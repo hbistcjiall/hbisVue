@@ -55,7 +55,7 @@
 </script>
 <style scoped>
     .ivu-menu{
-        width: 180px !important;
+        width: 200px !important;
     }
 
 </style>
