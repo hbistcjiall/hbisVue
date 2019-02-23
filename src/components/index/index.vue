@@ -44,17 +44,20 @@
                 <div slot="trigger"></div>
             </Sider>
             <Layout>
-                <Header class="layout-header-bar"></Header>
+                <Header class="layout-header-bar">
+                    <headerList/>
+                </Header>
                 <Content :style="{margin: '20px', background: '#fff', minHeight:myheight}">
-                    <router-view></router-view>
+                <contentList/>
                 </Content>
-
             </Layout>
         </Layout>
     </div>
 </template>
 <script>
     import menuList from './menu';
+    import headerList from './header';
+    import contentList from './content';
 
     export default {
         data () {
@@ -72,7 +75,9 @@
             }
         },
         components:{
-            menuList
+            menuList,
+            contentList,
+            headerList
         }
     }
 </script>
