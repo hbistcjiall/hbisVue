@@ -33,14 +33,17 @@ const routes = [
                 },
                 children: [
                     {
-                        path: '/userInsert_1', name: 'userInsert_1', component: userInsert_1, meta: {
+                        path:'/',redirect: 'userInsert_1'
+                    },
+                    {
+                        path: 'userInsert_1', name: 'userInsert_1', component: userInsert_1, meta: {
                             title: '基本信息',
                             keepAlive: true,
                             isLogin: true
                         }
                     },
                     {
-                        path: '/userInsert_2', name: 'userInsert_2', component: userInsert_2, meta: {
+                        path: 'userInsert_2', name: 'userInsert_2', component: userInsert_2, meta: {
                             title: '设置组',
                             keepAlive: true,
                             isLogin: true

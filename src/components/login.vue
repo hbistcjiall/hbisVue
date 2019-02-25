@@ -47,7 +47,8 @@
                         fetch(this.$store.state.fetchPath + "/doLogin", {
                             method: "POST",
                             headers: this.$store.state.fetchHeader,
-                            body: this.utils.formatParams(this.formInline)
+                            body: this.utils.formatParams(this.formInline),
+                            credentials:'include'
                         }).then((res) => {
                             return res.text();
                         }).then((res) => {
@@ -60,7 +61,7 @@
                                 this.$Message.error("密码输入错误");
                             } else if (res.msg == "1000") {
                                 this.$store.commit('userStatus', true)
-                                localStorage.setItem("Flag", "isLogin");
+                                sessionStorage.setItem("Flag", "isLogin");
                                 this.$Message.success("登录成功！");
                                 return this.$router.push("index");
                             } else {

@@ -11,7 +11,7 @@ Vue.prototype.utils=utils;
 Vue.config.productionTip = false;
 router.beforeEach((to, from, next) => {
 
-    let getFlag = localStorage.getItem("Flag");
+    let getFlag = sessionStorage.getItem("Flag");
     if (getFlag === "isLogin") {
         store.commit('userStatus', true);
         next();

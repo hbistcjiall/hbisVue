@@ -4,5 +4,8 @@ export default {//触发state更改
     },
     userStatus(state, flag) {
         state.isLogin = flag
+    },
+    updateCurrent(state, flag) {
+        state.current = flag
     }
 }

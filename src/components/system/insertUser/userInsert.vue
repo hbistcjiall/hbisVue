@@ -1,19 +1,18 @@
 <template>
    <div>
        <steps/>
-    <userInsertContent/>
-       <!--<button @click="">点击我</button>-->
+       <router-view/>
    </div>
 </template>
 
 <script>
     import steps from "./steps"
-    import userInsertContent from "./userInsertContent"
     export default {
         name: "userManager",
         components:{
-            steps,
-            userInsertContent
+            steps
+        },
+        methods:{
         }
     }
 </script>
