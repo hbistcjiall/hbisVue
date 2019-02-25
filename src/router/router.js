@@ -2,7 +2,7 @@ import Vue from 'vue'
 import VueRouter from 'vue-router'
 const login=()=>import('../components/login')
 const index=()=>import('../components/index/index')
-const userManager=()=>import('../components/system/userManager')
+const userManager=()=>import('../components/system/insertUser/userInsert')
 const logger=()=>import('../components/system/logger')
 
 Vue.use(VueRouter)

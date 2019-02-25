@@ -47,7 +47,7 @@
                 <Header class="layout-header-bar">
                     <headerList/>
                 </Header>
-                <Content :style="{margin: '20px', background: '#fff', minHeight:myheight}">
+                <Content :style="{margin: '2px',padding:'20px', background: '#fff', minHeight:myheight}">
                 <contentList/>
                 </Content>
             </Layout>

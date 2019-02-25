@@ -2,12 +2,13 @@ import Vue from 'vue'
 import App from './App.vue'
 import store from './store/store'
 import router from './router/router'
+import utils from './utils';
 import iView from 'iview';
 import 'iview/dist/styles/iview.css';
 
 Vue.use(iView);
-
-Vue.config.productionTip = false
+Vue.prototype.utils=utils;
+Vue.config.productionTip = false;
 router.beforeEach((to, from, next) => {
 
     let getFlag = localStorage.getItem("Flag");
