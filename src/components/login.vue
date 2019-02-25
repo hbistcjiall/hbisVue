@@ -2,14 +2,14 @@
     <div class="LoginCss">
         <img src="../assets/hbisLogo.jpg" class="img">
         <Form ref="formInline" :model="formInline" :rules="ruleInline" inline class="form">
-            <FormItem prop="user" class="formitem">
-                <Input type="text" v-model="formInline.user" placeholder="用户">
+            <FormItem prop="loginName" class="formitem">
+                <Input type="text" v-model="formInline.loginName" placeholder="用户">
                     <Icon type="ios-person-outline" slot="prepend" style="font-size: 20px"></Icon>
                 </Input>
             </FormItem>
 
-            <FormItem prop="password" class="formitem">
-                <Input type="password" v-model="formInline.password" placeholder="密码">
+            <FormItem prop="userPassword" class="formitem">
+                <Input type="password" v-model="formInline.userPassword" placeholder="密码">
                     <Icon type="ios-lock-outline" slot="prepend" style="font-size: 20px"></Icon>
                 </Input>
             </FormItem>
@@ -27,16 +27,15 @@
         data() {
             return {
                 formInline: {
-                    user: '',
-                    password: ''
+                    loginName: '',
+                    userPassword: ''
                 },
                 ruleInline: {
-                    user: [
+                    loginName: [
                         {required: true, message: '请填写用户名', trigger: 'blur'}
                     ],
-                    password: [
+                    userPassword: [
                         {required: true, message: '请填写密码', trigger: 'blur'},
-                        // { type: 'string', min: 6, message: 'The password length cannot be less than 6 bits', trigger: 'blur' }
                     ]
                 }
             }
@@ -45,14 +44,10 @@
             handleSubmit() {
                 this.$refs['formInline'].validate((valid) => {
                     if (valid) {
-                        let postdata = {
-                            username: this.formInline.user,
-                            password: this.formInline.password
-                        };
                         fetch(this.$store.state.fetchPath+"/doLogin", {
                             method: "POST",
                             headers: this.$store.state.fetchHeader,
-                            body: this.utils.formatParams(postdata)
+                            body: this.utils.formatParams(this.formInline)
                         }).then((res) => {
                             return res.text();
                         }).then((res) => {
