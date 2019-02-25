@@ -44,18 +44,29 @@
             handleSubmit() {
                 this.$refs['formInline'].validate((valid) => {
                     if (valid) {
-                        fetch(this.$store.state.fetchPath+"/doLogin", {
+                        fetch(this.$store.state.fetchPath + "/doLogin", {
                             method: "POST",
                             headers: this.$store.state.fetchHeader,
                             body: this.utils.formatParams(this.formInline)
                         }).then((res) => {
                             return res.text();
                         }).then((res) => {
+                            res = JSON.parse(res);
                             window.console.log(res);
-                            // this.$store.commit('userStatus', true)
-                            // localStorage.setItem("Flag", "isLogin");
-                            // this.$Message.success("登录成功！");
-                            // return this.$router.push("index");
+                            // res.msg 1000登录成功  1001用户名输入错误 1002密码输入错误
+                            if (res.msg == "1001") {
+                                this.$Message.error("用户名输入错误");
+                            } else if (res.msg == "1002") {
+                                this.$Message.error("密码输入错误");
+                            } else if (res.msg == "1000") {
+                                this.$store.commit('userStatus', true)
+                                localStorage.setItem("Flag", "isLogin");
+                                this.$Message.success("登录成功！");
+                                return this.$router.push("index");
+                            } else {
+                                this.$Message.error("服务器登录异常");
+                            }
+
                         });
                     }
                 })

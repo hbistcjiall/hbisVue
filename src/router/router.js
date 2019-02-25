@@ -1,14 +1,17 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
-const login=()=>import('../components/login')
-const index=()=>import('../components/index/index')
-const userManager=()=>import('../components/system/insertUser/userInsert')
-const logger=()=>import('../components/system/logger')
+
+const login = () => import('../components/login')
+const index = () => import('../components/index/index')
+const userManager = () => import('../components/system/insertUser/userInsert')
+const logger = () => import('../components/system/logger')
+const userInsert_1 = () => import('../components/system/insertUser/userInsert_1')
+const userInsert_2 = () => import('../components/system/insertUser/userInsert_2')
 
 Vue.use(VueRouter)
 
 const routes = [
-    { path: '*', redirect: '/index' },
+    {path: '*', redirect: '/index'},
     {
         path: '/login', name: 'login', component: login, meta: {
             title: '登录',
@@ -27,7 +30,23 @@ const routes = [
                     title: '用户管理',
                     keepAlive: true,
                     isLogin: true
-                }
+                },
+                children: [
+                    {
+                        path: '/userInsert_1', name: 'userInsert_1', component: userInsert_1, meta: {
+                            title: '基本信息',
+                            keepAlive: true,
+                            isLogin: true
+                        }
+                    },
+                    {
+                        path: '/userInsert_2', name: 'userInsert_2', component: userInsert_2, meta: {
+                            title: '设置组',
+                            keepAlive: true,
+                            isLogin: true
+                        }
+                    }
+                ]
             },
             {
                 path: '/logger', name: 'logger', component: logger, meta: {
@@ -42,7 +61,7 @@ const routes = [
 
 
 const router = new VueRouter({
-    bese:__dirname,
+    bese: __dirname,
     routes
 })
 export default router;
