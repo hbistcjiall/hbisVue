@@ -1,16 +1,16 @@
 <template>
     <Form ref="formCustom" :model="formCustom" :rules="ruleCustom" :label-width="100">
         <FormItem label="用户名" prop="userName">
-            <Input type="text" v-model="formCustom.userName"></Input>
+            <Input type="text" v-model="formCustom.userName"/>
         </FormItem>
         <FormItem label="登录账号" prop="loginName">
-            <Input type="text" v-model="formCustom.loginName"></Input>
+            <Input type="text" v-model="formCustom.loginName"/>
         </FormItem>
         <FormItem label="密码" prop="userPassword">
-            <Input type="password" v-model="formCustom.userPassword"></Input>
+            <Input type="password" v-model="formCustom.userPassword"/>
         </FormItem>
         <FormItem label="再次输入密码" prop="passwdCheck">
-            <Input type="password" v-model="formCustom.passwdCheck"></Input>
+            <Input type="password" v-model="formCustom.passwdCheck"/>
         </FormItem>
         <FormItem>
             <Button type="primary" @click="handleSubmit('formCustom')">保存</Button>
