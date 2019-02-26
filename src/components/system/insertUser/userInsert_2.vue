@@ -4,6 +4,7 @@
             <Select v-model="formValidate.selectGroup" style="width:200px">
                 <Option v-for="item in groupList" :value="item.id" :key="item.id">{{ item.name }}</Option>
             </Select>
+
         </FormItem>
         <FormItem label="选择角色" prop="selectRole">
             <Select v-model="formValidate.selectRole" @on-change="getMenu" style="width:200px">
