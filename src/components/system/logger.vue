@@ -15,10 +15,10 @@
             return {
                 loggerParams: {
                     createTime: '',
-                    page:0,
+                    endTime:'',
+                    current:0,
                     size:10
                 },
-                dates:[],
                 fecthLoggerData: [],
                 // 初始化信息总条数
                 dataCount: 0,
@@ -28,7 +28,7 @@
                 loggerColumns: [{
                     "title": "用户名",
                     "align": "center",
-                    "key": "username"
+                    "key": "userName"
                 }, {
                     "title": "请求方式",
                     "align": "center",
@@ -75,8 +75,8 @@
                 }).then((res) => {
                     return res.text();
                 }).then((res) => {
-                    res = JSON.parse(res);
-                    // window.console.log(res);
+                    res = JSON.parse(res)
+                    window.console.log(res);
                     // 保存取到的所有数据
                     this.fecthLoggerData =  res.records;
                     this.dataCount =  res.total;
@@ -90,19 +90,21 @@
             },
             changepage(index) {
                 //index当前页码
-                var _start = ( index - 1 ) * this.pageSize;
-                var _end = index * this.pageSize;
-                this.loggerData = this.fecthLoggerData.slice(_start,_end);
+                this.loggerParams.current=index;
+                this.handleListApproveHistory();
+                // var _start = ( index - 1 ) * this.pageSize;
+                // var _end = index * this.pageSize;
+                // this.loggerData = this.fecthLoggerData.slice(_start,_end);
             },
             time1(e){
-                window.console.log(e);
                 this.Dates=e;
-                window.console.log(this.Dates[0]);
-                window.console.log(this.Dates[1]);
-
+                this.loggerParams.createTime=this.Dates[0];
+                this.loggerParams.endTime=this.Dates[1];
+                this.loggerParams.size=10;
+                this.loggerParams.current=0;
             },
-            search(params){
-                window.console.log(params);
+            search(){
+                this.handleListApproveHistory();
             }
          },
 
