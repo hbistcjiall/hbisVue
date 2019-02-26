@@ -1,32 +1,25 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
 
-const login = () => import('../components/login')
-const index = () => import('../components/index/index')
-const userManager = () => import('../components/system/insertUser/userInsert')
-const logger = () => import('../components/system/logger')
-const userInsert_1 = () => import('../components/system/insertUser/userInsert_1')
-const userInsert_2 = () => import('../components/system/insertUser/userInsert_2')
-
 Vue.use(VueRouter)
 
 const routes = [
     {path: '*', redirect: '/index'},
     {
-        path: '/login', name: 'login', component: login, meta: {
+        path: '/login', name: 'login', component: resolve=>require(['@/components/login'],resolve), meta: {
             title: '登录',
             keepAlive: false,
             isLogin: false
         }
     },
     {
-        path: '/index', name: 'index', component: index, meta: {
+        path: '/index', name: 'index', component: resolve=>require(['@/components/index/index'],resolve), meta: {
             title: '首页',
             keepAlive: true,
             isLogin: true
         }, children: [
             {
-                path: '/userManager', name: 'userManager', component: userManager, meta: {
+                path: '/userManager', name: 'userManager', component: resolve=>require(['@/components/system/insertUser/userInsert'],resolve), meta: {
                     title: '用户管理',
                     keepAlive: true,
                     isLogin: true
@@ -36,14 +29,14 @@ const routes = [
                         path:'/',redirect: 'userInsert_1'
                     },
                     {
-                        path: 'userInsert_1', name: 'userInsert_1', component: userInsert_1, meta: {
+                        path: 'userInsert_1', name: 'userInsert_1', component:  resolve=>require(['@/components/system/insertUser/userInsert_1'],resolve), meta: {
                             title: '基本信息',
                             keepAlive: true,
                             isLogin: true
                         }
                     },
                     {
-                        path: 'userInsert_2', name: 'userInsert_2', component: userInsert_2, meta: {
+                        path: 'userInsert_2', name: 'userInsert_2', component:  resolve=>require(['@/components/system/insertUser/userInsert_2'],resolve), meta: {
                             title: '设置组',
                             keepAlive: true,
                             isLogin: true
@@ -52,7 +45,7 @@ const routes = [
                 ]
             },
             {
-                path: '/logger', name: 'logger', component: logger, meta: {
+                path: '/logger', name: 'logger', component: resolve=>require(['@/components/system/logger'],resolve), meta: {
                     title: '日志管理',
                     keepAlive: true,
                     isLogin: true

@@ -1,9 +1,8 @@
 <template>
     <Steps :current="current">
-        <Step title="基本信息" content="设置用户基本信息"></Step>
-        <Step title="设置组" content="配置组和角色"></Step>
-        <Step title="设置权限" content="配置用户权限"></Step>
-        <Step title="设置菜单" content="配置用户菜单可见"></Step>
+        <Step title="添加用户" content="设置用户基本信息"></Step>
+        <Step title="用户权限" content="设置用户权限"></Step>
+        <Step title="其他" content="其他参数设置"></Step>
     </Steps>
 </template>
 
