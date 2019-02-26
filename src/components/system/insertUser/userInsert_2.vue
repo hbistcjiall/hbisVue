@@ -4,7 +4,6 @@
             <Select v-model="formValidate.selectGroup" style="width:200px">
                 <Option v-for="item in groupList" :value="item.id" :key="item.id">{{ item.name }}</Option>
             </Select>
-
         </FormItem>
         <FormItem label="选择角色" prop="selectRole">
             <Select v-model="formValidate.selectRole" @on-change="getMenu" style="width:200px">
@@ -14,6 +13,7 @@
         <FormItem label="权限一览" v-if="showMenu">
             <Tree :data="data1" ></Tree>
         </FormItem>
+        <p class="newputh">权限不够用？试试&nbsp;<router-link tag="创建权限" to="insertAuth"><a>创建一套权限</a></router-link></p>
         <FormItem>
             <Button type="primary" @click="handleSubmit('formValidate')">保存</Button>
             <Button @click="handleReset('formValidate')" style="margin-left: 8px">重置</Button>
@@ -119,5 +119,9 @@
         width: 35%;
         margin: 20px auto;
 
+    }
+    .newputh{
+        color: #c3c3c3;
+        margin:5px;
     }
 </style>
