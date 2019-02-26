@@ -82,28 +82,30 @@
         },
         methods: {
             handleSubmit(name) {
-                window.console.log(this.formCustom);
+                this.$store.commit("updateCurrent", 1);
+                this.$router.push('userInsert_2');
                 this.$refs[name].validate((valid) => {
                     if (valid) {
-                        fetch(this.$store.state.fetchPath + "/register", {
-                            method: "POST",
-                            headers: this.$store.state.fetchHeader,
-                            body: this.utils.formatParams(this.formCustom),
-                            credentials: 'include'
-                        }).then((res) => {
-                            return res.text();
-                        }).then((res) => {
-                            res = JSON.parse(res);
-                            if (res.msg == "1000") {
-                                this.$Message.success('保存成功!');
-                                this.$store.commit("updateCurrent", 1);
-                                this.$router.push('userInsert_2');
-                            } else {
-                                this.$Message.success('保存失败!');
-                            }
-                        });
-                    } else {
-                        this.$Message.error('Fail!');
+                //         fetch(this.$store.state.fetchPath + "/register", {
+                //             method: "POST",
+                //             headers: this.$store.state.fetchHeader,
+                //             body: this.utils.formatParams(this.formCustom),
+                //             credentials: 'include'
+                //         }).then((res) => {
+                //             return res.text();
+                //         }).then((res) => {
+                //             res = JSON.parse(res);
+                //             if (res.msg == "1000") {
+                //                 this.$Message.success('保存成功!');
+                //                 this.$store.commit("updateCurrent", 1);
+                //                 this.$store.commit("updateNewuserId", res.userId);
+                //                 this.$router.push('userInsert_2');
+                //             } else {
+                //                 this.$Message.success('保存失败!');
+                //             }
+                //         });
+                //     } else {
+                //         this.$Message.error('Fail!');
                     }
                 })
             },
