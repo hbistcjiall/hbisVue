@@ -52,7 +52,7 @@
                         }).then((res) => {
                             return res.text();
                         }).then((res) => {
-                            res = JSON.parse(res);
+                            res = res.length>0?JSON.parse(res):[];
                             window.console.log(res);
                             // res.msg 1000登录成功  1001用户名输入错误 1002密码输入错误
                             if (res.msg == "1001") {
