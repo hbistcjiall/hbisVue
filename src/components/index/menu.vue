@@ -1,14 +1,18 @@
 <template>
-    <Menu ref="side_menu" :theme="theme3" @on-open-change="getParentName" @on-select="getName" accordion>
-        <Submenu  v-for="item of menulist" :key="item.mName" :name="item.mName" >
-            <template v-if="item" slot="title">
-                <Icon type="ios-filing" />
-                {{item.title}}
-            </template>
-            <label v-if="item.children">
-                <MenuItem  v-for="tab2 of item.children"  :key="tab2.mName" :name="tab2.mName" :to="tab2.path">{{tab2.title}}</MenuItem>
-            </label>
-        </Submenu>
+    <Menu ref="side_menu" :theme="theme3" @on-open-change="getParentName" @on-select="getName" :accordion="true">
+        <div v-for="(item,index) of menulist" :key="index">
+            <MenuItem v-if="!item.children" :name="item.mName"><Icon type="ios-filing" style="margin-right:8px "/>{{item.title}}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</MenuItem>
+            <Submenu v-if="item.children"  :name="item.mName" >
+                <template slot="title">
+                    <Icon type="ios-filing" />
+                    {{item.title}}
+                </template>
+                <label v-if="item.children">
+                    <MenuItem  v-for="tab2 of item.children"  :key="tab2.mName" :name="tab2.mName" :to="tab2.path">{{tab2.title}}</MenuItem>
+                </label>
+            </Submenu>
+        </div>
+
     </Menu>
 </template>
 <script>
@@ -17,33 +21,28 @@
         data () {
             return {
                 theme3: 'dark',
-                menulist:[
-                    // {
-                    //     name : '系统管理',
-                    //     title : '系统管理',
-                    //     path:'',
-                    //     icon : 'outlet',
-                    //     children: [
-                    //         { name : '新增用户', title : '新增用户', icon : 'outlet',path:'/userManager'},
-                    //         { name : '日志管理', title : '用户管理', icon : 'outlet',path:'/logger', },
-                    //         { name : '用户信息', title : '用户信息', icon : 'outlet',path:'/userMsg', }
-                    //     ]
-                    // }
-                ],
-                getNames:[]
+                menulist:[],
+                getNames:[],
+                layout:'',
+                components:''
             }
-        },
-        mounted(){
         },
         created() {
             this.newMenu();
         },
         methods:{
             getParentName(e){
-              e.length==1?this.getNames=[]:this.getNames.push({'name':e[0]});
+                this.components=e[0];
             },
             getName(e){
-                this.getNames.length==2?(this.getNames.pop(),this.getNames.push({'name':e})):this.getNames.push({'name':e});
+                this.layout=e;
+                this.getNames=[];
+                if(this.components){
+                this.getNames.push({'name': this.components});
+                this.getNames.push({'name': this.layout});
+                }else{
+                    this.getNames.push({'name': this.layout});
+                }
                 this.$store.commit('setHeaders',this.getNames);
             },
             newMenu(){
