@@ -12,7 +12,8 @@
         components:{
             steps
         },
-        methods:{
+        create() {
+            this.$store.commit("updateCurrent", 0);
         }
     }
 </script>
