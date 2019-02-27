@@ -13,7 +13,7 @@
         name:"logger",
         data() {
             return {
-                loggerParams: {
+                loggerParams: {//向后台传的数据
                     createTime: '',
                     endTime:'',
                     current:0,
