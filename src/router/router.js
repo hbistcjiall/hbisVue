@@ -59,7 +59,7 @@ const routes = [
                 }
             },
             {
-                path: '/userMsg', name: 'userMsg', component: resolve=>require(['@/components/system/userMsg'],resolve), meta: {
+                path: '/userMsg', name: 'userMsg', component: resolve=>require(['@/components/system/userMsg/userMsg'],resolve), meta:  {
                     title: '用户信息',
                     keepAlive: true,
                     isLogin: true
