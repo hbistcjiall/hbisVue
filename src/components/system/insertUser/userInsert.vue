@@ -1,8 +1,8 @@
 <template>
-   <div>
-       <steps/>
-       <router-view/>
-   </div>
+    <div>
+        <steps/>
+        <router-view/>
+    </div>
 </template>
 
 <script>

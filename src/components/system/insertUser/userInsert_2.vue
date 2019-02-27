@@ -72,9 +72,9 @@
                         }).then((res) => {
                             res = res.length>0?JSON.parse(res):[];
                             if(res.msg=="1000"){
-                            this.$store.commit("updateCurrent", 2);
+                                this.$store.commit("updateCurrent", 2);
                                 this.$router.push('userInsert_3');
-                            this.$Message.success('Success!');
+                                this.$Message.success('Success!');
                             }else{
                                 this.$Message.error('保存失败！');
                             }
@@ -104,21 +104,21 @@
                 }
             },
             getMenu(){
-                 if(this.formValidate.selectRole){
-                     fetch(this.$store.state.fetchPath + "/t-user-entity/findAuthorityByRole", {
-                         method: "POST",
-                         headers: this.$store.state.fetchHeader,
-                         body: this.utils.formatParams({"trId":this.formValidate.selectRole}),
-                         credentials: 'include'
-                     }).then((res) => {
-                         return res.text();
-                     }).then((res) => {
-                         res = res.length>0?JSON.parse(res):[];
-                         this.menuData=this.utils.buildTree(res);
-                         this.showMenu=true;
-                     });
+                if(this.formValidate.selectRole){
+                    fetch(this.$store.state.fetchPath + "/t-user-entity/findAuthorityByRole", {
+                        method: "POST",
+                        headers: this.$store.state.fetchHeader,
+                        body: this.utils.formatParams({"trId":this.formValidate.selectRole}),
+                        credentials: 'include'
+                    }).then((res) => {
+                        return res.text();
+                    }).then((res) => {
+                        res = res.length>0?JSON.parse(res):[];
+                        this.menuData=this.utils.buildTree(res);
+                        this.showMenu=true;
+                    });
 
-                 }
+                }
             }
         }
     }

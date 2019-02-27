@@ -84,24 +84,25 @@
             handleSubmit(name) {
                 this.$refs[name].validate((valid) => {
                     if (valid) {
-                        fetch(this.$store.state.fetchPath + "/register", {
-                            method: "POST",
-                            headers: this.$store.state.fetchHeader,
-                            body: this.utils.formatParams(this.formCustom),
-                            credentials: 'include'
-                        }).then((res) => {
-                            return res.text();
-                        }).then((res) => {
-                             res = res.length>0?JSON.parse(res):[];
-                            if (res.msg == "1000") {
-                                this.$Message.success('保存成功!');
-                                this.$store.commit("updateCurrent", 1);
-                                this.$store.commit("updateNewuserId", res.userId);
-                                this.$router.push('userInsert_2');
-                            } else {
-                                this.$Message.success('保存失败!');
-                            }
-                        });
+                        // fetch(this.$store.state.fetchPath + "/register", {
+                        //     method: "POST",
+                        //     headers: this.$store.state.fetchHeader,
+                        //     body: this.utils.formatParams(this.formCustom),
+                        //     credentials: 'include'
+                        // }).then((res) => {
+                        //     return res.text();
+                        // }).then((res) => {
+                        //      res = res.length>0?JSON.parse(res):[];
+                        //     if (res.msg == "1000") {
+                        //         this.$Message.success('保存成功!');
+                        //         this.$store.commit("updateCurrent", 1);
+                        //         this.$store.commit("updateNewuserId", res.userId);
+                        //         this.$router.push('userInsert_2');
+                        //     } else {
+                        //         this.$Message.success('保存失败!');
+                        //     }
+                        // });
+                        this.$router.push('insertAuth');
                     } else {
                         this.$Message.error('Fail!');
                     }
