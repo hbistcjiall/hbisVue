@@ -9,11 +9,10 @@
         </template>
         <template slot-scope="{ row, index }" slot="action">
             <Button type="primary" size="small" style="margin-right: 5px" @click="show(index)">查看</Button>
-            <Button type="primary" size="small" style="margin-right: 5px" @click="show(index)">编辑</Button>
-            <Button type="error" size="small" @click="remove(index)">删除</Button>
+            <Button type="primary" size="small" style="margin-right: 5px" @click="updD(row)">编辑</Button>
+            <Button type="error" size="small" @click="remove(row)">删除</Button>
         </template>
     </Table>
-
         <Page :total="dataCount" :page-size="pageSize" show-total class="paging" @on-change="changepage" style="margin-top:20px;"></Page>
     </div>
 </template>
@@ -26,6 +25,9 @@
                     userName:'',
                     current:0,
                     size:10
+                },
+                delData:{
+                    id:'',
                 },
                 userNames:'',
                 // 初始化信息总条数
@@ -75,7 +77,6 @@
                     return res.text();
                 }).then((res) => {
                     res = res.length>0?JSON.parse(res):[]
-                    // window.console.log(res.records)
                     // 保存取到的所有数据
                     this.resDatas =  res.records;
                     this.dataCount =  res.total;
@@ -92,24 +93,31 @@
                 //index当前页码
                 this.MsgData.current=index;
                 this.handleListApproveHistory();
-                // var _start = ( index - 1 ) * this.pageSize;
-                // var _end = index * this.pageSize;
-                // this.loggerData = this.fecthLoggerData.slice(_start,_end);
             },
             search(){
                 this.MsgData.userName=this.userNames;
                 this.handleListApproveHistory();
-                // window.console.log(this.userNames);
             },
-
             show (index) {
                 this.$Modal.info({
                     title: '详细信息',
                     content: `姓名：${this.fecthdata6[index].userName}<br>登录名：${this.fecthdata6[index].loginName}<br>所在组：${this.fecthdata6[index].groupName}`
                 })
             },
-            remove (index) {
-                this.fecthdata6.splice(index, 1);
+            remove (r) {
+                this.delData.id=r.id;
+                fetch(this.$store.state.fetchPath + "/deleteuser", {
+                    method: "POST",
+                    headers: this.$store.state.fetchHeader,
+                    body: this.utils.formatParams(this.delData),
+                    credentials:'include'
+                })
+                    .then((res) => {
+                        return res.text();
+                    })
+                    .then(() => {
+                        this.handleListApproveHistory();
+                    })
             }
         }
     }
