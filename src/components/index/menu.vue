@@ -26,7 +26,8 @@
                         icon : 'outlet',
                         children: [
                             { name : '新增用户', title : '新增用户', icon : 'outlet',path:'/userManager'},
-                            { name : '日志管理', title : '用户管理', icon : 'outlet',path:'/logger', }
+                            { name : '日志管理', title : '用户管理', icon : 'outlet',path:'/logger', },
+                            { name : '用户信息', title : '用户信息', icon : 'outlet',path:'/userMsg', }
                         ]
                     }
                 ],
