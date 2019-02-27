@@ -43,6 +43,13 @@ const routes = [
                         }
                     },
                     {
+                        path: 'userInsert_3', name: 'userInsert_3', component:  resolve=>require(['@/components/system/insertUser/userInsert_3'],resolve), meta: {
+                            title: '完成',
+                            keepAlive: true,
+                            isLogin: true
+                        }
+                    },
+                    {
                         path: 'insertAuth', name: 'insertAuth', component:  resolve=>require(['@/components/system/insertUser/insertAuth'],resolve), meta: {
                             title: '创建新权限',
                             keepAlive: true,
