@@ -65,7 +65,7 @@
                         fetch(this.$store.state.fetchPath + "/t-user-role-relation-entity/roleSave", {
                             method: "POST",
                             headers: this.$store.state.fetchHeader,
-                            body: this.utils.formatParams({roleId:this.formValidate.selectRole,userId:this.$store.state.newUserId,groupId:this.$store.state.newUserId}),
+                            body: this.utils.formatParams({roleId:this.formValidate.selectRole,userId:this.$store.state.newUserId,groupId:this.formValidate.selectGroup}),
                             credentials: 'include'
                         }).then((res) => {
                             return res.text();
