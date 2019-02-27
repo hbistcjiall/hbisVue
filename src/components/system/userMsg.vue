@@ -1,7 +1,7 @@
 <template>
     <div>
     <Input placeholder="用户名" style="width: 300px" v-model="userNames"/>
-    <Button type="primary" @click="search()" style="magin-left:'20px'">查询日志</Button>
+    <Button type="primary" @click="search()" style="magin-left:'20px'">查询用户</Button>
 
     <Table border stripe :columns="columns12" :data="fecthdata6" style="margin-top: 20px">
         <template slot-scope="{ row }" slot="name">
@@ -14,9 +14,11 @@
         </template>
     </Table>
         <Page :total="dataCount" :page-size="pageSize" show-total class="paging" @on-change="changepage" style="margin-top:20px;"></Page>
+
     </div>
 </template>
 <script>
+    import add from './updUsermsg.vue'
     export default {
         name:'userMsg',
         data () {
@@ -28,6 +30,11 @@
                 },
                 delData:{
                     id:'',
+                },
+                updData:{
+                    userName:'',
+                    userPassword:'',
+                    id:''
                 },
                 userNames:'',
                 // 初始化信息总条数
@@ -60,6 +67,9 @@
                 fecthdata6: [],
                 resDatas:[]
             }
+        },
+        components:{
+            add
         },
         created() {
             this.handleListApproveHistory();
@@ -105,20 +115,88 @@
                 })
             },
             remove (r) {
-                this.delData.id=r.id;
-                fetch(this.$store.state.fetchPath + "/deleteuser", {
-                    method: "POST",
-                    headers: this.$store.state.fetchHeader,
-                    body: this.utils.formatParams(this.delData),
-                    credentials:'include'
+                this.$Modal.confirm({
+                    title: '提示',
+                    content: '确认删除吗？',
+                    onOk: () => {
+                        this.delData.id=r.id;
+                        fetch(this.$store.state.fetchPath + "/deleteuser", {
+                            method: "POST",
+                            headers: this.$store.state.fetchHeader,
+                            body: this.utils.formatParams(this.delData),
+                            credentials:'include'
+                        })
+                            .then((res) => {
+                                return res.text();
+                            })
+                            .then(() => {
+                                this.handleListApproveHistory();
+                            })
+                        // this.$Message.info('Clicked ok');
+                    },
+                    onCancel: () => {
+                        // this.$Message.info('Clicked cancel');
+                    }
+                });
+
+            },
+            updD(row){
+                window.console.log(row.id);
+                this.updData.id=row.id;
+                this.$Modal.confirm({
+                    scrollable:true,
+                    okText:'保存',
+                    render: (h) => {
+                        return h(add, {
+                            props: {
+
+                            },
+                            on: {
+                                value1: (value1) => {
+                                    this.v1 = value1
+                                    this.updData.userName=this.v1
+                                },
+                                value2: (value2) => {
+                                    this.v2 = value2
+                                    this.updData.userPassword=this.v2
+                                }
+                            }
+                        })
+                    },
+                    onOk: () => {
+                        if (this.v1 === '') {
+                            this.$Message.error('用户名不能为空!')
+                        }else if(this.v2 === ''){
+                            this.$Message.error('密码不能为空!')
+                        }else{
+                            // window.console.log(this.updData);
+                            // this.delData.id=r.id;
+                            fetch(this.$store.state.fetchPath + "/updateuser", {
+                                method: "POST",
+                                headers: this.$store.state.fetchHeader,
+                                body: this.utils.formatParams(this.updData),
+                                credentials:'include'
+                            })
+                                .then((res) => {
+                                    return res.text();
+                                })
+                                .then((res) => {
+                                    res = res.length>0?JSON.parse(res):[]
+
+                                    this.handleListApproveHistory();
+                                })
+                        }
+                    }
                 })
-                    .then((res) => {
-                        return res.text();
-                    })
-                    .then(() => {
-                        this.handleListApproveHistory();
-                    })
+
             }
-        }
+        },
+
     }
 </script>
+<style scoped>
+    .paging{
+        float:right;
+        margin-top:10px;
+    }
+</style>
