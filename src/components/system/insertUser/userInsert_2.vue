@@ -62,7 +62,7 @@
             handleSubmit(name) {
                 this.$refs[name].validate((valid) => {
                     if (valid) {
-                        fetch(this.$store.state.fetchPath + "/t-user-entity/findRoleByGroup", {
+                        fetch(this.$store.state.fetchPath + "/t-user-role-relation-entity/roleSave", {
                             method: "POST",
                             headers: this.$store.state.fetchHeader,
                             body: this.utils.formatParams({roleId:this.formValidate.selectRole,userId:this.$store.state.newUserId}),
@@ -73,6 +73,7 @@
                             res = res.length>0?JSON.parse(res):[];
                             if(res.msg=="1000"){
                             this.$store.commit("updateCurrent", 2);
+                                this.$router.push('userInsert_3');
                             this.$Message.success('Success!');
                             }else{
                                 this.$Message.error('保存失败！');
