@@ -44,6 +44,9 @@
                     this.getNames.push({'name': this.layout});
                 }
                 this.$store.commit('setHeaders',this.getNames);
+                if(this.getNames[1].name==='用户管理'){
+                    this.$store.commit("updateCurrent", 0);
+                }
             },
             newMenu(){
                 fetch(this.$store.state.fetchPath + "/t-user-entity/buildTree", {
