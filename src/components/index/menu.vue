@@ -5,14 +5,13 @@
             <Submenu v-if="item.children"  :name="item.mName" >
                 <template slot="title">
                     <Icon type="ios-filing" />
-                    {{item.title}}
+                    <span>{{item.title}}</span>
                 </template>
                 <label v-if="item.children">
-                    <MenuItem  v-for="tab2 of item.children"  :key="tab2.mName" :name="tab2.mName" :to="tab2.path">{{tab2.title}}</MenuItem>
+                    <MenuItem  v-for="tab2 of item.children"  :key="tab2.mName" :name="tab2.mName" :to="tab2.path"><Icon type="ios-navigate"></Icon><span>{{tab2.title}}</span></MenuItem>
                 </label>
             </Submenu>
         </div>
-
     </Menu>
 </template>
 <script>
@@ -24,7 +23,8 @@
                 menulist:[],
                 getNames:[],
                 layout:'',
-                components:''
+                components:'',
+                isCollapsed: false
             }
         },
         created() {
@@ -66,6 +66,35 @@
 </script>
 <style scoped>
     .ivu-menu{
-        width: 200px !important;
+        width: auto !important;
+    }
+    .ivu-menu-item{
+        padding-left:20px !important;
+    }
+    .ivu-menu-submenu-title,.ivu-menu-item span{
+       display: inline-block;
+        overflow: hidden;
+        width: 69px;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+        vertical-align: bottom;
+        transition: width .2s ease .2s;
+    }
+    .ivu-menu-submenu-title,.ivu-menu-item i{
+        transform: translateX(0px);
+        transition: font-size .2s ease, transform .2s ease;
+        vertical-align: middle;
+        font-size: 16px;
+    }
+    .collapsed-menu span{
+        width: 0px;
+        transition: width .2s ease;
+    }
+    .ivu-menu-submenu-title,.collapsed-menu i{
+        transform: translateX(5px);
+        transition: font-size .2s ease .2s, transform .2s ease .2s;
+        vertical-align: middle;
+        font-size: 22px;
+        margin-top:5px;
     }
 </style>

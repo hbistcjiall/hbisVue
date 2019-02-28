@@ -6,6 +6,24 @@
         border-radius: 4px;
         overflow: hidden;
     }
+    .layout-logo{
+        width: 100px;
+        height: 30px;
+        background: #5b6270;
+        border-radius: 3px;
+        float: left;
+        position: relative;
+        top: 15px;
+        left: 20px;
+        line-height: 30px;
+        color:#ffffff;
+        text-align: center;
+    }
+    .layout-nav{
+        width: 420px;
+        margin: 0 auto;
+        margin-right: 20px;
+    }
     .layout-header-bar{
         background: #fff;
         box-shadow: 0 1px 1px rgba(0,0,0,.1);
@@ -39,9 +57,35 @@
 <template>
     <div class="layout">
         <Layout>
-            <Sider breakpoint="md" collapsible :collapsed-width="78" v-model="isCollapsed">
+            <Header>
+                <Menu mode="horizontal" theme="dark" active-name="1">
+                    <div class="layout-logo">
+                        河钢集团
+                    </div>
+                    <div class="layout-nav">
+                        <MenuItem name="1">
+                            <Icon type="ios-navigate"></Icon>
+                            <span>系统管理</span>
+                        </MenuItem>
+                        <MenuItem name="2">
+                            <Icon type="ios-keypad"></Icon>
+                            Item 2
+                        </MenuItem>
+                        <MenuItem name="3">
+                            <Icon type="ios-analytics"></Icon>
+                            Item 3
+                        </MenuItem>
+                        <MenuItem name="4">
+                            <Icon type="ios-paper"></Icon>
+                            Item 4
+                        </MenuItem>
+                    </div>
+                </Menu>
+            </Header>
+        </Layout>
+        <Layout>
+            <Sider breakpoint="md" collapsible :collapsed-width="78" v-model="isCollapsed"  :class="menuitemClasses">
                <menuList/>
-                <div slot="trigger"></div>
             </Sider>
             <Layout>
                 <Header class="layout-header-bar">
@@ -66,18 +110,18 @@
                 myheight:document.documentElement.clientHeight-110+"px"
             };
         },
-        computed: {
-            menuitemClasses: function () {
-                return [
-                    'menu-item',
-                    this.isCollapsed ? 'collapsed-menu' : ''
-                ]
-            }
-        },
         components:{
             menuList,
             contentList,
             headerList
-        }
+        },
+        computed: {
+                menuitemClasses: function () {
+                    return [
+                        'ivu-menu-item',
+                        this.isCollapsed ? 'collapsed-menu' : ''
+                    ]
+                }
+            }
     }
 </script>
