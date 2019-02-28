@@ -19,10 +19,10 @@ const routes = [
             isLogin: true
         }, children: [
             {
-                path: '/', redirect: 'home'
+                path: '', redirect: '/home'
             },
             {
-                path: 'home',
+                path: '/home',
                 name: 'home',
                 component: resolve => require(['@/components/index/home'], resolve),
                 meta: {
