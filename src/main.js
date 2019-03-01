@@ -40,7 +40,7 @@ router.beforeEach((to, from, next) => {
     }
 
 });
-
+//这是测试用的
 new Vue({
     store,
     router,
