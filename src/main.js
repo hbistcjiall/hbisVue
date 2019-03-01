@@ -1,4 +1,4 @@
-import Vue from 'vue'
+﻿import Vue from 'vue'
 import App from './App.vue'
 import store from './store/store'
 import router from './router/router'
@@ -40,7 +40,7 @@ router.beforeEach((to, from, next) => {
     }
 
 });
-
+//我测试用一下
 new Vue({
     store,
     router,
