@@ -41,6 +41,7 @@ router.beforeEach((to, from, next) => {
 
 });
 //我测试用一下
+//这是测试用的
 new Vue({
     store,
     router,
