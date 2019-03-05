@@ -11,6 +11,13 @@
 <script>
     export default {
         name: "headerList",
+        data(){
+            return {
+                headerss:[{
+                    name: '首页'
+                }]
+            }
+        },
         computed:{
             headers(){
               return this.$store.state.headers;
@@ -27,7 +34,7 @@
                     .then((res) => {
                         return res.text();
                     }).then(() => {
-                     // res = res.length>0?JSON.parse(res):[];
+                     this.$store.commit('setHeaders',this.headerss);
                      sessionStorage.setItem("Flag", "");
                      return this.$router.push("login");
                 })
