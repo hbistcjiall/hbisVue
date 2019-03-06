@@ -18,6 +18,9 @@
         <FormItem label="新建角色" v-if="createRoleShow" prop="newRoleName">
             <Input  v-model="formValidate.newRoleName" placeholder="请输入角色名"/>
         </FormItem>
+        <FormItem label="权限一览" v-if="showMenu">
+            <Tree :data="menuData"  show-checkbox />
+        </FormItem>
         <FormItem>
             <Button type="primary" @click="handleSubmit('formValidate')">保存</Button>
             <Button @click="handleReset('formValidate')" style="margin-left: 8px">重置</Button>
@@ -31,6 +34,7 @@
         name: "insertAuth",
         data() {
             return {
+                showMenu:false,
                 createGroupShow: false,
                 createRoleShow: false,
                 formValidate: {
@@ -81,9 +85,23 @@
                 res = res.length > 0 ? JSON.parse(res) : [];
                 this.groupList = res;
             });
+            this.getTreeData();
         },
-
         methods: {
+            getTreeData(){
+                fetch(this.$store.state.fetchPath + "/t-user-entity/buildTree", {
+                    method: "POST",
+                    headers: this.$store.state.fetchHeader,
+                    body: '',
+                    credentials: 'include'
+                }).then((res) => {
+                    return res.text();
+                }).then((res) => {
+                    res = res.length>0?JSON.parse(res):[];
+                    this.menuData=this.utils.buildTree(res);
+                    this.showMenu=true;
+                });
+            },
             handleSubmit(name) {
                 this.$refs[name].validate((valid) => {
                     if (valid) {
