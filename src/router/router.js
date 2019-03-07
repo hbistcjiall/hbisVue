@@ -1,5 +1,6 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
+import index from 'modules/index'
 
 Vue.use(VueRouter)
 
@@ -12,102 +13,7 @@ const routes = [
             isLogin: false
         }
     },
-    {
-        path: '/index', name: 'index', component: resolve => require(['@/components/index/index'], resolve), meta: {
-            title: '首页',
-            keepAlive: true,
-            isLogin: true
-        }, children: [
-            {
-                path: '', redirect: '/home'
-            },
-            {
-                path: '/home',
-                name: 'home',
-                component: resolve => require(['@/components/index/home'], resolve),
-                meta: {
-                    title: 'home',
-                    keepAlive: true,
-                    isLogin: true
-                }
-            },
-            {
-                path: '/userManager',
-                name: 'userManager',
-                component: resolve => require(['@/components/system/insertUser/userInsert'], resolve),
-                meta: {
-                    title: '用户管理',
-                    keepAlive: true,
-                    isLogin: true
-                },
-                children: [
-                    {
-                        path: '/', redirect: 'userInsert_1'
-                    },
-                    {
-                        path: 'userInsert_1',
-                        name: 'userInsert_1',
-                        component: resolve => require(['@/components/system/insertUser/userInsert_1'], resolve),
-                        meta: {
-                            title: '基本信息',
-                            keepAlive: true,
-                            isLogin: true
-                        }
-                    },
-                    {
-                        path: 'userInsert_2',
-                        name: 'userInsert_2',
-                        component: resolve => require(['@/components/system/insertUser/userInsert_2'], resolve),
-                        meta: {
-                            title: '配置权限',
-                            keepAlive: true,
-                            isLogin: true
-                        }
-                    },
-                    {
-                        path: 'userInsert_3',
-                        name: 'userInsert_3',
-                        component: resolve => require(['@/components/system/insertUser/userInsert_3'], resolve),
-                        meta: {
-                            title: '完成',
-                            keepAlive: true,
-                            isLogin: true
-                        }
-                    },
-                    {
-                        path: 'insertAuth',
-                        name: 'insertAuth',
-                        component: resolve => require(['@/components/system/insertUser/insertAuth'], resolve),
-                        meta: {
-                            title: '创建新权限',
-                            keepAlive: true,
-                            isLogin: true
-                        }
-                    }
-                ]
-            },
-            {
-                path: '/logger',
-                name: 'logger',
-                component: resolve => require(['@/components/system/logger'], resolve),
-                meta: {
-                    title: '日志管理',
-                    keepAlive: true,
-                    isLogin: true
-                }
-            },
-            {
-                path: '/userMsg',
-                name: 'userMsg',
-                component: resolve => require(['@/components/system/userMsg/userMsg'], resolve),
-                meta: {
-                    title: '用户信息',
-                    keepAlive: true,
-                    isLogin: true
-                }
-            },
-        ]
-    }
+    index
 ]
 
 
