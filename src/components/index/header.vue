@@ -15,7 +15,12 @@
             return {
                 headerss:[{
                     name: '首页'
-                }]
+                }],
+                loginOutData:{
+                    username:'',
+                    password:'',
+                    remember: ''
+                }
             }
         },
         computed:{
@@ -26,17 +31,22 @@
         methods:{
             loginOut(){
                 fetch(this.$store.state.fetchPath + "/logout", {
-                    method: "POST",
+                    method: "get",
                     headers: this.$store.state.fetchHeader,
-                    body: '',
+                    // body: '',
                     credentials:'include'
                 })
                     .then((res) => {
                         return res.text();
-                    }).then(() => {
+                    }).then((res) => {
+                     res = res.length>0?JSON.parse(res):[];
+                     window.console.log(res)
                      this.$store.commit('setHeaders',this.headerss);
+                     this.loginOutData.username =res.userName;
+                     this.loginOutData.password =res.password;
                      sessionStorage.setItem("Flag", "");
-                     return this.$router.push("login");
+                     this.$Message.success("请重新登录！");
+                     return this.$router.push({name:"login",params:this.loginOutData});
                 })
             }
         }

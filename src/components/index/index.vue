@@ -57,34 +57,7 @@
 <template>
     <div class="layout">
         <Layout>
-            <Header>
-                <Menu mode="horizontal" theme="dark" active-name="1">
-                    <div class="layout-logo">
-                        河钢集团
-                    </div>
-                    <div class="layout-nav">
-                        <MenuItem name="1">
-                            <Icon type="ios-navigate"></Icon>
-                            <span>系统管理</span>
-                        </MenuItem>
-                        <MenuItem name="2">
-                            <Icon type="ios-keypad"></Icon>
-                            Item 2
-                        </MenuItem>
-                        <MenuItem name="3">
-                            <Icon type="ios-analytics"></Icon>
-                            Item 3
-                        </MenuItem>
-                        <MenuItem name="4">
-                            <Icon type="ios-paper"></Icon>
-                            Item 4
-                        </MenuItem>
-                    </div>
-                </Menu>
-            </Header>
-        </Layout>
-        <Layout>
-            <Sider breakpoint="md" collapsible :collapsed-width="78" v-model="isCollapsed"  :class="menuitemClasses">
+            <Sider breakpoint="md" v-model="isCollapsed">
                <menuList/>
             </Sider>
             <Layout>
@@ -114,14 +87,6 @@
             menuList,
             contentList,
             headerList
-        },
-        computed: {
-                menuitemClasses: function () {
-                    return [
-                        'ivu-menu-item',
-                        this.isCollapsed ? 'collapsed-menu' : ''
-                    ]
-                }
-            }
+        }
     }
 </script>

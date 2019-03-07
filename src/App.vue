@@ -6,7 +6,31 @@
 
 <script>
 export default {
-  name: 'app'
+  name: 'app',
+    data(){return{}},
+    created() {
+        this.doLogin();
+    },
+    methods:{
+        doLogin(){
+            fetch(this.$store.state.fetchPath + "/login", {
+                        method: "get",
+                        headers: this.$store.state.fetchHeader,
+                        credentials:'include'
+                    })
+                        .then((res) => {
+                            return res.text();
+                        }).then((res) => {
+                        res = res.length>0?JSON.parse(res):[];
+                        if(res.page=='login'){
+                            return this.$router.push("login");
+                        }else{
+                            return this.$router.push("index");
+                        }
+                    })
+        }
+    }
+
 }
 </script>
 

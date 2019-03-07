@@ -1,24 +1,45 @@
 <template>
-    <div class="LoginCss">
-        <img src="../assets/hbisLogo.jpg" class="img">
-        <Form ref="formInline" :model="formInline" :rules="ruleInline" inline class="form">
-            <FormItem prop="loginName" class="formitem">
-                <Input type="text" v-model="formInline.loginName" placeholder="用户">
-                    <Icon type="ios-person-outline" slot="prepend" style="font-size: 20px"></Icon>
-                </Input>
-            </FormItem>
+    <Content  class="loginBj" :style="{minHeight:myheight}">
+        <div class="loginHd">
+            <div class="headImg">
+                <img src="../assets/loginImg/logo.jpg">
+            </div>
+            <div class="headSpan">
+                <span style="color: #0176c2;font-weight:800;">河钢销售营销数据中心 </span><span style="color: #B3B3B3"> |</span><span style="font-size: 20px;color: #B3B3B3"> 登录</span>
+            </div>
+            <div class="headlist">
+                <ul>
+                    <li>河钢首页</li>
+                    <li>河钢官网</li>
+                    <li>客户服务</li>
+                </ul>
+            </div>
+        </div>
+        <div class="LoginCss">
+            <Form ref="formInline" :model="formInline" :rules="ruleInline" inline class="form">
+                <p style="font-size:23px;color: #5e9cdb;font-weight: 700;padding-top: 37px">河钢销售营销数据中心</p>
+                <p style="color: #B3B3B3;padding-bottom: 30px;font-size:17px">Hegang Sales and Marketing Data Center</p>
+                <FormItem prop="username" class="formitem">
+                    <Input type="text" v-model="formInline.username" placeholder="用户">
+                        <Icon type="ios-person-outline" slot="prepend" style="font-size: 20px;color: #8ABEF2;font-weight: 800"></Icon>
+                    </Input>
+                </FormItem>
 
-            <FormItem prop="userPassword" class="formitem">
-                <Input type="password" v-model="formInline.userPassword" placeholder="密码">
-                    <Icon type="ios-lock-outline" slot="prepend" style="font-size: 20px"></Icon>
-                </Input>
-            </FormItem>
-            <FormItem class="formitem">
-                <Button type="primary" @click="handleSubmit('formInline')" class="button"><span style="font-size: 18px">登&emsp;&emsp;&emsp;录</span>
-                </Button>
-            </FormItem>
-        </Form>
-    </div>
+                <FormItem prop="password" class="formitem">
+                    <Input type="password" v-model="formInline.password" placeholder="密码">
+                        <Icon type="ios-lock-outline" slot="prepend" style="font-size: 20px;color: #8ABEF2;font-weight: 800""></Icon>
+                    </Input>
+                </FormItem>
+                <FormItem class="formitem">
+                    <Checkbox class="cBox" @on-change="Rem" style="float: left;padding-left: 10px;color: #B3B3B3" :value="true">记住用户名和密码</Checkbox>
+                </FormItem>
+                <FormItem class="formitem">
+                    <Button type="primary" @click="handleSubmit('formInline')" class="button"><span style="font-size: 18px">登&emsp;&emsp;&emsp;录</span>
+                    </Button>
+                </FormItem>
+            </Form>
+        </div>
+    </Content>
 </template>
 
 <script>
@@ -27,24 +48,29 @@
         data() {
             return {
                 formInline: {
-                    loginName: '',
-                    userPassword: ''
+                    username: '',
+                    password: '',
+                    remember:''
                 },
+                myheight:document.documentElement.clientHeight+"px",
                 ruleInline: {
-                    loginName: [
+                    username: [
                         {required: true, message: '请填写用户名', trigger: 'blur'}
                     ],
-                    userPassword: [
+                    password: [
                         {required: true, message: '请填写密码', trigger: 'blur'},
                     ]
                 }
             }
         },
+        created(){
+            this.loginOut()
+        },
         methods: {
             handleSubmit() {
                 this.$refs['formInline'].validate((valid) => {
                     if (valid) {
-                        fetch(this.$store.state.fetchPath + "/doLogin", {
+                        fetch(this.$store.state.fetchPath + "/login", {
                             method: "POST",
                             headers: this.$store.state.fetchHeader,
                             body: this.utils.formatParams(this.formInline),
@@ -53,17 +79,18 @@
                             return res.text();
                         }).then((res) => {
                             res = res.length>0?JSON.parse(res):[];
-                            window.console.log(res);
-                            // res.msg 1000登录成功  1001用户名输入错误 1002密码输入错误
-                            if (res.msg == "1001") {
+                            // window.console.log(res);
+                            if (res.msg == "1002") {
                                 this.$Message.error("用户名输入错误");
-                            } else if (res.msg == "1002") {
+                            } else if (res.msg == "1001") {
                                 this.$Message.error("密码输入错误");
+                            } else if (res.msg == "1003") {
+                                this.$Message.error("账号已锁定");
                             } else if (res.msg == "1000") {
                                 this.$store.commit('userStatus', true)
                                 sessionStorage.setItem("Flag", "isLogin");
                                 this.$Message.success("登录成功！");
-                                return this.$router.push("index");
+                                return this.$router.push({name:'index',params:res.menus});
                             } else {
                                 this.$Message.error("服务器登录异常");
                             }
@@ -72,27 +99,78 @@
                     }
                 })
 
+            },
+            Rem(stats){
+                window.console.log(stats)
+                if(stats===true){
+                    this.formInline.remember='on';
+                }else{
+                    this.formInline.remember='';
+                }
+            },
+            loginOut(){
+                this.formInline=this.$route.params;
+                // if(this.$route.params.userName!=''&&this.$route.params.password){
+                //     // $('.cBox').prop("checked", true);
+                // }
             }
         }
     }
 </script>
 
 <style scoped>
+    .loginBj{
+        width: 100%;
+        background-image: url("../assets/loginImg/loginBj.jpg");
+    }
+    .loginHd{
+        width: 100%;
+        height:90px;
+        background-color: white;
+    }
+    .headImg{
+        width:80px;
+        height: 80px;
+        border-radius: 1px;
+        margin-top:5px;
+        margin-left: 100px;
+        float: left;
+    }
+    .headImg img{
+        width: 100%;
+        height: 100%;
+    }
+    .headSpan{
+        float: left;
+        width:340px;
+        height: 25px;
+        margin-top: 43px;
+        margin-left: 20px;
+    }
+    .headSpan span{
+        font-size: 25px;
+    }
+    .headlist{
+        width: 400px;
+        float: right;
+        margin-right: 100px;
+    }
+    .headlist ul li {
+        color: #B3B3B3;
+        list-style: none;
+        float: left;
+        width: 30%;
+        font-size: 18px;
+        margin-top: 43px;
+        font-weight: 800;
+    }
     .LoginCss {
         width: 400px;
-        height: 400px;
-        background-color: gainsboro;
+        height: 360px;
+        background-color: white;
         border-radius: 5px;
         margin: 0 auto;
-        margin-top: 100px;
-    }
-
-    .img {
-        width: 120px;
-        height: 120px;
-        margin: 0 auto;
-        margin-top: 40px;
-        margin-bottom: 30px;
+        margin-top: 150px;
     }
 
     .form {

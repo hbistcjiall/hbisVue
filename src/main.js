@@ -9,37 +9,37 @@ import 'iview/dist/styles/iview.css';
 Vue.use(iView);
 Vue.prototype.utils=utils;
 Vue.config.productionTip = false;
-router.beforeEach((to, from, next) => {
-
-    let getFlag = sessionStorage.getItem("Flag");
-    if (getFlag === "isLogin") {
-        store.commit('userStatus', true);
-        next();
-        if (!to.meta.isLogin) {
-            next({
-                path: '/index'
-            });
-            iView.Message.error('请先退出登录')
-        }
-    } else {
-        if (to.path == "/") {
-            next({
-                path: '/login',
-            });
-        }
-
-        if (to.meta.isLogin) {
-            next({
-                path: '/login',
-            });
-            iView.Message.info('请先登录');
-        } else {
-            next();
-        }
-
-    }
-
-});
+// router.beforeEach((to, from, next) => {
+//
+//     let getFlag = sessionStorage.getItem("Flag");
+//     if (getFlag === "isLogin") {
+//         store.commit('userStatus', true);
+//         next();
+//         if (!to.meta.isLogin) {
+//             next({
+//                 path: '/index'
+//             });
+//             iView.Message.error('请先退出登录')
+//         }
+//     } else {
+//         if (to.path == "/") {
+//             next({
+//                 path: '/login',
+//             });
+//         }
+//
+//         if (to.meta.isLogin) {
+//             next({
+//                 path: '/login',
+//             });
+//             // iView.Message.info('请先登录');
+//         } else {
+//             next();
+//         }
+//
+//     }
+//
+// });
 //这是测试用的
 new Vue({
     store,

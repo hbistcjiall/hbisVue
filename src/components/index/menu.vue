@@ -1,14 +1,13 @@
 <template>
-    <Menu ref="side_menu" :theme="theme3" @on-open-change="getParentName" @on-select="getName" :accordion="true">
+    <Menu ref="side_menu" :theme="theme3" @on-open-change="getParentName" @on-select="getName">
         <div v-for="(item,index) of menulist" :key="index">
-            <MenuItem v-if="!item.children" :name="item.mName"><Icon type="ios-filing" style="margin-right:8px "/>{{item.title}}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</MenuItem>
-            <Submenu v-if="item.children"  :name="item.mName" >
+            <MenuItem v-if="!item.children" :name="item.name"><Icon type="ios-filing" style="margin-right:8px "/>{{item.name}}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</MenuItem>
+            <Submenu v-if="item.children"  :name="item.name" >
                 <template slot="title">
-                    <Icon type="ios-filing" />
-                    <span>{{item.title}}</span>
+                    <span>{{item.name}}</span>
                 </template>
                 <label v-if="item.children">
-                    <MenuItem  v-for="tab2 of item.children"  :key="tab2.mName" :name="tab2.mName" :to="tab2.path"><Icon type="ios-navigate"></Icon><span>{{tab2.title}}</span></MenuItem>
+                    <MenuItem  v-for="tab2 of item.children"  :key="tab2.name" :name="tab2.name" :to="tab2.path"><span>{{tab2.name}}</span></MenuItem>
                 </label>
             </Submenu>
         </div>
@@ -20,16 +19,15 @@
         data () {
             return {
                 theme3: 'dark',
-                menulist:[],
+                menulist:this.$route.params,
                 getNames:[],
                 layout:'',
                 components:'',
-                isCollapsed: false
             }
         },
-        created() {
-            this.newMenu();
-        },
+        // created() {
+        //     this.newMenu();
+        // },
         methods:{
             getParentName(e){
                 this.components=e[0];
@@ -48,22 +46,22 @@
                     this.$store.commit("updateCurrent", 0);
                 }
             },
-            newMenu(){
-                fetch(this.$store.state.fetchPath + "/t-user-entity/buildTree", {
-                    method: "POST",
-                    headers: this.$store.state.fetchHeader,
-                    body: '',
-                    credentials:'include'
-                })
-                    .then((res) => {
-                        return res.text();
-                    }).then((res) => {
-                    res = res.length>0?JSON.parse(res):[];
-                    this.menulist=this.utils.buildTree(res);
-                    window.console.log(typeof(this.menulist))
-                    this.showMenu=true;
-                })
-            }
+            // newMenu(){
+            //     fetch(this.$store.state.fetchPath + "/t-user-entity/buildTree", {
+            //         method: "POST",
+            //         headers: this.$store.state.fetchHeader,
+            //         body: '',
+            //         credentials:'include'
+            //     })
+            //         .then((res) => {
+            //             return res.text();
+            //         }).then((res) => {
+            //         res = res.length>0?JSON.parse(res):[];
+            //         this.menulist=this.utils.buildTree(res);
+            //         // window.console.log(typeof(this.menulist))
+            //         this.showMenu=true;
+            //     })
+            // }
         }
     }
 </script>
