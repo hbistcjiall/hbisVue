@@ -19,15 +19,12 @@
         data () {
             return {
                 theme3: 'dark',
-                menulist:this.$route.params,
+                menulist:JSON.parse(localStorage.getItem('Menulist')),
                 getNames:[],
                 layout:'',
                 components:'',
             }
         },
-        // created() {
-        //     this.newMenu();
-        // },
         methods:{
             getParentName(e){
                 this.components=e[0];
@@ -45,23 +42,7 @@
                 if(this.getNames[1].name==='用户管理'){
                     this.$store.commit("updateCurrent", 0);
                 }
-            },
-            // newMenu(){
-            //     fetch(this.$store.state.fetchPath + "/t-user-entity/buildTree", {
-            //         method: "POST",
-            //         headers: this.$store.state.fetchHeader,
-            //         body: '',
-            //         credentials:'include'
-            //     })
-            //         .then((res) => {
-            //             return res.text();
-            //         }).then((res) => {
-            //         res = res.length>0?JSON.parse(res):[];
-            //         this.menulist=this.utils.buildTree(res);
-            //         // window.console.log(typeof(this.menulist))
-            //         this.showMenu=true;
-            //     })
-            // }
+            }
         }
     }
 </script>

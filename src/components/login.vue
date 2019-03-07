@@ -79,7 +79,6 @@
                             return res.text();
                         }).then((res) => {
                             res = res.length>0?JSON.parse(res):[];
-                            // window.console.log(res);
                             if (res.msg == "1002") {
                                 this.$Message.error("用户名输入错误");
                             } else if (res.msg == "1001") {
@@ -87,10 +86,15 @@
                             } else if (res.msg == "1003") {
                                 this.$Message.error("账号已锁定");
                             } else if (res.msg == "1000") {
-                                this.$store.commit('userStatus', true)
+
+                                this.$store.commit('userStatus', true);
+                                window.console.log(res.menus);
+                                localStorage.removeItem('Menulist');
+                                localStorage.setItem('Menulist', JSON.stringify(res.menus));
+                                window.console.log(localStorage.getItem('Menulist'));
                                 sessionStorage.setItem("Flag", "isLogin");
                                 this.$Message.success("登录成功！");
-                                return this.$router.push({name:'index',params:res.menus});
+                                return this.$router.push({name:'index'});
                             } else {
                                 this.$Message.error("服务器登录异常");
                             }
@@ -110,9 +114,6 @@
             },
             loginOut(){
                 this.formInline=this.$route.params;
-                // if(this.$route.params.userName!=''&&this.$route.params.password){
-                //     // $('.cBox').prop("checked", true);
-                // }
             }
         }
     }

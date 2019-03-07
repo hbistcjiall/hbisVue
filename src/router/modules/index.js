@@ -1,5 +1,4 @@
-import userManager from 'userManager'
-
+import userManager from '@/router/modules/userManager'
 export default {
     path: '/index', name: 'index', component: resolve => require(['@/components/index/index'], resolve), meta: {
         title: '首页',
@@ -7,7 +6,7 @@ export default {
         isLogin: true
     }, children: [
         {
-            path: '', redirect: '/home'
+            path: '/home', redirect: 'home'
         },
         {
             path: '/home',
