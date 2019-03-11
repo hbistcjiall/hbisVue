@@ -92,9 +92,6 @@
                 //index当前页码
                 this.loggerParams.current=index;
                 this.handleListApproveHistory();
-                // var _start = ( index - 1 ) * this.pageSize;
-                // var _end = index * this.pageSize;
-                // this.loggerData = this.fecthLoggerData.slice(_start,_end);
             },
             time1(e){
                 this.Dates=e;

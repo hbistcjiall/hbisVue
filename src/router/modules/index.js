@@ -19,9 +19,9 @@ export default {
             }
         },
         {
-            path: '/userManager',
-            name: 'userManager',
-            component: resolve => require(['@/components/system/insertUser/userInsert'], resolve),
+            path: '/mgr',
+            name: 'mgr',
+            component: resolve => require(['@/components/system/userMsg/userMsg'], resolve),
             meta: {
                 title: '用户管理',
                 keepAlive: true,

@@ -1,75 +1,139 @@
 <template>
     <div>
-    <Input placeholder="用户名" style="width: 300px" v-model="userNames"/>
-    <Button type="primary" @click="search()" style="magin-left:'20px'">查询用户</Button>
-
+    <Input placeholder="账号/姓名/手机号" style="width: 300px" v-model="MsgData.name"/>
+        <DatePicker type="datetimerange" @on-change="serTime" format="yyyy-MM-dd" placeholder="请选择查询时间" style="width: 300px;margin-right:20px"></DatePicker>
+    <Button type="primary" @click="search" style="magin-left:'20px'" icon="ios-search">搜索</Button>
+        <Button type="primary" @click="addNew()" style="magin-left:'20px'" icon ="ios-add">添加</Button>
+        <Button type="primary" @click="downLoadTab()" style="magin-left:'20px'" icon="ios-download-outline">导出</Button>
     <Table border stripe :columns="columns12" :data="fecthdata6" style="margin-top: 20px">
         <template slot-scope="{ row }" slot="name">
             <strong>{{ row.name }}</strong>
         </template>
-        <template slot-scope="{ row, index }" slot="action">
-            <Button type="primary" size="small" style="margin-right: 5px" @click="show(index)">查看</Button>
+        <template slot-scope="{row}" slot="action">
             <Button type="primary" size="small" style="margin-right: 5px" @click="updD(row)">编辑</Button>
             <Button type="error" size="small" @click="remove(row)">删除</Button>
+            <Button type="primary" size="small" style="margin-right: 5px" @click="setUser(row)">分配角色</Button>
+            <Button type="primary" size="small" style="margin-right: 5px" @click="rePassword(row)">重置密码</Button>
         </template>
     </Table>
-        <Page :total="dataCount" :page-size="pageSize" show-total class="paging" @on-change="changepage" style="margin-top:20px;"></Page>
-
+        <Page :total="dataCount" :page-size="pageSize" show-total show-elevator show-sizer class="paging" @on-change="changepage" style="margin-top:20px;"></Page>
     </div>
 </template>
 <script>
     import add from './updUsermsg.vue'
     export default {
-        name:'userMsg',
+        name:'userManager',
         data () {
             return {
                 MsgData : {
-                    userName:'',
-                    current:0,
-                    size:10
+                    timeLimit:'',
+                    page:'0',
+                    limit:'10',
+                    name:''
                 },
                 delData:{
-                    id:'',
+                    userId:'',
+                },
+                freezeData:{
+                    userId:'',
+                    status:''
                 },
                 updData:{
                     userName:'',
                     userPassword:'',
                     id:''
                 },
-                userNames:'',
+                timePick:'',
                 // 初始化信息总条数
-                dataCount: 0,
+                dataCount:0,
                 // 每页显示多少条
                 pageSize: 10,
                 xia: 0, //下一页或者上一页的第一项索引值
                 columns12: [
                     {
-                        title: '用户名',
+                        title: '账号',
                         align: "center",
-                        key: 'userName'
+                        key: 'ACCOUNT'
                     },
                     {
-                        title: '登录名',
+                        title: '姓名',
                         align: "center",
-                        key: 'loginName'
+                        key: 'NAME'
                     },
                     {
-                        title: '所在组',
+                        title: '性别',
                         align: "center",
-                        key: 'groupName'
+                        key: 'SEXNAME'
+                    },
+                    {
+                        title: '角色',
+                        align: "center",
+                        key: 'ROLENAME'
+                    },
+                    {
+                        title: '部门',
+                        align: 'center',
+                        key: 'DEPTNAME'
+                    },
+                    {
+                        title: '邮箱',
+                        align: 'center',
+                        key: 'EMAIL'
+                    },
+                    {
+                        title: '电话',
+                        align: 'center',
+                        key: 'PHONE'
+                    },
+                    {
+                        title: '创建时间',
+                        align: 'center',
+                        key: 'CREATETIME'
+                    },
+                    {
+                        title: '状态',
+                        key: 'STATUS',
+                        align: 'center',
+                        render: (h, params) => h('i-switch', {
+                            props: {
+                                size:'large',
+                                value: params.row.STATUS,
+                                'true-value': 'ENABLE',
+                                'false-value': 'FREEZE'
+                            },
+                            on: {
+                                'on-change': (value) => {
+                                    this.freezeData.userId = params.row.USERID;
+                                    this.freezeData.status = value;
+                                    fetch(this.$store.state.fetchPath + "/mgr/freeze", {
+                                        method: "POST",
+                                        headers: this.$store.state.fetchHeader,
+                                        body: this.utils.formatParams(this.freezeData),
+                                        credentials:'include'
+                                    })
+                                        .then((res) => {
+                                            return res.text();
+                                        }).then((res) => {
+                                        res = res.length>0?JSON.parse(res):[]
+                                        this.handleListApproveHistory();
+                                    })
+                                }
+                            }
+                        }, [h('span', {slot: 'open',domProps: {innerHTML: '启用'}}),
+                            h('span', {slot: 'close',domProps: {innerHTML: '冻结'}})
+                        ])
                     },
                     {
                         title: '操作',
                         slot: 'action',
-                        align: 'center'
-                    }
+                    },
                 ],
                 fecthdata6: [],
                 resDatas:[]
             }
         },
         components:{
-            add
+            // add
         },
         created() {
             this.handleListApproveHistory();
@@ -77,7 +141,7 @@
         methods: {
             // 获取日志记录信息
             handleListApproveHistory() {
-                fetch(this.$store.state.fetchPath + "/selectuser", {
+                fetch(this.$store.state.fetchPath + "/mgr/list", {
                     method: "POST",
                     headers: this.$store.state.fetchHeader,
                     body: this.utils.formatParams(this.MsgData),
@@ -88,9 +152,9 @@
                 }).then((res) => {
                     res = res.length>0?JSON.parse(res):[]
                     // 保存取到的所有数据
-                    this.resDatas =  res.records;
-                    this.dataCount =  res.total;
-                    this.pageSize = res.size;
+                    this.resDatas =  res.data;
+                    this.dataCount =  parseInt(res.count);
+                    this.pageSize = parseInt(res.pageSize);
                     // 初始化显示，小于每页显示条数，全显，大于每页显示条数，取前每页条数显示
                     if(this.dataCount < this.pageSize){
                         this.fecthdata6 = this.resDatas;
@@ -100,27 +164,33 @@
                 })
             },
             changepage(index) {
-                //index当前页码
-                this.MsgData.current=index;
+                this.MsgData.page=index;
                 this.handleListApproveHistory();
+            },
+            serTime(e){
+                this.Dates=e;
+                if(this.Dates[0]==''){
+                    this.MsgData.timeLimit=''
+                }else{
+                    this.MsgData.timeLimit =this.Dates[0]+' - '+this.Dates[1];
+                }
             },
             search(){
-                this.MsgData.userName=this.userNames;
                 this.handleListApproveHistory();
             },
-            show (index) {
-                this.$Modal.info({
-                    title: '详细信息',
-                    content: `姓名：${this.fecthdata6[index].userName}<br>登录名：${this.fecthdata6[index].loginName}<br>所在组：${this.fecthdata6[index].groupName}`
-                })
-            },
+            // show (index) {
+            //     this.$Modal.info({
+            //         title: '详细信息',
+            //         content: `姓名：${this.fecthdata6[index].userName}<br>登录名：${this.fecthdata6[index].loginName}<br>所在组：${this.fecthdata6[index].groupName}`
+            //     })
+            // },
             remove (r) {
                 this.$Modal.confirm({
                     title: '提示',
                     content: '确认删除吗？',
                     onOk: () => {
-                        this.delData.id=r.id;
-                        fetch(this.$store.state.fetchPath + "/deleteuser", {
+                        this.delData.userId=r.userId;
+                        fetch(this.$store.state.fetchPath + "/mgr/delete", {
                             method: "POST",
                             headers: this.$store.state.fetchHeader,
                             body: this.utils.formatParams(this.delData),
@@ -132,16 +202,11 @@
                             .then(() => {
                                 this.handleListApproveHistory();
                             })
-                        // this.$Message.info('Clicked ok');
-                    },
-                    onCancel: () => {
-                        // this.$Message.info('Clicked cancel');
                     }
                 });
 
             },
             updD(row){
-                window.console.log(row.id);
                 this.updData.id=row.id;
                 this.$Modal.confirm({
                     scrollable:true,
@@ -169,8 +234,6 @@
                         }else if(this.v2 === ''){
                             this.$Message.error('密码不能为空!')
                         }else{
-                            // window.console.log(this.updData);
-                            // this.delData.id=r.id;
                             fetch(this.$store.state.fetchPath + "/updateuser", {
                                 method: "POST",
                                 headers: this.$store.state.fetchHeader,
@@ -181,8 +244,9 @@
                                     return res.text();
                                 })
                                 .then((res) => {
-                                    res = res.length>0?JSON.parse(res):[]
+                                    res = res.length>0?JSON.parse(res):[];
 
+                                    this.$Message.error(res.msg);
                                     this.handleListApproveHistory();
                                 })
                         }

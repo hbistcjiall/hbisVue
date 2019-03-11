@@ -40,7 +40,6 @@
                         return res.text();
                     }).then((res) => {
                      res = res.length>0?JSON.parse(res):[];
-                     window.console.log(res)
                      this.$store.commit('setHeaders',this.headerss);
                      this.loginOutData.username =res.userName;
                      this.loginOutData.password =res.password;

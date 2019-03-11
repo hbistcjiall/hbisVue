@@ -7,7 +7,7 @@
                     <span>{{item.name}}</span>
                 </template>
                 <label v-if="item.children">
-                    <MenuItem  v-for="tab2 of item.children"  :key="tab2.name" :name="tab2.name" :to="tab2.path"><span>{{tab2.name}}</span></MenuItem>
+                    <MenuItem  v-for="tab2 of item.children"  :key="tab2.name" :name="tab2.name" :to="tab2.url"><span>{{tab2.name}}</span></MenuItem>
                 </label>
             </Submenu>
         </div>
