@@ -13,7 +13,13 @@ const buildTree=(list)=>{
     });
     return val;
 }
+const format =(date)=>{
+    let newdate=new Date(date);
+    let month=(newdate.getMonth()+1)<10?'0'+(newdate.getMonth()+1):(newdate.getMonth()+1);
+    return newdate.getFullYear()+'-'+month+'-'+newdate.getDate();
+}
 export default {
     formatParams,
-    buildTree
+    buildTree,
+    format
 };
