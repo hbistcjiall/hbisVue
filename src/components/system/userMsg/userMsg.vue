@@ -17,17 +17,55 @@
         </template>
     </Table>
         <Page :total="dataCount" :page-size="pageSize" show-total show-elevator show-sizer class="paging" @on-change="changepage" style="margin-top:20px;"></Page>
+        <Modal v-model="updModal" title="用户编辑" :closable='false' @on-ok="updok">
+            <Form :model="updformValidate" :rules="updruleValidate" :label-width="60">
+                <FormItem label="姓名" prop="name">
+                    <Input v-model="updformValidate.name" placeholder="请输入姓名"></Input>
+                </FormItem>
+                <FormItem label="出生日期">
+                    <Row>
+                        <Col span="11">
+                            <FormItem>
+                                <DatePicker format="yyyy-MM-dd" type="date" placeholder="出生日期" v-model="updformValidate.birthday"></DatePicker>
+                            </FormItem>
+                        </Col>
+                    </Row>
+                </FormItem>
+                <FormItem label="E-mail">
+                    <Input v-model="updformValidate.email" placeholder="请输入邮箱"></Input>
+                </FormItem>
+                <FormItem label="性别">
+                    <Radio-group v-model="updformValidate.sex">
+                        <Radio label="M">男</Radio>
+                        <Radio label="F">女</Radio>
+                    </Radio-group>
+                </FormItem>
+                <FormItem label="部门" prop="deptId">
+                    <Cascader :data="deptdata" trigger="hover" placeholder="请重新选择部门" @on-change="depChange"></Cascader>
+                </FormItem>
+                <FormItem label="电话">
+                    <Input v-model="updformValidate.phone" placeholder="请输入电话"></Input>
+                </FormItem>
+            </Form>
+        </Modal>
+        <Modal v-model="setModal" title="分配角色" :closable='false' @on-ok="roleok">
+            <Tree :data="userData" ref="tree" show-checkbox check-strictly></Tree>
+            <!--@on-check-change="checkRole"-->
+        </Modal>
     </div>
+
 </template>
 <script>
-    // import add from './updUsermsg.vue'
     import resetPass from './resetPassword.vue'
     import addUser from './addUser.vue'
-    import updUser from './updUser.vue'
+    // import updUser from './updUser.vue'
+    // import setUser from './setUser.vue'
     export default {
         name:'userManager',
         data () {
             return {
+                updModal:false,
+                setModal:false,
                 MsgData : {
                     timeLimit:'',
                     page:'0',
@@ -41,23 +79,11 @@
                     userId:'',
                     status:''
                 },
-                updData:{
-                    userName:'',
-                    userPassword:'',
-                    id:''
-                },
                 resPass:{
                     userId:''
                 },
-                newUser:{
-                    name: '',
-                    email: '',
-                    sex: '',
-                    birthday: '',
-                    phone:'',
-                    deptId:'',
-                },
                 timePick:'',
+                deptdata:[],
                 // 初始化信息总条数
                 dataCount:0,
                 // 每页显示多少条
@@ -154,16 +180,62 @@
                     password:'',
                     phone:'',
                     deptId:'',
-                    setpassword:''
+                    setpassword:'',
+                    userId:'',
+
+                },
+                updformValidate: {
+                    name: '',
+                    email: '',
+                    sex: '',
+                    birthday: '',
+                    phone:'',
+                    deptId:'',
+                    userId:''
+                },
+                updruleValidate: {
+                    name: [
+                        { required: true, message: '姓名不为空', trigger: 'blur' }
+                    ],
+                    deptId: [
+                        { required: true, message: '部门不为空', trigger: 'blur' },
+                    ],
+                },
+                userData:[],
+                roleForm:{
+                    userId:'',
                 },
             }
         },
-        components:{
-            // add
-        },
         created() {
             this.handleListApproveHistory();
-            this.getDeptid();
+            fetch(this.$store.state.fetchPath + "/dept/treeView", {
+                method: "POST",
+                headers: {//fetch请求头
+                    "Content-Type":"application/x-www-form-urlencoded; charset=UTF-8"
+                },
+                credentials:'include'
+            })
+                .then((res) => {
+                    return res.text();
+                }).then((res) => {
+                res = res.length>0?JSON.parse(res):[]
+                // 保存取到的所有数据
+                this.deptdata =  this.utils.buildDeptTree(res);
+            })
+            fetch("http://18.4.18.5:8081/role/roleTreeList", {
+                method: "POST",
+                headers: {//fetch请求头
+                    "Content-Type":"application/x-www-form-urlencoded; charset=UTF-8"
+                },
+                body: '',
+                credentials: 'include'
+            }).then((res) => {
+                return res.text();
+            }).then((res) => {
+                res = res.length>0?JSON.parse(res):[];
+                this.userData=this.utils.roleTree(this.utils.buildRoleTree(res));
+            });
         },
         methods: {
             // 获取日志记录信息
@@ -215,16 +287,49 @@
 
                             },
                             on: {
-                                // this.newUser =
-                                // value1: (value1) => {
-                                //     this.v1 = value1
-                                //     this.updData.userName=this.v1
-                                // },
+                                account: (account) => {
+                                    this.formValidate.account=account
+                                },
+                                name: (name) => {
+                                    this.formValidate.name=name
+                                },
+                                birthday: (birthday) => {
+                                    this.formValidate.birthday=birthday
+                                },
+                                password: (password) => {
+                                    this.formValidate.password=password
+                                },
+                                setpassword: (setpassword) => {
+                                    this.formValidate.setpassword=setpassword
+                                },
+                                email: (email) => {
+                                    this.formValidate.email=email
+                                },
+                                sex: (sex) => {
+                                    this.formValidate.sex=sex
+                                },
+                                phone: (phone) => {
+                                    this.formValidate.phone=phone
+                                },
+                                deptId: (deptId) => {
+                                    this.formValidate.deptId=deptId
+                                },
                             }
                         })
                     },
-                    onOk: (e) => {
-                        window.console.log(e)
+                    onOk: () => {
+                        fetch(this.$store.state.fetchPath + "/mgr/add", {
+                            method: "POST",
+                            headers: this.$store.state.fetchHeader,
+                            body: this.utils.formatParams(this.formValidate),
+                            credentials:'include'
+                        })
+                        .then((res) => {
+                            return res.text();
+                        })
+                        .then(() => {
+                            this.handleListApproveHistory();
+                        })
                     }
                 })
             },
@@ -233,7 +338,7 @@
                     title: '提示',
                     content: '确认删除吗？',
                     onOk: () => {
-                        this.delData.userId=r.userId;
+                        this.delData.userId=r.USERID;
                         fetch(this.$store.state.fetchPath + "/mgr/delete", {
                             method: "POST",
                             headers: this.$store.state.fetchHeader,
@@ -244,6 +349,8 @@
                                 return res.text();
                             })
                             .then(() => {
+                                // res = res.length>0?JSON.parse(res):[];
+                                // this.$Message.error(res.msg);
                                 this.handleListApproveHistory();
                             })
                     }
@@ -251,65 +358,57 @@
 
             },
             updD(row){
-                this.updData.id=row.id;
-                // this.$Modal.confirm({
-                //     scrollable:true,
-                //     okText:'保存',
-                //     render: (h) => {
-                //         return h(addUser, {
-                //             props: {
-                //
-                //             },
-                //             on: {
-                //
-                //             }
-                //         })
-                //     },
-                //     onOk: () => {
-                //         if (this.v1 === '') {
-                //             this.$Message.error('用户名不能为空!')
-                //         }else if(this.v2 === ''){
-                //             this.$Message.error('密码不能为空!')
-                //         }else{
-                //             fetch(this.$store.state.fetchPath + "/updateuser", {
-                //                 method: "POST",
-                //                 headers: this.$store.state.fetchHeader,
-                //                 body: this.utils.formatParams(this.updData),
-                //                 credentials:'include'
-                //             })
-                //                 .then((res) => {
-                //                     return res.text();
-                //                 })
-                //                 .then((res) => {
-                //                     res = res.length>0?JSON.parse(res):[];
-                //
-                //                     this.$Message.error(res.msg);
-                //                     this.handleListApproveHistory();
-                //                 })
-                //         }
-                //     }
-                // })
+                this.updModal = true;
+                this.updformValidate.name = row.NAME;
+                this.updformValidate.email = row.EMAIL;
+                this.updformValidate.birthday = row.BIRTHDAY;
+                this.updformValidate.sex = row.SEX
+                this.updformValidate.phone = row.PHONE;
+                this.updformValidate.userId = row.USERID
+            },
+            depChange(e){
+                this.updformValidate.deptId= e[e.length-1];
+                this.$emit('deptId', this.updformValidate.deptId);
+            },
+            updok(){
+                fetch(this.$store.state.fetchPath + "/mgr/edit", {
+                    method: "POST",
+                    headers: this.$store.state.fetchHeader,
+                    body: this.utils.formatParams(this.updformValidate),
+                    credentials:'include'
+                })
+                    .then((res) => {
+                        return res.text();
+                    })
+                    .then(() => {
+                        this.handleListApproveHistory();
+                    })
+
             },
             setUser(row){
-                this.updData.id=row.id;
-                this.$Modal.confirm({
-                    scrollable:true,
-                    okText:'分配角色',
-                    render: (h) => {
-                        return h(updUser, {
-                            props: {
-
-                            },
-                            on: {
-
-                            }
-                        })
-                    },
-                    onOk: () => {
-
-                    }
+                this.setModal = true;
+                this.roleForm.userId = row.USERID
+            },
+            roleok(){
+                let roleCheckarr = []
+                let rolearr = this.$refs.tree.getCheckedNodes();
+                for(var i=0;i<rolearr.length;i++){
+                    roleCheckarr.push(rolearr[i].id);
+                }
+                fetch(this.$store.state.fetchPath + "/mgr/setRole", {
+                    method: "POST",
+                    headers: this.$store.state.fetchHeader,
+                    body: "roleIds="+roleCheckarr.toString()+"&userId="+this.roleForm.userId,
+                    credentials:'include'
                 })
-
+                .then((res) => {
+                    return res.text();
+                })
+                .then((res) => {
+                    res = res.length>0?JSON.parse(res):[];
+                    this.$Message.success(res.message);
+                    this.handleListApproveHistory();
+                })
             },
             rePassword(row){
                 this.resPass.userId=row.USERID;
@@ -346,23 +445,7 @@
                 })
 
             },
-            getDeptid(){
-                fetch(this.$store.state.fetchPath + "/dept/tree", {
-                    method: "POST",
-                    headers: this.$store.state.fetchHeader,
-                    credentials:'include'
-                })
-                    .then((res) => {
-                        return res.text();
-                    }).then((res) => {
-                    res = res.length>0?JSON.parse(res):[]
-                    // 保存取到的所有数据
-                    window.console.log(res);
-                    // this.data =  res.data;
-                })
-            }
         },
-
     }
 </script>
 <style scoped>

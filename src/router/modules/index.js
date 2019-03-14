@@ -1,4 +1,4 @@
-import userManager from '@/router/modules/userManager'
+// import userManager from '@/router/modules/userManager'
 export default {
     path: '/index', name: 'index', component: resolve => require(['@/components/index/index'], resolve), meta: {
         title: '首页',
@@ -27,7 +27,16 @@ export default {
                 keepAlive: true,
                 isLogin: true
             },
-            children: userManager
+        },
+        {
+            path: '/role',
+            name: 'role',
+            component: resolve => require(['@/components/system/role/roleMsg'], resolve),
+            meta: {
+                title: '角色管理',
+                keepAlive: true,
+                isLogin: true
+            },
         }
     ]
 }

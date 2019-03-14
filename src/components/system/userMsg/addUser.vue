@@ -26,12 +26,12 @@
         </FormItem>
         <FormItem label="性别" prop="sex">
             <Radio-group v-model="formValidate.sex" @on-change="sexChange">
-                <Radio label="male">男</Radio>
-                <Radio label="female">女</Radio>
+                <Radio label="M">男</Radio>
+                <Radio label="F">女</Radio>
             </Radio-group>
         </FormItem>
         <FormItem label="部门" prop="deptId">
-            <Cascader :data="data" v-model="value1"></Cascader>
+            <Cascader :data="deptdata" trigger="hover" @on-change="depChange"></Cascader>
         </FormItem>
         <FormItem label="电话" prop="phone">
             <Input v-model="formValidate.phone" placeholder="请输入电话" @on-change="phoneChange"></Input>
@@ -44,55 +44,7 @@
         data () {
             return {
                 value1:[],
-                data: [
-                //     {
-                //     value: 'beijing',
-                //     label: '北京',
-                //     children: [
-                //         {
-                //             value: 'gugong',
-                //             label: '故宫'
-                //         },
-                //         {
-                //             value: 'tiantan',
-                //             label: '天坛'
-                //         },
-                //         {
-                //             value: 'wangfujing',
-                //             label: '王府井'
-                //         }
-                //     ]
-                // }, {
-                //     value: 'jiangsu',
-                //     label: '江苏',
-                //     children: [
-                //         {
-                //             value: 'nanjing',
-                //             label: '南京',
-                //             children: [
-                //                 {
-                //                     value: 'fuzimiao',
-                //                     label: '夫子庙',
-                //                 }
-                //             ]
-                //         },
-                //         {
-                //             value: 'suzhou',
-                //             label: '苏州',
-                //             children: [
-                //                 {
-                //                     value: 'zhuozhengyuan',
-                //                     label: '拙政园',
-                //                 },
-                //                 {
-                //                     value: 'shizilin',
-                //                     label: '狮子林',
-                //                 }
-                //             ]
-                //         }
-                //     ],
-                // }
-                ],
+                deptdata: [],
                 formValidate: {
                     account:'',
                     name: '',
@@ -112,7 +64,7 @@
                         { required: true, message: '账号不为空', trigger: 'blur' }
                     ],
                     password:[
-                        { required: true, message: '账号不为空', trigger: 'blur' }
+                        { required: true, message: '密码不为空', trigger: 'blur' }
                     ],
                     deptId: [
                         { required: true, message: '部门不为空', trigger: 'blur' },
@@ -120,8 +72,21 @@
                 }
             }
         },
-        created() {
-            // this.getDeptid();
+        created(){
+            fetch("http://18.4.18.5:8081/dept/treeView", {
+                method: "POST",
+                headers: {//fetch请求头
+                    "Content-Type":"application/x-www-form-urlencoded; charset=UTF-8"
+                },
+                credentials:'include'
+            })
+                .then((res) => {
+                    return res.text();
+                }).then((res) => {
+                    res = res.length>0?JSON.parse(res):[]
+                    // 保存取到的所有数据
+                    this.deptdata =  this.utils.buildDeptTree(res);
+                })
         },
         methods: {
             accountChange:function() {
@@ -148,21 +113,10 @@
             phoneChange:function() {
                 this.$emit('phone', this.formValidate.phone)
             },
-            // getDeptid(){
-            //     fetch(this.$store.state.fetchPath + "/dept/treeView", {
-            //         method: "POST",
-            //         headers: this.$store.state.fetchHeader,
-            //         credentials:'include'
-            //     })
-            //         .then((res) => {
-            //             return res.text();
-            //         }).then((res) => {
-            //         res = res.length>0?JSON.parse(res):[]
-            //         // 保存取到的所有数据
-            //         window.console.log(res)
-            //         // this.data =  res.data;
-            //     })
-            // }
+            depChange(e){
+                this.formValidate.deptId= e[e.length-1];
+                this.$emit('deptId', this.formValidate.deptId);
+            }
         }
     }
 </script>
