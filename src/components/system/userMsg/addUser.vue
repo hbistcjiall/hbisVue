@@ -43,7 +43,6 @@
         name:'addUser',
         data () {
             return {
-                value1:[],
                 deptdata: [],
                 formValidate: {
                     account:'',
