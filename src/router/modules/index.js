@@ -37,6 +37,16 @@ export default {
                 keepAlive: true,
                 isLogin: true
             },
+        },
+        {
+            path: '/dept',
+            name: 'dept',
+            component: resolve => require(['@/components/system/dept/deptMsg'], resolve),
+            meta: {
+                title: '部门管理',
+                keepAlive: true,
+                isLogin: true
+            },
         }
     ]
 }
