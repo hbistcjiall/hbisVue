@@ -1,5 +1,5 @@
 const formatParams = (params) => JSON.stringify(params).replace(/{/g, '').replace(/}/g, '').replace(/"/g, '').replace(/:/g, '=').replace(/,/g, '&');
-const buildTree=(list)=>{
+const buildTree = (list) => {
     let map = {};
     let val = [];
     list.forEach(function (item) {
@@ -7,11 +7,19 @@ const buildTree=(list)=>{
         map[item.id] = item;
     });
     list.forEach(function (item) {
-        map[item.parentId]?(map[item.parentId].children || ( map[item.parentId].children = [] )).push(item):val.push(item);
+        map[item.parentId] ? (map[item.parentId].children || (map[item.parentId].children = [])).push(item) : val.push(item);
     });
     return val;
 };
-const buildDeptTree=(tree)=>{
+const mergeRow = (arr, obj) => {
+    let temp = [];
+    let rowspan = 1;
+    for (let i = 0; i < arr.length; i++) {
+        temp.indexOf(arr[i][obj]) != -1 ? (arr[i - rowspan].rowspan = rowspan + 1, rowspan++) : (temp.push(arr[i][obj]), arr[i].rowspan = 1, rowspan = 1);
+    }
+    return arr;
+}
+const buildDeptTree = (tree) => {
     const result = []
     // 遍历 tree
     tree.forEach((item) => {
@@ -35,7 +43,7 @@ const buildDeptTree=(tree)=>{
     })
     return result;
 }
-const roleTree=(tree)=>{
+const roleTree = (tree) => {
     const result = []
     // 遍历 tree
     tree.forEach((item) => {
@@ -60,7 +68,7 @@ const roleTree=(tree)=>{
     return result;
 
 }
-const buildRoleTree=(list)=>{
+const buildRoleTree = (list) => {
     let map = {};
     let val = [];
     list.forEach(function (item) {
@@ -68,14 +76,14 @@ const buildRoleTree=(list)=>{
         map[item.id] = item;
     });
     list.forEach(function (item) {
-        map[item.pId]?(map[item.pId].children || ( map[item.pId].children = [] )).push(item):val.push(item);
+        map[item.pId] ? (map[item.pId].children || (map[item.pId].children = [])).push(item) : val.push(item);
     });
     return val;
 };
-const format =(date)=>{
-    let newdate=new Date(date);
-    let month=(newdate.getMonth()+1)<10?'0'+(newdate.getMonth()+1):(newdate.getMonth()+1);
-    return newdate.getFullYear()+'-'+month+'-'+newdate.getDate();
+const format = (date) => {
+    let newdate = new Date(date);
+    let month = (newdate.getMonth() + 1) < 10 ? '0' + (newdate.getMonth() + 1) : (newdate.getMonth() + 1);
+    return newdate.getFullYear() + '-' + month + '-' + newdate.getDate();
 }
 
 export default {
@@ -85,5 +93,5 @@ export default {
     buildDeptTree,
     buildRoleTree,
     roleTree,
-
+    mergeRow
 };
