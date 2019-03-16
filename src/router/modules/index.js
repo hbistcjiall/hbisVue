@@ -47,6 +47,16 @@ export default {
                 keepAlive: true,
                 isLogin: true
             },
+        },
+        {
+            path: '/menu',
+            name: 'menu',
+            component: resolve => require(['@/components/system/menu/menuMsg'], resolve),
+            meta: {
+                title: '菜单管理',
+                keepAlive: true,
+                isLogin: true
+            },
         }
     ]
 }

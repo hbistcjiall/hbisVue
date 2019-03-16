@@ -1,0 +1,314 @@
+<template>
+    <div>
+        <Input placeholder="菜单名称/编码" style="width: 300px" v-model="menuData.menuName"/>
+        <Input placeholder="层级" style="width: 300px" v-model="menuData.level"/>
+        <Button type="primary" @click="search" style="magin-left:20px" icon="ios-search">搜索</Button>
+        <Button type="primary" @click="addNew" style="magin-left:20px" icon ="ios-add">添加</Button>
+        <!--<Button type="primary" @click="downLoadTab" style="magin-left:20px" icon="ios-download-outline">导出</Button>-->
+        <Table border stripe :columns="columns12" :data="fecthdata6" style="margin-top: 20px">
+            <template slot-scope="{ row }" slot="name">
+                <strong>{{ row.name }}</strong>
+            </template>
+            <template slot-scope="{row}" slot="action">
+                <Button type="primary" size="small" style="margin-right: 5px" @click="updD(row)">编辑</Button>
+                <Button type="error" size="small" @click="remove(row)">删除</Button>
+            </template>
+        </Table>
+        <Page :total="dataCount" :page-size="pageSize" show-total show-elevator show-sizer class="paging" @on-change="changepage" style="margin-top:20px;"></Page>
+        <Modal v-model="updModal" title="用户编辑" :closable='false' @on-ok="updok">
+            <Form ref="updformValidate" :model="updformValidate" :rules="updruleValidate" :label-width="80">
+                <FormItem label="名称" prop="name">
+                    <Input v-model="updformValidate.name" placeholder="名称"></Input>
+                </FormItem>
+                <FormItem label="菜单编号" prop="code">
+                    <Input v-model="updformValidate.code" placeholder="菜单编号"></Input>
+                </FormItem>
+                <FormItem label="父级编号" prop="pcode">
+                    <Cascader :data="menuDatas" trigger="hover" @on-change="pcodeChange"></Cascader>
+                </FormItem>
+                <FormItem label="是否是菜单" prop="menuFlag">
+                    <Radio-group v-model="updformValidate.menuFlag">
+                        <Radio label="Y">是</Radio>
+                        <Radio label="N">不是</Radio>
+                    </Radio-group>
+                </FormItem>
+                <FormItem label="请求地址" prop="url">
+                    <Input v-model="updformValidate.url" placeholder="请输入请求地址"></Input>
+                </FormItem>
+                <FormItem label="排序">
+                    <Input v-model="updformValidate.sort" placeholder="请输入排序"></Input>
+                </FormItem>
+            </Form>
+        </Modal>
+    </div>
+
+</template>
+<script>
+    import addMenu from './addMenu.vue'
+    export default {
+        name:'menuMsg',
+        data () {
+            return {
+                updModal:false,
+                menuData : {
+                    level:'',
+                    page:'0',
+                    limit:'10',
+                    menuName:'',
+                },
+                delData:{
+                    menuId:'',
+                },
+                freezeData:{
+                    userId:'',
+                    status:''
+                },
+                menuDatas:[],
+                // 初始化信息总条数
+                dataCount:0,
+                // 每页显示多少条
+                pageSize: 10,
+                xia: 0, //下一页或者上一页的第一项索引值
+                columns12: [
+                    {
+                        title: '菜单名称',
+                        align: "center",
+                        key: 'NAME'
+                    },
+                    {
+                        title: '菜单编号',
+                        align: "center",
+                        key: 'CODE'
+                    },
+                    {
+                        title: '菜单父编号',
+                        align: "center",
+                        key: 'PCODE'
+                    },
+                    {
+                        title: '请求地址',
+                        align: "center",
+                        key: 'URL'
+                    },
+                    {
+                        title: '排序',
+                        align: 'center',
+                        key: 'SORT'
+                    },
+                    {
+                        title: '层级',
+                        align: 'center',
+                        key: 'LEVELS'
+                    },
+                    {
+                        title: '是否是菜单',
+                        align: 'center',
+                        key: 'isMenuName'
+                    },
+                    {
+                        title: '操作',
+                        slot: 'action',
+                        align: 'center',
+                        width:'260px'
+                    },
+                ],
+                fecthdata6: [],
+                resDatas:[],
+                formValidate: {
+                    name:'',
+                    code:'',
+                    pcode:'',
+                    menuFlag:'',
+                    url:'',
+                    sort:0,
+                },
+                updformValidate: {
+                    name:'',
+                    code:'',
+                    pcode:'',
+                    menuFlag:'',
+                    url:'',
+                    sort:0,
+                    menuId:''
+                },
+                updruleValidate: {
+                    name: [
+                        { required: true, message: '名称为空', trigger: 'blur' }
+                    ],
+                    code:[
+                        { required: true, message: '菜单编号不为空', trigger: 'blur' }
+                    ],
+                    pcode:[
+                        { required: true, message: '父菜单编号不为空', trigger: 'blur' }
+                    ],
+                    menuFlag:[
+                        { required: true, message: '是否是菜单不为空', trigger: 'blur' }
+                    ],
+                    url: [
+                        { required: true, message: '请求路径不为空', trigger: 'blur' },
+                    ],
+                },
+                userData:[],
+            }
+        },
+        created() {
+            this.handleListApproveHistory();
+            fetch("http://18.4.18.5:8081/dept/treeView", {
+                method: "POST",
+                headers: {//fetch请求头
+                    "Content-Type":"application/x-www-form-urlencoded; charset=UTF-8"
+                },
+                credentials:'include'
+            })
+                .then((res) => {
+                    return res.text();
+                }).then((res) => {
+                res = res.length>0?JSON.parse(res):[]
+                // 保存取到的所有数据
+                this.menuDatas =  this.utils.buildDeptTree(res);
+            })
+        },
+        methods: {
+            // 获取日志记录信息
+            handleListApproveHistory() {
+                fetch(this.$store.state.fetchPath + "/menu/list", {
+                    method: "POST",
+                    headers: this.$store.state.fetchHeader,
+                    body: this.utils.formatParams(this.menuData),
+                    credentials:'include'
+                })
+                    .then((res) => {
+                        return res.text();
+                    }).then((res) => {
+                    res = res.length>0?JSON.parse(res):[]
+                    // 保存取到的所有数据
+                    this.resDatas =  res.data;
+                    this.dataCount =  parseInt(res.count);
+                    this.pageSize = parseInt(res.pageSize);
+                    // 初始化显示，小于每页显示条数，全显，大于每页显示条数，取前每页条数显示
+                    if(this.dataCount < this.pageSize){
+                        this.fecthdata6 = this.resDatas;
+                    }else{
+                        this.fecthdata6 = this.resDatas.slice(0,this.pageSize);
+                    }
+                })
+            },
+            changepage(index) {
+                this.menuData.page=index;
+                this.handleListApproveHistory();
+            },
+            search(){
+                this.handleListApproveHistory();
+            },
+            addNew () {
+                this.$Modal.confirm({
+                    scrollable:true,
+                    okText:'保存',
+                    render: (h) => {
+                        return h(addMenu, {
+                            props: {
+
+                            },
+                            on: {
+                                name: (name) => {
+                                    this.formValidate.name=name
+                                },
+                                code: (code) => {
+                                    this.formValidate.code=code
+                                },
+                                pcode: (pcode) => {
+                                    this.formValidate.pcode=pcode
+                                },
+                                menuFlag: (menuFlag) => {
+                                    this.formValidate.menuFlag=menuFlag
+                                },
+                                url: (url) => {
+                                    this.formValidate.url=url
+                                },
+                                sort: (sort) => {
+                                    this.formValidate.sort=sort
+                                },
+                            }
+                        })
+                    },
+                    onOk: () => {
+                        fetch(this.$store.state.fetchPath + "/menu/add", {
+                            method: "POST",
+                            headers: this.$store.state.fetchHeader,
+                            body: this.utils.formatParams(this.formValidate),
+                            credentials:'include'
+                        })
+                            .then((res) => {
+                                return res.text();
+                            })
+                            .then(() => {
+                                this.handleListApproveHistory();
+                            })
+                    }
+                })
+            },
+            remove (r) {
+                this.$Modal.confirm({
+                    title: '提示',
+                    content: '确认删除吗？',
+                    onOk: () => {
+                        this.delData.menuId=r.MENUID;
+                        fetch(this.$store.state.fetchPath + "/menu/remove", {
+                            method: "POST",
+                            headers: this.$store.state.fetchHeader,
+                            body: this.utils.formatParams(this.delData),
+                            credentials:'include'
+                        })
+                            .then((res) => {
+                                return res.text();
+                            })
+                            .then(() => {
+                                // res = res.length>0?JSON.parse(res):[];
+                                // this.$Message.error(res.msg);
+                                this.handleListApproveHistory();
+                            })
+                    }
+                });
+
+            },
+            updD(row){
+                this.updModal = true;
+                this.updformValidate.menuId = row.MENUID;
+                this.updformValidate.name = row.NAME;
+                this.updformValidate.code = row.CODE;
+                this.updformValidate.pcode = row.PCODE;
+                this.updformValidate.menuFlag = row.MENUFLAG;
+                this.updformValidate.url = row.URL;
+                this.updformValidate.sort = row.SORT;
+            },
+            pcodeChange(e){
+                this.updformValidate.pcode= e[e.length-1];
+                // this.$emit('pcode', this.updformValidate.pcode);
+            },
+            updok(){
+                fetch(this.$store.state.fetchPath + "/menu/edit", {
+                    method: "POST",
+                    headers: this.$store.state.fetchHeader,
+                    body: this.utils.formatParams(this.updformValidate),
+                    credentials:'include'
+                })
+                    .then((res) => {
+                        return res.text();
+                    })
+                    .then(() => {
+                        this.handleListApproveHistory();
+                    })
+
+            }
+        },
+    }
+</script>
+<style scoped>
+    .paging{
+        float:right;
+        margin-top:10px;
+    }
+    .userbtn{
+        margin-right:10px;
+    }
+</style>
