@@ -43,7 +43,7 @@
                     id:'',
                 },
                 formValidate: {
-                    name:'',
+                    companyname:'',
                     code:'',
                 },
                 // 初始化信息总条数
@@ -140,8 +140,8 @@
 
                             },
                             on: {
-                                name: (name) => {
-                                    this.formValidate.name=name
+                                companyname: (name) => {
+                                    this.formValidate.companyname=name
                                 },
                                 code: (code) => {
                                     this.formValidate.code=code

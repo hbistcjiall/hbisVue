@@ -1,10 +1,10 @@
 <template>
     <Form ref="formValidate" :model="formValidate" :rules="ruleValidate" :label-width="80">
         <FormItem label="编码" prop="code">
-            <Input v-model="formValidate.code" placeholder="请输入编码"></Input>
+            <Input v-model="formValidate.code" placeholder="请输入编码" @on-change="codeChange"></Input>
         </FormItem>
         <FormItem label="责任单位名称" prop="companyname">
-            <Input v-model="formValidate.companyname" placeholder="请输入责任单位名称"></Input>
+            <Input v-model="formValidate.companyname" placeholder="请输入责任单位名称" @on-change="nameChange"></Input>
         </FormItem>
 
     </Form>
@@ -34,7 +34,7 @@
         },
         methods: {
             nameChange:function() {
-                this.$emit('name', this.formValidate.companyname)
+                this.$emit('companyname', this.formValidate.companyname)
             },
             codeChange:function() {
                 this.$emit('code', this.formValidate.code)
