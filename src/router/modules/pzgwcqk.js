@@ -61,6 +61,15 @@ export default [
             title: '责任单位管理',
             isLogin: true
         }
+    },
+    {
+        path: '/pzgwcqk/mbmxgl',
+        name: 'mbmxgl',
+        component: resolve => require(['@/components/pzgwcqk/mbmxgl'], resolve),
+        meta: {
+            title: '目标明细管理',
+            isLogin: true
+        }
     }
 
 ]
