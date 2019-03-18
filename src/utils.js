@@ -84,7 +84,12 @@ const format = (date) => {
     let newdate = new Date(date);
     let month = (newdate.getMonth() + 1) < 10 ? '0' + (newdate.getMonth() + 1) : (newdate.getMonth() + 1);
     return newdate.getFullYear() + '-' + month + '-' + newdate.getDate();
-}
+};
+const formatMonth = (date) => {
+    let newdate = new Date(date);
+    let month = (newdate.getMonth() + 1) < 10 ? '0' + (newdate.getMonth() + 1) : (newdate.getMonth() + 1);
+    return newdate.getFullYear() + '-' + month;
+};
 
 export default {
     formatParams,
@@ -93,5 +98,6 @@ export default {
     buildDeptTree,
     buildRoleTree,
     roleTree,
-    mergeRow
+    mergeRow,
+    formatMonth
 };

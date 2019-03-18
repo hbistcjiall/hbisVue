@@ -63,11 +63,11 @@ export default [
         }
     },
     {
-        path: '/pzgwcqk/addZrdwgl',
-        name: 'addZrdwgl',
-        component: resolve => require(['@/components/pzgwcqk/addZrdwgl'], resolve),
+        path: '/pzgwcqk/mbmxgl',
+        name: 'mbmxgl',
+        component: resolve => require(['@/components/pzgwcqk/mbmxgl'], resolve),
         meta: {
-            title: '添加责任单位管理',
+            title: '目标明细管理',
             isLogin: true
         }
     }
