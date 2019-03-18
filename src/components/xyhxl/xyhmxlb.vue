@@ -1,13 +1,337 @@
 <template>
-    
+    <div>
+        <Form :label-width="80">
+        <Row>
+            <Col span="4">
+                <FormItem label="产品类别:">
+                    <Select v-model="xyhmxlbData.varieties">
+                        <Option value="">全部</Option>
+                        <Option value="热板">热板</Option>
+                        <Option value="冷板">冷板</Option>
+                        <Option value="宽厚板">宽厚板</Option>
+                        <Option value="棒线">棒线</Option>
+                        <Option value="型带">型带</Option>
+                    </Select>
+                </FormItem>
+            </Col>
+            <Col span="2"> </Col>
+            <Col span="6">
+                <FormItem label="上传时间:">
+                    <DatePicker v-model='begin' type="date" style="width: 120px;"/> — <DatePicker v-model="end" style="width: 120px;" type="date"/>
+                </FormItem>
+            </Col>
+            <Col span="2"> </Col>
+            <Col span="4">
+                <FormItem label="协议年份:">
+                <DatePicker type="year" v-model='year'></DatePicker>
+                </FormItem>
+            </Col>
+            <Col span="4">
+                <FormItem label="钢厂:">
+                    <Select v-model="xyhmxlbData.steelMills">
+                        <Option value="">全部</Option>
+                        <Option value="唐钢">唐钢</Option>
+                        <Option value="邯钢">邯钢</Option>
+                        <Option value="宣钢">宣钢</Option>
+                        <Option value="承钢">承钢</Option>
+                        <Option value="舞钢">舞钢</Option>
+                    </Select>
+                </FormItem>
+            </Col>
+            <Col span="6">
+                <Button type="primary" @click="search" style="magin-left:20px" >查询</Button>
+                <Button type="primary" @click="clearall" style="magin-left:20px">清空</Button>
+                <Button type="primary" @click="checkedel" style="magin-left:20px">批量删除</Button>
+                <Button type="primary" @click="downLoad" style="magin-left:20px">导出</Button>
+            </Col>
+        </Row>
+        </Form>
+        <Table border stripe :columns="columns12" :data="fecthdata6" style="margin-top: 20px">
+            <template slot-scope="{ row }" slot="name">
+                <strong>{{ row.name }}</strong>
+            </template>
+            <template slot-scope="{row}" slot="action">
+                <Button type="primary" size="small" style="margin-right: 5px" @click="updD(row)">修改</Button>
+                <Button type="error" size="small" @click="remove(row)">删除</Button>
+            </template>
+        </Table>
+        <Page :total="dataCount" :page-size="pageSize" show-total show-elevator show-sizer class="paging" @on-change="changepage" style="margin-top:20px;"></Page>
+        <Modal v-model="updModal" title="角色编辑" :closable='false' @on-ok="updok">
+            <Form :model="updformValidate" :rules="updruleValidate" :label-width="90">
+                <FormItem label="协议年份">
+                    <DatePicker type="year" v-model='updYear'></DatePicker>
+                </FormItem>
+                <FormItem label="用户名称" prop="accountName">
+                    <Input v-model="updformValidate.accountName" placeholder="请输入用户名称"></Input>
+                </FormItem>
+                <FormItem label="品种" prop="varieties">
+                    <Select v-model="updformValidate.varieties">
+                        <Option value="">全部</Option>
+                        <Option value="热板">热板</Option>
+                        <Option value="冷板">冷板</Option>
+                        <Option value="宽厚板">宽厚板</Option>
+                        <Option value="棒线">棒线</Option>
+                        <Option value="型带">型带</Option>
+                    </Select>
+                </FormItem>
+                <FormItem label="主销售区域">
+                    <Input v-model="updformValidate.mainSalesRegional" placeholder="请输入主销售区域"></Input>
+                </FormItem>
+                <FormItem label="辅助销售区域一">
+                    <Input v-model="updformValidate.aidedSalesRegionalOne" placeholder="请输入辅助销售区域一"></Input>
+                </FormItem>
+                <FormItem label="辅助销售区域二">
+                    <Input v-model="updformValidate.aidedSalesRegionalTwo" placeholder="请输入辅助销售区域二"></Input>
+                </FormItem>
+                <FormItem label="钢厂" prop="steelMills">
+                    <Select v-model="updformValidate.steelMills">
+                        <Option value="">全部</Option>
+                        <Option value="唐钢">唐钢</Option>
+                        <Option value="邯钢">邯钢</Option>
+                        <Option value="宣钢">宣钢</Option>
+                        <Option value="承钢">承钢</Option>
+                        <Option value="舞钢">舞钢</Option>
+                    </Select>
+                </FormItem>
+                <FormItem label="年协议量(吨)" prop="annualAgreementVolume">
+                    <Input v-model="updformValidate.annualAgreementVolume" placeholder="请输入年协议量"></Input>
+                </FormItem>
+            </Form>
+        </Modal>
+    </div>
 </template>
-
 <script>
     export default {
-        name: "xyhmxlb"
+        name:'xyhmxlb',
+        data () {
+            return {
+                updModal:false,
+                xyhmxlbData: {
+                    beginTime:'',
+                    endTime:'',
+                    protocolYear:'',
+                    steelMills:'',
+                    varieties:'',
+                    page: '0',
+                    limit: '10',
+                },
+                begin:'',
+                end:'',
+                year:'',
+                protocolAccountId:'',
+                // 初始化信息总条数
+                dataCount: 0,
+                // 每页显示多少条
+                pageSize: 10,
+                xia: 0, //下一页或者上一页的第一项索引值
+                columns12: [
+                    {
+                        title: '序号',
+                        align: "center",
+                        type:'index'
+                    },
+                    {
+                        title: '上传时间',
+                        align: "center",
+                        key: 'UPLOADTIME'
+                    },
+                    {
+                        title: '协议年份',
+                        align: "center",
+                        key: 'PROTOCOLYEAR'
+                    },
+                    {
+                        title: '用户名称(全称)',
+                        align: "center",
+                        key: 'ACCOUNTNAME'
+                    },
+                    {
+                        title: '品种',
+                        align: "center",
+                        key: 'VARIETIES'
+                    },
+                    {
+                        title: '主销售区域',
+                        align: "center",
+                        key: 'MAINSALESREGIONAL'
+                    },
+                    {
+                        title: '辅助销售区域一',
+                        align: "center",
+                        key: 'AIDEDSALESREGIONALONE'
+                    },
+                    {
+                        title: '辅助销售区域二',
+                        align: "center",
+                        key: 'AIDEDSALESREGIONALTWO'
+                    },
+                    {
+                        title: '钢厂',
+                        align: "center",
+                        key: 'STEELMILLS'
+                    },
+                    {
+                        title: '年协议量(吨)',
+                        align: "center",
+                        key: 'ANNUALAGREEMENTVOLUME'
+                    },
+                    {
+                        title: '操作',
+                        slot: 'action',
+                        align: 'center',
+                        width: '260px'
+                    },
+                ],
+                fecthdata6: [],
+                resDatas:[],
+                updformValidate: {
+                    accountName:'',
+                    aidedSalesRegionalOne:'',
+                    aidedSalesRegionalTwo:'',
+                    annualAgreementVolume:'',
+                    mainSalesRegional:'',
+                    protocolAccountId:'',
+                    protocolYear:'',
+                    steelMills:'',
+                    varieties:''
+                },
+                updYear:'',
+                updruleValidate: {
+                    accountName: [
+                        { required: true, message: '用户名称', trigger: 'blur' }
+                    ],
+                    mainSalesRegional:[
+                        { required: true, message: '主销售区域', trigger: 'blur' }
+                    ],
+                    varieties:[
+                        { required: true, message: '品种', trigger: 'blur' }
+                    ],
+                    steelMills:[
+                        { required: true, message: '钢厂', trigger: 'blur' }
+                    ],
+                },
+            }
+        },
+        created() {
+            this.handleListApproveHistory();
+        },
+        methods: {
+            // 获取日志记录信息
+            handleListApproveHistory() {
+                this.year?this.xyhmxlbData.protocolYear=new Date(this.year).getFullYear():'';
+                this.begin?this.xyhmxlbData.beginTime=this.utils.format(this.begin):'';
+                this.end?this.xyhmxlbData.endTime=this.utils.format(this.end):'';
+                fetch(this.$store.state.fetchPath + "/protocolAccountDetails/list", {
+                    method: "POST",
+                    headers: this.$store.state.fetchHeader,
+                    body: this.utils.formatParams(this.xyhmxlbData),
+                    credentials:'include'
+                })
+                    .then((res) => {
+                        return res.text();
+                    }).then((res) => {
+                    res = res.length>0?JSON.parse(res):[]
+                    // 保存取到的所有数据
+                    this.resDatas =  res.data;
+                    this.dataCount =  parseInt(res.count);
+                    this.pageSize = parseInt(res.pageSize);
+                    // 初始化显示，小于每页显示条数，全显，大于每页显示条数，取前每页条数显示
+                    if(this.dataCount < this.pageSize){
+                        this.fecthdata6 = this.resDatas;
+                    }else{
+                        this.fecthdata6 = this.resDatas.slice(0,this.pageSize);
+                    }
+                })
+            },
+            changepage(index) {
+                this.dictData.page=index;
+                this.handleListApproveHistory();
+            },
+            search(){
+                this.handleListApproveHistory();
+            },
+            clearall(){
+                this.xyhmxlbData.beginTime = '';
+                this.xyhmxlbData.endTime = '';
+                this.xyhmxlbData.steelMills = '';
+                this.xyhmxlbData.limit = '10';
+                this.xyhmxlbData.page = '1';
+                this.xyhmxlbData.protocolYear = '';
+                this.xyhmxlbData.varieties = '';
+                this.begin = '';
+                this.end = '';
+                this.year = ''
+            },
+            checkedel(){
+                window.console.log('checkedel')
+            },
+            downLoad(){
+                window.console.log('downLoad')
+            },
+            remove (r) {
+                this.$Modal.confirm({
+                    title: '提示',
+                    content: '确认删除吗？',
+                    onOk: () => {
+                        this.protocolAccountId=r.PROTOCOLACCOUNTID;
+                        fetch(this.$store.state.fetchPath + "/protocolAccountDetails/delete", {
+                            method: "POST",
+                            headers: this.$store.state.fetchHeader,
+                            body: this.utils.formatParams(this.delData),
+                            credentials:'include'
+                        })
+                            .then((res) => {
+                                return res.text();
+                            })
+                            .then(() => {
+                                // res = res.length>0?JSON.parse(res):[];
+                                // this.$Message.error(res.msg);
+                                this.handleListApproveHistory();
+                            })
+                    }
+                });
+
+            },
+            updD(r){
+                this.updModal = true;
+                this.updformValidate.protocolAccountId = r.PROTOCOLACCOUNTID;
+                this.updYear = r.PROTOCOLYEAR;
+                this.updformValidate.accountName = r.ACCOUNTNAME;
+                this.updformValidate.varieties = r.VARIETIES;
+                this.updformValidate.mainSalesRegional = r.MAINSALESREGIONAL;
+                this.updformValidate.aidedSalesRegionalOne = r.AIDEDSALESREGIONALONE;
+                this.updformValidate.aidedSalesRegionalTwo = r.AIDEDSALESREGIONALTWO;
+                this.updformValidate.steelMills = r.STEELMILLS;
+                this.updformValidate.annualAgreementVolume = r.ANNUALAGREEMENTVOLUME
+            },
+            updok(){
+                this.updYear?this.updformValidate.protocolYear=new Date(this.updYear).getFullYear():'';
+                fetch(this.$store.state.fetchPath + "/protocolAccountDetails/update", {
+                    method: "POST",
+                    headers: this.$store.state.fetchHeader,
+                    body: this.utils.formatParams(this.updformValidate),
+                    credentials:'include'
+                })
+                    .then((res) => {
+                        return res.text();
+                    })
+                    .then(() => {
+                        this.handleListApproveHistory();
+                    })
+            }
+
+        }
     }
 </script>
-
 <style scoped>
-
+    .paging{
+        float:right;
+        margin-top:10px;
+    }
+    .userbtn{
+        margin-right:10px;
+    }
+    FormItem {
+        float: left;
+    }
 </style>
