@@ -156,7 +156,7 @@
             getList() {
 
                 let params={
-                    zt:2// 1：按月查询,2:按年查询
+                    zt:1// 1：按月查询,2:按年查询
                 };
                 this.pz?params.pz=this.pz:'';
                 this.month?params.month=this.utils.formatMonth(this.month):'';
