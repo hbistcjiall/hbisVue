@@ -40,11 +40,12 @@
                         <Radio label="F">女</Radio>
                     </Radio-group>
                 </FormItem>
-                <FormItem label="部门" prop="deptId">
-                    <Cascader :data="deptdata" trigger="hover" placeholder="请重新选择部门" @on-change="depChange"></Cascader>
-                </FormItem>
                 <FormItem label="电话">
                     <Input v-model="updformValidate.phone" placeholder="请输入电话"></Input>
+                </FormItem>
+                <FormItem label="部门" prop="deptId">
+                    <!--<Cascader :data="deptdata" trigger="hover" placeholder="请重新选择部门"  @on-select-change="depChange"></Cascader>-->
+                    <Tree :data="deptdata" ref="tree" @on-select-change="depChange"></Tree>
                 </FormItem>
             </Form>
         </Modal>
@@ -209,7 +210,7 @@
         },
         created() {
             this.handleListApproveHistory();
-            fetch(this.$store.state.fetchPath + "/dept/treeView", {
+            fetch("http://18.4.22.0:8081/dept/tree", {
                 method: "POST",
                 headers: {//fetch请求头
                     "Content-Type":"application/x-www-form-urlencoded; charset=UTF-8"
@@ -221,9 +222,9 @@
                 }).then((res) => {
                 res = res.length>0?JSON.parse(res):[]
                 // 保存取到的所有数据
-                this.deptdata =  this.utils.buildDeptTree(res);
+                this.deptdata =  this.utils.roleTree(this.utils.buildRoleTree(res));
             })
-            fetch("http://localhost:8081/role/roleTreeList", {
+            fetch(this.$store.state.fetchPath +"/role/roleTreeList", {
                 method: "POST",
                 headers: {//fetch请求头
                     "Content-Type":"application/x-www-form-urlencoded; charset=UTF-8"
@@ -361,16 +362,25 @@
                 this.updModal = true;
                 this.updformValidate.name = row.NAME;
                 this.updformValidate.email = row.EMAIL;
-                this.updformValidate.birthday = row.BIRTHDAY;
+                this.updformValidate.birthday = this.utils.format(row.BIRTHDAY);
                 this.updformValidate.sex = row.SEX
                 this.updformValidate.phone = row.PHONE;
                 this.updformValidate.userId = row.USERID
             },
+            // birthdayChange:function() {
+            //     this.updformValidate.birthday = this.utils.format(this.updformValidate.birthday)
+            // },
             depChange(e){
-                this.updformValidate.deptId= e[e.length-1];
-                this.$emit('deptId', this.updformValidate.deptId);
+                let roleCheckarr = []
+                let rolearr = e;
+                for(var i=0;i<rolearr.length;i++){
+                    roleCheckarr.push(rolearr[i].id);
+                }
+                this.updformValidate.deptId = roleCheckarr.toString()
+                // this.formValidate.deptId= e[e.length-1];
             },
             updok(){
+                this.updformValidate.birthday = this.utils.format(this.updformValidate.birthday)
                 fetch(this.$store.state.fetchPath + "/mgr/edit", {
                     method: "POST",
                     headers: this.$store.state.fetchHeader,

@@ -23,8 +23,9 @@
                 <FormItem label="菜单编号" prop="code">
                     <Input v-model="updformValidate.code" placeholder="菜单编号"></Input>
                 </FormItem>
-                <FormItem label="父级编号" prop="pcode">
-                    <Cascader :data="menuDatas" trigger="hover" @on-change="pcodeChange"></Cascader>
+                <FormItem label="父级编号" prop="pid">
+                    <!--<Cascader :data="menuDatas" trigger="hover" @on-change="pIdChange"></Cascader>-->
+                    <Tree :data="menuDatas" ref="tree" @on-select-change="pIdChange"></Tree>
                 </FormItem>
                 <FormItem label="是否是菜单" prop="menuFlag">
                     <Radio-group v-model="updformValidate.menuFlag">
@@ -117,7 +118,7 @@
                 formValidate: {
                     name:'',
                     code:'',
-                    pcode:'',
+                    pid:'',
                     menuFlag:'',
                     url:'',
                     sort:0,
@@ -125,7 +126,7 @@
                 updformValidate: {
                     name:'',
                     code:'',
-                    pcode:'',
+                    pid:'',
                     menuFlag:'',
                     url:'',
                     sort:0,
@@ -138,7 +139,7 @@
                     code:[
                         { required: true, message: '菜单编号不为空', trigger: 'blur' }
                     ],
-                    pcode:[
+                    pid:[
                         { required: true, message: '父菜单编号不为空', trigger: 'blur' }
                     ],
                     menuFlag:[
@@ -153,7 +154,7 @@
         },
         created() {
             this.handleListApproveHistory();
-            fetch("http://localhost:8081/dept/treeView", {
+            fetch("http://18.4.22.0:8081/menu/selectMenuTreeList", {
                 method: "POST",
                 headers: {//fetch请求头
                     "Content-Type":"application/x-www-form-urlencoded; charset=UTF-8"
@@ -165,7 +166,8 @@
                 }).then((res) => {
                 res = res.length>0?JSON.parse(res):[]
                 // 保存取到的所有数据
-                this.menuDatas =  this.utils.buildDeptTree(res);
+                this.menuDatas =  this.utils.roleTree(this.utils.buildRoleTree(res));
+
             })
         },
         methods: {
@@ -216,8 +218,8 @@
                                 code: (code) => {
                                     this.formValidate.code=code
                                 },
-                                pcode: (pcode) => {
-                                    this.formValidate.pcode=pcode
+                                pid: (pid) => {
+                                    this.formValidate.pid=pid
                                 },
                                 menuFlag: (menuFlag) => {
                                     this.formValidate.menuFlag=menuFlag
@@ -276,14 +278,18 @@
                 this.updformValidate.menuId = row.MENUID;
                 this.updformValidate.name = row.NAME;
                 this.updformValidate.code = row.CODE;
-                this.updformValidate.pcode = row.PCODE;
+                this.updformValidate.pid = row.PID;
                 this.updformValidate.menuFlag = row.MENUFLAG;
                 this.updformValidate.url = row.URL;
                 this.updformValidate.sort = row.SORT;
             },
-            pcodeChange(e){
-                this.updformValidate.pcode= e[e.length-1];
-                // this.$emit('pcode', this.updformValidate.pcode);
+            pIdChange(e){
+                let roleCheckarr = []
+                let rolearr = e;
+                for(var i=0;i<rolearr.length;i++){
+                    roleCheckarr.push(rolearr[i].id);
+                }
+                this.updformValidate.pid = roleCheckarr.toString()
             },
             updok(){
                 fetch(this.$store.state.fetchPath + "/menu/edit", {

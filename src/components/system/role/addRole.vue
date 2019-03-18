@@ -3,16 +3,16 @@
         <FormItem label="角色" prop="name">
             <Input v-model="formValidate.name" placeholder="请输入角色" @on-change="nameChange"></Input>
         </FormItem>
-        <FormItem label="上级" prop="pid">
-            <Cascader :data="roledata" trigger="hover" @on-change="pidChange"></Cascader>
-        </FormItem>
         <FormItem label="别名" prop="description">
             <Input v-model="formValidate.description" placeholder="请输入别名" @on-change="descriptionChange"></Input>
         </FormItem>
         <FormItem label="排序" prop="sort">
             <Input v-model="formValidate.sort" placeholder="请输入排序" @on-change="sortChange"></Input>
         </FormItem>
-
+        <FormItem label="上级" prop="pid">
+            <!--<Cascader :data="roledata" trigger="hover" @on-change="pidChange"></Cascader>-->
+            <Tree :data="roledata" ref="tree" @on-select-change="pidChange"></Tree>
+        </FormItem>
     </Form>
 </template>
 <script>
@@ -44,7 +44,7 @@
             }
         },
         created(){
-            fetch("http://localhost:8081/role/treeView", {
+            fetch("http://18.4.22.0:8081/role/roleTreeList", {
                 method: "POST",
                 headers: {//fetch请求头
                     "Content-Type":"application/x-www-form-urlencoded; charset=UTF-8"
@@ -56,7 +56,8 @@
                 }).then((res) => {
                 res = res.length>0?JSON.parse(res):[]
                 // 保存取到的所有数据
-                this.roledata =  this.utils.buildDeptTree(res);
+                this.roledata =  this.utils.roleTree(this.utils.buildRoleTree(res));
+
 
             })
         },
@@ -65,8 +66,13 @@
                 this.$emit('name', this.formValidate.name)
             },
             pidChange(e){
-                this.formValidate.pId= e[e.length-1];
-                this.$emit('pid', this.formValidate.pId);
+                let roleCheckarr = []
+                let rolearr = e;
+                for(var i=0;i<rolearr.length;i++){
+                    roleCheckarr.push(rolearr[i].id);
+                }
+                this.formValidate.pid = roleCheckarr.toString()
+                this.$emit('pid',this.formValidate.pid );
             },
             descriptionChange:function() {
                 this.$emit('description', this.formValidate.description)

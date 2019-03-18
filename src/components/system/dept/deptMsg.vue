@@ -1,6 +1,6 @@
 <template>
     <div>
-        <Input placeholder="角色名称" style="width: 300px" v-model="deptData.condition"/>
+        <Input placeholder="部门名称" style="width: 300px" v-model="deptData.condition"/>
         <Button type="primary" @click="search" style="magin-left:20px" icon="ios-search">搜索</Button>
         <Button type="primary" @click="addNew" style="magin-left:20px" icon ="ios-add">添加</Button>
         <!--<Button type="primary" @click="downLoadTab" style="magin-left:20px" icon="ios-download-outline">导出</Button>-->
@@ -16,13 +16,11 @@
         </Table>
         <Page :total="dataCount" :page-size="pageSize" show-total show-elevator show-sizer class="paging" @on-change="changepage" style="margin-top:20px;"></Page>
         <Modal v-model="updModal" title="角色编辑" :closable='false' @on-ok="updok">
-            <Form :model="updformValidate" :rules="updruleValidate" :label-width="60">
+            <Form :model="updformValidate" :rules="updruleValidate" :label-width="90">
                 <FormItem label="部门名称" prop="simpleName">
                     <Input v-model="updformValidate.simpleName" placeholder="请输入部门名称"></Input>
                 </FormItem>
-                <FormItem label="上级名称" prop="pid">
-                    <Cascader :data="updeptdata" trigger="hover"></Cascader>
-                </FormItem>
+
                 <FormItem label="部门全称" prop="fullName">
                     <Input v-model="updformValidate.fullName" placeholder="请输入部门全称"></Input>
                 </FormItem>
@@ -31,6 +29,10 @@
                 </FormItem>
                 <FormItem label="排序">
                     <Input v-model="updformValidate.sort" placeholder="请输入排序"></Input>
+                </FormItem>
+                <FormItem label="上级名称" prop="pid">
+                    <!--<Cascader :data="updeptdata" trigger="hover"></Cascader>-->
+                    <Tree :data="updeptdata" ref="tree" @on-select-change="pidChange"></Tree>
                 </FormItem>
             </Form>
         </Modal>
@@ -117,7 +119,7 @@
         },
         created() {
             this.handleListApproveHistory();
-            fetch(this.$store.state.fetchPath + "/dept/treeView", {
+            fetch(this.$store.state.fetchPath + "/dept/tree", {
                 method: "POST",
                 headers: {//fetch请求头
                     "Content-Type":"application/x-www-form-urlencoded; charset=UTF-8"
@@ -129,7 +131,7 @@
                 }).then((res) => {
                 res = res.length>0?JSON.parse(res):[]
                 // 保存取到的所有数据
-                this.updeptdata =  this.utils.buildDeptTree(res);
+                this.updeptdata =  this.utils.roleTree(this.utils.buildRoleTree(res));
             })
         },
         methods: {
@@ -225,8 +227,6 @@
                                 return res.text();
                             })
                             .then(() => {
-                                // res = res.length>0?JSON.parse(res):[];
-                                // this.$Message.error(res.msg);
                                 this.handleListApproveHistory();
                             })
                     }
@@ -241,6 +241,14 @@
                 this.updformValidate.pid = r.PID;
                 this.updformValidate.description = r.DESCRIPTION;
                 this.updformValidate.deptId = r.DEPTID
+            },
+            pidChange(e){
+                let roleCheckarr = []
+                let rolearr = e;
+                for(var i=0;i<rolearr.length;i++){
+                    roleCheckarr.push(rolearr[i].id);
+                }
+                this.formValidate.pid = roleCheckarr.toString()
             },
             updok(){
                 fetch(this.$store.state.fetchPath + "/dept/update", {

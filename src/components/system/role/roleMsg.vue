@@ -20,14 +20,16 @@
                 <FormItem label="角色" prop="name">
                     <Input v-model="updformValidate.name" placeholder="请输入角色"></Input>
                 </FormItem>
-                <FormItem label="上级" prop="pid">
-                    <Cascader :data="uproledata" trigger="hover"></Cascader>
-                </FormItem>
+
                 <FormItem label="别名" prop="description">
                     <Input v-model="updformValidate.description" placeholder="请输入别名"></Input>
                 </FormItem>
                 <FormItem label="排序" prop="sort">
                     <Input v-model="updformValidate.sort" placeholder="请输入排序"></Input>
+                </FormItem>
+                <FormItem label="上级" prop="pid">
+                    <!--<Cascader :data="uproledata" trigger="hover"></Cascader>-->
+                    <Tree :data="uproledata" ref="tree" @on-select-change="pidChange"></Tree>
                 </FormItem>
             </Form>
         </Modal>
@@ -121,7 +123,7 @@
         },
         created() {
             this.handleListApproveHistory();
-            fetch(this.$store.state.fetchPath + "/role/treeView", {
+            fetch(this.$store.state.fetchPath + "/role/roleTreeList", {
                 method: "POST",
                 headers: {//fetch请求头
                     "Content-Type":"application/x-www-form-urlencoded; charset=UTF-8"
@@ -133,8 +135,21 @@
                 }).then((res) => {
                 res = res.length>0?JSON.parse(res):[]
                 // 保存取到的所有数据
-                this.uproledata =  this.utils.buildDeptTree(res);
-            })
+                this.uproledata =  this.utils.roleTree(this.utils.buildRoleTree(res));
+            });
+            fetch(this.$store.state.fetchPath +"/menu/menuTreeListByRoleId", {
+                method: "POST",
+                headers: {//fetch请求头
+                    "Content-Type":"application/x-www-form-urlencoded; charset=UTF-8"
+                },
+                body: this.utils.formatParams(this.roleForm),
+                credentials: 'include'
+            }).then((res) => {
+                return res.text();
+            }).then((res) => {
+                res = res.length>0?JSON.parse(res):[];
+                this.roleDatatree=this.utils.roleTree(this.utils.buildRoleTree(res));
+            });
         },
         methods: {
             // 获取日志记录信息
@@ -241,6 +256,14 @@
                 this.updformValidate.description = r.DESCRIPTION;
                 this.updformValidate.roleId = r.ROLEID
             },
+            pidChange(e){
+                let roleCheckarr = []
+                let rolearr = e;
+                for(var i=0;i<rolearr.length;i++){
+                    roleCheckarr.push(rolearr[i].id);
+                }
+                this.updformValidate.pid = roleCheckarr.toString()
+            },
             updok(){
                 fetch(this.$store.state.fetchPath + "/role/edit", {
                     method: "POST",
@@ -258,19 +281,6 @@
             setRole(r){
                 this.setModal = true;
                 this.roleForm.roleId = r.ROLEID;
-                fetch(this.$store.state.fetchPath +"/menu/menuTreeListByRoleId", {
-                    method: "POST",
-                    headers: {//fetch请求头
-                        "Content-Type":"application/x-www-form-urlencoded; charset=UTF-8"
-                    },
-                    body: this.utils.formatParams(this.roleForm),
-                    credentials: 'include'
-                }).then((res) => {
-                    return res.text();
-                }).then((res) => {
-                    res = res.length>0?JSON.parse(res):[];
-                    this.roleDatatree=this.utils.roleTree(this.utils.buildRoleTree(res));
-                });
             },
             roleok(){
                 let roleCheckarr = []

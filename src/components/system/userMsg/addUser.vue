@@ -30,11 +30,12 @@
                 <Radio label="F">女</Radio>
             </Radio-group>
         </FormItem>
-        <FormItem label="部门" prop="deptId">
-            <Cascader :data="deptdata" trigger="hover" @on-change="depChange"></Cascader>
-        </FormItem>
         <FormItem label="电话" prop="phone">
             <Input v-model="formValidate.phone" placeholder="请输入电话" @on-change="phoneChange"></Input>
+        </FormItem>
+        <FormItem label="部门" prop="deptId">
+            <!--<Cascader :data="deptdata" trigger="hover" @on-change="depChange"></Cascader>-->
+            <Tree :data="deptdata" ref="tree" @on-select-change="depChange"></Tree>
         </FormItem>
     </Form>
 </template>
@@ -72,7 +73,7 @@
             }
         },
         created(){
-            fetch("http://localhost:8081/dept/treeView", {
+            fetch("http://18.4.22.0:8081/dept/tree", {
                 method: "POST",
                 headers: {//fetch请求头
                     "Content-Type":"application/x-www-form-urlencoded; charset=UTF-8"
@@ -84,7 +85,7 @@
                 }).then((res) => {
                     res = res.length>0?JSON.parse(res):[]
                     // 保存取到的所有数据
-                    this.deptdata =  this.utils.buildDeptTree(res);
+                    this.deptdata=this.utils.roleTree(this.utils.buildRoleTree(res));
                 })
         },
         methods: {
@@ -113,8 +114,13 @@
                 this.$emit('phone', this.formValidate.phone)
             },
             depChange(e){
-                this.formValidate.deptId= e[e.length-1];
-                this.$emit('deptId', this.formValidate.deptId);
+                let roleCheckarr = []
+                let rolearr = e;
+                for(var i=0;i<rolearr.length;i++){
+                    roleCheckarr.push(rolearr[i].id);
+                }
+                this.formValidate.deptId = roleCheckarr.toString();
+                this.$emit('deptId', this.formValidate.deptId)
             }
         }
     }

@@ -1,13 +1,14 @@
 <template>
-    <Form ref="formValidate" :model="formValidate" :rules="ruleValidate" :label-width="80">
+    <Form ref="formValidate" :model="formValidate" :rules="ruleValidate" :label-width="90">
         <FormItem label="名称" prop="name">
             <Input v-model="formValidate.name" placeholder="名称" @on-change="nameChange"></Input>
         </FormItem>
         <FormItem label="菜单编号" prop="code">
             <Input v-model="formValidate.code" placeholder="菜单编号" @on-change="codeChange"></Input>
         </FormItem>
-        <FormItem label="父级编号" prop="pcode">
-            <Cascader :data="menuData" trigger="hover" @on-change="pcodeChange"></Cascader>
+        <FormItem label="父级编号" prop="pid">
+            <!--<Cascader :data="menuData" trigger="hover" @on-change="pcodeChange"></Cascader>-->
+            <Tree :data="menuData" ref="tree" @on-select-change="pIdChange"></Tree>
         </FormItem>
         <FormItem label="是否是菜单" prop="menuFlag">
             <Radio-group v-model="formValidate.menuFlag" @on-change="menuFlagChange">
@@ -32,7 +33,7 @@
                 formValidate: {
                     name:'',
                     code:'',
-                    pcode:'',
+                    pid:'',
                     menuFlag:'',
                     url:'',
                     sort:0,
@@ -44,7 +45,7 @@
                     code:[
                         { required: true, message: '菜单编号不为空', trigger: 'blur' }
                     ],
-                    pcode:[
+                    pid:[
                         { required: true, message: '父菜单编号不为空', trigger: 'blur' }
                     ],
                     menuFlag:[
@@ -57,7 +58,7 @@
             }
         },
         created(){
-            fetch("http://localhost:8081/role/treeView", {
+            fetch("http://18.4.22.0:8081/menu/selectMenuTreeList", {
                 method: "POST",
                 headers: {//fetch请求头
                     "Content-Type":"application/x-www-form-urlencoded; charset=UTF-8"
@@ -69,7 +70,7 @@
                 }).then((res) => {
                 res = res.length>0?JSON.parse(res):[]
                 // 保存取到的所有数据
-                this.menuData =  this.utils.buildDeptTree(res);
+                this.menuData =  this.utils.roleTree(this.utils.buildRoleTree(res));
 
             })
         },
@@ -80,9 +81,14 @@
             codeChange:function() {
                 this.$emit('code', this.formValidate.code)
             },
-            pcodeChange(e){
-                this.formValidate.pcode= e[e.length-1];
-                this.$emit('pcode', this.formValidate.pcode);
+            pIdChange(e){
+                let roleCheckarr = []
+                let rolearr = e;
+                for(var i=0;i<rolearr.length;i++){
+                    roleCheckarr.push(rolearr[i].id);
+                }
+                this.formValidate.pid = roleCheckarr.toString()
+                this.$emit('pid',this.formValidate.pid );
             },
             menuFlagChange:function(v) {
                 this.$emit('menuFlag', v)
