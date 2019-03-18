@@ -1,5 +1,5 @@
 <template>
-    <Table :columns="columns11" :data="data10" border height="500"></Table>
+    <Table :columns="columns" :data="data" border height="500"></Table>
 </template>
 
 <script>
@@ -7,9 +7,9 @@
         name: "getcx",
         data() {
             return {
-                columns11: [{
+                columns: [{
                     title: '单位',
-                    key: 'dw',
+                    key: 'COMPANYNAME',
                     align: 'center',
                     width: 100,
                     fixed: 'left',
@@ -63,49 +63,19 @@
                                 title: '专业公司-总量',
                                 key: 'zygszl',
                                 align: 'center',
-                                width: 100,
-                                render: (h, params) => {
-                                    let items = params.row.myzygs;
-                                    for (let key in items) {
-                                        if (items[key].zygs) {
-                                            return h("div", {
-                                                class: "ivu-table-cell"
-                                            }, items[key].zygszl);
-                                        }
-                                    }
-                                }
+                                width: 100
                             },
                                 {
                                     title: '专业公司-品种钢',
                                     key: 'zygspzg',
                                     align: 'center',
                                     width: 100,
-                                    render: (h, params) => {
-                                        let items = params.row.myzygs;
-                                        for (let key in items) {
-                                            if (items[key].zygs) {
-                                                return h("div", {
-                                                    class: "ivu-table-cell"
-                                                }, items[key].zygspzg);
-                                            }
-                                        }
-                                    }
                                 },
                                 {
                                     title: '专业公司-比重',
                                     key: 'zygsbz',
                                     align: 'center',
                                     width: 100,
-                                    render: (h, params) => {
-                                        let items = params.row.myzygs;
-                                        for (let key in items) {
-                                            if (items[key].zygs) {
-                                                return h("div", {
-                                                    class: "ivu-table-cell"
-                                                }, items[key].zygsbz);
-                                            }
-                                        }
-                                    }
                                 }
                             ]
                         },
@@ -117,49 +87,19 @@
                                     title: '专业公司-总量',
                                     key: 'zygszl',
                                     align: 'center',
-                                    width: 100,
-                                    render: (h, params) => {
-                                        let items = params.row.myzygs;
-                                        for (let key in items) {
-                                            if (items[key].fgs) {
-                                                return h("div", {
-                                                    class: "ivu-table-cell"
-                                                }, items[key].zygszl);
-                                            }
-                                        }
-                                    }
+                                    width: 100
                                 },
                                     {
                                         title: '专业公司-品种钢',
                                         key: 'zygspzg',
                                         align: 'center',
                                         width: 100,
-                                        render: (h, params) => {
-                                            let items = params.row.myzygs;
-                                            for (let key in items) {
-                                                if (items[key].fgs) {
-                                                    return h("div", {
-                                                        class: "ivu-table-cell"
-                                                    }, items[key].zygspzg);
-                                                }
-                                            }
-                                        }
                                     },
                                     {
                                         title: '专业公司-比重',
                                         key: 'zygsbz',
                                         align: 'center',
-                                        width: 100,
-                                        render: (h, params) => {
-                                            let items = params.row.myzygs;
-                                            for (let key in items) {
-                                                if (items[key].fgs) {
-                                                    return h("div", {
-                                                        class: "ivu-table-cell"
-                                                    }, items[key].zygsbz);
-                                                }
-                                            }
-                                        }
+                                        width: 100
                                     }
                                 ]
                             },
@@ -171,283 +111,188 @@
                                     title: '专业公司-总量',
                                     key: 'zygszl',
                                     align: 'center',
-                                    width: 100,
-                                    render: (h, params) => {
-                                        let items = params.row.myzygs;
-                                        for (let key in items) {
-                                            if (items[key].zgs) {
-                                                return h("div", {
-                                                    class: "ivu-table-cell"
-                                                }, items[key].zygszl);
-                                            }
-                                        }
-                                    }
+                                    width: 100
                                 },
                                     {
                                         title: '专业公司-品种钢',
                                         key: 'zygspzg',
                                         align: 'center',
-                                        width: 100,
-                                        render: (h, params) => {
-                                            let items = params.row.myzygs;
-                                            for (let key in items) {
-                                                if (items[key].zgs) {
-                                                    return h("div", {
-                                                        class: "ivu-table-cell"
-                                                    }, items[key].zygspzg);
-                                                }
-                                            }
-                                        }
+                                        width: 100
                                     },
                                     {
                                         title: '专业公司-比重',
-                                        key: 'zygsbz',
+                                        key: 'COMPANY_ID',
                                         align: 'center',
-                                        width: 100,
-                                        render: (h, params) => {
-                                            let items = params.row.myzygs;
-                                            for (let key in items) {
-                                                if (items[key].zgs) {
-                                                    return h("div", {
-                                                        class: "ivu-table-cell"
-                                                    }, items[key].zygsbz);
-                                                }
-                                            }
-                                        }
+                                        width: 100
                                     }
                                 ]
                             }
                         ]
                     }
                 ],
-                data10: [
+                data:this.utils.mergeRow([{
+                    "FKIMG2": "",
+                    "FKIMG": 575.793,
+                    "FKIMG3": "",
+                    "FKIMG1": "",
+                    "PZGL": 16.968,
+                    "NAME": "舞钢4100/4200",
+                    "PZGL2": "",
+                    "PZGL1": "",
+                    "SALE_BODY": "",
+                    "PZGL3": "",
+                    "BZ": "33.93",
+                    "BZ1": "",
+                    "COMPANYNAME": "舞钢",
+                    "BZ3": "",
+                    "BZ2": "",
+                    "COMPANY_ID": 1932
+                },
                     {
-                        dw: '唐钢',
-                        cx: '本部热板',
-                        nmzl: '5000',
-                        nmzlzl: '5500',
-                        nmzlpzg: '3800',
-                        nmzlbz: '0.5',
-                        rowspan: 4,
-                        hb: '-1.8',
-                        myzygs: [{
-                            zygszl: '270',
-                            zygspzg: '180',
-                            zygsbz: '1.2',
-                            zygs: '专业公司'
-                        },
-                            {
-                                zygszl: '270',
-                                zygspzg: '180',
-                                zygsbz: '1.2',
-                                fgs: '分公司'
-                            },
-                            {
-                                zygszl: '270',
-                                zygspzg: '180',
-                                zygsbz: '1.2',
-                                zgs: '子公司'
-                            }
-                        ]
+                        "FKIMG2": 13855.381,
+                        "FKIMG": 426.51,
+                        "FKIMG3": "",
+                        "FKIMG1": "",
+                        "PZGL": "",
+                        "NAME": "邯宝酸轧",
+                        "PZGL2": "",
+                        "PZGL1": "",
+                        "SALE_BODY": "分公司",
+                        "PZGL3": "",
+                        "BZ": "--",
+                        "BZ1": "",
+                        "COMPANYNAME": "邯宝",
+                        "BZ3": "",
+                        "BZ2": "--",
+                        "COMPANY_ID": 7778
                     },
                     {
-                        dw: '唐钢',
-                        cx: '本部热板',
-                        nmzl: '5000',
-                        nmzlzl: '5500',
-                        nmzlpzg: '3800',
-                        nmzlbz: '0.5',
-                        hb: '-1.8',
-                        myzygs: [{
-                            zygszl: '270',
-                            zygspzg: '180',
-                            zygsbz: '1.2',
-                            zygs: '专业公司'
-                        },
-                            {
-                                zygszl: '270',
-                                zygspzg: '180',
-                                zygsbz: '1.2',
-                                fgs: '分公司'
-                            },
-                            {
-                                zygszl: '270',
-                                zygspzg: '180',
-                                zygsbz: '1.2',
-                                zgs: '子公司'
-                            }
-                        ]
+                        "FKIMG2": "",
+                        "FKIMG": 426.51,
+                        "FKIMG3": "",
+                        "FKIMG1": "",
+                        "PZGL": "",
+                        "NAME": "邯宝酸轧",
+                        "PZGL2": "",
+                        "PZGL1": "",
+                        "SALE_BODY": "技术中心/市场部",
+                        "PZGL3": "",
+                        "BZ": "--",
+                        "BZ1": "",
+                        "COMPANYNAME": "邯宝",
+                        "BZ3": "",
+                        "BZ2": "",
+                        "COMPANY_ID": 7778
                     },
                     {
-                        dw: '唐钢',
-                        cx: '本部热板3',
-                        nmzl: '5000',
-                        nmzlzl: '5500',
-                        nmzlpzg: '3800',
-                        nmzlbz: '0.5',
-                        hb: '-1.8',
-                        myzygs: [{
-                            zygszl: '270',
-                            zygspzg: '180',
-                            zygsbz: '1.2',
-                            zygs: '专业公司'
-                        },
-                            {
-                                zygszl: '270',
-                                zygspzg: '180',
-                                zygsbz: '1.2',
-                                fgs: '分公司'
-                            },
-                            {
-                                zygszl: '270',
-                                zygspzg: '180',
-                                zygsbz: '1.2',
-                                zgs: '子公司'
-                            }
-                        ]
+                        "FKIMG2": "",
+                        "FKIMG": 1187.16,
+                        "FKIMG3": "",
+                        "FKIMG1": "",
+                        "PZGL": "",
+                        "NAME": "邯钢西区连退",
+                        "PZGL2": "",
+                        "PZGL1": "",
+                        "SALE_BODY": "事业部",
+                        "PZGL3": "",
+                        "BZ": "--",
+                        "BZ1": "",
+                        "COMPANYNAME": "邯宝",
+                        "BZ3": "",
+                        "BZ2": "",
+                        "COMPANY_ID": 7778
                     },
                     {
-                        dw: '唐钢',
-                        cx: '本部热板',
-                        nmzl: '5000',
-                        nmzlzl: '5500',
-                        nmzlpzg: '3800',
-                        nmzlbz: '0.5',
-                        hb: '-1.8',
-                        myzygs: [{
-                            zygszl: '270',
-                            zygspzg: '180',
-                            zygsbz: '1.2',
-                            zygs: '专业公司'
-                        },
-                            {
-                                zygszl: '270',
-                                zygspzg: '180',
-                                zygsbz: '1.2',
-                                fgs: '分公司'
-                            },
-                            {
-                                zygszl: '270',
-                                zygspzg: '180',
-                                zygsbz: '1.2',
-                                zgs: '子公司'
-                            }
-                        ]
+                        "FKIMG2": "",
+                        "FKIMG": 936.9,
+                        "FKIMG3": "",
+                        "FKIMG1": "",
+                        "PZGL": "",
+                        "NAME": "邯钢西区连退",
+                        "PZGL2": "",
+                        "PZGL1": "",
+                        "SALE_BODY": "技术中心/市场部",
+                        "PZGL3": "",
+                        "BZ": "--",
+                        "BZ1": "",
+                        "COMPANYNAME": "邯宝",
+                        "BZ3": "",
+                        "BZ2": "",
+                        "COMPANY_ID": 7778
                     },
                     {
-                        dw: '唐钢',
-                        cx: '本部热板',
-                        nmzl: '5000',
-                        nmzlzl: '5500',
-                        nmzlpzg: '3800',
-                        nmzlbz: '0.5',
-                        rowspan: 4,
-                        hb: '-1.8',
-                        myzygs: [{
-                            zygszl: '270',
-                            zygspzg: '180',
-                            zygsbz: '1.2',
-                            zygs: '专业公司'
-                        },
-                            {
-                                zygszl: '270',
-                                zygspzg: '180',
-                                zygsbz: '1.2',
-                                fgs: '分公司'
-                            },
-                            {
-                                zygszl: '270',
-                                zygspzg: '180',
-                                zygsbz: '1.2',
-                                zgs: '子公司'
-                            }
-                        ]
+                        "FKIMG2": "",
+                        "FKIMG": 250.26,
+                        "FKIMG3": "",
+                        "FKIMG1": "",
+                        "PZGL": "",
+                        "NAME": "邯钢西区连退",
+                        "PZGL2": "",
+                        "PZGL1": "",
+                        "SALE_BODY": "现货",
+                        "PZGL3": "",
+                        "BZ": "--",
+                        "BZ1": "",
+                        "COMPANYNAME": "邯宝",
+                        "BZ3": "",
+                        "BZ2": "",
+                        "COMPANY_ID": 7778
                     },
                     {
-                        dw: '唐钢',
-                        cx: '本部热板',
-                        nmzl: '5000',
-                        nmzlzl: '5500',
-                        nmzlpzg: '3800',
-                        nmzlbz: '0.5',
-                        hb: '-1.8',
-                        myzygs: [{
-                            zygszl: '270',
-                            zygspzg: '180',
-                            zygsbz: '1.2',
-                            zygs: '专业公司'
-                        },
-                            {
-                                zygszl: '270',
-                                zygspzg: '180',
-                                zygsbz: '1.2',
-                                fgs: '分公司'
-                            },
-                            {
-                                zygszl: '270',
-                                zygspzg: '180',
-                                zygsbz: '1.2',
-                                zgs: '子公司'
-                            }
-                        ]
+                        "FKIMG2": "",
+                        "FKIMG": 242106.24,
+                        "FKIMG3": "",
+                        "FKIMG1": "",
+                        "PZGL": 242106.24,
+                        "NAME": "承钢1780",
+                        "PZGL2": "",
+                        "PZGL1": "",
+                        "SALE_BODY": "",
+                        "PZGL3": "",
+                        "BZ": "1",
+                        "BZ1": "",
+                        "COMPANYNAME": "承钢",
+                        "BZ3": "",
+                        "BZ2": "",
+                        "COMPANY_ID": 9196
                     },
                     {
-                        dw: '唐钢',
-                        cx: '本部热板3',
-                        nmzl: '5000',
-                        nmzlzl: '5500',
-                        nmzlpzg: '3800',
-                        nmzlbz: '0.5',
-                        hb: '-1.8',
-                        myzygs: [{
-                            zygszl: '270',
-                            zygspzg: '180',
-                            zygsbz: '1.2',
-                            zygs: '专业公司'
-                        },
-                            {
-                                zygszl: '270',
-                                zygspzg: '180',
-                                zygsbz: '1.2',
-                                fgs: '分公司'
-                            },
-                            {
-                                zygszl: '270',
-                                zygspzg: '180',
-                                zygsbz: '1.2',
-                                zgs: '子公司'
-                            }
-                        ]
+                        "FKIMG2": "",
+                        "FKIMG": 62406.549,
+                        "FKIMG3": "",
+                        "FKIMG1": "",
+                        "PZGL": "",
+                        "NAME": "承钢棒材",
+                        "PZGL2": "",
+                        "PZGL1": "",
+                        "SALE_BODY": "",
+                        "PZGL3": "",
+                        "BZ": "--",
+                        "BZ1": "",
+                        "COMPANYNAME": "承钢",
+                        "BZ3": "",
+                        "BZ2": "",
+                        "COMPANY_ID": 9196
                     },
                     {
-                        dw: '唐钢',
-                        cx: '本部热板',
-                        nmzl: '5000',
-                        nmzlzl: '5500',
-                        nmzlpzg: '3800',
-                        nmzlbz: '0.5',
-                        hb: '-1.8',
-                        myzygs: [{
-                            zygszl: '270',
-                            zygspzg: '180',
-                            zygsbz: '1.2',
-                            zygs: '专业公司'
-                        },
-                            {
-                                zygszl: '270',
-                                zygspzg: '180',
-                                zygsbz: '1.2',
-                                fgs: '分公司'
-                            },
-                            {
-                                zygszl: '270',
-                                zygspzg: '180',
-                                zygsbz: '1.2',
-                                zgs: '子公司'
-                            }
-                        ]
+                        "FKIMG2": "",
+                        "FKIMG": 32776.664,
+                        "FKIMG3": "",
+                        "FKIMG1": "",
+                        "PZGL": 32776.664,
+                        "NAME": "承钢线材",
+                        "PZGL2": "",
+                        "PZGL1": "",
+                        "SALE_BODY": "",
+                        "PZGL3": "",
+                        "BZ": "1",
+                        "BZ1": "",
+                        "COMPANYNAME": "承钢",
+                        "BZ3": "",
+                        "BZ2": "",
+                        "COMPANY_ID": 9196
                     }
-                ]
+                ],'COMPANYNAME'),
             }
         },
     }

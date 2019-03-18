@@ -18,7 +18,7 @@ const mergeRow = (arr, obj) => {
         temp.indexOf(arr[i][obj]) != -1 ? (arr[i - rowspan].rowspan = rowspan + 1, rowspan++) : (temp.push(arr[i][obj]), arr[i].rowspan = 1, rowspan = 1);
     }
     return arr;
-}
+};
 const buildDeptTree = (tree) => {
     const result = []
     // 遍历 tree
