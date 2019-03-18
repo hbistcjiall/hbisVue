@@ -1,7 +1,8 @@
 export default {//全局状态存储
     isLogin:false,//登录状态
     current:0,//新增用户 步骤条
-    fetchPath:'http://47.94.21.130:8081',//fetch服务器地址   fuwuqi
+    fetchPath:'http://18.4.17.200:8081',//fetch服务器地址
+    // fetchPath:'http://47.94.21.130:8081',//fetch服务器地址   fuwuqi
     // fetchPath:'http://localhost:8081',//fetch服务器地址
     // fetchPath:'http://18.4.22.0:8081',//fetch服务器地址   zhangbao
 	// 测试123

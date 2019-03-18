@@ -61,6 +61,15 @@ export default [
             title: '责任单位管理',
             isLogin: true
         }
+    },
+    {
+        path: '/pzgwcqk/addZrdwgl',
+        name: 'addZrdwgl',
+        component: resolve => require(['@/components/pzgwcqk/addZrdwgl'], resolve),
+        meta: {
+            title: '添加责任单位管理',
+            isLogin: true
+        }
     }
 
 ]
