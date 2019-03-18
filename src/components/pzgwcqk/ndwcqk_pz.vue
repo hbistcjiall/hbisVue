@@ -30,6 +30,7 @@
 <script>
     export default {
         name: "ndwcqk_pz",
+
         data() {
             return {
                 year:'',
