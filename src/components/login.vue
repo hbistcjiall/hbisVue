@@ -76,9 +76,6 @@
                             body: this.utils.formatParams(this.formInline),
                             credentials:'include'
                         }).then((res) => {
-                            // if (res.status == 401) {
-                            //     // throw new Error(401);
-                            // }
                             return res.text();
                         }).then((res) => {
                             res = res.length>0?JSON.parse(res):[];
@@ -92,23 +89,6 @@
                                 this.$Message.success("登录成功！");
                                 return this.$router.push({name:'index'});
                             }
-                            // if (res.msg == "1002") {
-                            //     this.$Message.error("用户名输入错误");
-                            // } else if (res.msg == "1001") {
-                            //     this.$Message.error("密码输入错误");
-                            // } else if (res.msg == "1003") {
-                            //     this.$Message.error("账号已锁定");
-                            // } else if (res.msg == "1000") {
-                            //     this.$store.commit('userStatus', true);
-                            //     localStorage.removeItem('Menulist');
-                            //     localStorage.setItem('Menulist', JSON.stringify(res.menus));
-                            //     sessionStorage.setItem("Flag", "isLogin");
-                            //     this.$Message.success("登录成功！");
-                            //     return this.$router.push({name:'index'});
-                            // } else {
-                            //     this.$Message.error("服务器登录异常");
-                            // }
-
                         });
                     }
                 })
