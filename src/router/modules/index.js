@@ -59,6 +59,16 @@ export default {
                 isLogin: true
             },
         },
+        {
+            path: '/dict',
+            name: 'dict',
+            component: resolve => require(['@/components/system/dict/dictMsg'], resolve),
+            meta: {
+                title: '菜单管理',
+                keepAlive: true,
+                isLogin: true
+            },
+        },
         tables
 
     ]
