@@ -14,8 +14,7 @@ const routes = [
         }
     },
     index
-]
-
+];
 
 const router = new VueRouter({
     bese: __dirname,
