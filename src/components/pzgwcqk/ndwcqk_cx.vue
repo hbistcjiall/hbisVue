@@ -4,7 +4,7 @@
             <Row>
                 <Col span="6">
                     <FormItem label="年份：" style="width:150px">
-                        <DatePicker type="month" placeholder="请选择年份"  v-model="month" style="width:120px"></DatePicker>
+                        <DatePicker type="year" placeholder="请选择年份"  v-model="year" style="width:120px"></DatePicker>
                     </FormItem>
                 </Col>
                 <Col span="6">
@@ -45,7 +45,7 @@
         data() {
             return {
                 dw:'',
-                month:'',
+                year:'',
                 cx:'',
                 columns: [{
                     title: '单位',
@@ -180,7 +180,7 @@
                 };
                 this.dw?params.dw=this.dw:'';
                 this.cx?params.cx=this.cx:'';
-                this.month?params.month=new Date(this.month).getFullYear():'';
+                this.year?params.year=new Date(this.year).getFullYear():'';
                 fetch(this.$store.state.fetchPath + "/scm-steel-settle/getcx", {
                     method: "POST",
                     headers: this.$store.state.fetchHeader,

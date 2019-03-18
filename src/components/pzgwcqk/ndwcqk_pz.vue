@@ -4,30 +4,18 @@
             <Row>
                 <Col span="6">
                     <FormItem label="年份：" style="width:150px">
-                        <DatePicker type="month" placeholder="请选择年份"  v-model="month" style="width:120px"></DatePicker>
-                    </FormItem>
-                </Col>
-                <Col span="6">
-                    <FormItem label="单位：" style="width:150px">
-                        <Select v-model="dw" style="width:120px" placeholder="请选择单位">
-                            <Option value="">全部</Option>
-                            <Option value="9580">唐钢</Option>
-                            <Option value="9727">邯钢</Option>
-                            <Option value="9193">宣钢</Option>
-                            <Option value="9196">承钢</Option>
-                            <Option value="1932">舞钢</Option>
-                            <Option value="8110">石钢</Option>
-                            <Option value="8493">衡板</Option>
-                            <Option value="7778">邯宝</Option>
-                        </Select>
+                        <DatePicker type="year" placeholder="请选择年份"  v-model="year" style="width:120px"></DatePicker>
                     </FormItem>
                 </Col>
                 <Col span="8">
-                    <FormItem label="产线：" style="width:150px">
-                        <Select style="width:120px"  v-model="cx" placeholder="请选择产线">
-                            <Option value="cx1">产线一</Option>
-                            <Option value="cx2">产线二</Option>
-                            <Option value="cx3">产线三</Option>
+                    <FormItem label="品种：" style="width:150px">
+                        <Select v-model="pz" style="width:120px" placeholder="请选择品种">
+                            <Option value="">全部</Option>
+                            <Option value="冷板">冷板</Option>
+                            <Option value="热板">热板</Option>
+                            <Option value="棒线">棒线</Option>
+                            <Option value="宽厚板">宽厚板</Option>
+                            <Option value="型带">型带</Option>
                         </Select>
                     </FormItem>
                 </Col>
@@ -44,24 +32,15 @@
         name: "ndwcqk_pz",
         data() {
             return {
-                dw:'',
-                month:'',
-                cx:'',
+                year:'',
+                pz:'',
                 columns: [{
                     title: '品种',
-                    key: 'pz',
+                    key: 'VARIETY',
                     align: 'center',
                     width: 100,
-                    children:[
-                        {
-                            title: '产品大类分类',
-                            key: 'NAME',
-                            align: 'center',
-                            width: 100,
-                        }
-                    ]
+                    fixed: 'left'
                 },
-
                     {
                         title: '内贸总量',
                         key: 'nmzl',
@@ -179,10 +158,9 @@
                 let params={
                     zt:2// 1：按月查询,2:按年查询
                 };
-                this.dw?params.dw=this.dw:'';
-                this.cx?params.cx=this.cx:'';
-                this.month?params.month=new Date(this.month).getFullYear():'';
-                fetch(this.$store.state.fetchPath + "/scm-steel-settle/getcx", {
+                this.pz?params.pz=this.pz:'';
+                this.year?params.year=new Date(this.year).getFullYear():'';
+                fetch(this.$store.state.fetchPath + "/scm-steel-settle/getndpz", {
                     method: "POST",
                     headers: this.$store.state.fetchHeader,
                     body: this.utils.formatParams(params),
@@ -191,7 +169,7 @@
                     return res.text();
                 }).then((res) => {
                     res = res.length > 0 ? JSON.parse(res) : [];
-                    this.data = this.utils.mergeRow(res, 'COMPANYNAME');
+                    this.data = res;
                 });
             }
         }
