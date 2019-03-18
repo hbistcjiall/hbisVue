@@ -57,7 +57,7 @@
 <template>
     <div class="layout">
         <Layout>
-            <Sider breakpoint="md" v-model="isCollapsed">
+            <Sider breakpoint="md" v-model="isCollapsed" :width="180">
                <menuList/>
             </Sider>
             <Layout>

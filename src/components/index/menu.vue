@@ -1,5 +1,5 @@
 <template>
-    <Menu ref="side_menu" :theme="theme3" @on-open-change="getParentName" @on-select="getName">
+    <Menu width="180px" ref="side_menu" :theme="theme3" @on-open-change="getParentName" @on-select="getName" accordion>
         <div v-for="(item,index) of menulist" :key="index">
             <MenuItem v-if="!item.children" :name="item.name"><Icon type="ios-filing" style="margin-right:8px "/>{{item.name}}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</MenuItem>
             <Submenu v-if="item.children"  :name="item.name" >
@@ -47,36 +47,4 @@
     }
 </script>
 <style scoped>
-    .ivu-menu{
-        width: auto !important;
-    }
-    .ivu-menu-item{
-        padding-left:20px !important;
-    }
-    .ivu-menu-submenu-title,.ivu-menu-item span{
-       display: inline-block;
-        overflow: hidden;
-        width: 69px;
-        text-overflow: ellipsis;
-        white-space: nowrap;
-        vertical-align: bottom;
-        transition: width .2s ease .2s;
-    }
-    .ivu-menu-submenu-title,.ivu-menu-item i{
-        transform: translateX(0px);
-        transition: font-size .2s ease, transform .2s ease;
-        vertical-align: middle;
-        font-size: 16px;
-    }
-    .collapsed-menu span{
-        width: 0px;
-        transition: width .2s ease;
-    }
-    .ivu-menu-submenu-title,.collapsed-menu i{
-        transform: translateX(5px);
-        transition: font-size .2s ease .2s, transform .2s ease .2s;
-        vertical-align: middle;
-        font-size: 22px;
-        margin-top:5px;
-    }
 </style>

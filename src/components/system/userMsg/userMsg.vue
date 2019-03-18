@@ -223,7 +223,7 @@
                 // 保存取到的所有数据
                 this.deptdata =  this.utils.buildDeptTree(res);
             })
-            fetch("http://18.4.18.5:8081/role/roleTreeList", {
+            fetch("http://localhost:8081/role/roleTreeList", {
                 method: "POST",
                 headers: {//fetch请求头
                     "Content-Type":"application/x-www-form-urlencoded; charset=UTF-8"

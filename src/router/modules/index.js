@@ -1,4 +1,5 @@
 // import userManager from '@/router/modules/userManager'
+import tables from './tables'
 export default {
     path: '/index', name: 'index', component: resolve => require(['@/components/index/index'], resolve), meta: {
         title: '首页',
@@ -57,6 +58,8 @@ export default {
                 keepAlive: true,
                 isLogin: true
             },
-        }
+        },
+        tables
+
     ]
 }

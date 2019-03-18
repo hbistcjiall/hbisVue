@@ -45,7 +45,7 @@
             }
         },
         created(){
-            fetch("http://18.4.18.5:8081/dept/treeView", {
+            fetch("http://localhost:8081/dept/treeView", {
                 method: "POST",
                 headers: {//fetch请求头
                     "Content-Type":"application/x-www-form-urlencoded; charset=UTF-8"
