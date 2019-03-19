@@ -22,6 +22,9 @@
 <script>
     export default {
         name:'addRole',
+        props:{
+            url:String
+        },
         data () {
             return {
                 roledata: [],
@@ -46,7 +49,7 @@
             }
         },
         created(){
-            fetch("http://18.4.22.0:8081/dept/tree", {
+            fetch(this.url+"/dept/tree", {
                 method: "POST",
                 headers: {//fetch请求头
                     "Content-Type":"application/x-www-form-urlencoded; charset=UTF-8"

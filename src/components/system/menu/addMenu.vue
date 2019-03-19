@@ -27,6 +27,9 @@
 <script>
     export default {
         name:'addMenu',
+        props:{
+            url:String
+        },
         data () {
             return {
                 menuData: [],
@@ -58,7 +61,7 @@
             }
         },
         created(){
-            fetch("http://18.4.22.0:8081/menu/selectMenuTreeList", {
+            fetch(this.url+"/menu/selectMenuTreeList", {
                 method: "POST",
                 headers: {//fetch请求头
                     "Content-Type":"application/x-www-form-urlencoded; charset=UTF-8"

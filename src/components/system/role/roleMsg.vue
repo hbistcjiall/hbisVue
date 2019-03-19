@@ -190,7 +190,7 @@
                     render: (h) => {
                         return h(addRole, {
                             props: {
-
+                                url:this.$store.state.fetchPath
                             },
                             on: {
                                 name: (name) => {
