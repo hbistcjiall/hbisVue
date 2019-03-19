@@ -210,7 +210,7 @@
         },
         created() {
             this.handleListApproveHistory();
-            fetch("http://18.4.22.0:8081/dept/tree", {
+            fetch(this.$store.state.fetchPath+"/dept/tree", {
                 method: "POST",
                 headers: {//fetch请求头
                     "Content-Type":"application/x-www-form-urlencoded; charset=UTF-8"
@@ -285,7 +285,7 @@
                     render: (h) => {
                         return h(addUser, {
                             props: {
-
+                             url:this.$store.state.fetchPath
                             },
                             on: {
                                 account: (account) => {
