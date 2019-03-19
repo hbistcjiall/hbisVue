@@ -1,7 +1,13 @@
 <template>
     <div>
-        <DatePicker type="year" placeholder="年份" v-model="year" style="width: 200px;margin-right:10px;"></DatePicker>
-        <Input placeholder="责任单位名称" style="width: 120px" v-model="dictData.companyname"/>
+        <DatePicker type="year" placeholder="年份" v-model="year" style="width: 120px;margin-right:10px;"></DatePicker>
+
+        <Select style="width:200px;margin-right:10px;" placeholder="请输入责任单位名称" v-model="dictData.code">
+            <Option v-for="item in list" :value="item.code" :key="item.code">
+            {{item.name }}
+            </Option>
+        </Select>
+
         <Button type="primary" @click="search" style="magin-left:20px" icon="ios-search">查询</Button>
         <Button type="primary" @click="addNew" style="magin-left:20px" icon ="ios-add">新增</Button>
         <!--<Button type="primary" @click="downLoadTab" style="magin-left:20px" icon="ios-download-outline">导出</Button>-->
@@ -15,16 +21,6 @@
             </template>
         </Table>
         <Page :total="dataCount" :page-size="pageSize" show-total show-elevator show-sizer class="paging" @on-change="changepage" style="margin-top:20px;"></Page>
-        <!--<Modal v-model="updModal" title="责任单位管理" :closable='false' @on-ok="updok">-->
-            <!--<Form :model="updformValidate" :rules="updruleValidate" :label-width="90">-->
-                <!--<FormItem label="编码" prop="code">-->
-                    <!--<Input v-model="updformValidate.code" placeholder="请输入编码" readonly></Input>-->
-                <!--</FormItem>-->
-                <!--<FormItem label="责任单位名称" prop="companyname">-->
-                    <!--<Input v-model="updformValidate.companyname" placeholder="请输入责任单位名称"></Input>-->
-                <!--</FormItem>-->
-            <!--</Form>-->
-        <!--</Modal>-->
     </div>
 
 </template>
@@ -163,6 +159,21 @@
                     ]
                 },
                 uproledata:[],
+
+                list : [
+                    { name: '热板公司', code: "001" },
+                    { name: '冷板公司', code: "002" },
+                    { name: '宽厚板公司', code: "003" },
+                    { name: '棒线公司', code: "004" },
+                    { name: '型材公司', code: "005" },
+                    { name: '唐钢分公司', code: "006" },
+                    { name: '邯钢分公司', code: "007" },
+                    { name: '宣钢分公司', code: "008" },
+                    { name: '承钢分公司', code: "009" },
+                    { name: '舞钢分公司', code: "010" },
+                    { name: '石钢公司', code: "011" },
+                    { name: '衡板公司', code: "012" },
+                ]
             }
         },
         created() {
