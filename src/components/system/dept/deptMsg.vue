@@ -173,7 +173,7 @@
                     render: (h) => {
                         return h(addDept, {
                             props: {
-
+                                url:this.$store.state.fetchPath
                             },
                             on: {
                                 simpleName: (simpleName) => {

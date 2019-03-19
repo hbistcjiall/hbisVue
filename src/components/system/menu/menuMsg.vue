@@ -154,7 +154,7 @@
         },
         created() {
             this.handleListApproveHistory();
-            fetch("http://18.4.22.0:8081/menu/selectMenuTreeList", {
+            fetch(this.$store.state.fetchPath +"/menu/selectMenuTreeList", {
                 method: "POST",
                 headers: {//fetch请求头
                     "Content-Type":"application/x-www-form-urlencoded; charset=UTF-8"
@@ -209,7 +209,7 @@
                     render: (h) => {
                         return h(addMenu, {
                             props: {
-
+                                url:this.$store.state.fetchPath
                             },
                             on: {
                                 name: (name) => {

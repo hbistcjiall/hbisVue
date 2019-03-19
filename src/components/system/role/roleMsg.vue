@@ -34,7 +34,7 @@
             </Form>
         </Modal>
         <Modal v-model="setModal" title="权限配置" :closable='false' @on-ok="roleok">
-            <Tree :data="roleDatatree" ref="tree" show-checkbox check-strictly></Tree>
+            <Tree :data="roleDatatree" ref="tree" show-checkbox ></Tree>
             <!--@on-check-change="checkRole"-->
         </Modal>
     </div>
@@ -190,7 +190,7 @@
                     render: (h) => {
                         return h(addRole, {
                             props: {
-
+                                url:this.$store.state.fetchPath
                             },
                             on: {
                                 name: (name) => {
