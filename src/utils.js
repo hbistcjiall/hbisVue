@@ -137,6 +137,5 @@ export default {
     formatMonthEnd,
     formatYearStart,
     formatYearEnd,
-    formatMonth,
     buildselTree
 };
