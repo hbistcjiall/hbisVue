@@ -1,16 +1,16 @@
 <template>
     <div>
         <Input placeholder="责任单位名称" style="width: 300px" v-model="dictData.companyname"/>
-        <Button type="primary" @click="search" style="magin-left:20px" icon="ios-search">查询</Button>
-        <Button type="primary" @click="addNew" style="magin-left:20px" icon ="ios-add">新增</Button>
+        <Button @click="search" style="magin-left:20px;" icon="ios-search">查询</Button>
+        <Button @click="addNew" style="magin-left:20px;" icon ="ios-add">新增</Button>
         <!--<Button type="primary" @click="downLoadTab" style="magin-left:20px" icon="ios-download-outline">导出</Button>-->
         <Table border stripe :columns="columns12" :data="fecthdata6" style="margin-top: 20px">
             <template slot-scope="{ row }" slot="name">
                 <strong>{{ row.name }}</strong>
             </template>
             <template slot-scope="{row}" slot="action">
-                <Button type="primary" size="small" style="margin-right: 5px" @click="updD(row)">修改</Button>
-                <Button type="error" size="small" @click="remove(row)">删除</Button>
+                <Button size="small" style="margin-right: 5px" @click="updD(row)">修改</Button>
+                <Button size="small" @click="remove(row)" style="background:#ff6969;color:#fff;">删除</Button>
             </template>
         </Table>
         <Page :total="dataCount" :page-size="pageSize" show-total show-elevator show-sizer class="paging" @on-change="changepage" style="margin-top:20px;"></Page>
@@ -19,7 +19,7 @@
                 <FormItem label="编码" prop="code">
                     <Input v-model="updformValidate.code" placeholder="请输入编码" readonly></Input>
                 </FormItem>
-                <FormItem label="责任单位名称" prop="companyname">
+                <FormItem label="责任单位" prop="companyname">
                     <Input v-model="updformValidate.companyname" placeholder="请输入责任单位名称"></Input>
                 </FormItem>
             </Form>
@@ -44,7 +44,6 @@
                 },
                 formValidate: {
                     companyname:'',
-                    code:'',
                 },
                 // 初始化信息总条数
                 dataCount: 0,
@@ -84,9 +83,6 @@
                 updruleValidate: {
                     name: [
                         { required: true, message: '名称', trigger: 'blur' }
-                    ],
-                    dictTypeId:[
-                        { required: true, message: 'id', trigger: 'blur' }
                     ],
                     code:[
                         { required: true, message: '编码', trigger: 'blur' }
@@ -143,9 +139,6 @@
                                 companyname: (name) => {
                                     this.formValidate.companyname=name
                                 },
-                                code: (code) => {
-                                    this.formValidate.code=code
-                                }
                             }
                         })
                     },
@@ -187,7 +180,6 @@
                             })
                     }
                 });
-
             },
             updD(r){
                 this.updModal = true;
@@ -222,4 +214,12 @@
     .userbtn{
         margin-right:10px;
     }
+    button{
+        background: #3497db;
+        color:#fff;
+    }
+    table button{
+         background: #f2f4f7;
+         color:#546c8c;
+     }
 </style>

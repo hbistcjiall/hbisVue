@@ -1,9 +1,15 @@
 <template>
     <div>
-        <DatePicker type="year" placeholder="年份" v-model="year" style="width: 200px;margin-right:10px;"></DatePicker>
-        <Input placeholder="责任单位名称" style="width: 120px" v-model="dictData.companyname"/>
-        <Button type="primary" @click="search" style="magin-left:20px" icon="ios-search">查询</Button>
-        <Button type="primary" @click="addNew" style="magin-left:20px" icon ="ios-add">新增</Button>
+        <DatePicker type="year" placeholder="年份" v-model="year" style="width: 120px;margin-right:10px;"></DatePicker>
+
+        <Select style="width:200px;margin-right:10px;" placeholder="请输入责任单位名称" v-model="dictData.code">
+            <Option v-for="item in list" :value="item.value" :key="item.value">
+            {{item.label }}
+            </Option>
+        </Select>
+
+        <Button @click="search" style="magin-left:20px;" icon="ios-search">查询</Button>
+        <Button @click="addNew" style="magin-left:20px;" icon ="ios-add">新增</Button>
         <!--<Button type="primary" @click="downLoadTab" style="magin-left:20px" icon="ios-download-outline">导出</Button>-->
         <Table border stripe :columns="columns12" :data="fecthdata6" style="margin-top: 20px">
             <template slot-scope="{ row }" slot="name">
@@ -11,20 +17,10 @@
             </template>
             <template slot-scope="{row}" slot="action">
                 <!--<Button type="primary" size="small" style="margin-right: 5px" @click="updD(row)">新增</Button>-->
-                <Button type="error" size="small" @click="remove(row)">删除</Button>
+                <Button size="small" style="background:#ff6969;color:#fff;" @click="remove(row)">删除</Button>
             </template>
         </Table>
         <Page :total="dataCount" :page-size="pageSize" show-total show-elevator show-sizer class="paging" @on-change="changepage" style="margin-top:20px;"></Page>
-        <!--<Modal v-model="updModal" title="责任单位管理" :closable='false' @on-ok="updok">-->
-            <!--<Form :model="updformValidate" :rules="updruleValidate" :label-width="90">-->
-                <!--<FormItem label="编码" prop="code">-->
-                    <!--<Input v-model="updformValidate.code" placeholder="请输入编码" readonly></Input>-->
-                <!--</FormItem>-->
-                <!--<FormItem label="责任单位名称" prop="companyname">-->
-                    <!--<Input v-model="updformValidate.companyname" placeholder="请输入责任单位名称"></Input>-->
-                <!--</FormItem>-->
-            <!--</Form>-->
-        <!--</Modal>-->
     </div>
 
 </template>
@@ -163,10 +159,28 @@
                     ]
                 },
                 uproledata:[],
+
+                list : []
             }
         },
         created() {
             this.handleListApproveHistory();
+            fetch(this.$store.state.fetchPath + "/TargetManage/selectlist", {
+                method: "POST",
+                headers: {//fetch请求头
+                    "Content-Type":"application/x-www-form-urlencoded; charset=UTF-8"
+                },
+                body: '',
+                credentials:'include'
+            })
+                .then((res) => {
+                    return res.text();
+                }).then((res) => {
+                res = res.length>0?JSON.parse(res):[];
+                // window.console.log(res)
+                // 保存取到的所有数据
+                this.list =  this.utils.buildselTree(res);
+            })
         },
         methods: {
             // 获取日志记录信息
@@ -209,7 +223,7 @@
                     render: (h) => {
                         return h(addMbmxgl, {
                             props: {
-
+                                url:this.$store.state.fetchPath
                             },
                             on: {
                                 year: (year) => {
@@ -329,5 +343,13 @@
     }
     .userbtn{
         margin-right:10px;
+    }
+    button{
+        background: #3497db;
+        color:#fff;
+    }
+    table button{
+        background: #f2f4f7;
+        color:#546c8c;
     }
 </style>

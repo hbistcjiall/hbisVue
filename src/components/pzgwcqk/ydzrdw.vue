@@ -27,7 +27,7 @@
                     </FormItem>
                 </Col>
                 <Col span="4">
-                    <Button type="info" @click="getList()">查询</Button>
+                    <Button @click="getList()">查询</Button>
                 </Col>
             </Row>
         </Form>
@@ -126,5 +126,8 @@
 </script>
 
 <style scoped>
-
+    button{
+        background: #3497db;
+        color:#fff;
+    }
 </style>

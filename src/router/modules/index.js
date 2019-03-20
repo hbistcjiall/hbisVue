@@ -60,7 +60,27 @@ const indexchild=[
         name: 'dict',
         component: resolve => require(['@/components/system/dict/dictMsg'], resolve),
         meta: {
-            title: '菜单管理',
+            title: '字典管理',
+            keepAlive: true,
+            isLogin: true
+        },
+    },
+    {
+        path: '/loginLog',
+        name: 'loginLog',
+        component: resolve => require(['@/components/system/loginLog'], resolve),
+        meta: {
+            title: '登录日志',
+            keepAlive: true,
+            isLogin: true
+        },
+    },
+    {
+        path: '/log',
+        name: 'log',
+        component: resolve => require(['@/components/system/log'], resolve),
+        meta: {
+            title: '登录日志',
             keepAlive: true,
             isLogin: true
         },
