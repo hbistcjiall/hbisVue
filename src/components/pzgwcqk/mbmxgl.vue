@@ -8,8 +8,8 @@
             </Option>
         </Select>
 
-        <Button type="primary" @click="search" style="magin-left:20px" icon="ios-search">查询</Button>
-        <Button type="primary" @click="addNew" style="magin-left:20px" icon ="ios-add">新增</Button>
+        <Button type="Info" @click="search" style="magin-left:20px" icon="ios-search">查询</Button>
+        <Button type="Info" @click="addNew" style="magin-left:20px" icon ="ios-add">新增</Button>
         <!--<Button type="primary" @click="downLoadTab" style="magin-left:20px" icon="ios-download-outline">导出</Button>-->
         <Table border stripe :columns="columns12" :data="fecthdata6" style="margin-top: 20px">
             <template slot-scope="{ row }" slot="name">

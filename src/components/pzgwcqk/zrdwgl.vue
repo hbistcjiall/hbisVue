@@ -1,15 +1,15 @@
 <template>
     <div>
         <Input placeholder="责任单位名称" style="width: 300px" v-model="dictData.companyname"/>
-        <Button type="primary" @click="search" style="magin-left:20px" icon="ios-search">查询</Button>
-        <Button type="primary" @click="addNew" style="magin-left:20px" icon ="ios-add">新增</Button>
+        <Button type="Info" @click="search" style="magin-left:20px" icon="ios-search">查询</Button>
+        <Button type="Info" @click="addNew" style="magin-left:20px" icon ="ios-add">新增</Button>
         <!--<Button type="primary" @click="downLoadTab" style="magin-left:20px" icon="ios-download-outline">导出</Button>-->
         <Table border stripe :columns="columns12" :data="fecthdata6" style="margin-top: 20px">
             <template slot-scope="{ row }" slot="name">
                 <strong>{{ row.name }}</strong>
             </template>
             <template slot-scope="{row}" slot="action">
-                <Button type="primary" size="small" style="margin-right: 5px" @click="updD(row)">修改</Button>
+                <Button type="Warning" size="small" style="margin-right: 5px" @click="updD(row)">修改</Button>
                 <Button type="error" size="small" @click="remove(row)">删除</Button>
             </template>
         </Table>
