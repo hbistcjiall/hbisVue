@@ -1,5 +1,5 @@
 <template>
-    <Menu width="180px" ref="side_menu" :theme="theme3" @on-open-change="getParentName" @on-select="getName" accordion>
+    <Menu width="180px" ref="side_menu" @on-open-change="getParentName" @on-select="getName" accordion>
         <div v-for="(item,index) of menulist" :key="index">
             <MenuItem v-if="!item.children" :name="item.name">{{item.name}}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</MenuItem>
             <Submenu v-if="item.children"  :name="item.name" >
@@ -18,7 +18,6 @@
         name:'menuList',
         data () {
             return {
-                theme3: 'dark',
                 menulist:JSON.parse(localStorage.getItem('Menulist')),
                 getNames:[],
                 layout:'',
@@ -47,4 +46,15 @@
     }
 </script>
 <style scoped>
+    .ivu-menu-light{
+        background-color: #3491ce;
+        color: #fff;
+        font-weight: bold;
+    }
+    .ivu-menu-item span{
+        color: #fff;
+    }
+    .ivu-menu-light.ivu-menu-vertical .ivu-menu-item-active:not(.ivu-menu-submenu){
+        background-color: #3069a0;
+    }
 </style>

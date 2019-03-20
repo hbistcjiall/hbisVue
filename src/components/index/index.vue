@@ -1,4 +1,7 @@
 <style scoped>
+    .ivu-layout-header{
+        background-color: #0176c2;
+    }
     .layout{
         border: 1px solid #d7dde4;
         background: #f5f7f9;
@@ -8,16 +11,16 @@
     }
     .layout-logo{
         width: 100px;
-        height: 30px;
-        background: #5b6270;
+        height: 55px;
         border-radius: 3px;
+        top: 5px;
         float: left;
         position: relative;
-        top: 15px;
-        left: 20px;
-        line-height: 30px;
-        color:#ffffff;
-        text-align: center;
+        background-image: url("../../assets/indexImg/indexLog.jpg");
+        background-size:100% 100%;
+    }
+    .ivu-menu-horizontal{
+        height: 65px;
     }
     .layout-nav{
         width: 420px;
@@ -25,8 +28,13 @@
         margin-right: 20px;
     }
     .layout-header-bar{
-        background: #fff;
+        width: 100%;
+        height: 30px;
+        background-color: #f2f4f7;
         box-shadow: 0 1px 1px rgba(0,0,0,.1);
+    }
+    .ivu-layout-sider{
+        background-color: #3491ce;
     }
     .menu-item span{
         display: inline-block;
@@ -55,18 +63,29 @@
     }
 </style>
 <template>
+
     <div class="layout">
         <Layout>
-            <Sider breakpoint="md" v-model="isCollapsed" :width="180">
-               <menuList/>
-            </Sider>
+            <Header>
+                <Menu mode="horizontal" active-name="1" style="background-color: #0176c2">
+                    <div class="layout-logo"></div>
+                    <div class="layout-nav">
+                        <Button type="info" style="float: right;margin-top: 14px" @click="loginOut()">退 出</Button>
+                    </div>
+                </Menu>
+            </Header>
             <Layout>
-                <Header class="layout-header-bar">
+                <Sider breakpoint="md" v-model="isCollapsed" :width="180">
+                    <menuList/>
+                </Sider>
+                <Layout>
+                    <Header class="layout-header-bar">
                     <headerList/>
-                </Header>
-                <Content :style="{margin: '2px',padding:'20px', background: '#fff', minHeight:myheight}">
-                <contentList/>
-                </Content>
+                    </Header>
+                    <Content :style="{margin: '2px',padding:'20px', background: '#fff', minHeight:myheight}">
+                        <contentList/>
+                    </Content>
+                </Layout>
             </Layout>
         </Layout>
     </div>
@@ -80,13 +99,39 @@
         data () {
             return {
                 isCollapsed: false,
-                myheight:document.documentElement.clientHeight-110+"px"
+                myheight:document.documentElement.clientHeight-110+"px",
+                loginOutData:{
+                    username:'',
+                    password:'',
+                    remember: ''
+                }
             };
         },
         components:{
             menuList,
             contentList,
             headerList
+        },
+        methods:{
+            loginOut(){
+                fetch(this.$store.state.fetchPath + "/logout", {
+                    method: "get",
+                    headers: this.$store.state.fetchHeader,
+                    // body: '',
+                    credentials:'include'
+                })
+                    .then((res) => {
+                        return res.text();
+                    }).then((res) => {
+                    res = res.length>0?JSON.parse(res):[];
+                    this.$store.commit('setHeaders',this.headerss);
+                    this.loginOutData.username =res.userName;
+                    this.loginOutData.password =res.password;
+                    sessionStorage.setItem("Flag", "");
+                    this.$Message.success("请重新登录！");
+                    return this.$router.push({name:"login",params:this.loginOutData});
+                })
+            }
         }
     }
 </script>
