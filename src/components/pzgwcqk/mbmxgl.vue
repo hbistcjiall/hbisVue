@@ -3,8 +3,8 @@
         <DatePicker type="year" placeholder="年份" v-model="year" style="width: 120px;margin-right:10px;"></DatePicker>
 
         <Select style="width:200px;margin-right:10px;" placeholder="请输入责任单位名称" v-model="dictData.code">
-            <Option v-for="item in list" :value="item.code" :key="item.code">
-            {{item.name }}
+            <Option v-for="item in list" :value="item.value" :key="item.value">
+            {{item.label }}
             </Option>
         </Select>
 
@@ -160,24 +160,27 @@
                 },
                 uproledata:[],
 
-                list : [
-                    { name: '热板公司', code: "001" },
-                    { name: '冷板公司', code: "002" },
-                    { name: '宽厚板公司', code: "003" },
-                    { name: '棒线公司', code: "004" },
-                    { name: '型材公司', code: "005" },
-                    { name: '唐钢分公司', code: "006" },
-                    { name: '邯钢分公司', code: "007" },
-                    { name: '宣钢分公司', code: "008" },
-                    { name: '承钢分公司', code: "009" },
-                    { name: '舞钢分公司', code: "010" },
-                    { name: '石钢公司', code: "011" },
-                    { name: '衡板公司', code: "012" },
-                ]
+                list : []
             }
         },
         created() {
             this.handleListApproveHistory();
+            fetch(this.$store.state.fetchPath + "/TargetManage/selectlist", {
+                method: "POST",
+                headers: {//fetch请求头
+                    "Content-Type":"application/x-www-form-urlencoded; charset=UTF-8"
+                },
+                body: '',
+                credentials:'include'
+            })
+                .then((res) => {
+                    return res.text();
+                }).then((res) => {
+                res = res.length>0?JSON.parse(res):[];
+                // window.console.log(res)
+                // 保存取到的所有数据
+                this.list =  this.utils.buildselTree(res);
+            })
         },
         methods: {
             // 获取日志记录信息
@@ -220,7 +223,7 @@
                     render: (h) => {
                         return h(addMbmxgl, {
                             props: {
-
+                                url:this.$store.state.fetchPath
                             },
                             on: {
                                 year: (year) => {

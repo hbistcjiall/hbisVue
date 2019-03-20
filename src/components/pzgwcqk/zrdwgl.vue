@@ -19,7 +19,7 @@
                 <FormItem label="编码" prop="code">
                     <Input v-model="updformValidate.code" placeholder="请输入编码" readonly></Input>
                 </FormItem>
-                <FormItem label="责任单位名称" prop="companyname">
+                <FormItem label="责任单位" prop="companyname">
                     <Input v-model="updformValidate.companyname" placeholder="请输入责任单位名称"></Input>
                 </FormItem>
             </Form>
@@ -44,7 +44,6 @@
                 },
                 formValidate: {
                     companyname:'',
-                    code:'',
                 },
                 // 初始化信息总条数
                 dataCount: 0,
@@ -84,9 +83,6 @@
                 updruleValidate: {
                     name: [
                         { required: true, message: '名称', trigger: 'blur' }
-                    ],
-                    dictTypeId:[
-                        { required: true, message: 'id', trigger: 'blur' }
                     ],
                     code:[
                         { required: true, message: '编码', trigger: 'blur' }
@@ -143,9 +139,6 @@
                                 companyname: (name) => {
                                     this.formValidate.companyname=name
                                 },
-                                code: (code) => {
-                                    this.formValidate.code=code
-                                }
                             }
                         })
                     },
@@ -187,7 +180,6 @@
                             })
                     }
                 });
-
             },
             updD(r){
                 this.updModal = true;

@@ -68,6 +68,24 @@ const roleTree = (tree) => {
     return result;
 
 }
+const buildselTree = (tree) => {
+    const result = []
+    // 遍历 tree
+    tree.forEach((item) => {
+        // 解构赋值
+        let {
+            CODE: value,
+            NAME: label,
+        } = item
+
+
+        result.push({
+            value,
+            label,
+        })
+    })
+    return result;
+}
 const buildRoleTree = (list) => {
     let map = {};
     let val = [];
@@ -99,5 +117,6 @@ export default {
     buildRoleTree,
     roleTree,
     mergeRow,
-    formatMonth
+    formatMonth,
+    buildselTree
 };
