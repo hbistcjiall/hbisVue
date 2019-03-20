@@ -1,13 +1,31 @@
 <template>
     <div>
-        <Form :label-width="180">
+        <Form :label-width="50">
             <Row>
-                <Col span="6">
-                    <FormItem label="月份：" style="width:150px">
-                        <DatePicker type="month" placeholder="请选择月份"  v-model="month" style="width:120px"></DatePicker>
+                <Col span="6" v-if="!switchTime">
+                    <FormItem label="年份：" style="width:250px">
+                        <DatePicker type="year" placeholder="请选择年份" :editable="false" :clearable="false"  v-model="year" style="width:150px"></DatePicker>
                     </FormItem>
                 </Col>
-                <Col span="6">
+                <Col span="4"  v-if="switchTime">
+                    <FormItem label="月份：" style="width:150px">
+                        <DatePicker type="month" placeholder="起始月份" :editable="false" :clearable="false"  v-model="startTime" style="width:150px"></DatePicker>
+                    </FormItem>
+                </Col>
+                <Col span="4" v-if="switchTime">
+                    <FormItem style="width:150px">
+                        <DatePicker type="month" placeholder="终止月份" :editable="false" :clearable="false"  v-model="endTime" style="width:150px"></DatePicker>
+                    </FormItem>
+                </Col>
+                <Col span="3">
+                    <FormItem style="width:50px">
+                        <i-switch v-model="switchTime" @on-change="changeSwitch">
+                            <span slot="open">年</span>
+                            <span slot="close">月</span>
+                        </i-switch>
+                    </FormItem>
+                </Col>
+                <Col span="5">
                     <FormItem label="单位：" style="width:150px">
                         <Select v-model="dw" style="width:120px" placeholder="请选择单位">
                             <Option value="">全部</Option>
@@ -22,7 +40,7 @@
                         </Select>
                     </FormItem>
                 </Col>
-                <Col span="8">
+                <Col span="4">
                     <FormItem label="产线：" style="width:150px">
                         <Select style="width:120px"  v-model="cx" placeholder="请选择产线">
                             <Option value="cx1">产线一</Option>
@@ -44,8 +62,11 @@
         name: "ydwcqk_cx",
         data() {
             return {
+                switchTime:true,
+                year:new Date(),
+                startTime:new Date(),
+                endTime:this.utils.formatMonthEnd(),
                 dw:'',
-                month:'',
                 cx:'',
                 columns: [{
                     title: '单位',
@@ -173,18 +194,21 @@
             this.getList();
         },
         methods: {
+            changeSwitch(){
+                let date=new Date();
+                this.switchTime?(this.startTime=date,this.endTime=this.utils.formatMonthEnd()):this.year=date;
+            },
             getList() {
-
-                let params={
-                    zt:1// 1：按月查询,2:按年查询
-                };
+                let params={};
                 this.dw?params.dw=this.dw:'';
                 this.cx?params.cx=this.cx:'';
-                this.month?params.month=this.utils.formatMonth(this.month):'';
+                let startTime='startTime=';
+                let endTime='&endTime=';
+                this.switchTime?(startTime=startTime+this.utils.formatMonthStart(this.startTime),endTime=endTime+this.utils.formatMonthStart(this.endTime)):(startTime=startTime+ this.utils.formatYearStart(this.year),endTime=endTime+this.utils.formatYearEnd(this.year));
                 fetch(this.$store.state.fetchPath + "/scm-steel-settle/getcx", {
                     method: "POST",
                     headers: this.$store.state.fetchHeader,
-                    body: this.utils.formatParams(params),
+                    body: startTime+endTime+'&'+this.utils.formatParams(params),
                     credentials: 'include'
                 }).then((res) => {
                     return res.text();
