@@ -57,4 +57,7 @@
     .ivu-menu-light.ivu-menu-vertical .ivu-menu-item-active:not(.ivu-menu-submenu){
         background-color: #3069a0;
     }
+    .ivu-menu-vertical li:hover span{
+        color:#ffffff;
+    }
 </style>

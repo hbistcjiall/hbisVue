@@ -135,3 +135,9 @@
         }
     }
 </script>
+<style>
+.ivu-icon-ios-arrow-down:before {
+        content: "\F116";
+        color:#fff;
+    }
+</style>
