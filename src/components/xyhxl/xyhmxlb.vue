@@ -39,10 +39,10 @@
                 </FormItem>
             </Col>
             <Col span="6">
-                <Button type="primary" @click="search" style="magin-left:20px" >查询</Button>
-                <Button type="primary" @click="clearall" style="magin-left:20px">清空</Button>
-                <Button type="primary" @click="checkedel" style="magin-left:20px">批量删除</Button>
-                <Button type="primary" @click="downLoad" style="magin-left:20px">导出</Button>
+                <Button type="info" @click="search" style="magin-left:20px" >查询</Button>
+                <Button type="info" @click="clearall" style="magin-left:20px">清空</Button>
+                <Button type="info" @click="checkedel" style="magin-left:20px">批量删除</Button>
+                <Button type="info" @click="downLoad" style="magin-left:20px">导出</Button>
             </Col>
         </Row>
         </Form>
@@ -51,7 +51,7 @@
                 <strong>{{ row.name }}</strong>
             </template>
             <template slot-scope="{row}" slot="action">
-                <Button type="primary" size="small" style="margin-right: 5px" @click="updD(row)">修改</Button>
+                <Button type="warning" size="small" style="margin-right: 5px" @click="updD(row)">修改</Button>
                 <Button type="error" size="small" @click="remove(row)">删除</Button>
             </template>
         </Table>

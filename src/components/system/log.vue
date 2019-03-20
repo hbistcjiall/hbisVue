@@ -7,14 +7,14 @@
             <Option value=1>业务日志</Option>
             <Option value=2>异常日志</Option>
         </Select>
-        <Button type="primary" @click="search" style="magin-left:20px" icon="ios-search">搜索</Button>
-        <Button type="primary" @click="clearAll" style="magin-left:20px">清空日志</Button>
+        <Button type="info" @click="search" style="magin-left:20px" icon="ios-search">搜索</Button>
+        <Button type="error" @click="clearAll" style="magin-left:20px">清空日志</Button>
         <Table border stripe :columns="columns12" :data="fecthdata6" style="margin-top: 20px">
             <template slot-scope="{ row }" slot="name">
                 <strong>{{ row.name }}</strong>
             </template>
             <template slot-scope="{ row }" slot="action">
-                <Button type="primary" size="small" style="margin-right: 5px" @click="searchThis(row)">查看详情</Button>
+                <Button type="info" size="small" style="margin-right: 5px" @click="searchThis(row)">查看详情</Button>
             </template>
         </Table>
         <Page :total="dataCount" :page-size="pageSize" show-total show-elevator show-sizer class="paging" @on-change="changepage" style="margin-top:20px;"></Page>

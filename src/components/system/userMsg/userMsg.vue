@@ -2,17 +2,17 @@
     <div>
     <Input placeholder="账号/姓名/手机号" style="width: 300px" v-model="MsgData.name"/>
         <DatePicker type="datetimerange" @on-change="serTime" format="yyyy-MM-dd" placeholder="请选择查询时间" style="width: 300px;margin-right:20px"></DatePicker>
-        <Button type="primary" @click="search" style="magin-left:20px" icon="ios-search">搜索</Button>
-        <Button type="primary" @click="addNew" style="magin-left:20px" icon ="ios-add">添加</Button>
+        <Button type="info" @click="search" style="magin-left:20px" icon="ios-search">搜索</Button>
+        <Button type="info" @click="addNew" style="magin-left:20px" icon ="ios-add">添加</Button>
         <!--<Button type="primary" @click="downLoadTab" style="magin-left:20px" icon="ios-download-outline">导出</Button>-->
     <Table border stripe :columns="columns12" :data="fecthdata6" style="margin-top: 20px">
         <template slot-scope="{ row }" slot="name">
             <strong>{{ row.name }}</strong>
         </template>
         <template slot-scope="{row}" slot="action">
-            <Button type="primary" size="small" style="margin-right: 5px" @click="updD(row)">编辑</Button>
+            <Button type="warning" size="small" style="margin-right: 5px" @click="updD(row)">编辑</Button>
             <Button type="primary" size="small" style="margin-right: 5px" @click="setUser(row)">分配角色</Button>
-            <Button type="primary" size="small" style="margin-right: 5px" @click="rePassword(row)">重置密码</Button>
+            <Button type="error" size="small" style="margin-right: 5px" @click="rePassword(row)">重置密码</Button>
             <Button type="error" size="small" @click="remove(row)">删除</Button>
         </template>
     </Table>

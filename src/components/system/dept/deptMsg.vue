@@ -1,16 +1,15 @@
 <template>
     <div>
         <Input placeholder="部门名称" style="width: 300px" v-model="deptData.condition"/>
-        <Button type="primary" @click="search" style="magin-left:20px" icon="ios-search">搜索</Button>
-        <Button type="primary" @click="addNew" style="magin-left:20px" icon ="ios-add">添加</Button>
+        <Button type="info" @click="search" style="magin-left:20px" icon="ios-search">搜索</Button>
+        <Button type="info" @click="addNew" style="magin-left:20px" icon ="ios-add">添加</Button>
         <!--<Button type="primary" @click="downLoadTab" style="magin-left:20px" icon="ios-download-outline">导出</Button>-->
         <Table border stripe :columns="columns12" :data="fecthdata6" style="margin-top: 20px">
             <template slot-scope="{ row }" slot="name">
                 <strong>{{ row.name }}</strong>
             </template>
             <template slot-scope="{row}" slot="action">
-                <Button type="primary" size="small" style="margin-right: 5px" @click="updD(row)">编辑</Button>
-                <!--<Button type="primary" size="small" style="margin-right: 5px" @click="setRole(row)">权限配置</Button>-->
+                <Button type="warning" size="small" style="margin-right: 5px" @click="updD(row)">编辑</Button>
                 <Button type="error" size="small" @click="remove(row)">删除</Button>
             </template>
         </Table>
