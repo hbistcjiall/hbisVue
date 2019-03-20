@@ -103,11 +103,27 @@ const format = (date) => {
     let month = (newdate.getMonth() + 1) < 10 ? '0' + (newdate.getMonth() + 1) : (newdate.getMonth() + 1);
     return newdate.getFullYear() + '-' + month + '-' + newdate.getDate();
 };
-const formatMonth = (date) => {
+
+const formatMonthStart = (date) => {
     let newdate = new Date(date);
     let month = (newdate.getMonth() + 1) < 10 ? '0' + (newdate.getMonth() + 1) : (newdate.getMonth() + 1);
-    return newdate.getFullYear() + '-' + month;
+    return newdate.getFullYear() + '-' + month+'-'+'01  00:00:00';
 };
+const formatMonthEnd = (date) => {
+    let newdate = date?new Date(date):new Date();
+    let month = (newdate.getMonth() + 2) < 12 ?'0' + (newdate.getMonth() + 2) : (newdate.getMonth() + 2)!=12?(newdate.getMonth() -9 ):newdate.getMonth() + 2;
+    return newdate.getFullYear() + '-' + month+'-'+'01  00:00:00';
+};
+const formatYearStart = (date) => {
+    let newdate = new Date(date);
+    return newdate.getFullYear() + '-01-01 00:00:00';
+};
+
+const formatYearEnd = (date) => {
+    let newdate = new Date(date);
+    return (newdate.getFullYear()+1) + '-01-01 00:00:00';
+};
+
 
 export default {
     formatParams,
@@ -117,6 +133,10 @@ export default {
     buildRoleTree,
     roleTree,
     mergeRow,
+    formatMonthStart,
+    formatMonthEnd,
+    formatYearStart,
+    formatYearEnd,
     formatMonth,
     buildselTree
 };
