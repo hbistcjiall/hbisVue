@@ -112,4 +112,8 @@
         float:right;
         margin-top:10px;
     }
+    button{
+        background: #3497db;
+        color:#fff;
+    }
 </style>

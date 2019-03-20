@@ -51,8 +51,8 @@
                 <strong>{{ row.name }}</strong>
             </template>
             <template slot-scope="{row}" slot="action">
-                <Button type="warning" size="small" style="margin-right: 5px" @click="updD(row)">修改</Button>
-                <Button type="error" size="small" @click="remove(row)">删除</Button>
+                <Button size="small" style="margin-right: 5px" @click="updD(row)">修改</Button>
+                <Button size="small" @click="remove(row)" style="background:#ff6969;color:#fff;">删除</Button>
             </template>
         </Table>
         <Page :total="dataCount" :page-size="pageSize" show-total show-elevator show-sizer class="paging" @on-change="changepage" style="margin-top:20px;"></Page>
@@ -333,5 +333,9 @@
     }
     FormItem {
         float: left;
+    }
+    table button{
+        background: #f2f4f7;
+        color:#546c8c;
     }
 </style>

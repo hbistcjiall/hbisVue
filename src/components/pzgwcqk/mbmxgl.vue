@@ -8,8 +8,8 @@
             </Option>
         </Select>
 
-        <Button type="Info" @click="search" style="magin-left:20px" icon="ios-search">查询</Button>
-        <Button type="Info" @click="addNew" style="magin-left:20px" icon ="ios-add">新增</Button>
+        <Button @click="search" style="magin-left:20px;" icon="ios-search">查询</Button>
+        <Button @click="addNew" style="magin-left:20px;" icon ="ios-add">新增</Button>
         <!--<Button type="primary" @click="downLoadTab" style="magin-left:20px" icon="ios-download-outline">导出</Button>-->
         <Table border stripe :columns="columns12" :data="fecthdata6" style="margin-top: 20px">
             <template slot-scope="{ row }" slot="name">
@@ -17,7 +17,7 @@
             </template>
             <template slot-scope="{row}" slot="action">
                 <!--<Button type="primary" size="small" style="margin-right: 5px" @click="updD(row)">新增</Button>-->
-                <Button type="error" size="small" @click="remove(row)">删除</Button>
+                <Button size="small" style="background:#ff6969;color:#fff;" @click="remove(row)">删除</Button>
             </template>
         </Table>
         <Page :total="dataCount" :page-size="pageSize" show-total show-elevator show-sizer class="paging" @on-change="changepage" style="margin-top:20px;"></Page>
@@ -343,5 +343,13 @@
     }
     .userbtn{
         margin-right:10px;
+    }
+    button{
+        background: #3497db;
+        color:#fff;
+    }
+    table button{
+        background: #f2f4f7;
+        color:#546c8c;
     }
 </style>

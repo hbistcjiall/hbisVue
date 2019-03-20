@@ -2,16 +2,16 @@
     <div>
         <Input placeholder="菜单名称/编码" style="width: 300px" v-model="menuData.menuName"/>
         <Input placeholder="层级" style="width: 300px" v-model="menuData.level"/>
-        <Button type="info" @click="search" style="magin-left:20px" icon="ios-search">搜索</Button>
-        <Button type="info" @click="addNew" style="magin-left:20px" icon ="ios-add">添加</Button>
+        <Button @click="search" style="magin-left:20px;" icon="ios-search">搜索</Button>
+        <Button @click="addNew" style="magin-left:20px;" icon ="ios-add">添加</Button>
         <!--<Button type="primary" @click="downLoadTab" style="magin-left:20px" icon="ios-download-outline">导出</Button>-->
         <Table border stripe :columns="columns12" :data="fecthdata6" style="margin-top: 20px">
             <template slot-scope="{ row }" slot="name">
                 <strong>{{ row.name }}</strong>
             </template>
             <template slot-scope="{row}" slot="action">
-                <Button type="warning" size="small" style="margin-right: 5px" @click="updD(row)">编辑</Button>
-                <Button type="error" size="small" @click="remove(row)">删除</Button>
+                <Button size="small" style="margin-right: 5px" @click="updD(row)">编辑</Button>
+                <Button size="small" @click="remove(row)" style="background:#ff6969;color:#fff;">删除</Button>
             </template>
         </Table>
         <Page :total="dataCount" :page-size="pageSize" show-total show-elevator show-sizer class="paging" @on-change="changepage" style="margin-top:20px;"></Page>
@@ -316,5 +316,13 @@
     }
     .userbtn{
         margin-right:10px;
+    }
+    button{
+        background: #3497db;
+        color:#fff;
+    }
+    table button{
+        background: #f2f4f7;
+        color:#546c8c;
     }
 </style>
