@@ -60,4 +60,8 @@
     .ivu-menu-vertical li:hover span{
         color:#ffffff;
     }
+    a.ivu-menu-item {
+        color: inherit;
+        background-color:#2679af;
+    }
 </style>
