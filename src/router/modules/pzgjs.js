@@ -27,18 +27,18 @@ export default [
         }
     },
     {
-        path: '/pzgwcqk/zrdwgl',
+        path: '/jcsjgl/zrdwgl',
         name: 'zrdwgl',
-        component: resolve => require(['@/components/pzgwcqk/zrdwgl'], resolve),
+        component: resolve => require(['@/components/jcsjgl/zrdwgl'], resolve),
         meta: {
             title: '责任单位管理',
             isLogin: true
         }
     },
     {
-        path: '/pzgwcqk/mbmxgl',
+        path: '/jcsjgl/mbmxgl',
         name: 'mbmxgl',
-        component: resolve => require(['@/components/pzgwcqk/mbmxgl'], resolve),
+        component: resolve => require(['@/components/jcsjgl/mbmxgl'], resolve),
         meta: {
             title: '目标明细管理',
             isLogin: true

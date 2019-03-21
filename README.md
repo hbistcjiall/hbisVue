@@ -1,29 +1,6 @@
-# hbis
-
-## Project setup
-```
-npm install
-```
-
-### Compiles and hot-reloads for development
-```
-npm run serve
-```
-
-### Compiles and minifies for production
-```
-npm run build
-```
-
-### Run your tests
-```
-npm run test
-```
-
-### Lints and fixes files
-```
-npm run lint
-```
-
-### Customize configuration
-See [Configuration Reference](https://cli.vuejs.org/config/).
+gkfx--概况分析
+index--首页
+jcsjgl--基础数据管理
+pzgjs--品种钢结算
+system--系统管理
+xyhxl--协议户销量
