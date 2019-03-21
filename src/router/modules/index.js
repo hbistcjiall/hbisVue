@@ -1,4 +1,4 @@
-import pzgwcqk from './pzgwcqk'
+import pzgjs from './pzgjs'
 import xyhxl from './xyhxl'
 import gkfx from './gkfx'
 const indexchild=[
@@ -86,7 +86,7 @@ const indexchild=[
         },
     }
 ];
-const childrens=indexchild.concat(pzgwcqk).concat(xyhxl).concat(gkfx);
+const childrens=indexchild.concat(pzgjs).concat(xyhxl).concat(gkfx);
 export default {
     path: '/index', name: 'index', component: resolve => require(['@/components/index/index'], resolve), meta: {
         title: '首页',

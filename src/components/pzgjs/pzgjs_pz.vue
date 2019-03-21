@@ -4,7 +4,7 @@
             <Row>
                 <Col span="6" v-if="!switchTime">
                     <FormItem label="年份：" style="width:250px">
-                        <DatePicker type="year" placeholder="请选择年份" :editable="false" :clearable="false"  v-model="year" style="width:150px"></DatePicker>
+                        <DatePicker type="year"  placeholder="请选择年份" :editable="false" :clearable="false"  v-model="year" style="width:150px"></DatePicker>
                     </FormItem>
                 </Col>
                 <Col span="4"  v-if="switchTime">
@@ -25,27 +25,15 @@
                         </i-switch>
                     </FormItem>
                 </Col>
-                <Col span="5">
-                    <FormItem label="单位：" style="width:150px">
-                        <Select v-model="dw" style="width:120px" placeholder="请选择单位">
+                <Col span="8">
+                    <FormItem label="品种：" style="width:150px">
+                        <Select v-model="pz" style="width:120px" placeholder="请选择品种">
                             <Option value="">全部</Option>
-                            <Option value="9580">唐钢</Option>
-                            <Option value="9727">邯钢</Option>
-                            <Option value="9193">宣钢</Option>
-                            <Option value="9196">承钢</Option>
-                            <Option value="1932">舞钢</Option>
-                            <Option value="8110">石钢</Option>
-                            <Option value="8493">衡板</Option>
-                            <Option value="7778">邯宝</Option>
-                        </Select>
-                    </FormItem>
-                </Col>
-                <Col span="4">
-                    <FormItem label="产线：" style="width:150px">
-                        <Select style="width:120px"  v-model="cx" placeholder="请选择产线">
-                            <Option value="cx1">产线一</Option>
-                            <Option value="cx2">产线二</Option>
-                            <Option value="cx3">产线三</Option>
+                            <Option value="冷板">冷板</Option>
+                            <Option value="热板">热板</Option>
+                            <Option value="棒线">棒线</Option>
+                            <Option value="宽厚板">宽厚板</Option>
+                            <Option value="型带">型带</Option>
                         </Select>
                     </FormItem>
                 </Col>
@@ -59,29 +47,21 @@
 
 <script>
     export default {
-        name: "ydwcqk_cx",
+        name: "pzgjs_pz",
         data() {
             return {
                 switchTime:true,
                 year:new Date(),
                 startTime:new Date(),
                 endTime:this.utils.formatMonthEnd(),
-                dw:'',
-                cx:'',
+                pz:'',
                 columns: [{
-                    title: '单位',
-                    key: 'COMPANYNAME',
+                    title: '品种',
+                    key: 'VARIETY',
                     align: 'center',
                     width: 100,
-                    fixed: 'left',
-                    isMergeRow: true
+                    fixed: 'left'
                 },
-                    {
-                        title: '产线',
-                        key: 'NAME',
-                        align: 'center',
-                        width: 100,
-                    },
                     {
                         title: '内贸总量',
                         key: 'nmzl',
@@ -199,22 +179,27 @@
                 this.switchTime?(this.startTime=date,this.endTime=this.utils.formatMonthEnd()):this.year=date;
             },
             getList() {
-                let params={};
-                this.dw?params.dw=this.dw:'';
-                this.cx?params.cx=this.cx:'';
+
+                let params={
+                };
+                this.pz?params.pz=this.pz:'';
                 let startTime='startTime=';
                 let endTime='&endTime=';
                 this.switchTime?(startTime=startTime+this.utils.formatMonthStart(this.startTime),endTime=endTime+this.utils.formatMonthStart(this.endTime)):(startTime=startTime+ this.utils.formatYearStart(this.year),endTime=endTime+this.utils.formatYearEnd(this.year));
-                fetch(this.$store.state.fetchPath + "/scm-steel-settle/getcx", {
+                fetch(this.$store.state.fetchPath + "/scm-steel-settle/getndpz", {
                     method: "POST",
                     headers: this.$store.state.fetchHeader,
                     body: startTime+endTime+'&'+this.utils.formatParams(params),
                     credentials: 'include'
                 }).then((res) => {
-                    return res.text();
+                    if(res.status!=200){
+                        this.$Message.error('请求失败！');
+                    }else{
+                        return res.text;
+                    }
                 }).then((res) => {
-                    res = res.length > 0 ? JSON.parse(res) : [];
-                    this.data = this.utils.mergeRow(res, 'COMPANYNAME');
+                    res = res && res.length > 0 ? JSON.parse(res) : [];
+                    this.data = res;
                 });
             }
         }
