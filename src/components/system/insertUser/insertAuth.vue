@@ -80,9 +80,13 @@
                 body: '',
                 credentials: 'include'
             }).then((res) => {
-                return res.text();
+                if(res.status!=200){
+                    this.$Message.error('请求失败！');
+                }else{
+                    return res.text();
+                }
             }).then((res) => {
-                res = res.length > 0 ? JSON.parse(res) : [];
+                res = res&&res.length > 0 ? JSON.parse(res) : [];
                 this.groupList = res;
             });
             this.getTreeData();
@@ -95,9 +99,13 @@
                     body: '',
                     credentials: 'include'
                 }).then((res) => {
-                    return res.text();
+                    if(res.status!=200){
+                        this.$Message.error('请求失败！');
+                    }else{
+                        return res.text();
+                    }
                 }).then((res) => {
-                    res = res.length>0?JSON.parse(res):[];
+                    res = res&&res.length>0?JSON.parse(res):[];
                     this.menuData=this.utils.buildTree(res);
                     this.showMenu=true;
                 });
@@ -122,10 +130,14 @@
                         body: this.utils.formatParams({"groupId": this.formValidate.selectGroup}),
                         credentials: 'include'
                     }).then((res) => {
-                        return res.text();
+                        if(res.status!=200){
+                            this.$Message.error('请求失败！');
+                        }else{
+                            return res.text();
+                        }
                     }).then((res) => {
                         this.formValidate.selectRole = "";
-                        res = res.length > 0 ? JSON.parse(res) : [];
+                        res = res&&res.length > 0 ? JSON.parse(res) : [];
                         this.roleList = res;
                     });
                 }
@@ -138,9 +150,13 @@
                         body: this.utils.formatParams({"trId": this.formValidate.selectRole}),
                         credentials: 'include'
                     }).then((res) => {
-                        return res.text();
+                        if(res.status!=200){
+                            this.$Message.error('请求失败！');
+                        }else{
+                            return res.text();
+                        }
                     }).then((res) => {
-                        res = res.length > 0 ? JSON.parse(res) : [];
+                        res = res&&res.length > 0 ? JSON.parse(res) : [];
                         this.menuData = this.utils.buildTree(res);
                     });
 

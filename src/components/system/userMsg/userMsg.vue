@@ -59,8 +59,7 @@
 <script>
     import resetPass from './resetPassword.vue'
     import addUser from './addUser.vue'
-    // import updUser from './updUser.vue'
-    // import setUser from './setUser.vue'
+
     export default {
         name:'userManager',
         data () {
@@ -85,11 +84,9 @@
                 },
                 timePick:'',
                 deptdata:[],
-                // 初始化信息总条数
                 dataCount:0,
-                // 每页显示多少条
                 pageSize: 10,
-                xia: 0, //下一页或者上一页的第一项索引值
+                xia: 0,
                 columns12: [
                     {
                         title: '账号',
@@ -212,34 +209,40 @@
             this.handleListApproveHistory();
             fetch(this.$store.state.fetchPath+"/dept/tree", {
                 method: "POST",
-                headers: {//fetch请求头
+                headers: {
                     "Content-Type":"application/x-www-form-urlencoded; charset=UTF-8"
                 },
                 credentials:'include'
             })
                 .then((res) => {
-                    return res.text();
+                    if(res.status!=200){
+                        this.$Message.error('请求失败！');
+                    }else{
+                        return res.text();
+                    }
                 }).then((res) => {
-                res = res.length>0?JSON.parse(res):[]
-                // 保存取到的所有数据
+                res = res&&res.length>0?JSON.parse(res):[]
                 this.deptdata =  this.utils.roleTree(this.utils.buildRoleTree(res));
             })
             fetch(this.$store.state.fetchPath +"/role/roleTreeList", {
                 method: "POST",
-                headers: {//fetch请求头
+                headers: {
                     "Content-Type":"application/x-www-form-urlencoded; charset=UTF-8"
                 },
                 body: '',
                 credentials: 'include'
             }).then((res) => {
-                return res.text();
+                if(res.status!=200){
+                    this.$Message.error('请求失败！');
+                }else{
+                    return res.text();
+                }
             }).then((res) => {
-                res = res.length>0?JSON.parse(res):[];
+                res = res&&res.length>0?JSON.parse(res):[];
                 this.userData=this.utils.roleTree(this.utils.buildRoleTree(res));
             });
         },
         methods: {
-            // 获取日志记录信息
             handleListApproveHistory() {
                 fetch(this.$store.state.fetchPath + "/mgr/list", {
                     method: "POST",
@@ -248,14 +251,16 @@
                     credentials:'include'
                 })
                 .then((res) => {
-                    return res.text();
+                    if(res.status!=200){
+                        this.$Message.error('请求失败！');
+                    }else{
+                        return res.text();
+                    }
                 }).then((res) => {
-                    res = res.length>0?JSON.parse(res):[]
-                    // 保存取到的所有数据
+                    res = res&&res.length>0?JSON.parse(res):[]
                     this.resDatas =  res.data;
                     this.dataCount =  parseInt(res.count);
                     this.pageSize = parseInt(res.pageSize);
-                    // 初始化显示，小于每页显示条数，全显，大于每页显示条数，取前每页条数显示
                     if(this.dataCount < this.pageSize){
                         this.fecthdata6 = this.resDatas;
                     }else{
@@ -326,7 +331,11 @@
                             credentials:'include'
                         })
                         .then((res) => {
-                            return res.text();
+                            if(res.status!=200){
+                                this.$Message.error('请求失败！');
+                            }else{
+                                return res.text();
+                            }
                         })
                         .then(() => {
                             this.handleListApproveHistory();
@@ -347,11 +356,13 @@
                             credentials:'include'
                         })
                             .then((res) => {
-                                return res.text();
+                                if(res.status!=200){
+                                    this.$Message.error('请求失败！');
+                                }else{
+                                    return res.text();
+                                }
                             })
                             .then(() => {
-                                // res = res.length>0?JSON.parse(res):[];
-                                // this.$Message.error(res.msg);
                                 this.handleListApproveHistory();
                             })
                     }
@@ -367,9 +378,6 @@
                 this.updformValidate.phone = row.PHONE;
                 this.updformValidate.userId = row.USERID
             },
-            // birthdayChange:function() {
-            //     this.updformValidate.birthday = this.utils.format(this.updformValidate.birthday)
-            // },
             depChange(e){
                 let roleCheckarr = []
                 let rolearr = e;
@@ -377,7 +385,6 @@
                     roleCheckarr.push(rolearr[i].id);
                 }
                 this.updformValidate.deptId = roleCheckarr.toString()
-                // this.formValidate.deptId= e[e.length-1];
             },
             updok(){
                 this.updformValidate.birthday = this.utils.format(this.updformValidate.birthday)
@@ -388,7 +395,11 @@
                     credentials:'include'
                 })
                     .then((res) => {
-                        return res.text();
+                        if(res.status!=200){
+                            this.$Message.error('请求失败！');
+                        }else{
+                            return res.text();
+                        }
                     })
                     .then(() => {
                         this.handleListApproveHistory();
@@ -412,10 +423,14 @@
                     credentials:'include'
                 })
                 .then((res) => {
-                    return res.text();
+                    if(res.status!=200){
+                        this.$Message.error('请求失败！');
+                    }else{
+                        return res.text();
+                    }
                 })
                 .then((res) => {
-                    res = res.length>0?JSON.parse(res):[];
+                    res = res&&res.length>0?JSON.parse(res):[];
                     this.$Message.success(res.message);
                     this.handleListApproveHistory();
                 })
@@ -443,10 +458,14 @@
                                 credentials:'include'
                             })
                                 .then((res) => {
-                                    return res.text();
+                                    if(res.status!=200){
+                                        this.$Message.error('请求失败！');
+                                    }else{
+                                        return res.text();
+                                    }
                                 })
                                 .then((res) => {
-                                    res = res.length>0?JSON.parse(res):[];
+                                    res = res&&res.length>0?JSON.parse(res):[];
                                     this.$Message.success(res.message);
                                     this.handleListApproveHistory();
                                 })

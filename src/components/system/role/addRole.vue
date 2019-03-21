@@ -49,16 +49,19 @@
         created(){
             fetch(this.url+"/role/roleTreeList", {
                 method: "POST",
-                headers: {//fetch请求头
+                headers: {
                     "Content-Type":"application/x-www-form-urlencoded; charset=UTF-8"
                 },
                 credentials:'include'
             })
                 .then((res) => {
-                    return res.text();
+                    if(res.status!=200){
+                        this.$Message.error('请求失败！');
+                    }else{
+                        return res.text();
+                    }
                 }).then((res) => {
-                res = res.length>0?JSON.parse(res):[]
-                // 保存取到的所有数据
+                res = res&&res.length>0?JSON.parse(res):[]
                 this.roledata =  this.utils.roleTree(this.utils.buildRoleTree(res));
 
 

@@ -144,9 +144,13 @@
                     credentials:'include'
                 })
                     .then((res) => {
-                        return res.text();
+                        if(res.status!=200){
+                            this.$Message.error('请求失败！');
+                        }else{
+                            return res.text();
+                        }
                     }).then((res) => {
-                    res = res.length>0?JSON.parse(res):[];
+                    res = res&&res.length>0?JSON.parse(res):[];
                     this.$store.commit('setHeaders',this.headerss);
                     this.loginOutData.username =res.userName;
                     this.loginOutData.password =res.password;
