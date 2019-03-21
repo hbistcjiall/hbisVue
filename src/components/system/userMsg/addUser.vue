@@ -34,9 +34,9 @@
             <Input v-model="formValidate.phone" placeholder="请输入电话" @on-change="phoneChange"></Input>
         </FormItem>
         <FormItem label="部门" prop="deptId">
-            <!--<Cascader :data="deptdata" trigger="hover" @on-change="depChange"></Cascader>-->
-            <Tree :data="deptdata" ref="tree" @on-select-change="depChange"></Tree>
+            <div class="textBorder"><Tree :data="deptdata" ref="tree" @on-check-change="depChange" show-checkbox check-strictly multiple></Tree></div>
         </FormItem>
+
     </Form>
 </template>
 <script>
@@ -101,6 +101,7 @@
                     }).then((res) => {
                     res = res&&res.length>0?JSON.parse(res):[]
                     this.deptdata=this.utils.roleTree(this.utils.buildRoleTree(res));
+                    // this.deptdata[0].expand=true;
                 })
             },
             accountChange:function() {
@@ -128,14 +129,35 @@
                 this.$emit('phone', this.formValidate.phone)
             },
             depChange(e){
-                let roleCheckarr = []
-                let rolearr = e;
-                for(var i=0;i<rolearr.length;i++){
-                    roleCheckarr.push(rolearr[i].id);
+                if(this.$refs.tree.getCheckedNodes()){
+                    for(let i=0;i<this.$refs.tree.getCheckedNodes().length;i++){
+                        if(e[0].nodeKey!=this.$refs.tree.getCheckedNodes()[i].nodeKey){
+                            this.$refs.tree.getCheckedNodes()[i].checked=false;
+                        }
+                    }
                 }
-                this.formValidate.deptId = roleCheckarr.toString();
-                this.$emit('deptId', this.formValidate.deptId)
+                e[0]?this.formValidate.deptId=e[0].id.toString():this.formValidate.deptId="";
+                window.console.log(this.formValidate.deptId);
+                this.$emit('deptId', this.formValidate.deptId);
             }
         }
     }
 </script>
+<style>
+    .ivu-form-item-content{
+        top:-8px !important;
+    }
+    .ivu-tree-title{
+        font-size: 14px !important;
+    }
+    .ivu-icon-md-arrow-dropright-circle{
+        font-size: 18px !important;
+        color:#ccc;
+    }
+    /*.textBorder{*/
+        /*min-height: 200px;*/
+        /*border: 1px solid #ccc;*/
+        /*width: auto;*/
+        /*overflow: auto;*/
+    /*}*/
+</style>
