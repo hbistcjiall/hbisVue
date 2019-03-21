@@ -16,7 +16,7 @@
         top: 5px;
         float: left;
         position: relative;
-        background-image: url("../../assets/indexImg/indexLog.jpg");
+        background-image: url("../../assets/indexImg/indexLog.png");
         background-size:100% 100%;
     }
     .ivu-menu-horizontal{

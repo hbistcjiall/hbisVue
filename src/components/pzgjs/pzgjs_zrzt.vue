@@ -4,17 +4,17 @@
             <Row>
                 <Col span="6" v-if="!switchTime">
                     <FormItem label="年份：" style="width:250px">
-                        <DatePicker type="year" placeholder="请选择年份" :clearable="false" v-model="year" style="width:150px"></DatePicker>
+                        <DatePicker type="year" placeholder="请选择年份" :editable="false" :clearable="false" v-model="year" style="width:150px"></DatePicker>
                     </FormItem>
                 </Col>
                 <Col span="4"  v-if="switchTime">
                     <FormItem label="月份：" style="width:150px">
-                        <DatePicker type="month" placeholder="起始月份" :clearable="false" v-model="startTime" style="width:150px"></DatePicker>
+                        <DatePicker type="month" placeholder="起始月份" :editable="false" :clearable="false" v-model="startTime" style="width:150px"></DatePicker>
                     </FormItem>
                 </Col>
                 <Col span="4" v-if="switchTime">
                     <FormItem style="width:150px">
-                        <DatePicker type="month" placeholder="终止月份" :clearable="false" v-model="endTime" style="width:150px"></DatePicker>
+                        <DatePicker type="month" placeholder="终止月份" :editable="false" :clearable="false" v-model="endTime" style="width:150px"></DatePicker>
                     </FormItem>
                 </Col>
                 <Col span="3">
@@ -143,7 +143,7 @@
                     if(res.status!=200){
                         return this.$Message.error('请求失败！');
                     }else{
-                        return res.text;
+                        return res.text();
                     }
                 }).then((res) => {
                     res =res && res.length > 0 ? JSON.parse(res) : [];

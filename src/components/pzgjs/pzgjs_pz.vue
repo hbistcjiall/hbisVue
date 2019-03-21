@@ -186,7 +186,7 @@
                 let startTime='startTime=';
                 let endTime='&endTime=';
                 this.switchTime?(startTime=startTime+this.utils.formatMonthStart(this.startTime),endTime=endTime+this.utils.formatMonthStart(this.endTime)):(startTime=startTime+ this.utils.formatYearStart(this.year),endTime=endTime+this.utils.formatYearEnd(this.year));
-                fetch(this.$store.state.fetchPath + "/scm-steel-settle/getndpz", {
+                fetch(this.$store.state.fetchPath + "/scm-steel-settle/getpz", {
                     method: "POST",
                     headers: this.$store.state.fetchHeader,
                     body: startTime+endTime+'&'+this.utils.formatParams(params),
@@ -195,7 +195,7 @@
                     if(res.status!=200){
                         this.$Message.error('请求失败！');
                     }else{
-                        return res.text;
+                        return res.text();
                     }
                 }).then((res) => {
                     res = res && res.length > 0 ? JSON.parse(res) : [];
