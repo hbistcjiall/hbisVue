@@ -219,7 +219,7 @@
                     }
 
                 }).then((res) => {
-                    res = res.length > 0 ? JSON.parse(res) : [];
+                    res = res && res.length > 0 ? JSON.parse(res) : [];
                     this.data = this.utils.mergeRow(res, 'COMPANYNAME');
                 });
             }
