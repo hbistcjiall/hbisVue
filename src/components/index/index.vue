@@ -22,8 +22,18 @@
     .ivu-menu-horizontal{
         height: 65px;
     }
+    .layout-title{
+        width:300px;
+        color:#ffffff;
+        text-align: center;
+        float:left;
+        font-size: 24px;
+        font-weight: bold;
+        margin-left:30%;
+        cursor: default;
+    }
     .layout-nav{
-        width: 420px;
+        width: 100px;
         margin: 0 auto;
         margin-right: 20px;
     }
@@ -69,6 +79,7 @@
             <Header>
                 <Menu mode="horizontal" active-name="1" style="background-color: #0176c2">
                     <div class="layout-logo"></div>
+                    <div class="layout-title">河钢销售营销数据中心</div>
                     <div class="layout-nav">
                         <Button type="info" style="float: right;margin-top: 14px" @click="loginOut()">退 出</Button>
                     </div>
