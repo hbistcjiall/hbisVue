@@ -1,6 +1,6 @@
 <template>
     <div>
-        <Form :label-width="50">
+        <Form :label-width="100">
             <Row>
                 <Col span="6" v-if="!switchTime">
                     <FormItem label="年份：" style="width:250px">
@@ -26,7 +26,7 @@
                     </FormItem>
                 </Col>
                 <Col span="5">
-                    <FormItem label="责任单位：" style="width:150px">
+                    <FormItem label="责任单位：" style="width:180px">
                         <Select v-model="zrbm" style="width:120px" placeholder="请选择责任单位">
                             <Option value="">全部</Option>
                             <Option value="热板公司">热板公司</Option>
