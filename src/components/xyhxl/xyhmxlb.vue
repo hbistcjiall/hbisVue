@@ -14,14 +14,12 @@
                     </Select>
                 </FormItem>
             </Col>
-            <Col span="2"> </Col>
-            <Col span="6">
+            <Col span="4">
                 <FormItem label="上传时间:">
-                    <DatePicker v-model='begin' type="date" style="width: 120px;"/> — <DatePicker v-model="end" style="width: 120px;" type="date"/>
+                    <DatePicker type="datetimerange" @on-change="serTime" format="yyyy-MM-dd" placeholder="请选择上传时间" style="width: 180px"></DatePicker>
                 </FormItem>
             </Col>
-            <Col span="2"> </Col>
-            <Col span="4">
+            <Col span="4" style="margin-left: 80px">
                 <FormItem label="协议年份:">
                 <DatePicker type="year" v-model='year'></DatePicker>
                 </FormItem>
@@ -38,7 +36,7 @@
                     </Select>
                 </FormItem>
             </Col>
-            <Col span="6">
+            <Col span="6" style="float: right">
                 <Button type="info" @click="search" style="magin-left:20px" >查询</Button>
                 <Button type="info" @click="clearall" style="magin-left:20px">清空</Button>
                 <Button type="info" @click="checkedel" style="magin-left:20px">批量删除</Button>
@@ -246,6 +244,16 @@
             changepage(index) {
                 this.dictData.page=index;
                 this.handleListApproveHistory();
+            },
+            serTime(e){
+                this.Dates=e;
+                if(this.Dates[0]==''){
+                    this.xyhmxlbData.beginTime='';
+                    this.xyhmxlbData.endTime='';
+                }else{
+                    this.xyhmxlbData.beginTime=this.Dates[0];
+                    this.xyhmxlbData.endTime=this.Dates[1]
+                }
             },
             search(){
                 this.handleListApproveHistory();
