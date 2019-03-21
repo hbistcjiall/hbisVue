@@ -51,6 +51,9 @@
         color: #fff;
         font-weight: bold;
     }
+    .ivu-menu-item, .ivu-menu-submenu{
+        text-align: left;
+    }
     .ivu-menu-item span{
         color: #fff;
     }
