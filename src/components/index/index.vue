@@ -86,14 +86,14 @@
                 </Menu>
             </Header>
             <Layout>
-                <Sider breakpoint="md" v-model="isCollapsed" :width="180">
+                <Sider breakpoint="md" v-model="isCollapsed" :width="179">
                     <menuList/>
                 </Sider>
                 <Layout>
                     <Header class="layout-header-bar">
                     <headerList/>
                     </Header>
-                    <Content :style="{margin: '2px',padding:'20px', background: '#fff', minHeight:myheight}">
+                    <Content :style="{margin: '2px',padding:'20px', background: '#fff', minHeight:screenHeight}">
                         <contentList/>
                     </Content>
                 </Layout>
@@ -110,13 +110,26 @@
         data () {
             return {
                 isCollapsed: false,
-                myheight:document.documentElement.clientHeight-110+"px",
+                screenHeight:document.documentElement.clientHeight-110+'px',
                 loginOutData:{
                     username:'',
                     password:'',
                     remember: ''
                 }
             };
+        },
+        mounted () {
+            const that = this;
+            window.onresize = () => {
+                return (() => {
+                    that.screenHeight =document.documentElement.clientHeight-110+'px';
+                })()
+            }
+        },
+        watch: {
+            screenHeight (val) {
+                this.screenHeight = val
+            }
         },
         components:{
             menuList,
@@ -128,7 +141,6 @@
                 fetch(this.$store.state.fetchPath + "/logout", {
                     method: "get",
                     headers: this.$store.state.fetchHeader,
-                    // body: '',
                     credentials:'include'
                 })
                     .then((res) => {
