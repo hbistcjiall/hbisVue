@@ -13,18 +13,16 @@
         name:"logger",
         data() {
             return {
-                loggerParams: {//向后台传的数据
+                loggerParams: {
                     createTime: '',
                     endTime:'',
                     current:0,
                     size:10
                 },
                 fecthLoggerData: [],
-                // 初始化信息总条数
                 dataCount: 0,
-                // 每页显示多少条
                 pageSize: 10,
-                xia: 0, //下一页或者上一页的第一项索引值
+                xia: 0,
                 loggerColumns: [{
                     "title": "用户名",
                     "align": "center",
@@ -65,7 +63,6 @@
             this.handleListApproveHistory();
         },
         methods: {
-            // 获取日志记录信息
             handleListApproveHistory() {
                 fetch(this.$store.state.fetchPath + "/selectloggers", {
                     method: "POST",
@@ -73,14 +70,16 @@
                     body: this.utils.formatParams(this.loggerParams),
                     credentials:'include'
                 }).then((res) => {
-                    return res.text();
+                    if(res.status!=200){
+                        this.$Message.error('请求失败！');
+                    }else{
+                        return res.text();
+                    }
                 }).then((res) => {
-                    res = JSON.parse(res)
+                    res = res&&JSON.parse(res)
                     window.console.log(res);
-                    // 保存取到的所有数据
                     this.fecthLoggerData =  res.records;
                     this.dataCount =  res.total;
-                    // 初始化显示，小于每页显示条数，全显，大于每页显示条数，取前每页条数显示
                     if(this.dataCount < this.pageSize){
                         this.loggerData = this.fecthLoggerData;
                     }else{
@@ -89,7 +88,6 @@
                 })
             },
             changepage(index) {
-                //index当前页码
                 this.loggerParams.current=index;
                 this.handleListApproveHistory();
             },

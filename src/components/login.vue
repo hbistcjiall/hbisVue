@@ -76,9 +76,13 @@
                             body: this.utils.formatParams(this.formInline),
                             credentials:'include'
                         }).then((res) => {
-                            return res.text();
+                            if(res.status!=200){
+                                this.$Message.error('请求失败！');
+                            }else{
+                                return res.text();
+                            }
                         }).then((res) => {
-                            res = res.length>0?JSON.parse(res):[];
+                            res = res&&res.length>0?JSON.parse(res):[];
                             if(res.msg){
                                 this.$Message.error(res.msg);
                             }else{
