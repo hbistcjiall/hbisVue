@@ -42,11 +42,11 @@
 <script>
     export default {
         name:'addUser',
+        props:{
+            url:String
+        },
         data () {
             return {
-                props:{
-                    url:String
-                },
                 deptdata: [],
                 formValidate: {
                     account:'',
@@ -75,26 +75,34 @@
                 }
             }
         },
-        created(){
-            fetch(this.url+"/dept/tree", {
-                method: "POST",
-                headers: {
-                    "Content-Type":"application/x-www-form-urlencoded; charset=UTF-8"
-                },
-                credentials:'include'
-            })
-                .then((res) => {
-                    if(res.status!=200){
-                        this.$Message.error('请求失败！');
-                    }else{
-                        return res.text();
-                    }
-                }).then((res) => {
+        mounted(){
+            this.getDeptList();
+        },
+        watch: {
+            url: function(newVal){
+                this.url=newVal;
+            },
+        },
+        methods: {
+            getDeptList(){
+                fetch(this.url+"/dept/tree", {
+                    method: "POST",
+                    headers: {
+                        "Content-Type":"application/x-www-form-urlencoded; charset=UTF-8"
+                    },
+                    credentials:'include'
+                })
+                    .then((res) => {
+                        if(res.status!=200){
+                            this.$Message.error('请求失败！');
+                        }else{
+                            return res.text();
+                        }
+                    }).then((res) => {
                     res = res&&res.length>0?JSON.parse(res):[]
                     this.deptdata=this.utils.roleTree(this.utils.buildRoleTree(res));
                 })
-        },
-        methods: {
+            },
             accountChange:function() {
                 this.$emit('account', this.formValidate.account)
             },

@@ -48,7 +48,7 @@
                 },
             }
         },
-        created(){
+        mounted(){
             fetch(this.url+"/dept/tree", {
                 method: "POST",
                 headers: {
@@ -67,6 +67,11 @@
 
                 this.roledata =  this.utils.roleTree(this.utils.buildRoleTree(res));
             })
+        },
+        watch: {
+            url: function(newVal){
+                this.url=newVal;
+            },
         },
         methods: {
             simplenameChange:function() {
