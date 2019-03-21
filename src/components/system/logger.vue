@@ -77,7 +77,6 @@
                     }
                 }).then((res) => {
                     res = res&&JSON.parse(res)
-                    window.console.log(res);
                     this.fecthLoggerData =  res.records;
                     this.dataCount =  res.total;
                     if(this.dataCount < this.pageSize){
