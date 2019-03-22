@@ -1,6 +1,7 @@
 import pzgjs from './pzgjs'
 import xyhxl from './xyhxl'
 import gkfx from './gkfx'
+import htzzjd from './htzzjd'
 const indexchild=[
     {
         path: '/home', redirect: 'home'
@@ -86,7 +87,7 @@ const indexchild=[
         },
     }
 ];
-const childrens=indexchild.concat(pzgjs).concat(xyhxl).concat(gkfx);
+const childrens=indexchild.concat(pzgjs).concat(xyhxl).concat(gkfx).concat(htzzjd);
 export default {
     path: '/index', name: 'index', component: resolve => require(['@/components/index/index'], resolve), meta: {
         title: '首页',
