@@ -1,7 +1,7 @@
 <template>
     <Menu width="180px" ref="side_menu" @on-open-change="getParentName" @on-select="getName" accordion>
         <div v-for="(item,index) of menulist" :key="index">
-            <MenuItem v-if="!item.children" :name="item.name">{{item.name}}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</MenuItem>
+            <MenuItem v-if="!item.children" :name="item.name" >{{item.name}}</MenuItem>
             <Submenu v-if="item.children"  :name="item.name" >
                 <template slot="title">
                     <span>{{item.name}}</span>
@@ -56,6 +56,7 @@
     }
     .ivu-menu-item span{
         color: #fff;
+        white-space:nowrap;
     }
     .ivu-menu-light.ivu-menu-vertical .ivu-menu-item-active:not(.ivu-menu-submenu){
         background-color: #3069a0;
@@ -63,7 +64,7 @@
     .ivu-menu-vertical li:hover span{
         color:#ffffff;
     }
-    a.ivu-menu-item {
+    a .ivu-menu-item {
         color: inherit;
         background-color:#2679af;
     }

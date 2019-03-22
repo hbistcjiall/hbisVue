@@ -1,10 +1,28 @@
 <template>
     <div>
-        <Form :label-width="180">
+        <Form :label-width="50">
             <Row>
-                <Col span="6">
-                    <FormItem label="年份：" style="width:150px">
-                        <DatePicker type="year" placeholder="请选择年份"  v-model="year" style="width:120px"></DatePicker>
+                <Col span="6" v-if="!switchTime">
+                    <FormItem label="年份：" style="width:250px">
+                        <DatePicker type="year"  placeholder="请选择年份" :editable="false" :clearable="false"  v-model="year" style="width:150px"></DatePicker>
+                    </FormItem>
+                </Col>
+                <Col span="4"  v-if="switchTime">
+                    <FormItem label="月份：" style="width:150px">
+                        <DatePicker type="month" placeholder="起始月份" :editable="false" :clearable="false"  v-model="startTime" style="width:150px"></DatePicker>
+                    </FormItem>
+                </Col>
+                <Col span="4" v-if="switchTime">
+                    <FormItem style="width:150px">
+                        <DatePicker type="month" placeholder="终止月份" :editable="false" :clearable="false"  v-model="endTime" style="width:150px"></DatePicker>
+                    </FormItem>
+                </Col>
+                <Col span="3">
+                    <FormItem style="width:50px">
+                        <i-switch v-model="switchTime" @on-change="changeSwitch">
+                            <span slot="open">年</span>
+                            <span slot="close">月</span>
+                        </i-switch>
                     </FormItem>
                 </Col>
                 <Col span="8">
@@ -29,11 +47,13 @@
 
 <script>
     export default {
-        name: "ndwcqk_pz",
-
+        name: "pzgjs_pz",
         data() {
             return {
-                year:'',
+                switchTime:true,
+                year:new Date(),
+                startTime:new Date(),
+                endTime:this.utils.formatMonthEnd(),
                 pz:'',
                 columns: [{
                     title: '品种',
@@ -154,22 +174,31 @@
             this.getList();
         },
         methods: {
+            changeSwitch(){
+                let date=new Date();
+                this.switchTime?(this.startTime=date,this.endTime=this.utils.formatMonthEnd()):this.year=date;
+            },
             getList() {
 
                 let params={
-                    zt:2// 1：按月查询,2:按年查询
                 };
                 this.pz?params.pz=this.pz:'';
-                this.year?params.year=new Date(this.year).getFullYear():'';
-                fetch(this.$store.state.fetchPath + "/scm-steel-settle/getndpz", {
+                let startTime='startTime=';
+                let endTime='&endTime=';
+                this.switchTime?(startTime=startTime+this.utils.formatMonthStart(this.startTime),endTime=endTime+this.utils.formatMonthStart(this.endTime)):(startTime=startTime+ this.utils.formatYearStart(this.year),endTime=endTime+this.utils.formatYearEnd(this.year));
+                fetch(this.$store.state.fetchPath + "/scm-steel-settle/getpz", {
                     method: "POST",
                     headers: this.$store.state.fetchHeader,
-                    body: this.utils.formatParams(params),
+                    body: startTime+endTime+'&'+this.utils.formatParams(params),
                     credentials: 'include'
                 }).then((res) => {
-                    return res.text();
+                    if(res.status!=200){
+                        this.$Message.error('请求失败！');
+                    }else{
+                        return res.text();
+                    }
                 }).then((res) => {
-                    res = res.length > 0 ? JSON.parse(res) : [];
+                    res = res && res.length > 0 ? JSON.parse(res) : [];
                     this.data = res;
                 });
             }

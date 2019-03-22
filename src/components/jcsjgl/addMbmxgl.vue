@@ -88,11 +88,13 @@
                 credentials:'include'
             })
                 .then((res) => {
-                    return res.text();
+                    if(res.status!=200){
+                        this.$Message.error('请求失败！');
+                    }else{
+                        return res.text();
+                    }
                 }).then((res) => {
-                res = res.length>0?JSON.parse(res):[];
-                // window.console.log(res)
-                // 保存取到的所有数据
+                res = res&&res.length>0?JSON.parse(res):[];
                 this.list =  this.utils.buildselTree(res);
             })
         },

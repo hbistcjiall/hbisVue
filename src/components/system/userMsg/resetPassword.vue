@@ -9,9 +9,7 @@
     export default {
         name: 'resetPass',
         data() {
-            return {
-                // value1:'111111',
-            }
+            return {}
         },
         methods:{
 

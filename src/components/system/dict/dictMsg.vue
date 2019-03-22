@@ -58,11 +58,10 @@
                     description:'',
                     sort:0
                 },
-                // 初始化信息总条数
                 dataCount: 0,
-                // 每页显示多少条
+
                 pageSize: 10,
-                xia: 0, //下一页或者上一页的第一项索引值
+                xia: 0,
                 columns12: [
                     {
                         title: '名称',
@@ -119,7 +118,6 @@
             this.handleListApproveHistory();
         },
         methods: {
-            // 获取日志记录信息
             handleListApproveHistory() {
                 fetch(this.$store.state.fetchPath + "/dict/list", {
                     method: "POST",
@@ -128,14 +126,16 @@
                     credentials:'include'
                 })
                     .then((res) => {
-                        return res.text();
+                        if(res.status!=200){
+                            this.$Message.error('请求失败！');
+                        }else{
+                            return res.text();
+                        }
                     }).then((res) => {
-                    res = res.length>0?JSON.parse(res):[]
-                    // 保存取到的所有数据
+                    res = res&&res.length>0?JSON.parse(res):[]
                     this.resDatas =  res.data;
                     this.dataCount =  parseInt(res.count);
                     this.pageSize = parseInt(res.pageSize);
-                    // 初始化显示，小于每页显示条数，全显，大于每页显示条数，取前每页条数显示
                     if(this.dataCount < this.pageSize){
                         this.fecthdata6 = this.resDatas;
                     }else{
@@ -186,7 +186,11 @@
                             credentials:'include'
                         })
                             .then((res) => {
-                                return res.text();
+                                if(res.status!=200){
+                                    this.$Message.error('请求失败！');
+                                }else{
+                                    return res.text();
+                                }
                             })
                             .then(() => {
                                 this.handleListApproveHistory();
@@ -207,11 +211,13 @@
                             credentials:'include'
                         })
                             .then((res) => {
-                                return res.text();
+                                if(res.status!=200){
+                                    this.$Message.error('请求失败！');
+                                }else{
+                                    return res.text();
+                                }
                             })
                             .then(() => {
-                                // res = res.length>0?JSON.parse(res):[];
-                                // this.$Message.error(res.msg);
                                 this.handleListApproveHistory();
                             })
                     }
@@ -232,7 +238,11 @@
                     credentials:'include'
                 })
                     .then((res) => {
-                        return res.text();
+                        if(res.status!=200){
+                            this.$Message.error('请求失败！');
+                        }else{
+                            return res.text();
+                        }
                     })
                     .then(() => {
                         this.handleListApproveHistory();

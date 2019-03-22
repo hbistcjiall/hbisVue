@@ -9,12 +9,12 @@
                 </Col>
                 <Col span="4"  v-if="switchTime">
                     <FormItem label="月份：" style="width:150px">
-                        <DatePicker type="month" placeholder="起始月份" :editable="false" :clearable="false"  v-model="startTime" style="width:150px"></DatePicker>
+                        <DatePicker type="month" placeholder="起始月份" :editable="false" :clearable="false" v-model="startTime" style="width:150px"></DatePicker>
                     </FormItem>
                 </Col>
                 <Col span="4" v-if="switchTime">
                     <FormItem style="width:150px">
-                        <DatePicker type="month" placeholder="终止月份" :editable="false" :clearable="false"  v-model="endTime" style="width:150px"></DatePicker>
+                        <DatePicker type="month" placeholder="终止月份"  :editable="false" :clearable="false" v-model="endTime" style="width:150px"></DatePicker>
                     </FormItem>
                 </Col>
                 <Col span="3">
@@ -25,8 +25,9 @@
                         </i-switch>
                     </FormItem>
                 </Col>
+
                 <Col span="5">
-                    <FormItem label="单位：" style="width:150px">
+                    <FormItem label="单位：" style="width:120px">
                         <Select v-model="dw" style="width:120px" placeholder="请选择单位">
                             <Option value="">全部</Option>
                             <Option value="9580">唐钢</Option>
@@ -41,7 +42,7 @@
                     </FormItem>
                 </Col>
                 <Col span="4">
-                    <FormItem label="产线：" style="width:150px">
+                    <FormItem label="产线：" style="width:120px">
                         <Select style="width:120px"  v-model="cx" placeholder="请选择产线">
                             <Option value="cx1">产线一</Option>
                             <Option value="cx2">产线二</Option>
@@ -59,14 +60,14 @@
 
 <script>
     export default {
-        name: "ydwcqk_cx",
+        name: "pzgjs_cx",
         data() {
             return {
+                dw:'',
                 switchTime:true,
                 year:new Date(),
                 startTime:new Date(),
                 endTime:this.utils.formatMonthEnd(),
-                dw:'',
                 cx:'',
                 columns: [{
                     title: '单位',
@@ -211,9 +212,14 @@
                     body: startTime+endTime+'&'+this.utils.formatParams(params),
                     credentials: 'include'
                 }).then((res) => {
-                    return res.text();
+                    if(res.status!=200){
+                        this.$Message.error('请求失败！');
+                    }else{
+                        return res.text();
+                    }
+
                 }).then((res) => {
-                    res = res.length > 0 ? JSON.parse(res) : [];
+                    res = res && res.length > 0 ? JSON.parse(res) : [];
                     this.data = this.utils.mergeRow(res, 'COMPANYNAME');
                 });
             }

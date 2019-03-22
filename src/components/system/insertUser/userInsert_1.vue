@@ -28,7 +28,6 @@
                     callback(new Error('请输入密码'));
                 } else {
                     if (this.formCustom.passwdCheck !== '') {
-                        // 对第二个密码框单独验证
                         this.$refs.formCustom.validateField('passwdCheck');
                     }
                     callback();
@@ -90,9 +89,13 @@
                             body: this.utils.formatParams(this.formCustom),
                             credentials: 'include'
                         }).then((res) => {
-                            return res.text();
+                            if(res.status!=200){
+                                this.$Message.error('请求失败！');
+                            }else{
+                                return res.text();
+                            }
                         }).then((res) => {
-                             res = res.length>0?JSON.parse(res):[];
+                             res = res&&res.length>0?JSON.parse(res):[];
                             if (res.msg == "1000") {
                                 this.$Message.success('保存成功!');
                                 this.$store.commit("updateCurrent", 1);
