@@ -34,7 +34,7 @@
             <Input v-model="formValidate.phone" placeholder="请输入电话" @on-change="phoneChange"></Input>
         </FormItem>
         <FormItem label="部门" prop="deptId">
-            <div class="textBorder"><Tree :data="deptdata" ref="tree" @on-check-change="depChange" show-checkbox check-strictly multiple></Tree></div>
+            <Tree :data="deptdata" ref="tree" @on-check-change="depChange" show-checkbox check-strictly multiple></Tree>
         </FormItem>
 
     </Form>
@@ -101,7 +101,6 @@
                     }).then((res) => {
                     res = res&&res.length>0?JSON.parse(res):[]
                     this.deptdata=this.utils.roleTree(this.utils.buildRoleTree(res));
-                    // this.deptdata[0].expand=true;
                 })
             },
             accountChange:function() {
@@ -137,7 +136,6 @@
                     }
                 }
                 e[0]?this.formValidate.deptId=e[0].id.toString():this.formValidate.deptId="";
-                window.console.log(this.formValidate.deptId);
                 this.$emit('deptId', this.formValidate.deptId);
             }
         }
@@ -154,10 +152,4 @@
         font-size: 18px !important;
         color:#ccc;
     }
-    /*.textBorder{*/
-        /*min-height: 200px;*/
-        /*border: 1px solid #ccc;*/
-        /*width: auto;*/
-        /*overflow: auto;*/
-    /*}*/
 </style>
