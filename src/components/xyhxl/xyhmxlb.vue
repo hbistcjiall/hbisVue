@@ -327,7 +327,6 @@
                         this.handleListApproveHistory();
                     })
             }
-
         }
     }
 </script>
