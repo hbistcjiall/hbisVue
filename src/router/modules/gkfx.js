@@ -1,10 +1,10 @@
 export default [
     {
-        path: '/gkfx/zyphjh',
-        name: 'zyphjh',
-        component: resolve => require(['@/components/gkfx/zyphjh'], resolve),
+        path: '/gkfx/htzzjd',
+        name: 'htzzjd',
+        component: resolve => require(['@/components/htzzjd/htjd_pz'], resolve),
         meta: {
-            title: '资源平衡计划',
+            title: '合同组织进度',
             isLogin: true
         }
     },
