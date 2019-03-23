@@ -1,5 +1,6 @@
 <template>
-    <div style="width:80%;">
+    <div>
+    <div style="width:50%;float:left;">
         <div style="float:right">
             <div class="CStyle">1%-49%<span style="background: #ed4117;"></span></div>
             <div class="CStyle">5%0-79%<span style="background: #fa9909;"></span></div>
@@ -27,9 +28,7 @@
             </li>
         </ul>
     </div>
-
-    <div>
-
+    <div style="float:left;width:20%;marging-left:5%;"></div>
     </div>
 </template>
 
