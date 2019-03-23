@@ -68,6 +68,7 @@
                     },
                     {
                         title: '责任公司名称',
+                        width:120,
                         align: "center",
                         key: 'NAME'
                     },
