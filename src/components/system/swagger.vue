@@ -14,5 +14,13 @@
 </script>
 
 <style scoped>
-
+    iframe{
+        border: 0px;
+        width: 100%;
+        min-height:600px ;
+        padding: 0px;
+    }
+    .ivu-layout-content{
+        padding: 0px !important;
+    }
 </style>

@@ -1,5 +1,5 @@
 <template>
-    <iframe :src="url"></iframe>
+    <iframe :src="url" ></iframe>
 </template>
 
 <script>
@@ -14,10 +14,14 @@
 
 </script>
 
-<style>
+<style scoped>
     iframe{
-        height: 100%;
-        width: 100%;
         border: 0px;
+        width: 100%;
+        min-height:600px ;
+        padding: 0px;
+    }
+    .ivu-layout-content{
+        padding: 0px !important;
     }
 </style>
