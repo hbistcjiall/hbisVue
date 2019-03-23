@@ -125,6 +125,16 @@ const indexchild=[
             keepAlive: true,
             isLogin: true
         },
+    },
+    {
+        path: '/demo',
+        name: 'demo',
+        component: resolve => require(['@/components/demo'], resolve),
+        meta: {
+            title: 'Demo',
+            keepAlive: true,
+            isLogin: true
+        },
     }
 ];
 const childrens=indexchild.concat(pzgjs).concat(xyhxl).concat(gkfx).concat(htzzjd);

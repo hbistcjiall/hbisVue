@@ -1,7 +1,7 @@
+
 <template>
     <div class="x-bar">
-        <div :id="id"
-             :option="option"></div>
+        <div :id="id"  :option="option"></div>
     </div>
 </template>
 <script>
@@ -14,10 +14,18 @@
             },
             option: {
                 type: Object
+            },
+            state:{
+                type:String,
+            }
+        },
+        watch: {
+            option () {
+               HighCharts.chart(this.id, this.option);
             }
         },
         mounted() {
-            HighCharts.chart(this.id,this.option)
+           HighCharts.chart(this.id,this.option)
         }
     }
 </script>

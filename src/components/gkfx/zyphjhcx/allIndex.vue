@@ -2,7 +2,8 @@
     <div>
         <div>
             <div style="width:50%;float:left;height:500px;border:1px solid black;">
-                <!--<x-chart id="xszt" :option="pie"></x-chart>-->
+
+               fdsfdsf <!--<x-chart id="xszt" :option="pie"></x-chart>-->
             </div>
             <div style="width:49%;float:right;height:500px;border:1px solid black;">
                 <!--<x-chart id="test" :option="column"></x-chart>-->
