@@ -1,43 +1,83 @@
 <template>
-    <div style="width:80%;">
-        <div style="float:right">
-            <div class="CStyle">1%-49%<span style="background: #ed4117;"></span></div>
-            <div class="CStyle">5%0-79%<span style="background: #fa9909;"></span></div>
-            <div class="CStyle">80%-100%<span style="background: #2ebf6b;"></span></div>
+    <div>
+        <div style="width:50%;float:left;">
+            <div style="float:right">
+                <div class="CStyle">1%-49%<span style="background: #ed4117;"></span></div>
+                <div class="CStyle">5%0-79%<span style="background: #fa9909;"></span></div>
+                <div class="CStyle">80%-100%<span style="background: #2ebf6b;"></span></div>
+            </div>
+            <ul>
+                <li class="item-icon-right" v-for="list in lists">
+                    <div class="titleStyle">{{list.title}}</div>
+                    <div class="progressContainer">
+                        <div class="progress" :style="{width:list.wcbl*100+'%','background-color':'#ed4117'}" v-if="list.wcbl <= 0.49">
+                            <b>已产量:{{list.ycl}}吨/{{list.wcbl*100}}%</b>
+                        </div>
+                        <div class="progress" :style="{width:list.wcbl*100+'%','background-color':'#fa9909'}" v-else-if="list.wcbl >0.49 && list.wcbl <= 0.79">
+                            <b>已产量:{{list.ycl}}吨/{{list.wcbl*100}}%</b>
+                        </div>
+                        <div class="progress" :style="{width:list.wcbl*100+'%','background-color':'#2ebf6b'}" v-else>
+                            <b>已产量:{{list.ycl}}吨/{{list.wcbl*100}}%</b>
+                        </div>
+                    </div>
+                    <div class="progressContainer">
+                        <div class="progress" :style="{width:100+'%','background-color':'#33b7f6','margin-top':'5px'}">
+                            <b>计划量:{{list.jhl}}吨/100%</b>
+                        </div>
+                    </div>
+                </li>
+            </ul>
         </div>
-        <ul>
-            <li class="item-icon-right" v-for="list in lists">
-                <div class="titleStyle">{{list.title}}</div>
-                <div class="progressContainer">
-                    <div class="progress" :style="{width:list.wcbl*100+'%','background-color':'#ed4117'}" v-if="list.wcbl <= 0.49">
-                        <b>已产量:{{list.ycl}}吨/{{list.wcbl*100}}%</b>
+        <div style="float:left;width:20%;margin-left:5%;">
+            <div style="font-size: 24px;font-weight: bold;">产线前10</div>
+            <ul>
+                <li class="item-icon-right" v-for="list in CXQ">
+                    <div class="titleStyle">{{list.cxtitle}}</div>
+                    <div class="cxStyle">产线:{{list.ycl}}万</div>
+                    <div class="progressContainer">
+                        <div class="progress" :style="{width:list.wcbl*100+'%','background-color':'#3793cf'}">
+                            <b>进度:{{list.wcbl*100}}%</b>
+                        </div>
                     </div>
-                    <div class="progress" :style="{width:list.wcbl*100+'%','background-color':'#fa9909'}" v-else-if="list.wcbl >0.49 && list.wcbl <= 0.79">
-                        <b>已产量:{{list.ycl}}吨/{{list.wcbl*100}}%</b>
+                </li>
+            </ul>
+        </div>
+        <div style="float:right;width:20%;">
+            <div style="font-size: 24px;font-weight: bold;">产线后10</div>
+            <ul>
+                <li class="item-icon-right" v-for="list in CXH">
+                    <div class="titleStyle">{{list.cxtitle}}</div>
+                    <div class="cxStyle">产线:{{list.ycl}}万</div>
+                    <div class="progressContainer">
+                        <div class="progress" :style="{width:list.wcbl*100+'%','background-color':'#3793cf'}">
+                            <b>进度:{{list.wcbl*100}}%</b>
+                        </div>
                     </div>
-                    <div class="progress" :style="{width:list.wcbl*100+'%','background-color':'#2ebf6b'}" v-else>
-                        <b>已产量:{{list.ycl}}吨/{{list.wcbl*100}}%</b>
-                    </div>
-                </div>
-                <div class="progressContainer">
-                    <div class="progress" :style="{width:100+'%','background-color':'#33b7f6','margin-top':'5px'}">
-                        <b>计划量:{{list.jhl}}吨/100%</b>
-                    </div>
-                </div>
-            </li>
-        </ul>
+                </li>
+            </ul>
+        </div>
     </div>
 </template>
 
 <script>
     export default {
-        name: "htjd_pz_zgs",
+        name: "htjd_pz_jt",
         data(){
             return {
                 lists:[],
+                CXQ:[],
+                CXH:[],
                 Csvj:{
-                    flName:"4"
-                }
+                    flName:"4",
+                },
+                CXQvalue:{
+                    flName:"4",
+                    sort:"0"
+                },
+                CXHvalue:{
+                    flName:"4",
+                    sort:"1"
+                },
             }
         },
         created() {
@@ -50,7 +90,7 @@
                 fetch(this.$store.state.fetchPath + "/allocation/selAllocation", {
                     method: "POST",
                     headers: this.$store.state.fetchHeader,
-                    body:this.utils.formatParams(this.Csvj),
+                    body: this.utils.formatParams(this.Csvj),
                     credentials: 'include'
                 }).then((res) => {
                     if(res.status!=200){
@@ -61,7 +101,39 @@
                 }).then((res) => {
                     res = res.length>0?JSON.parse(res):[];
                     this.lists =  this.utils.htjdTree(res);
-                    window.console.log(this.lists)
+                })
+
+                fetch(this.$store.state.fetchPath + "/allocation/selScheduleByCx", {
+                    method: "POST",
+                    headers: this.$store.state.fetchHeader,
+                    body:this.utils.formatParams(this.CXQvalue),
+                    credentials: 'include'
+                }).then((res) => {
+                    if(res.status!=200){
+                        this.$Message.error('请求失败！');
+                    }else{
+                        return res.text();
+                    }
+                }).then((res) => {
+                    res = res.length>0?JSON.parse(res):[];
+                    this.CXQ =  this.utils.htjdTree(res);
+                    window.console.log(this.CXQ)
+                })
+
+                fetch(this.$store.state.fetchPath + "/allocation/selScheduleByCx", {
+                    method: "POST",
+                    headers: this.$store.state.fetchHeader,
+                    body:this.utils.formatParams(this.CXHvalue),
+                    credentials: 'include'
+                }).then((res) => {
+                    if(res.status!=200){
+                        this.$Message.error('请求失败！');
+                    }else{
+                        return res.text();
+                    }
+                }).then((res) => {
+                    res = res.length>0?JSON.parse(res):[];
+                    this.CXH =  this.utils.htjdTree(res);
                 })
             }
         }
@@ -69,6 +141,9 @@
 </script>
 
 <style scoped>
+    ul{
+        list-style-type:none;
+    }
     .titleStyle{
         font-size: 24px;
         text-align: left;
@@ -106,5 +181,10 @@
         height:10px;
         float:right;
         margin-top:3px;
+    }
+    .cxStyle{
+        font-size: 16px;
+        text-align: left;
+        margin-left:10px;
     }
 </style>

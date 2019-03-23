@@ -28,7 +28,34 @@
             </li>
         </ul>
     </div>
-    <div style="float:left;width:20%;marging-left:5%;"></div>
+    <div style="float:left;width:20%;margin-left:5%;">
+        <div style="font-size: 24px;font-weight: bold;">产线前10</div>
+        <ul>
+            <li class="item-icon-right" v-for="list in CXQ">
+                <div class="titleStyle">{{list.cxtitle}}</div>
+                <div class="cxStyle">产线:{{list.ycl}}万</div>
+                <div class="progressContainer">
+                    <div class="progress" :style="{width:list.wcbl*100+'%','background-color':'#3793cf'}">
+                        <b>进度:{{list.wcbl*100}}%</b>
+                    </div>
+                </div>
+            </li>
+        </ul>
+    </div>
+        <div style="float:right;width:20%;">
+            <div style="font-size: 24px;font-weight: bold;">产线后10</div>
+            <ul>
+                <li class="item-icon-right" v-for="list in CXH">
+                    <div class="titleStyle">{{list.cxtitle}}</div>
+                    <div class="cxStyle">产线:{{list.ycl}}万</div>
+                    <div class="progressContainer">
+                        <div class="progress" :style="{width:list.wcbl*100+'%','background-color':'#3793cf'}">
+                            <b>进度:{{list.wcbl*100}}%</b>
+                        </div>
+                    </div>
+                </li>
+            </ul>
+        </div>
     </div>
 </template>
 
@@ -38,9 +65,19 @@
         data(){
             return {
                 lists:[],
+                CXQ:[],
+                CXH:[],
                 Csvj:{
-                    flName:""
-                }
+                    flName:"",
+                },
+                CXQvalue:{
+                    flName:"",
+                    sort:"0"
+                },
+                CXHvalue:{
+                    flName:"",
+                    sort:"1"
+                },
             }
         },
         created() {
@@ -65,12 +102,48 @@
                     res = res.length>0?JSON.parse(res):[];
                     this.lists =  this.utils.htjdTree(res);
                 })
+
+                fetch(this.$store.state.fetchPath + "/allocation/selScheduleByCx", {
+                    method: "POST",
+                    headers: this.$store.state.fetchHeader,
+                    body:this.utils.formatParams(this.CXQvalue),
+                    credentials: 'include'
+                }).then((res) => {
+                    if(res.status!=200){
+                        this.$Message.error('请求失败！');
+                    }else{
+                        return res.text();
+                    }
+                }).then((res) => {
+                    res = res.length>0?JSON.parse(res):[];
+                    this.CXQ =  this.utils.htjdTree(res);
+                    window.console.log(this.CXQ)
+                })
+
+                fetch(this.$store.state.fetchPath + "/allocation/selScheduleByCx", {
+                    method: "POST",
+                    headers: this.$store.state.fetchHeader,
+                    body:this.utils.formatParams(this.CXHvalue),
+                    credentials: 'include'
+                }).then((res) => {
+                    if(res.status!=200){
+                        this.$Message.error('请求失败！');
+                    }else{
+                        return res.text();
+                    }
+                }).then((res) => {
+                    res = res.length>0?JSON.parse(res):[];
+                    this.CXH =  this.utils.htjdTree(res);
+                })
             }
         }
     }
 </script>
 
 <style scoped>
+    ul{
+        list-style-type:none;
+    }
     .titleStyle{
         font-size: 24px;
         text-align: left;
@@ -108,5 +181,10 @@
         height:10px;
         float:right;
         margin-top:3px;
+    }
+    .cxStyle{
+        font-size: 16px;
+        text-align: left;
+        margin-left:10px;
     }
 </style>
