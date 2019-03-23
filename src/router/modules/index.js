@@ -115,6 +115,16 @@ const indexchild=[
             keepAlive: true,
             isLogin: true
         },
+    },
+    {
+        path: '/jcscxhjg/bjsc',
+        name: 'bjsc',
+        component: resolve => require(['@/components/jcscjg/bjsc'], resolve),
+        meta: {
+            title: '北京市场',
+            keepAlive: true,
+            isLogin: true
+        },
     }
 ];
 const childrens=indexchild.concat(pzgjs).concat(xyhxl).concat(gkfx).concat(htzzjd);

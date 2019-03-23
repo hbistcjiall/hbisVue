@@ -198,7 +198,13 @@ const getXszt = (data) =>{
         })
     })
     return result;
-}
+};
+const formatdate = (date) => {
+    let newdate = new Date(date);
+    let month = (newdate.getMonth() + 1) < 10 ? '0' + (newdate.getMonth() + 1) : (newdate.getMonth() + 1);
+    let day=newdate.getDate()<10?'0'+(newdate.getDate()):(newdate.getDate());
+    return newdate.getFullYear() + '-' + month+'-'+day+'  00:00:00';
+};
 export default {
     formatParams,
     buildTree,
@@ -215,5 +221,6 @@ export default {
     htjdTree,
     getPz,
     getCx,
-    getXszt
+    getXszt,
+    formatdate
 };
