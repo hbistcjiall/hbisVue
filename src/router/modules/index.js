@@ -86,6 +86,26 @@ const indexchild=[
         },
     },
     {
+        path: '/druid',
+        name: 'druid',
+        component: resolve => require(['@/components/system/druid'], resolve),
+        meta: {
+            title: 'druid',
+            keepAlive: true,
+            isLogin: true
+        },
+    },
+    {
+        path: '/swagger',
+        name: 'swagger',
+        component: resolve => require(['@/components/system/swagger'], resolve),
+        meta: {
+            title: 'swagger',
+            keepAlive: true,
+            isLogin: true
+        },
+    },
+    {
         path: '/zyphjh/zyjhSel',
         name: 'zyjhcx',
         component: resolve => require(['@/components/zyjhcx/zyjhcx'], resolve),
