@@ -1,39 +1,49 @@
 <template>
     <div>
-        <Form :label-width="50">
+        <Form :label-width="100">
             <Row>
                 <Col span="4">
-                    <FormItem label="单位：" style="width:120px">
-                        <Select v-model="dw" style="width:120px" placeholder="请选择单位">
-                            <Option value="">全部</Option>
-                            <Option value="9580">唐钢</Option>
-                            <Option value="9727">邯钢</Option>
-                            <Option value="9193">宣钢</Option>
-                            <Option value="9196">承钢</Option>
-                            <Option value="1932">舞钢</Option>
-                            <Option value="8110">石钢</Option>
-                            <Option value="8493">衡板</Option>
-                            <Option value="7778">邯宝</Option>
+                    <FormItem label="品种：" style="width:120px">
+                        <Select v-model="zyjhcx.pz" style="width:120px" placeholder="请选择品种" @on-change="getCx">
+                            <Option v-for="item in pzData" :value="item.value" :key="item.value">{{ item.label }}</Option>
                         </Select>
                     </FormItem>
                 </Col>
                 <Col span="4">
-                    <FormItem label="品种：" style="width:120px">
-                        <Select style="width:120px"  v-model="cx" placeholder="请选择产线">
-                            <Option value="cx1">产线一</Option>
-                            <Option value="cx2">产线二</Option>
-                            <Option value="cx3">产线三</Option>
+                    <FormItem label="产线：" style="width:120px">
+                        <Select style="width:120px"  v-model="zyjhcx.cx" placeholder="请选择产线">
+                            <Option v-for="item in cxData" :value="item.value" :key="item.value">{{ item.label }}</Option>
                         </Select>
                     </FormItem>
                 </Col>
-                <Col span="4"  v-if="switchTime">
-                    <FormItem label="月份：" style="width:150px">
-                        <DatePicker type="month" placeholder="起始月份" :editable="false" :clearable="false" v-model="startTime" style="width:150px"></DatePicker>
+                <Col span="4">
+                    <FormItem label="销售主体：" style="width:150px">
+                        <Select style="width:120px"  v-model="zyjhcx.xszt" placeholder="请选择销售主体">
+                            <Option v-for="item in xsztData" :value="item.value" :key="item.value">{{ item.label }}</Option>
+                        </Select>
                     </FormItem>
                 </Col>
-                <Col span="4" v-if="switchTime">
-                    <FormItem style="width:150px">
-                        <DatePicker type="month" placeholder="终止月份"  :editable="false" :clearable="false" v-model="endTime" style="width:150px"></DatePicker>
+                <Col span="4">
+                    <FormItem label="年份：" style="width:150px">
+                        <DatePicker type="year" placeholder="年份" :editable="false" :clearable="false" v-model="zyjhcx.nf" style="width:150px"></DatePicker>
+                    </FormItem>
+                </Col>
+                <Col span="4">
+                    <FormItem style="width:150px" label="月份：">
+                        <Select style="width:120px"  v-model="zyjhcx.yf" placeholder="请选择月份">
+                            <Option value="1">1月</Option>
+                            <Option value="2">2月</Option>
+                            <Option value="3">3月</Option>
+                            <Option value="4">4月</Option>
+                            <Option value="5">5月</Option>
+                            <Option value="6">6月</Option>
+                            <Option value="7">7月</Option>
+                            <Option value="8">8月</Option>
+                            <Option value="9">9月</Option>
+                            <Option value="10">10月</Option>
+                            <Option value="11">11月</Option>
+                            <Option value="12">12月</Option>
+                        </Select>
                     </FormItem>
                 </Col>
                 <Col span="4"><Button @click="getList()" icon="ios-search">查询</Button></Col>
@@ -49,65 +59,44 @@
         name: "pzgjs_cx",
         data() {
             return {
-                dw:'',
-                switchTime:true,
-                year:new Date(),
-                startTime:new Date(),
-                endTime:this.utils.formatMonthEnd(),
-                cx:'',
+                zyjhcx:{
+                    pz:'',
+                    cx:'',
+                    nf:'',
+                    yf:'1',
+                    xszt:''
+                },
+                pzData:[],
+                cxData:[],
+                xsztData:[],
+                cxCx:{
+                    pz:''
+                },
                 columns: [
                     {
                         title: '日期',
                         align: "center",
-                        key: 'LOGTYPE'
+                        key: 'RQ'
                     },
                     {
                         title: '品种',
                         align: "center",
-                        key: 'LOGNAME'
+                        key: 'PZ'
                     },
                     {
                         title: '产线',
                         align: "center",
-                        key: 'userName'
+                        key: 'CX'
                     },
                     {
-                        title: '销售总公司',
+                        title: '销售主体',
                         align: "center",
-                        key: 'CLASSNAME'
+                        key: 'FL_NAME'
                     },
                     {
-                        title: '子公司',
+                        title: '计划量',
                         align: "center",
-                        key: 'METHOD'
-                    },
-                    {
-                        title: '出口',
-                        align: "center",
-                        key: 'CREATETIME'
-                    },
-                    {
-                        title: '现货',
-                        align: "center",
-                        key: 'CREATETIME'
-                    },
-                    {
-                        title: '总量',
-                        align: "center",
-                        key: 'MESSAGE',
-                        ellipsis:true
-                    },
-                    {
-                        title: '品种钢',
-                        slot: 'action',
-                        align: 'center',
-                        width:'160px'
-                    },
-                    {
-                        title: '品种钢比例',
-                        slot: 'action',
-                        align: 'center',
-                        width:'160px'
+                        key: 'JHL'
                     }
                 ],
                 data: []
@@ -115,19 +104,35 @@
         },
         mounted() {
             this.getList();
+            fetch(this.$store.state.fetchPath + "/scm-steel-settle/getzyjhcxtjpz", {
+                method: "POST",
+                headers: this.$store.state.fetchHeader,
+                body: '',
+                credentials: 'include'
+            }).then((res) => {
+                if(res.status!=200){
+                    this.$Message.error('请求失败！');
+                }else{
+                    return res.text();
+                }
+            }).then((res) => {
+                res = res && res.length > 0 ? JSON.parse(res) : [];
+                this.pzData = this.utils.getPz(res)
+            });
+            this.getCxData();
+            this.getXsztData();
         },
         methods: {
             getList() {
-                let params={};
-                this.dw?params.dw=this.dw:'';
-                this.cx?params.cx=this.cx:'';
-                let startTime='startTime=';
-                let endTime='&endTime=';
-                this.switchTime?(startTime=startTime+this.utils.formatMonthStart(this.startTime),endTime=endTime+this.utils.formatMonthStart(this.endTime)):(startTime=startTime+ this.utils.formatYearStart(this.year),endTime=endTime+this.utils.formatYearEnd(this.year));
-                fetch(this.$store.state.fetchPath + "/scm-steel-settle/getcx", {
+                if(this.zyjhcx.nf!=''){
+                    this.zyjhcx.nf=new Date(this.zyjhcx.nf).getFullYear().toString()
+                }else{
+                    this.zyjhcx.nf=''
+                }
+                fetch(this.$store.state.fetchPath + "/scm-steel-settle/getzyjh", {
                     method: "POST",
                     headers: this.$store.state.fetchHeader,
-                    body: startTime+endTime+'&'+this.utils.formatParams(params),
+                    body: this.utils.formatParams(this.zyjhcx),
                     credentials: 'include'
                 }).then((res) => {
                     if(res.status!=200){
@@ -137,7 +142,45 @@
                     }
                 }).then((res) => {
                     res = res && res.length > 0 ? JSON.parse(res) : [];
-                    this.data =  res.data;
+                    this.data =  res;
+                });
+            },
+            getCxData(){
+                fetch(this.$store.state.fetchPath + "/scm-steel-settle/getzyjhcxtjcx", {
+                    method: "POST",
+                    headers: this.$store.state.fetchHeader,
+                    body: this.utils.formatParams(this.cxCx),
+                    credentials: 'include'
+                }).then((res) => {
+                    if(res.status!=200){
+                        this.$Message.error('请求失败！');
+                    }else{
+                        return res.text();
+                    }
+                }).then((res) => {
+                    res = res && res.length > 0 ? JSON.parse(res) : [];
+                    this.cxData = this.utils.getCx(res)
+                });
+            },
+            getCx(){
+                this.cxCx.pz = this.zyjhcx.pz
+                this.getCxData()
+            },
+            getXsztData(){
+                fetch(this.$store.state.fetchPath + "/scm-steel-settle/getzyjhcxtjxszt", {
+                    method: "POST",
+                    headers: this.$store.state.fetchHeader,
+                    body: '',
+                    credentials: 'include'
+                }).then((res) => {
+                    if(res.status!=200){
+                        this.$Message.error('请求失败！');
+                    }else{
+                        return res.text();
+                    }
+                }).then((res) => {
+                    res = res && res.length > 0 ? JSON.parse(res) : [];
+                    this.xsztData = this.utils.getXszt(res)
                 });
             }
         }

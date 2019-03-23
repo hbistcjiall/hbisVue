@@ -148,7 +148,57 @@ const formatYearEnd = (date) => {
     return (newdate.getFullYear()+1) + '-01-01 00:00:00';
 };
 
+const getPz = (data) =>{
+    const result = []
+    // 遍历 tree
+    data.forEach((item) => {
+        // 解构赋值
+        let {
+            PZ: value,
+            PZ: label,
+        } = item
 
+        result.push({
+            value,
+            label
+        })
+    })
+    return result;
+}
+const getCx = (data) =>{
+    const result = []
+    // 遍历 tree
+    data.forEach((item) => {
+        // 解构赋值
+        let {
+            CX: value,
+            CX: label,
+        } = item
+
+        result.push({
+            value,
+            label
+        })
+    })
+    return result;
+}
+const getXszt = (data) =>{
+    const result = []
+    // 遍历 tree
+    data.forEach((item) => {
+        // 解构赋值
+        let {
+            XSZT: value,
+            XSZT: label,
+        } = item
+
+        result.push({
+            value,
+            label
+        })
+    })
+    return result;
+}
 export default {
     formatParams,
     buildTree,
@@ -162,5 +212,8 @@ export default {
     formatYearStart,
     formatYearEnd,
     buildselTree,
-    htjdTree
+    htjdTree,
+    getPz,
+    getCx,
+    getXszt
 };
