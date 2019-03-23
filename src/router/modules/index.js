@@ -84,6 +84,16 @@ const indexchild=[
             keepAlive: true,
             isLogin: true
         },
+    },
+    {
+        path: '/zyphjh/zyjhSel',
+        name: 'zyjhcx',
+        component: resolve => require(['@/components/zyjhcx/zyjhcx'], resolve),
+        meta: {
+            title: '资源计划查询',
+            keepAlive: true,
+            isLogin: true
+        },
     }
 ];
 const childrens=indexchild.concat(pzgjs).concat(xyhxl).concat(gkfx);

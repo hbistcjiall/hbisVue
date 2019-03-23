@@ -129,6 +129,7 @@
                     {
                         title: '上传时间',
                         align: "center",
+                        width:100,
                         key: 'UPLOADTIME'
                     },
                     {
