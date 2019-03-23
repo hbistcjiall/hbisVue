@@ -10,13 +10,16 @@
         overflow: hidden;
     }
     .layout-logo{
-        width: 100px;
-        height: 55px;
+        /*width: 238px;*/
+        /*height: 74px;*/
+        width: 190px;
+        height: 59px;
         border-radius: 3px;
         top: 5px;
         float: left;
+        margin-left: -30px;
         position: relative;
-        background-image: url("../../assets/indexImg/indexLog.png");
+        background-image: url("../../assets/indexImg/newindexlog.jpg");
         background-size:100% 100%;
     }
     .ivu-menu-horizontal{
@@ -44,7 +47,7 @@
         box-shadow: 0 1px 1px rgba(0,0,0,.1);
     }
     .ivu-layout-sider{
-        background-color: #3491ce;
+        background-color: #f2f4f7;
     }
     .menu-item span{
         display: inline-block;
@@ -79,7 +82,7 @@
             <Header>
                 <Menu mode="horizontal" active-name="1" style="background-color: #0176c2">
                     <div class="layout-logo"></div>
-                    <div class="layout-title">河钢销售营销数据中心</div>
+                    <!--<div class="layout-title">河钢销售营销数据中心</div>-->
                     <div class="layout-nav">
                         <Button type="info" style="float: right;margin-top: 14px" @click="loginOut()">退 出</Button>
                     </div>
@@ -93,7 +96,7 @@
                     <Header class="layout-header-bar">
                     <headerList/>
                     </Header>
-                    <Content :style="{margin: '2px',padding:'20px', background: '#fff', minHeight:screenHeight}">
+                    <Content :style="{margin: '2px',padding:'20px', background: '#f9f8f8', minHeight:screenHeight}">
                         <contentList/>
                     </Content>
                 </Layout>
@@ -165,6 +168,9 @@
 <style>
 .ivu-icon-ios-arrow-down:before {
         content: "\F116";
-        color:#fff;
+        color:#0075c1;
     }
+.ivu-layout-content{
+    background-color: #f9f8f8;
+}
 </style>

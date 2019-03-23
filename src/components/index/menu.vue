@@ -47,25 +47,34 @@
 </script>
 <style scoped>
     .ivu-menu-light{
-        background-color: #3491ce;
-        color: #fff;
+        background-color: #f2f4f7;
+        color: #546c8c;
         font-weight: bold;
     }
     .ivu-menu-item, .ivu-menu-submenu{
         text-align: left;
     }
     .ivu-menu-item span{
-        color: #fff;
+        /*color: #fff;*/
+        color: #546c8c;
         white-space:nowrap;
     }
     .ivu-menu-light.ivu-menu-vertical .ivu-menu-item-active:not(.ivu-menu-submenu){
-        background-color: #3069a0;
+        /*background-color: #3069a0;*/
+        background-color: #ffffff;
     }
     .ivu-menu-vertical li:hover span{
-        color:#ffffff;
+        /*color:#ffffff;*/
     }
     a .ivu-menu-item {
         color: inherit;
         background-color:#2679af;
+    }
+    .ivu-menu a{
+        background-color: #ffffff;
+        border: 1px solid #e6e2e2;
+    }
+    .ivu-menu a:hover span{
+        color: #0075c1;
     }
 </style>
