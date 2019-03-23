@@ -75,30 +75,133 @@
                 },
                 columns: [
                     {
-                        title: '日期',
-                        align: "center",
-                        key: 'RQ'
-                    },
-                    {
-                        title: '品种',
-                        align: "center",
-                        key: 'PZ'
-                    },
-                    {
                         title: '产线',
-                        align: "center",
-                        key: 'CX'
+                        key: 'NAME',
+                        align: 'center',
+                        width: 100,
                     },
                     {
-                        title: '销售主体',
-                        align: "center",
-                        key: 'FL_NAME'
+                        title: '合计',
+                        key: 'nmzl',
+                        align: 'center',
+                        width: 100,
+                        children: [
+                            {
+                                title: '计划量',
+                                key: 'FKIMG',
+                                align: 'center',
+                                width: 100,
+                            },
+                            {
+                                title: '合同量',
+                                key: 'PZGL',
+                                align: 'center',
+                                width: 100,
+                            },
+                            {
+                                title: '完成比例',
+                                key: 'BZ',
+                                align: 'center',
+                                width: 100,
+                            }
+                        ]
                     },
                     {
-                        title: '计划量',
-                        align: "center",
-                        key: 'JHL'
-                    }
+                        title: '销售总公司',
+                        key: 'zygs',
+                        align: 'center',
+                        children: [{
+                            title: '计划量',
+                            key: 'ZYFKIMG',
+                            align: 'center',
+                            width: 100
+                        },
+                            {
+                                title: '合同量（专业公司）',
+                                key: 'ZYPZGL',
+                                align: 'center',
+                                width: 100,
+                            },
+                            {
+                                title: '合同量（分公司）',
+                                key: 'ZYPZGL',
+                                align: 'center',
+                                width: 100,
+                            },
+                            {
+                                title: '完成比例',
+                                key: 'ZYBZ',
+                                align: 'center',
+                                width: 100,
+                            },
+                            {
+                                title: '进度',
+                                key: 'ZYBZ',
+                                align: 'center',
+                                width: 100,
+                            }
+                        ]
+                    },
+                    {
+                        title: '子公司（技术中心、事业部）',
+                        key: 'fgs',
+                        align: 'center',
+                        children: [{
+                            title: '计划量',
+                            key: 'FGSFKIMG',
+                            align: 'center',
+                            width: 100
+                        },
+                            {
+                                title: '合同量',
+                                key: 'FGSPZGL',
+                                align: 'center',
+                                width: 100,
+                            },
+                            {
+                                title: '完成比例',
+                                key: 'FGSBZ',
+                                align: 'center',
+                                width: 100
+                            },
+                            {
+                                title: '进度',
+                                key: 'FGSBZ',
+                                align: 'center',
+                                width: 100
+                            }
+                        ]
+                    },
+                    {
+                        title: '出口',
+                        key: 'fgs',
+                        align: 'center',
+                        children: [{
+                            title: '计划量',
+                            key: 'FGSFKIMG',
+                            align: 'center',
+                            width: 100
+                        },
+                            {
+                                title: '合同量',
+                                key: 'FGSPZGL',
+                                align: 'center',
+                                width: 100,
+                            },
+                            {
+                                title: '完成比例',
+                                key: 'FGSBZ',
+                                align: 'center',
+                                width: 100
+                            },
+                            {
+                                title: '进度',
+                                key: 'FGSBZ',
+                                align: 'center',
+                                width: 100
+                            }
+                        ]
+                    },
                 ],
                 data: []
             }
