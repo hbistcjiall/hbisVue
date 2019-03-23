@@ -86,6 +86,30 @@ const buildselTree = (tree) => {
     })
     return result;
 }
+
+const htjdTree = (tree) => {
+    const result = []
+    // 遍历 tree
+    tree.forEach((item) => {
+        // 解构赋值
+        let {
+            PZNAME: title,
+            YIELD: ycl,
+            PLANNUM : jhl,
+            SCHEDULE : wcbl,
+            CXNAME:cxtitle,
+        } = item
+        result.push({
+            title,
+            ycl,
+            jhl,
+            wcbl,
+            cxtitle
+        })
+    })
+    return result;
+}
+
 const buildRoleTree = (list) => {
     let map = {};
     let val = [];
@@ -137,5 +161,6 @@ export default {
     formatMonthEnd,
     formatYearStart,
     formatYearEnd,
-    buildselTree
+    buildselTree,
+    htjdTree
 };
