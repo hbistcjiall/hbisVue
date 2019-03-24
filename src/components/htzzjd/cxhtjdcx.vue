@@ -2,51 +2,46 @@
     <div>
         <Form :label-width="100">
             <Row>
-                <Col span="4">
-                    <FormItem label="钢厂：" style="width:150px">
-                        <Select style="width:120px"  v-model="cxhtjdcx.gc" placeholder="请选择销售主体">
-                            <Option value="">全部</Option>
-                            <Option value="9580">唐钢</Option>
-                            <Option value="9727">邯钢</Option>
-                            <Option value="9193">宣钢</Option>
-                            <Option value="9196">承钢</Option>
-                            <Option value="1932">舞钢</Option>
-                            <Option value="8110">石钢</Option>
-                            <Option value="8493">衡板</Option>
-                            <Option value="7778">邯宝</Option>
-                        </Select>
-                    </FormItem>
-                </Col>
-                <Col span="4">
-                    <FormItem label="品种：" style="width:120px">
-                        <Select v-model="cxhtjdcx.pz" style="width:120px" placeholder="请选择品种" @on-change="getCx">
-                            <Option v-for="item in pzData" :value="item.value" :key="item.value">{{ item.label }}</Option>
-                        </Select>
-                    </FormItem>
-                </Col>
+                <!--<Col span="4">-->
+                    <!--<FormItem label="品种：" style="width:120px">-->
+                        <!--<Select v-model="cxhtjdcx.pz" style="width:120px" placeholder="请选择品种" @on-change="getCx">-->
+                            <!--<Option v-for="item in pzData" :value="item.value" :key="item.value">{{ item.label }}</Option>-->
+                        <!--</Select>-->
+                    <!--</FormItem>-->
+                <!--</Col>-->
                 <Col span="4">
                     <FormItem label="产线：" style="width:120px">
-                        <Select style="width:120px"  v-model="cxhtjdcx.cx" placeholder="请选择产线">
+                        <Select style="width:120px"  v-model="cx" placeholder="请选择产线">
                             <Option v-for="item in cxData" :value="item.value" :key="item.value">{{ item.label }}</Option>
                         </Select>
                     </FormItem>
                 </Col>
+                <!--<Col span="4">-->
+                    <!--<FormItem style="width:150px" label="计划月份：">-->
+                        <!--<Select style="width:120px"  v-model="cxhtjdcx.yf" placeholder="请选择月份">-->
+                            <!--<Option value="1">1月</Option>-->
+                            <!--<Option value="2">2月</Option>-->
+                            <!--<Option value="3">3月</Option>-->
+                            <!--<Option value="4">4月</Option>-->
+                            <!--<Option value="5">5月</Option>-->
+                            <!--<Option value="6">6月</Option>-->
+                            <!--<Option value="7">7月</Option>-->
+                            <!--<Option value="8">8月</Option>-->
+                            <!--<Option value="9">9月</Option>-->
+                            <!--<Option value="10">10月</Option>-->
+                            <!--<Option value="11">11月</Option>-->
+                            <!--<Option value="12">12月</Option>-->
+                        <!--</Select>-->
+                    <!--</FormItem>-->
+                <!--</Col>-->
                 <Col span="4">
-                    <FormItem style="width:150px" label="计划月份：">
-                        <Select style="width:120px"  v-model="cxhtjdcx.yf" placeholder="请选择月份">
-                            <Option value="1">1月</Option>
-                            <Option value="2">2月</Option>
-                            <Option value="3">3月</Option>
-                            <Option value="4">4月</Option>
-                            <Option value="5">5月</Option>
-                            <Option value="6">6月</Option>
-                            <Option value="7">7月</Option>
-                            <Option value="8">8月</Option>
-                            <Option value="9">9月</Option>
-                            <Option value="10">10月</Option>
-                            <Option value="11">11月</Option>
-                            <Option value="12">12月</Option>
-                        </Select>
+                    <FormItem label="月份：" style="width:150px">
+                        <DatePicker type="month" placeholder="起始月份" :editable="false" :clearable="false" v-model="startTime" style="width:150px"></DatePicker>
+                    </FormItem>
+                </Col>
+                <Col span="4">
+                    <FormItem style="width:150px">
+                        <DatePicker type="month" placeholder="终止月份"  :editable="false" :clearable="false" v-model="endTime" style="width:150px"></DatePicker>
                     </FormItem>
                 </Col>
                 <Col span="4"><Button @click="getList()" icon="ios-search">查询</Button></Col>
@@ -62,13 +57,10 @@
         name: "cxhtjdcx",
         data() {
             return {
-                cxhtjdcx:{
-                    pz:'',
-                    cx:'',
-                    yf:'1',
-                    gc:''
-                },
-                pzData:[],
+                cx:'',
+                startTime:new Date(),
+                endTime:this.utils.formatMonthEnd(),
+                // pzData:[],
                 cxData:[],
                 cxCx:{
                     pz:''
@@ -88,19 +80,19 @@
                         children: [
                             {
                                 title: '计划量',
-                                key: 'FKIMG',
+                                key: 'ZJHL',
                                 align: 'center',
                                 width: 100,
                             },
                             {
                                 title: '合同量',
-                                key: 'PZGL',
+                                key: 'ZHTL',
                                 align: 'center',
                                 width: 100,
                             },
                             {
                                 title: '完成比例',
-                                key: 'BZ',
+                                key: 'ZWCBL',
                                 align: 'center',
                                 width: 100,
                             }
@@ -112,31 +104,31 @@
                         align: 'center',
                         children: [{
                             title: '计划量',
-                            key: 'ZYFKIMG',
+                            key: 'ZYJHL',
                             align: 'center',
                             width: 100
                         },
                             {
                                 title: '合同量（专业公司）',
-                                key: 'ZYPZGL',
+                                key: 'ZYHTL',
                                 align: 'center',
                                 width: 100,
                             },
                             {
                                 title: '合同量（分公司）',
-                                key: 'ZYPZGL',
+                                key: 'HTL',
                                 align: 'center',
                                 width: 100,
                             },
                             {
                                 title: '完成比例',
-                                key: 'ZYBZ',
+                                key: 'WCBL',
                                 align: 'center',
                                 width: 100,
                             },
                             {
                                 title: '进度',
-                                key: 'ZYBZ',
+                                key: 'JD',
                                 align: 'center',
                                 width: 100,
                             }
@@ -148,25 +140,25 @@
                         align: 'center',
                         children: [{
                             title: '计划量',
-                            key: 'FGSFKIMG',
+                            key: 'ZGSJHL',
                             align: 'center',
                             width: 100
                         },
                             {
                                 title: '合同量',
-                                key: 'FGSPZGL',
+                                key: 'ZGSHTL',
                                 align: 'center',
                                 width: 100,
                             },
                             {
                                 title: '完成比例',
-                                key: 'FGSBZ',
+                                key: 'ZGSWCBL',
                                 align: 'center',
                                 width: 100
                             },
                             {
                                 title: '进度',
-                                key: 'FGSBZ',
+                                key: 'ZGSJD',
                                 align: 'center',
                                 width: 100
                             }
@@ -178,25 +170,25 @@
                         align: 'center',
                         children: [{
                             title: '计划量',
-                            key: 'FGSFKIMG',
+                            key: 'CKJHL',
                             align: 'center',
                             width: 100
                         },
                             {
                                 title: '合同量',
-                                key: 'FGSPZGL',
+                                key: 'CKHTL',
                                 align: 'center',
                                 width: 100,
                             },
                             {
                                 title: '完成比例',
-                                key: 'FGSBZ',
+                                key: 'CKWCBL',
                                 align: 'center',
                                 width: 100
                             },
                             {
                                 title: '进度',
-                                key: 'FGSBZ',
+                                key: 'CKJD',
                                 align: 'center',
                                 width: 100
                             }
@@ -206,31 +198,37 @@
                 data: []
             }
         },
-        mounted() {
+        created() {
             this.getList();
-            fetch(this.$store.state.fetchPath + "/scm-steel-settle/getzyjhcxtjpz", {
-                method: "POST",
-                headers: this.$store.state.fetchHeader,
-                body: '',
-                credentials: 'include'
-            }).then((res) => {
-                if(res.status!=200){
-                    this.$Message.error('请求失败！');
-                }else{
-                    return res.text();
-                }
-            }).then((res) => {
-                res = res && res.length > 0 ? JSON.parse(res) : [];
-                this.pzData = this.utils.getPz(res)
-            });
+            // fetch(this.$store.state.fetchPath + "/scm-steel-settle/getzyjhcxtjpz", {
+            //     method: "POST",
+            //     headers: this.$store.state.fetchHeader,
+            //     body: '',
+            //     credentials: 'include'
+            // }).then((res) => {
+            //     if(res.status!=200){
+            //         this.$Message.error('请求失败！');
+            //     }else{
+            //         return res.text();
+            //     }
+            // }).then((res) => {
+            //     res = res && res.length > 0 ? JSON.parse(res) : [];
+            //     this.pzData = this.utils.getPz(res)
+            // });
             this.getCxData();
         },
         methods: {
             getList() {
-                fetch(this.$store.state.fetchPath + "/scm-steel-settle/getzyjh", {
+                let params={};
+                params.cx = this.cx
+                let startTime='startTime=';
+                let endTime='&endTime=';
+                startTime=startTime+this.utils.formatMonthStart(this.startTime);
+                endTime=endTime+this.utils.formatMonthStart(this.endTime);
+                fetch(this.$store.state.fetchPath + "/scm-steel-settle/getcxhtjd", {
                     method: "POST",
                     headers: this.$store.state.fetchHeader,
-                    body: this.utils.formatParams(this.zyjhcx),
+                    body: startTime+endTime+'&'+this.utils.formatParams(params),
                     credentials: 'include'
                 }).then((res) => {
                     if(res.status!=200){
@@ -247,7 +245,7 @@
                 fetch(this.$store.state.fetchPath + "/scm-steel-settle/getzyjhcxtjcx", {
                     method: "POST",
                     headers: this.$store.state.fetchHeader,
-                    body: this.utils.formatParams(this.cxCx),
+                    body:this.utils.formatParams(this.cxCx),
                     credentials: 'include'
                 }).then((res) => {
                     if(res.status!=200){
@@ -260,10 +258,10 @@
                     this.cxData = this.utils.getCx(res)
                 });
             },
-            getCx(){
-                this.cxCx.pz = this.zyjhcx.pz
-                this.getCxData()
-            }
+            // getCx(){
+            //     this.cxCx.pz = this.zyjhcx.pz
+            //     this.getCxData()
+            // }
         }
     }
 </script>
