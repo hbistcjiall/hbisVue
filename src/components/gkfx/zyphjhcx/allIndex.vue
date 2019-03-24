@@ -1,25 +1,23 @@
 <template>
     <div>
         <div>
-            <div style="width:50%;float:left;height:500px;border:1px solid black;">
-
-               fdsfdsf <!--<x-chart id="xszt" :option="pie"></x-chart>-->
+            <div style="width:50%;float:left;height:405px;border:1px solid black;">
+                <x-chart id="all_pieValue" :option="pieOption"></x-chart>
             </div>
-            <div style="width:49%;float:right;height:500px;border:1px solid black;">
-                <!--<x-chart id="test" :option="column"></x-chart>-->
-                <div id="test" :option="column"></div>
+            <div style="width:49%;float:right;height:405px;border:1px solid black;">
+                <x-chart id="all_columnValue"  :option="option"></x-chart>
             </div>
         </div>
         <div>
             <div style="width:55%;float:left;">
-                <Table border stripe :columns="columns1" :data="resDatas3" style="margin-top: 20px">
+                <Table border stripe :columns="columns1" :data="resDatas3" style="margin-top: 20px" id="allTable1">
                     <template slot-scope="{ row }" slot="name">
                         <strong>{{ row.name }}</strong>
                     </template>
                 </Table>
             </div>
             <div style="width:44%;float:right;">
-                <Table border stripe :columns="columns2" :data="resDatas4" style="margin-top: 20px">
+                <Table border stripe :columns="columns2" :data="resDatas4" style="margin-top: 20px" id="allTable2">
                     <template slot-scope="{ row }" slot="name">
                         <strong>{{ row.name }}</strong>
                     </template>
@@ -30,13 +28,14 @@
 </template>
 
 <script>
-    // import XChart from '../../chart.vue'
-    import highCharts from 'highcharts'
+    import XChart from '../../chart.vue'
     export default {
         name: "allIndex",
         data () {
             return {
-                gcjh:'gcjh',
+                byValue:{
+                    type:''
+                },
                 columns1: [
                     {
                         title: '品种',
@@ -87,15 +86,16 @@
                 resDatas4:[],
                 xhdata:[],
                 //柱状图
+                option:{},
                 column: {
                     chart: {
                         type: 'column'
                     },
                     title: {
-                        text: '钢厂计划'
+                        text: '<span style="font-size:16px;font-weight: bold">钢厂计划</span><br>'
                     },
                     xAxis: {
-                        categories: [1],
+                        categories: [],
                         crosshair: true
                     },
                     yAxis: {
@@ -123,17 +123,22 @@
                         data: this.xhdata
                     }]
                 },
-
+                //饼状图
+                pieOption:{},
                 pie: {
                     chart: {
                         type: 'pie'
                     },
                     title: {
-                        text: '销售主体'
+                        text: '<span style="font-size:16px;font-weight: bold">销售主体</span><br>'
+                    },
+                    subtitle: {
+                        text: ''
                     },
                     tooltip: {
-                        pointFormat: '{series.name}: <b>{point.percentage:.1f}%</b>',
-                        percentageDecimals: 2 //百分比保留小数
+                        percentageDecimals: 2 ,//百分比保留小数
+                        headerFormat: '<span style="font-size:11px">{series.name}</span><br>',
+                        pointFormat: '<span style="color:{point.color}">{point.name}</span>: <b>{point.b:.2f}%</b><br/>',
                     },
                     plotOptions: {
                         pie: {
@@ -141,7 +146,7 @@
                             cursor: 'pointer',
                             dataLabels: {
                                 enabled: true,
-                                format: '<b>{point.name}</b>: {point.percentage:.1f}万吨',
+                                format: '<b>{point.name}</b>: {point.y:.2f}万吨',
                             }
                         }
                     },
@@ -150,57 +155,50 @@
                     },
                     series: [{
                         name: '百分比',
-                        data: [ {
-                            name: '技术中心',
-                            y: 51.82
-                        }, {
-                            name: '出口',
-                            y: 24.25
-                        },{
-                            name: '子公司',
-                            y: 46.02
-                        },{
-                            name: '销售公司',
-                            y: 158.36,
-                        }]
+                        data: []
                     }]
                 },
             }
         },
-        // components: {
-        //     XChart
-        // },
+        components: {
+            XChart
+        },
         mounted() {
             this.handleListApproveHistory();
-            highCharts.chart('test',this.column);
         },
 
         methods: {
             handleListApproveHistory() {
                 //销售主体
-                // fetch(this.$store.state.fetchPath + "/protocolAccountDetails/resourceplanone", {
-                //     method: "POST",
-                //     headers: this.$store.state.fetchHeader,
-                //     body:'',
-                //     credentials:'include'
-                // })
-                //     .then((res) => {
-                //         if(res.status!=200){
-                //             this.$Message.error('请求失败！');
-                //         }else{
-                //             return res.text();
-                //         }
-                //     }).then((res) => {
-                //     res = res&&res.length>0?JSON.parse(res):[]
-                //     this.resDatas1 =  res;
-                //     window.console.log(this.resDatas1)
-                // })
+                fetch(this.$store.state.fetchPath + "/protocolAccountDetails/resourceplanone", {
+                    method: "POST",
+                    headers: this.$store.state.fetchHeader,
+                    body:this.utils.formatParams(this.byValue),
+                    credentials:'include'
+                })
+                    .then((res) => {
+                        if(res.status!=200){
+                            this.$Message.error('请求失败！');
+                        }else{
+                            return res.text();
+                        }
+                    }).then((res) => {
+                    res = res&&res.length>0?JSON.parse(res):[]
+                    this.resDatas1 =  res;
+                    let chartsData =[];
+                        for(let i=1;i<res.length;i++){
+                                chartsData.push({name:res[i].COMPANYNAME,y:res[i].ZYFKIMG,b:res[i].BILI});
+                            }
+                    this.pie.series[0].data=chartsData;
+                    this.pie.subtitle.text = '<span style="font-size:14px;color:black;font-weight: bold">'+res[0].COMPANYNAME+':'+res[0].ZYFKIMG+"万吨"+'</span>'
+                    this.pieOption=this.pie;
+                })
 
                 //钢厂计划
                 fetch(this.$store.state.fetchPath + "/protocolAccountDetails/resourceplantwo", {
                     method: "POST",
                     headers: this.$store.state.fetchHeader,
-                    body:'',
+                    body:this.utils.formatParams(this.byValue),
                     credentials:'include'
                 })
                     .then((res) => {
@@ -212,70 +210,63 @@
                     }).then((res) => {
                     res = res&&res.length>0?JSON.parse(res):[]
                     this.resDatas2 =  res;
+                    let chartsData1=[];
+                    let chartsData2=[];
+                    let chartsData3=[];
+                    for(let k=0;k<res.length;k++){
+                        chartsData2.push(res[k].JH);
+                        chartsData1.push(res[k].XH);
+                        chartsData3.push(res[k].COMPANYNAME);
+                    }
+                    this.column.series[1].data=chartsData2;
+                    this.column.series[0].data=chartsData1;
+                    this.column.xAxis.categories=chartsData3;
+                    this.option=this.column;
+                })
 
-                    // window.console.log(this.resDatas2)
-                    // for(var i=0;i<this.resDatas2.length;i++){
-                    //     // this.xhdata = this.resDatas2[i].JH;
-                    //     this.xhdata.splice(this.resDatas2[i].JH);
-                    //     this.column.series[0].data=res;
-                    //     window.console.log(this.column.series[1])
-                    //     // this.column.series[1].data.push(this.xhdata);
-                    //     // this.column.series[1].data= this.resDatas2[i].JH;
-                    //     //  this.column.xAxis.categories.push(+'"'+this.resDatas2[i].COMPANYNAME+'"');
-                    //     //  window.console.log(typeof(this.column.series[0].data[0]))
-                    // }
-                    for(let i=0;i<res.length;i++){
-                        this.column.series[0].data.push(res[i].JH);
+                //品种表格
+                fetch(this.$store.state.fetchPath + "/protocolAccountDetails/resourceplanthrid", {
+                    method: "POST",
+                    headers: this.$store.state.fetchHeader,
+                    body:this.utils.formatParams(this.byValue),
+                    credentials:'include'
+                })
+                    .then((res) => {
+                        if(res.status!=200){
+                            this.$Message.error('请求失败！');
+                        }else{
+                            return res.text();
+                        }
+                    }).then((res) => {
+                    res = res&&res.length>0?JSON.parse(res):[]
+                    this.resDatas3 =  res;
+                    for(var i=0;i<this.resDatas3.length;i++){
+                        this.resDatas3[i].BILI = this.resDatas3[i].BILI;
                     }
 
                 })
 
-                //品种表格
-                // fetch(this.$store.state.fetchPath + "/protocolAccountDetails/resourceplanthrid", {
-                //     method: "POST",
-                //     headers: this.$store.state.fetchHeader,
-                //     body:'',
-                //     credentials:'include'
-                // })
-                //     .then((res) => {
-                //         if(res.status!=200){
-                //             this.$Message.error('请求失败！');
-                //         }else{
-                //             return res.text();
-                //         }
-                //     }).then((res) => {
-                //     res = res&&res.length>0?JSON.parse(res):[]
-                //     this.resDatas3 =  res;
-                //     window.console.log(this.resDatas3[3].BILI*100+'%')
-                //     for(var i=0;i<this.resDatas3.length;i++){
-                //         this.resDatas3[i].BILI = this.resDatas3[i].BILI*100+'%';
-                //     }
-                //
-                // })
-                //
 
                 //钢厂表格
-                // fetch(this.$store.state.fetchPath + "/protocolAccountDetails/resourceplanfour", {
-                //     method: "POST",
-                //     headers: this.$store.state.fetchHeader,
-                //     body:'',
-                //     credentials:'include'
-                // })
-                //     .then((res) => {
-                //         if(res.status!=200){
-                //             this.$Message.error('请求失败！');
-                //         }else{
-                //             return res.text();
-                //         }
-                //     }).then((res) => {
-                //     res = res&&res.length>0?JSON.parse(res):[]
-                //     this.resDatas4 =  res;
-                //     for(var i=0;i<this.resDatas4.length;i++){
-                //         this.resDatas4[i].BILI = this.resDatas4[i].BILI*100+'%';
-                //     }
-                //     window.console.log(this.resDatas4)
-                //
-                // })
+                fetch(this.$store.state.fetchPath + "/protocolAccountDetails/resourceplanfour", {
+                    method: "POST",
+                    headers: this.$store.state.fetchHeader,
+                    body:this.utils.formatParams(this.byValue),
+                    credentials:'include'
+                })
+                    .then((res) => {
+                        if(res.status!=200){
+                            this.$Message.error('请求失败！');
+                        }else{
+                            return res.text();
+                        }
+                    }).then((res) => {
+                    res = res&&res.length>0?JSON.parse(res):[]
+                    this.resDatas4 =  res;
+                    for(var i=0;i<this.resDatas4.length;i++){
+                        this.resDatas4[i].BILI = this.resDatas4[i].BILI;
+                    }
+                })
             },
         }
     }
