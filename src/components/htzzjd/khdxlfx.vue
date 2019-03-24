@@ -54,7 +54,7 @@
                         title:'单位',
                         align: "center",
                         width: 100,
-                        key:'companyId'
+                        key:'companyName'
                     },
                     {
                         title:'日期',
