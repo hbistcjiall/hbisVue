@@ -1,5 +1,5 @@
 <template>
-    <Tabs type="card" v-model="activeIndex" @on-click="onTabClick">
+    <Tabs type="card" v-model="activeIndex" @on-click="onTabClick" :animated="false">
         <TabPane label="集团"><jt></jt></TabPane>
         <TabPane label="销售总公司"><xszgs></xszgs></TabPane>
         <TabPane label="子公司"><zgs></zgs></TabPane>

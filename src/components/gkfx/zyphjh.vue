@@ -1,5 +1,5 @@
 <template>
-        <Tabs type="card">
+        <Tabs type="card" :animated="false">
             <TabPane label="全部"><allIndex></allIndex></TabPane>
             <TabPane label="热板"><rbIndex></rbIndex></TabPane>
             <TabPane label="冷板"><lbIndex></lbIndex></TabPane>
