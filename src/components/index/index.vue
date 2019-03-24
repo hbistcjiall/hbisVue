@@ -43,7 +43,7 @@
     .layout-header-bar{
         width: 100%;
         height: 30px;
-        background-color: #f2f4f7;
+        background-color: #ffffff;
         box-shadow: 0 1px 1px rgba(0,0,0,.1);
     }
     .ivu-layout-sider{

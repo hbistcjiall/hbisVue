@@ -33,7 +33,7 @@
         width: 100%;
         height:30px;
         text-align: left !important;
-        background-color: #f2f4f7;
+        background-color: #ffffff;
         line-height: 30px;
     }
     .ivu-breadcrumb span{
