@@ -46,49 +46,17 @@
     }
 </script>
 <style scoped>
-    .ivu-menu-light{
-        background-color: #ffffff;
-        color: #546c8c;
-        font-weight: bold;
-    }
-
     .ivu-menu-item, .ivu-menu-submenu{
         text-align: left;
+        color: #333;
 
     }
     .ivu-menu-item span{
-        /*color: #fff;*/
-        color: #546c8c;
         white-space:nowrap;
     }
     .ivu-menu-light.ivu-menu-vertical .ivu-menu-item-active:not(.ivu-menu-submenu){
-        /*background-color: #3069a0;*/
-        background-color: #3491ce;
-        color: #ffffff;
+        color: white;
+        background: #09c;
     }
-    .ivu-menu-vertical li:hover span{
-        /*color:#ffffff;*/
-    }
-    a .ivu-menu-item {
-        color: inherit;
-        background-color:#2679af;
-    }
-    .ivu-menu a{
-        background-color: #ffffff;
-        border: 1px solid #e6e2e2;
-    }
-    .ivu-menu a:hover{
-        background-color: #3491ce;
-    }
-    .ivu-menu a:hover span{
-        /*color: #0075c1;*/
-        color: #ffffff;
-    }
-    .ivu-menu a:active span{
-        /*color: #0075c1;*/
-        color: #ffffff;
-    }
-    .ivu-menu-item a{
-        background-color: #eef5f9;
-    }
+
 </style>

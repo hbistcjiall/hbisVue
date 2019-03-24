@@ -1,6 +1,10 @@
 <style scoped>
-    .ivu-layout-header{
-        background-color: #0176c2;
+    .ivu-menu-light,.ivu-layout-header{
+      background:none;
+    }
+    .newheader{
+        /*background-image: url("../../assets/indexImg/bg.jpg");*/
+        background-color: #134598;
     }
     .layout{
         border: 1px solid #d7dde4;
@@ -19,7 +23,7 @@
         float: left;
         margin-left: -30px;
         position: relative;
-        background-image: url("../../assets/indexImg/newindexlog.jpg");
+        background-image: url("../../assets/indexImg/indexLog.png");
         background-size:100% 100%;
     }
     .ivu-menu-horizontal{
@@ -43,11 +47,12 @@
     .layout-header-bar{
         width: 100%;
         height: 30px;
-        background-color: #ffffff;
+        background-color: #f2f9fd;
         box-shadow: 0 1px 1px rgba(0,0,0,.1);
     }
+
     .ivu-layout-sider{
-        background-color: #f2f4f7;
+        background-color: #f2f9fd;
     }
     .menu-item span{
         display: inline-block;
@@ -74,13 +79,20 @@
         vertical-align: middle;
         font-size: 22px;
     }
+    .ivu-icon-ios-arrow-down:before {
+        content: "\F116";
+        color:#0075c1;
+    }
+    .ivu-layout-content{
+        background-color: #fff;
+    }
 </style>
 <template>
 
     <div class="layout">
         <Layout>
-            <Header>
-                <Menu mode="horizontal" active-name="1" style="background-color: #0176c2">
+            <Header class="newheader">
+                <Menu mode="horizontal" active-name="1">
                     <div class="layout-logo"></div>
                     <!--<div class="layout-title">河钢销售营销数据中心</div>-->
                     <div class="layout-nav">
@@ -96,7 +108,7 @@
                     <Header class="layout-header-bar">
                     <headerList/>
                     </Header>
-                    <Content :style="{margin: '2px',padding:'20px', background: '#f9f8f8', minHeight:screenHeight}">
+                    <Content :style="{margin: '2px',padding:'20px', background: '#fff', minHeight:screenHeight}">
                         <contentList/>
                     </Content>
                 </Layout>
@@ -165,12 +177,4 @@
         }
     }
 </script>
-<style>
-.ivu-icon-ios-arrow-down:before {
-        content: "\F116";
-        color:#0075c1;
-    }
-.ivu-layout-content{
-    background-color: #f9f8f8;
-}
-</style>
+
