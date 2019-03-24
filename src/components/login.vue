@@ -2,18 +2,21 @@
     <Content  class="loginBj" :style="{minHeight:myheight}">
         <div class="loginHd">
             <div class="headImg">
-                <img src="../assets/loginImg/logo.jpg">
+                <img src="../assets/loginImg/logo2.png">
             </div>
             <div class="headSpan">
-                <span style="color: #0176c2;font-weight:800;">河钢销售营销数据中心 </span><span style="color: #B3B3B3"> |</span><span style="font-size: 20px;color: #B3B3B3"> 登录</span>
+                <!--<span style="color: #0176c2;font-weight:800;">河钢销售营销数据中心 </span>-->
+                <span style="color: #B3B3B3"> |</span><span style="font-size: 20px;color: #B3B3B3"> 登录</span>
             </div>
             <div class="headlist">
                 <ul>
-                    <li>河钢首页</li>
                     <li>河钢官网</li>
                     <li>客户服务</li>
                 </ul>
             </div>
+        </div>
+        <div class="contentimg">
+            <img src="../assets/loginImg/loginbj3.png">
         </div>
         <div class="LoginCss">
             <Form ref="formInline" :model="formInline" :rules="ruleInline" inline class="form">
@@ -115,17 +118,18 @@
 <style scoped>
     .loginBj{
         width: 100%;
-        background-image: url("../assets/loginImg/loginbj2.jpg");
+        height: auto;
+        background-image: url("../assets/loginImg/loginBj.jpg");
         background-repeat:no-repeat;
         clear: both;
     }
     .loginHd{
         width: 100%;
-        height:90px;
+        height:70px;
         background-color: white;
     }
     .headImg{
-        width:80px;
+        width:258px;
         height: 80px;
         border-radius: 1px;
         margin-top:5px;
@@ -133,14 +137,14 @@
         float: left;
     }
     .headImg img{
-        width: 100%;
-        height: 100%;
+        width: 70%;
+        height: auto;
     }
     .headSpan{
         float: left;
-        width:340px;
+        /*width:340px;*/
         height: 25px;
-        margin-top: 43px;
+        margin-top: 14px;
         margin-left: 20px;
     }
     .headSpan span{
@@ -149,7 +153,7 @@
     .headlist{
         width: 400px;
         float: right;
-        margin-right: 100px;
+        margin-top: -21px;
     }
     .headlist ul li {
         color: #B3B3B3;
@@ -166,10 +170,10 @@
         background-color: white;
         float: right;
         position: relative;
-        right: 50px;
+        right: 300px;
         border-radius: 5px;
         margin: 0 auto;
-        margin-top: 120px;
+        margin-top: 100px;
     }
 
     .form {
@@ -182,5 +186,11 @@
 
     .button {
         width: 100%;
+    }
+    .contentimg img{
+        position: absolute;
+        left: 0px;
+        width: 55%;
+        height: auto;
     }
 </style>
