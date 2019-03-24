@@ -115,7 +115,9 @@
 <style scoped>
     .loginBj{
         width: 100%;
-        background-image: url("../assets/loginImg/loginBj.jpg");
+        background-image: url("../assets/loginImg/loginbj2.jpg");
+        background-repeat:no-repeat;
+        clear: both;
     }
     .loginHd{
         width: 100%;
@@ -162,9 +164,12 @@
         width: 400px;
         height: 360px;
         background-color: white;
+        float: right;
+        position: relative;
+        right: 50px;
         border-radius: 5px;
         margin: 0 auto;
-        margin-top: 150px;
+        margin-top: 120px;
     }
 
     .form {
