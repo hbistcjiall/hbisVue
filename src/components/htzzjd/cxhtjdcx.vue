@@ -9,7 +9,7 @@
                         <!--</Select>-->
                     <!--</FormItem>-->
                 <!--</Col>-->
-                <Col span="4">
+                <Col span="6">
                     <FormItem label="产线：" style="width:120px">
                         <Select style="width:120px"  v-model="cx" placeholder="请选择产线">
                             <Option v-for="item in cxData" :value="item.value" :key="item.value">{{ item.label }}</Option>
@@ -34,12 +34,12 @@
                         <!--</Select>-->
                     <!--</FormItem>-->
                 <!--</Col>-->
-                <Col span="4">
+                <Col span="6">
                     <FormItem label="月份：" style="width:150px">
                         <DatePicker type="month" placeholder="起始月份" :editable="false" :clearable="false" v-model="startTime" style="width:150px"></DatePicker>
                     </FormItem>
                 </Col>
-                <Col span="4">
+                <Col span="6">
                     <FormItem style="width:150px">
                         <DatePicker type="month" placeholder="终止月份"  :editable="false" :clearable="false" v-model="endTime" style="width:150px"></DatePicker>
                     </FormItem>

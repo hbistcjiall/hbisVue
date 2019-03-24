@@ -2,19 +2,19 @@
     <div>
         <Form :label-width="100">
             <Row>
-                <Col span="4">
+                <Col span="6">
                     <FormItem label="品种：" style="width:120px">
                         <Select v-model="pz" style="width:120px" placeholder="请选择品种">
                             <Option v-for="item in pzData" :value="item.value" :key="item.value">{{ item.label }}</Option>
                         </Select>
                     </FormItem>
                 </Col>
-                <Col span="4">
+                <Col span="6">
                     <FormItem label="月份：" style="width:150px">
                         <DatePicker type="month" placeholder="起始月份" :editable="false" :clearable="false" v-model="startTime" style="width:150px"></DatePicker>
                     </FormItem>
                 </Col>
-                <Col span="4">
+                <Col span="6">
                     <FormItem style="width:150px">
                         <DatePicker type="month" placeholder="终止月份"  :editable="false" :clearable="false" v-model="endTime" style="width:150px"></DatePicker>
                     </FormItem>

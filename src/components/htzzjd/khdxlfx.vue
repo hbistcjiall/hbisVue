@@ -1,33 +1,33 @@
 <template>
     <div>
-        <Form :label-width="100">
+        <Form :label-width="120">
             <Row>
-                <Col span="4">
+                <Col span="6">
                     <FormItem label="子公司：" style="width:120px;">
                         <Select style="width:120px" v-model="zgs">
                             <Option v-for="item in zgslist" :value="item.value">{{item.lable}}</Option>
                         </Select>
                     </FormItem>
                 </Col>
-                <Col span="4" v-if="switchTime">
+                <Col span="6" v-if="switchTime">
                     <FormItem label="交货截至日期：" style="width:120px;margin-left: 40px">
                         <DatePicker type="month" placeholder="起始月份" :editable="false" :clearable="false" v-model="startTime"
                                     style="width:120px"></DatePicker>
                     </FormItem>
                 </Col>
-                <Col span="4" v-if="switchTime">
+                <Col span="6" v-if="switchTime">
                     <FormItem style="width:120px;">
                         <DatePicker type="month" placeholder="终止月份" :editable="false" :clearable="false" v-model="endTime" style="width:120px"></DatePicker>
                     </FormItem>
                 </Col>
-                <Col span="4" v-if="switchTime">
+                <Col span="6" v-if="switchTime">
                     <FormItem label="记录日期：" style="width:120px;margin-left: 20px">
                         <DatePicker type="date" placeholder="记录时间" :editable="false" :clearable="false" v-model="jiluTime"
                                     style="width:120px"></DatePicker>
                         <!--<DatePicker type="date"  placeholder="Select date" style="width: 150px" v-model="startTime"></DatePicker>-->
                     </FormItem>
                 </Col>
-                <Col span="4">
+                <Col span="8">
                     <FormItem label="发货量汇总方式：" style="width:120px;margin-left: 40px">
                         <Select style="width:120px" v-model="hz">
                             <Option value="1">去0统计</Option>

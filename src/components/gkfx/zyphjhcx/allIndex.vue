@@ -91,6 +91,7 @@
                     chart: {
                         type: 'column'
                     },
+                    colors:['#386489','#3689cf'],
                     title: {
                         text: '<span style="font-size:16px;font-weight: bold">钢厂计划</span><br>'
                     },
@@ -129,6 +130,7 @@
                     chart: {
                         type: 'pie'
                     },
+                    colors:['#386489','#3689cf'],
                     title: {
                         text: '<span style="font-size:16px;font-weight: bold">销售主体</span><br>'
                     },
