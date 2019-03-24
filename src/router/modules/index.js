@@ -135,7 +135,18 @@ const indexchild=[
             keepAlive: true,
             isLogin: true
         },
-    }
+    },
+    // /zgspzgqk/wcqk
+    {
+        path: '/zgspzgqk/wcqk',
+        name: 'wcqk',
+        component: resolve => require(['@/components/jtpzgqk/wcqk'], resolve),
+        meta: {
+            title: '完成情况',
+            keepAlive: true,
+            isLogin: true
+        },
+    },
 ];
 const childrens=indexchild.concat(pzgjs).concat(xyhxl).concat(gkfx).concat(htzzjd);
 export default {
