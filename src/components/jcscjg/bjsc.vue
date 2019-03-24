@@ -38,8 +38,10 @@
                     {
                         title: '日期',
                         align: "center",
-                        width: 85,
-                        key: 'ORDERDAY'
+                        width: 100,
+                        isMergeRow:true,
+                        key: 'ORDERDAY',
+                        fixed: 'left'
                     },
                     {
                         title: '单位',
@@ -349,6 +351,8 @@
                     res = res && res.length > 0 ? JSON.parse(res) : [];
                     window.console.log(res.dayList);
                     this.data =  res.dayList;
+                    // ORDERDAY
+                    this.data=this.utils.mergeRow(res.dayList,'ORDERDAY');
                 });
             }
         }
