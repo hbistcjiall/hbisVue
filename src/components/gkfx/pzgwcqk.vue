@@ -1,6 +1,17 @@
 <template>
     <div>
-        <Table :columns="columns" :data="data" border height="500"></Table>
+        <div>
+            <button @click="getTime(1)">本月</button>
+            <button @click="getTime(2)">上月</button>
+            <button @click="getTime(3)">本年</button>
+            <button @click="getTime(1,1)">品种</button>
+            <button @click="getTime(1,2)">钢厂</button>
+        </div>
+        <Table :columns="columns" :data="resDatas" border height="500">
+            <template slot-scope="{ row }" slot="name">
+                <strong>{{ row.name }}</strong>
+            </template>
+        </Table>
     </div>
 </template>
 
@@ -9,155 +20,90 @@
         name: "pzgwcqk",
         data() {
             return {
-                byValue:{},
+                resDatas : [],
                 columns: [
                     {
-                        title: '合计',
-                        key: 'nmzl',
+                        title: '总量',
+                        key: 'zl',
                         align: 'center',
-                        width: 100,
                         children: [
                             {
-                                title: '计划量',
-                                key: 'FKIMG',
+                                title: '品种',
+                                key: 'NAME',
                                 align: 'center',
-                                width: 100,
                             },
                             {
-                                title: '合同量',
-                                key: 'PZGL',
+                                title: '完成量',
+                                key: 'JSL',
                                 align: 'center',
-                                width: 100,
                             },
-                            {
-                                title: '完成比例',
-                                key: 'BZ',
-                                align: 'center',
-                                width: 100,
-                            }
                         ]
                     },
                     {
-                        title: '销售总公司',
-                        key: 'zygs',
+                        title: '品种钢量',
+                        key: 'pzgl',
                         align: 'center',
                         children: [{
-                            title: '计划量',
-                            key: 'ZYFKIMG',
+                            title: '品种钢',
+                            key: 'PZGL',
                             align: 'center',
-                            width: 100
-                        },
-                            {
-                                title: '合同量（专业公司）',
-                                key: 'ZYPZGL',
-                                align: 'center',
-                                width: 100,
-                            },
-                            {
-                                title: '合同量（分公司）',
-                                key: 'ZYPZGL',
-                                align: 'center',
-                                width: 100,
-                            },
-                            {
-                                title: '完成比例',
-                                key: 'ZYBZ',
-                                align: 'center',
-                                width: 100,
-                            },
-                            {
-                                title: '进度',
-                                key: 'ZYBZ',
-                                align: 'center',
-                                width: 100,
-                            }
-                        ]
-                    },
-                    {
-                        title: '子公司（技术中心、事业部）',
-                        key: 'fgs',
-                        align: 'center',
-                        children: [{
-                            title: '计划量',
-                            key: 'FGSFKIMG',
+                        },{
+                            title: '完成比例',
+                            key: 'WCL',
                             align: 'center',
-                            width: 100
                         },
-                            {
-                                title: '合同量',
-                                key: 'FGSPZGL',
-                                align: 'center',
-                                width: 100,
-                            },
-                            {
-                                title: '完成比例',
-                                key: 'FGSBZ',
-                                align: 'center',
-                                width: 100
-                            },
-                            {
-                                title: '进度',
-                                key: 'FGSBZ',
-                                align: 'center',
-                                width: 100
-                            }
                         ]
-                    },
-                    {
-                        title: '出口',
-                        key: 'fgs',
-                        align: 'center',
-                        children: [{
-                            title: '计划量',
-                            key: 'FGSFKIMG',
-                            align: 'center',
-                            width: 100
-                        },
-                            {
-                                title: '合同量',
-                                key: 'FGSPZGL',
-                                align: 'center',
-                                width: 100,
-                            },
-                            {
-                                title: '完成比例',
-                                key: 'FGSBZ',
-                                align: 'center',
-                                width: 100
-                            },
-                            {
-                                title: '进度',
-                                key: 'FGSBZ',
-                                align: 'center',
-                                width: 100
-                            }
-                        ]
-                    },
+                    }
                 ],
             }
         },
         mounted() {
-            fetch(this.$store.state.fetchPath + "/protocolAccountDetails/resourceplanthrid", {
-                method: "POST",
-                headers: this.$store.state.fetchHeader,
-                body:this.utils.formatParams(this.byValue),
-                credentials:'include'
-            })
-                .then((res) => {
-                    if(res.status!=200){
-                        this.$Message.error('请求失败！');
-                    }else{
-                        return res.text();
-                    }
-                }).then((res) => {
-                res = res&&res.length>0?JSON.parse(res):[]
-                this.resDatas3 =  res;
-                for(var i=0;i<this.resDatas3.length;i++){
-                    this.resDatas3[i].BILI = this.resDatas3[i].BILI;
-                }
-            })
+            this.getTime(1,1);
         },
         methods: {
+            getTime(e,zt){
+                let params = {}
+                if(zt!=undefined){
+                    params.zt = zt
+                }else{
+                    params.zt = '1'
+                }
+
+
+                let startTime='startTime=';
+                let endTime='&endTime=';
+                switch (e) {
+                    case 1:
+                        startTime=startTime+this.utils.formatMonthStart();
+                        endTime=endTime+this.utils.formatMonthEnd();
+                        break;
+                    case 2:
+                        window.console.log(new Date(new Date().getFullYear()+'-'+new Date().getMonth()-1));
+                        startTime=startTime+this.utils.formatMonthBefore();
+                        endTime=endTime+this.utils.formatMonthStart();
+                        break;
+                    case 3:
+                        startTime=startTime+ this.utils.formatYearStart(new Date());
+                        endTime=endTime+this.utils.formatYearEnd(new Date());
+                        break;
+                }
+                fetch(this.$store.state.fetchPath + "/scm-steel-settle/getpzgjswc", {
+                    method: "POST",
+                    headers: this.$store.state.fetchHeader,
+                    body:startTime+endTime+'&'+this.utils.formatParams(params),
+                    credentials:'include'
+                })
+                    .then((res) => {
+                        if(res.status!=200){
+                            this.$Message.error('请求失败！');
+                        }else{
+                            return res.text();
+                        }
+                    }).then((res) => {
+                    res = res&&res.length>0?JSON.parse(res):[]
+                    this.resDatas =  res;
+                })
+            }
         }
     }
 </script>
@@ -166,5 +112,8 @@
     button{
         background: #3497db;
         color:#fff;
+        width:100px;
+        height:30px;
+        margin-left:20px;
     }
 </style>
