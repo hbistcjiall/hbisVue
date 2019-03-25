@@ -4,14 +4,23 @@
             <button @click="getTime(1)">本月</button>
             <button @click="getTime(2)">上月</button>
             <button @click="getTime(3)">本年</button>
-            <button @click="getTime(1,1)">品种</button>
-            <button @click="getTime(1,2)">钢厂</button>
         </div>
-        <Table :columns="columns" :data="resDatas" border height="500">
-            <template slot-scope="{ row }" slot="name">
-                <strong>{{ row.name }}</strong>
-            </template>
-        </Table>
+        <Tabs type="card" @on-click="tabsClick()" :animated="false" v-model="active">
+            <TabPane label="品种">
+                <Table :columns="columns" :data="resDatas" border height="500">
+                    <template slot-scope="{ row }" slot="name">
+                        <strong>{{ row.name }}</strong>
+                    </template>
+                </Table>
+            </TabPane>
+            <TabPane label="钢厂">
+                <Table :columns="columns1" :data="resDatas" border height="500">
+                    <template slot-scope="{ row }" slot="name">
+                        <strong>{{ row.name }}</strong>
+                    </template>
+                </Table>
+            </TabPane>
+        </Tabs>
     </div>
 </template>
 
@@ -20,7 +29,10 @@
         name: "pzgwcqk",
         data() {
             return {
+                active:0,
+                zt:1,
                 resDatas : [],
+                resDatas1 : [],
                 columns: [
                     {
                         title: '总量',
@@ -55,21 +67,50 @@
                         ]
                     }
                 ],
+                columns1: [
+                    {
+                        title: '总量',
+                        key: 'zl',
+                        align: 'center',
+                        children: [
+                            {
+                                title: '钢厂',
+                                key: 'NAME',
+                                align: 'center',
+                            },
+                            {
+                                title: '完成量',
+                                key: 'JSL',
+                                align: 'center',
+                            },
+                        ]
+                    },
+                    {
+                        title: '品种钢量',
+                        key: 'pzgl',
+                        align: 'center',
+                        children: [{
+                            title: '品种钢',
+                            key: 'PZGL',
+                            align: 'center',
+                        },{
+                            title: '完成比例',
+                            key: 'WCL',
+                            align: 'center',
+                        },
+                        ]
+                    }
+                ],
             }
         },
         mounted() {
             this.getTime(1,1);
         },
         methods: {
-            getTime(e,zt){
-                let params = {}
-                if(zt!=undefined){
-                    params.zt = zt
-                }else{
-                    params.zt = '1'
+            getTime(e){
+                let params = {
+                    zt:this.zt
                 }
-
-
                 let startTime='startTime=';
                 let endTime='&endTime=';
                 switch (e) {
@@ -101,9 +142,14 @@
                         }
                     }).then((res) => {
                     res = res&&res.length>0?JSON.parse(res):[]
-                    this.resDatas =  res;
+                        this.resDatas =  res;
                 })
-            }
+
+            },
+            tabsClick(){
+                this.zt = this.active+1;
+                this.getTime(1,this.zt);
+            },
         }
     }
 </script>
@@ -115,5 +161,7 @@
         width:100px;
         height:30px;
         margin-left:20px;
+        outline: none;
+        border:none;
     }
 </style>
