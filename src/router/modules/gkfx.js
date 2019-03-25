@@ -26,5 +26,13 @@ export default [
             isLogin: true
         }
     },
-
+    {
+        path: '/gkfx/jswcqk',
+        name: 'jswcqk',
+        component: resolve => require(['@/components/gkfx/jswcqk'], resolve),
+        meta: {
+            title: '结算完成情况',
+            isLogin: true
+        }
+    },
 ]
