@@ -3,7 +3,7 @@ import xyhxl from './xyhxl'
 import gkfx from './gkfx'
 import htzzjd from './htzzjd'
 const indexchild=[
-    {path:'/',redirect:'/demo'},
+    {path:'',redirect:'/demo'},
     {
         path: '/mgr',
         name: 'mgr',
