@@ -1,12 +1,12 @@
 <template>
     <div>
-        <Row>
+        <Row style="margin-bottom: 20px">
             <Button @click="getJt" type="primary">集团</Button>
             <Button @click="getXszgs" type="primary" style="margin-left: 9px">销售总公司</Button>
             <Button @click="getZgs" type="primary" style="margin-left: 9px">子公司</Button>
             <Button @click="getCk" type="primary" style="margin-left: 9px">出口</Button>
         </Row>
-        <div style="width:50%;float:left;">
+        <div style="width:40%;float:left;margin-top: 20px">
             <div style="float:right">
                 <div class="CStyle">1%-49%<span style="background: #ed4117;"></span></div>
                 <div class="CStyle">5%0-79%<span style="background: #fa9909;"></span></div>
@@ -34,12 +34,11 @@
                 </li>
             </ul>
         </div>
-        <div style="float:left;width:20%;margin-left:5%;">
-            <div style="font-size: 24px;font-weight: bold;">产线前10</div>
+        <div style="float:left;width:20%;margin-left:10%;">
+            <div style="font-size: 16px;font-weight: bold;">产线前10</div>
             <ul>
                 <li class="item-icon-right" v-for="list in CXQ">
-                    <div class="titleStyle">{{list.cxtitle}}</div>
-                    <div class="cxStyle">产线:{{list.ycl}}万</div>
+                    <div class="titleStyle">{{list.cxtitle}},产线:{{list.ycl}}万</div>
                     <div class="progressContainer">
                         <div class="progress" :style="{width:list.wcbl*100+'%','background-color':'#3793cf'}">
                             <b>进度:{{list.wcbl*100}}%</b>
@@ -48,12 +47,11 @@
                 </li>
             </ul>
         </div>
-        <div style="float:right;width:20%;">
-            <div style="font-size: 24px;font-weight: bold;">产线后10</div>
+        <div style="float:right;width:20%;margin-right: 5%">
+            <div style="font-size: 16px;font-weight: bold;">产线后10</div>
             <ul>
-                <li class="item-icon-right" v-for="list in CXH">
-                    <div class="titleStyle">{{list.cxtitle}}</div>
-                    <div class="cxStyle">产线:{{list.ycl}}万</div>
+                <li class="item-icon-right" v-for="list in CXH" style="font-size: 5px">
+                    <div class="titleStyle">{{list.cxtitle}},产线:{{list.ycl}}万</div>
                     <div class="progressContainer">
                         <div class="progress" :style="{width:list.wcbl*100+'%','background-color':'#3793cf'}">
                             <b>进度:{{list.wcbl*100}}%</b>
@@ -182,7 +180,7 @@
     .titleStyle{
         font-size: 24px;
         text-align: left;
-        margin-top:10px;
+        margin-top:5px;
     }
     .spanStyle{
         padding-top:10px;
@@ -218,7 +216,7 @@
         margin-top:3px;
     }
     .cxStyle{
-        font-size: 16px;
+        font-size: 14px;
         text-align: left;
         margin-left:10px;
     }
