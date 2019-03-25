@@ -5,7 +5,6 @@ import index from './modules/index'
 Vue.use(VueRouter)
 
 const routes = [
-    {path: '*', redirect: '/index'},
     {
         path: '/login', name: 'login', component: resolve => require(['@/components/login'], resolve), meta: {
             title: '登录',

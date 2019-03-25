@@ -3,19 +3,7 @@ import xyhxl from './xyhxl'
 import gkfx from './gkfx'
 import htzzjd from './htzzjd'
 const indexchild=[
-    {
-        path: '/home', redirect: 'home'
-    },
-    {
-        path: '/home',
-        name: 'home',
-        component: resolve => require(['@/components/index/home'], resolve),
-        meta: {
-            title: 'home',
-            keepAlive: true,
-            isLogin: true
-        }
-    },
+    {path:'/',redirect:'/demo'},
     {
         path: '/mgr',
         name: 'mgr',
