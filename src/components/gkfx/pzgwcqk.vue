@@ -119,7 +119,6 @@
                         endTime=endTime+this.utils.formatMonthEnd();
                         break;
                     case 2:
-                        window.console.log(new Date(new Date().getFullYear()+'-'+new Date().getMonth()-1));
                         startTime=startTime+this.utils.formatMonthBefore();
                         endTime=endTime+this.utils.formatMonthStart();
                         break;

@@ -1,22 +1,22 @@
 <template>
     <div>
         <div>
-            <div style="width:50%;float:left;height:405px;border:1px solid black;">
+            <div style="border:1px solid black;" class="LeftImg">
                 <x-chart id="re_pieValue" :option="pieOption"></x-chart>
             </div>
-            <div style="width:49%;float:right;height:405px;border:1px solid black;">
+            <div style="border:1px solid black;" class="RightImg">
                 <x-chart id="re_rcolumnValue"  :option="option"></x-chart>
             </div>
         </div>
         <div>
-            <div style="width:55%;float:left;">
+            <div class="LeftImg">
                 <Table border stripe :columns="columns1" :data="resDatas3" style="margin-top: 20px" id="reTable1">
                     <template slot-scope="{ row }" slot="name">
                         <strong>{{ row.name }}</strong>
                     </template>
                 </Table>
             </div>
-            <div style="width:44%;float:right;">
+            <div class="RightImg">
                 <Table border stripe :columns="columns2" :data="resDatas4" style="margin-top: 20px" id="reTable2">
                     <template slot-scope="{ row }" slot="name">
                         <strong>{{ row.name }}</strong>
@@ -273,5 +273,12 @@
 </script>
 
 <style scoped>
-
+    .RightImg{
+        width:49%;
+        float:right;
+    }
+    .LeftImg{
+        width:50%;
+        float:left;
+    }
 </style>
