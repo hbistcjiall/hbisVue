@@ -125,6 +125,9 @@
                             }
                         }
                     },
+                    credits: {
+                        enabled: false,
+                    },
                     series: [{
                         name: '现货',
                         data: []
