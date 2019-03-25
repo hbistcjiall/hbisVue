@@ -12,7 +12,6 @@
             <div style="width:49%;float:right;">
                 <x-chart id="columnValue"  :option="option"></x-chart>
             </div>
-            <div style="clear:both"></div>
         </div>
     </div>
 </template>
@@ -27,7 +26,9 @@
                     endTime:'2019-06-01 00:00:00',
                     startTime:'2016-01-01 00:00:00',
                 },
-                resDatas2:[],
+                active:'',
+                SubStarTime_month :'',
+                SubStarTime_year :'',
                 //柱状图
                 option:{},
                 column: {
@@ -36,6 +37,9 @@
                     },
                     colors:['#3689cf','#cc0000'],
                     title: {
+                        text: ''
+                    },
+                    subtitle: {
                         text: ''
                     },
                     xAxis: [{
@@ -50,14 +54,14 @@
                             }
                         },
                         title: {
-                            text: '结算均价',
+                            text: '结算均价(元)',
                             style: {
                                 color:''
                             }
                         }
                     }, { // Secondary yAxis
                         title: {
-                            text: '结算',
+                            text: '结算(万吨)',
                             style: {
                                 color:''
                             }
@@ -82,8 +86,15 @@
                         spline:{
                             dataLabels:{
                                 enabled:true, // dataLabels设为true
-                            }
+                                color:'#cc0000'
+                            },
                         }
+                    },
+                    credits: {
+                        enabled: false,
+                    },
+                    legend: {
+                        y: 20,
                     },
                     series: [{
                         name: '结算（万吨）',
@@ -102,9 +113,9 @@
                     chart: {
                         type: 'pie'
                     },
-                    // colors:['#386489','#3689cf'],
+                    colors:['#75b9e6','#4aa3de','#c1e0ff','#77bbff','#33577b','#6ba6e0','#3d8ec4','#4fc1e9','#96bdd3','#73bbc4'],
                     title: {
-                        text: '<span style="font-size:16px;font-weight: bold">销售主体</span><br>'
+                        text: ''
                     },
                     subtitle: {
                         text: ''
@@ -112,7 +123,7 @@
                     tooltip: {
                         percentageDecimals: 2 ,//百分比保留小数
                         headerFormat: '<span style="font-size:11px">{series.name}</span><br>',
-                        pointFormat: '<span style="color:{point.color}">{point.name}</span>: <b>{point.y:.2f}万吨</b><br/>',
+                        pointFormat: '<span style="color:{point.color}">{point.name}</span>: <b>{point.y:.2f}</b><br/>',
                     },
                     plotOptions: {
                         pie: {
@@ -126,7 +137,7 @@
                         }
                     },
                     credits: {
-                        enabled: false
+                        enabled: false,
                     },
                     series: [{
                         name: '结算量',
@@ -143,28 +154,41 @@
         },
         methods: {
             getTime(e) {
+                this.pieOption = {};
+                this.option = {};
                 let startTime='startTime=';
                 let endTime='&endTime=';
                 switch (e) {
                     case 1:
                         startTime=startTime+this.utils.formatMonthStart();
                         endTime=endTime+this.utils.formatMonthEnd();
+                        window.console.log(startTime)
+                        this.SubStarTime_year = startTime.substring(10, 14);
+                        this.SubStarTime_month = startTime.substring(15, 17);
+                        this.pie.title.text = '<span style="font-size:14px;color:black;font-weight: bold">'+this.SubStarTime_year+"年"+this.SubStarTime_month+"月"+"结算完成情况（品种）"+'</span>';
+                        this.column.title.text = '<span style="font-size:14px;color:black;font-weight: bold">'+this.SubStarTime_year+"年"+this.SubStarTime_month+"月"+"结算完成情况（品种）"+'</span>';
                         break;
                     case 2:
-                        window.console.log(new Date(new Date().getFullYear()+'-'+new Date().getMonth()-1));
                         startTime=startTime+this.utils.formatMonthBefore();
                         endTime=endTime+this.utils.formatMonthStart();
+                        this.SubStarTime_year = startTime.substring(10, 14);
+                        this.SubStarTime_month = startTime.substring(15, 17);
+                        this.pie.title.text = '<span style="font-size:14px;color:black;font-weight: bold">'+this.SubStarTime_year+"年"+this.SubStarTime_month+"月"+"结算完成情况（品种）"+'</span>';
+                        this.column.title.text = '<span style="font-size:14px;color:black;font-weight: bold">'+this.SubStarTime_year+"年"+this.SubStarTime_month+"月"+"结算完成情况（品种）"+'</span>';
                         break;
                     case 3:
                         startTime=startTime+ this.utils.formatYearStart(new Date());
                         endTime=endTime+this.utils.formatYearEnd(new Date());
+                        this.SubStarTime_year = startTime.substring(10, 14);
+                        this.pie.title.text = '<span style="font-size:14px;color:black;font-weight: bold">'+this.SubStarTime_year+"年结算完成情况（品种）"+'</span>';
+                        this.column.title.text = '<span style="font-size:14px;color:black;font-weight: bold">'+this.SubStarTime_year+"年结算完成情况（品种）"+'</span>';
                         break;
                 }
                 fetch(this.$store.state.fetchPath + "/scm-steel-settle/getpzjszl", {
                     method: "POST",
                     headers: this.$store.state.fetchHeader,
-                    body:this.utils.formatParams(this.byValue),
-                    // body:startTime+endTime,
+                    // body:this.utils.formatParams(this.byValue),
+                    body:startTime+endTime,
                     credentials:'include'
                 })
                     .then((res) => {
@@ -175,20 +199,19 @@
                         }
                     }).then((res) => {
                     res = res&&res.length>0?JSON.parse(res):[]
-                    this.resDatas2 =  res;
                     let chartsData1=[];
                     let chartsData2=[];
                     let chartsData3=[];
                     for(let k=0;k<res.length;k++){
-                        chartsData2.push(res[k].JSJJ);
                         chartsData1.push(res[k].JSL);
+                        chartsData2.push(res[k].JSJJ);
                         chartsData3.push(res[k].VARIETY);
                     }
                     this.column.series[1].data=chartsData2;
                     this.column.series[0].data=chartsData1;
                     this.column.xAxis[0].categories=chartsData3;
-                    window.console.log(this.column.xAxis.categories)
                     this.option=this.column;
+
 
                     let chartsData =[];
                     for(let i=1;i<res.length;i++){
@@ -212,10 +235,12 @@
         margin-left:20px;
         outline: none;
         border:none;
+        cursor: pointer;
     }
     .chartStyle{
         margin-top:20px;
-        border:1px solid #3497db;
     }
-
+  .highcharts-credits{
+      display: none !important;
+  }
 </style>

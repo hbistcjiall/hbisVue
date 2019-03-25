@@ -142,7 +142,7 @@
                     chart: {
                         type: 'pie'
                     },
-                    colors:['#386489','#3689cf'],
+                    colors:['#75b9e6','#4aa3de','#c1e0ff','#77bbff','#33577b','#6ba6e0','#3d8ec4','#4fc1e9','#96bdd3','#73bbc4'],
                     title: {
                         text: '<span style="font-size:16px;font-weight: bold">销售主体</span><br>'
                     },
@@ -201,6 +201,7 @@
                     let chartsData =[];
                     for(let i=1;i<res.length;i++){
                         chartsData.push({name:res[i].COMPANYNAME,y:res[i].ZYFKIMG,b:res[i].BILI});
+
                     }
                     this.pie.series[0].data=chartsData;
                     this.pie.subtitle.text = '<span style="font-size:14px;color:black;font-weight: bold">'+res[0].COMPANYNAME+':'+res[0].ZYFKIMG+"万吨"+'</span>'

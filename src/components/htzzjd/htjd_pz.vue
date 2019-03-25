@@ -35,7 +35,7 @@
             </ul>
         </div>
         <div style="float:left;width:20%;margin-left:10%;">
-            <div style="font-size: 16px;font-weight: bold;">产线前10</div>
+            <div style="font-size: 24px;font-weight: bold;">产线前10</div>
             <ul>
                 <li class="item-icon-right" v-for="list in CXQ">
                     <div class="titleStyle">{{list.cxtitle}},产线:{{list.ycl}}万</div>
@@ -48,7 +48,7 @@
             </ul>
         </div>
         <div style="float:right;width:20%;margin-right: 5%">
-            <div style="font-size: 16px;font-weight: bold;">产线后10</div>
+            <div style="font-size: 24px;font-weight: bold;">产线后10</div>
             <ul>
                 <li class="item-icon-right" v-for="list in CXH" style="font-size: 5px">
                     <div class="titleStyle">{{list.cxtitle}},产线:{{list.ycl}}万</div>
@@ -178,7 +178,7 @@
         list-style-type:none;
     }
     .titleStyle{
-        font-size: 24px;
+        font-size: 16px;
         text-align: left;
         margin-top:5px;
     }
