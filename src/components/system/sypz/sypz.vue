@@ -138,13 +138,10 @@
                     title: '提示',
                     content: '确认删除吗？',
                     onOk: () => {
-                        window.console.log(this.delData.roleId);
-                        // this.delData.roleId=r.SETTING_ID;
                         fetch(this.$store.state.fetchPath + "/settings/delsettings", {
                             method: "POST",
                             headers: this.$store.state.fetchHeader,
                             body: "id="+r.SETTING_ID,
-                            // body: '1110459158293504001',
                             credentials:'include'
                         })
                             .then((res) => {
