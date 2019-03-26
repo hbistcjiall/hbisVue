@@ -2,33 +2,12 @@
     <div>
         <Form :label-width="100">
             <Row>
-                <Col span="6">
-                    <FormItem label="品种：" style="width:120px">
-                        <Select v-model="zyjhcx.pz" style="width:120px" placeholder="请选择品种" @on-change="getCx">
-                            <Option v-for="item in pzData" :value="item.value" :key="item.value">{{ item.label }}</Option>
-                        </Select>
-                    </FormItem>
-                </Col>
-                <Col span="6">
-                    <FormItem label="产线：" style="width:120px">
-                        <Select style="width:120px"  v-model="zyjhcx.cx" placeholder="请选择产线">
-                            <Option v-for="item in cxData" :value="item.value" :key="item.value">{{ item.label }}</Option>
-                        </Select>
-                    </FormItem>
-                </Col>
-                <Col span="6">
-                    <FormItem label="销售主体：" style="width:150px">
-                        <Select style="width:120px"  v-model="zyjhcx.xszt" placeholder="请选择销售主体">
-                            <Option v-for="item in xsztData" :value="item.value" :key="item.value">{{ item.label }}</Option>
-                        </Select>
-                    </FormItem>
-                </Col>
-                <Col span="6">
+                <Col span="4">
                     <FormItem label="年份：" style="width:150px">
                         <DatePicker type="year" placeholder="年份" :editable="false" :clearable="false" v-model="zyjhcx.nf" style="width:150px"></DatePicker>
                     </FormItem>
                 </Col>
-                <Col span="6">
+                <Col span="4">
                     <FormItem style="width:150px" label="月份：">
                         <Select style="width:120px"  v-model="zyjhcx.yf" placeholder="请选择月份">
                             <Option value="1">1月</Option>
@@ -46,11 +25,49 @@
                         </Select>
                     </FormItem>
                 </Col>
-                <Col span="4"><Button @click="getList()" icon="ios-search">查询</Button></Col>
+                <Col span="4">
+                    <FormItem label="品种：" style="width:120px">
+                        <Select v-model="zyjhcx.pz" style="width:120px" placeholder="请选择品种" @on-change="getCx">
+                            <Option value="">全部</Option>
+                            <Option value="热板">热板</Option>
+                            <Option value="冷板">冷板</Option>
+                            <Option value="宽厚板">宽厚板</Option>
+                            <Option value="棒线">棒线</Option>
+                            <Option value="型带">型带</Option>
+                        </Select>
+                    </FormItem>
+                </Col>
+                <Col span="4">
+                    <FormItem label="产线：" style="width:120px">
+                        <Select style="width:120px"  v-model="zyjhcx.cx" placeholder="请选择产线">
+                            <Option v-for="item in cxData" :value="item.value" :key="item.value">{{ item.label }}</Option>
+                        </Select>
+                    </FormItem>
+                </Col>
+                <Col span="4">
+                    <FormItem label="销售主体：" style="width:150px">
+                        <Select style="width:120px"  v-model="zyjhcx.xszt" placeholder="请选择销售主体">
+                            <Option value="">全部</Option>
+                            <Option value="销售总公司">销售总公司</Option>
+                            <Option value="技术中心">技术中心</Option>
+                            <Option value="事业部">事业部</Option>
+                            <Option value="出口">出口</Option>
+                            <Option value="现货">现货</Option>
+                        </Select>
+                    </FormItem>
+                </Col>
             </Row>
-
+            <Row style="margin-bottom: 10px">
+                <Col span="4">
+                    <Button @click="getList()" icon="ios-search">查询</Button>
+                    <Button @click="upLoad()" icon="ios-cloud-upload-outline">导入</Button>
+                </Col>
+                <Col span="2" style="line-height: 30px;margin-top: 10px;float: right">
+                    <p>单位：元</p>
+                </Col>
+            </Row>
         </Form>
-        <Table :columns="columns" :data="data" border height="500"></Table>
+        <Table :columns="columns" :data="data" border height="600"></Table>
     </div>
 </template>
 
@@ -104,23 +121,7 @@
         },
         mounted() {
             this.getList();
-            fetch(this.$store.state.fetchPath + "/scm-steel-settle/getzyjhcxtjpz", {
-                method: "POST",
-                headers: this.$store.state.fetchHeader,
-                body: '',
-                credentials: 'include'
-            }).then((res) => {
-                if(res.status!=200){
-                    this.$Message.error('请求失败！');
-                }else{
-                    return res.text();
-                }
-            }).then((res) => {
-                res = res && res.length > 0 ? JSON.parse(res) : [];
-                this.pzData = this.utils.getPz(res)
-            });
             this.getCxData();
-            this.getXsztData();
         },
         methods: {
             getList() {
@@ -165,23 +166,6 @@
             getCx(){
                 this.cxCx.pz = this.zyjhcx.pz
                 this.getCxData()
-            },
-            getXsztData(){
-                fetch(this.$store.state.fetchPath + "/scm-steel-settle/getzyjhcxtjxszt", {
-                    method: "POST",
-                    headers: this.$store.state.fetchHeader,
-                    body: '',
-                    credentials: 'include'
-                }).then((res) => {
-                    if(res.status!=200){
-                        this.$Message.error('请求失败！');
-                    }else{
-                        return res.text();
-                    }
-                }).then((res) => {
-                    res = res && res.length > 0 ? JSON.parse(res) : [];
-                    this.xsztData = this.utils.getXszt(res)
-                });
             }
         }
     }

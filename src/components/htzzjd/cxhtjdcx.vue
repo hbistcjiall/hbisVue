@@ -1,45 +1,20 @@
 <template>
     <div>
-        <Form :label-width="100">
+        <Form :label-width="70">
             <Row>
-                <!--<Col span="4">-->
-                    <!--<FormItem label="品种：" style="width:120px">-->
-                        <!--<Select v-model="cxhtjdcx.pz" style="width:120px" placeholder="请选择品种" @on-change="getCx">-->
-                            <!--<Option v-for="item in pzData" :value="item.value" :key="item.value">{{ item.label }}</Option>-->
-                        <!--</Select>-->
-                    <!--</FormItem>-->
-                <!--</Col>-->
-                <Col span="6">
+                <Col span="4">
                     <FormItem label="产线：" style="width:120px">
                         <Select style="width:120px"  v-model="cx" placeholder="请选择产线">
                             <Option v-for="item in cxData" :value="item.value" :key="item.value">{{ item.label }}</Option>
                         </Select>
                     </FormItem>
                 </Col>
-                <!--<Col span="4">-->
-                    <!--<FormItem style="width:150px" label="计划月份：">-->
-                        <!--<Select style="width:120px"  v-model="cxhtjdcx.yf" placeholder="请选择月份">-->
-                            <!--<Option value="1">1月</Option>-->
-                            <!--<Option value="2">2月</Option>-->
-                            <!--<Option value="3">3月</Option>-->
-                            <!--<Option value="4">4月</Option>-->
-                            <!--<Option value="5">5月</Option>-->
-                            <!--<Option value="6">6月</Option>-->
-                            <!--<Option value="7">7月</Option>-->
-                            <!--<Option value="8">8月</Option>-->
-                            <!--<Option value="9">9月</Option>-->
-                            <!--<Option value="10">10月</Option>-->
-                            <!--<Option value="11">11月</Option>-->
-                            <!--<Option value="12">12月</Option>-->
-                        <!--</Select>-->
-                    <!--</FormItem>-->
-                <!--</Col>-->
-                <Col span="6">
+                <Col span="4">
                     <FormItem label="月份：" style="width:150px">
                         <DatePicker type="month" placeholder="起始月份" :editable="false" :clearable="false" v-model="startTime" style="width:150px"></DatePicker>
                     </FormItem>
                 </Col>
-                <Col span="6">
+                <Col span="4">
                     <FormItem style="width:150px">
                         <DatePicker type="month" placeholder="终止月份"  :editable="false" :clearable="false" v-model="endTime" style="width:150px"></DatePicker>
                     </FormItem>

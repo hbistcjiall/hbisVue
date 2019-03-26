@@ -12,7 +12,7 @@
                         <DatePicker type="month" placeholder="起始月份" :editable="false" :clearable="false" v-model="startTime" style="width:150px"></DatePicker>
                     </FormItem>
                 </Col>
-                <Col span="4" v-if="switchTime">
+                <Col span="4" v-if="switchTime" style="margin-left: -40px">
                     <FormItem style="width:150px">
                         <DatePicker type="month" placeholder="终止月份"  :editable="false" :clearable="false" v-model="endTime" style="width:150px"></DatePicker>
                     </FormItem>
@@ -26,7 +26,7 @@
                     </FormItem>
                 </Col>
 
-                <Col span="5">
+                <Col span="4">
                     <FormItem label="单位：" style="width:120px">
                         <Select v-model="dw" style="width:120px" placeholder="请选择单位">
                             <Option value="">全部</Option>
@@ -44,13 +44,11 @@
                 <Col span="4">
                     <FormItem label="产线：" style="width:120px">
                         <Select style="width:120px"  v-model="cx" placeholder="请选择产线">
-                            <Option value="cx1">产线一</Option>
-                            <Option value="cx2">产线二</Option>
-                            <Option value="cx3">产线三</Option>
+                            <Option v-for="item in cxData" :value="item.value" :key="item.value">{{ item.label }}</Option>
                         </Select>
                     </FormItem>
                 </Col>
-                <Col span="4"><Button @click="getList()">查询</Button></Col>
+                <Col span="4"><Button @click="getList()" icon="ios-search">查询</Button></Col>
             </Row>
 
         </Form>
@@ -73,7 +71,6 @@
                     title: '单位',
                     key: 'COMPANYNAME',
                     align: 'center',
-                    width: 100,
                     fixed: 'left',
                     isMergeRow: true
                 },
@@ -81,31 +78,26 @@
                         title: '产线',
                         key: 'NAME',
                         align: 'center',
-                        width: 100,
                     },
                     {
                         title: '内贸总量',
                         key: 'nmzl',
                         align: 'center',
-                        width: 100,
                         children: [
                             {
                                 title: '内贸总量-总量',
                                 key: 'FKIMG',
                                 align: 'center',
-                                width: 100,
                             },
                             {
                                 title: '内贸总量-品种钢',
                                 key: 'PZGL',
                                 align: 'center',
-                                width: 100,
                             },
                             {
                                 title: '内贸总量-比重',
                                 key: 'BZ',
                                 align: 'center',
-                                width: 100,
                             }
                         ]
                     },
@@ -113,7 +105,6 @@
                         title: '环比',
                         key: 'hb',
                         align: 'center',
-                        width: 100,
                     },
                     {
                         title: '专业公司',
@@ -123,19 +114,16 @@
                             title: '专业公司-总量',
                             key: 'ZYFKIMG',
                             align: 'center',
-                            width: 100
                         },
                             {
                                 title: '专业公司-品种钢',
                                 key: 'ZYPZGL',
                                 align: 'center',
-                                width: 100,
                             },
                             {
                                 title: '专业公司-比重',
                                 key: 'ZYBZ',
                                 align: 'center',
-                                width: 100,
                             }
                         ]
                     },
@@ -147,19 +135,16 @@
                             title: '分公司-总量',
                             key: 'FGSFKIMG',
                             align: 'center',
-                            width: 100
                         },
                             {
                                 title: '分公司-品种钢',
                                 key: 'FGSPZGL',
-                                align: 'center',
-                                width: 100,
+                                align: 'center'
                             },
                             {
                                 title: '分公司-比重',
                                 key: 'FGSBZ',
-                                align: 'center',
-                                width: 100
+                                align: 'center'
                             }
                         ]
                     },
@@ -170,31 +155,50 @@
                         children: [{
                             title: '子公司-总量',
                             key: 'ZGSFKIMG',
-                            align: 'center',
-                            width: 100
+                            align: 'center'
                         },
                             {
                                 title: '子公司-品种钢',
                                 key: 'ZGSPZGL',
-                                align: 'center',
-                                width: 100
+                                align: 'center'
                             },
                             {
                                 title: '子公司-比重',
                                 key: 'ZGSBZ',
-                                align: 'center',
-                                width: 100
+                                align: 'center'
                             }
                         ]
                     }
                 ],
-                data: []
+                data: [],
+                cxData:[],
+                cxCx:{
+                    pz:''
+                },
             }
         },
         mounted() {
             this.getList();
+            this.getCxData();
         },
         methods: {
+            getCxData(){
+                fetch(this.$store.state.fetchPath + "/scm-steel-settle/getzyjhcxtjcx", {
+                    method: "POST",
+                    headers: this.$store.state.fetchHeader,
+                    body: this.utils.formatParams(this.cxCx),
+                    credentials: 'include'
+                }).then((res) => {
+                    if(res.status!=200){
+                        this.$Message.error('请求失败！');
+                    }else{
+                        return res.text();
+                    }
+                }).then((res) => {
+                    res = res && res.length > 0 ? JSON.parse(res) : [];
+                    this.cxData = this.utils.getCx(res)
+                });
+            },
             changeSwitch(){
                 let date=new Date();
                 this.switchTime?(this.startTime=date,this.endTime=this.utils.formatMonthEnd()):this.year=date;

@@ -12,7 +12,7 @@
                         <DatePicker type="month" placeholder="起始月份" :editable="false" :clearable="false"  v-model="startTime" style="width:150px"></DatePicker>
                     </FormItem>
                 </Col>
-                <Col span="4" v-if="switchTime">
+                <Col span="4" v-if="switchTime" style="margin-left: -40px">
                     <FormItem style="width:150px">
                         <DatePicker type="month" placeholder="终止月份" :editable="false" :clearable="false"  v-model="endTime" style="width:150px"></DatePicker>
                     </FormItem>
@@ -37,7 +37,7 @@
                         </Select>
                     </FormItem>
                 </Col>
-                <Col span="4"><Button @click="getList()">查询</Button></Col>
+                <Col span="4"><Button @click="getList()" icon="ios-search">查询</Button></Col>
             </Row>
 
         </Form>

@@ -2,32 +2,32 @@
     <div>
         <Form :label-width="120">
             <Row>
-                <Col span="6">
+                <Col span="4">
                     <FormItem label="子公司：" style="width:120px;">
                         <Select style="width:120px" v-model="zgs">
                             <Option v-for="item in zgslist" :value="item.value">{{item.lable}}</Option>
                         </Select>
                     </FormItem>
                 </Col>
-                <Col span="6" v-if="switchTime">
+                <Col span="4" v-if="switchTime">
                     <FormItem label="交货截至日期：" style="width:120px;margin-left: 40px">
                         <DatePicker type="month" placeholder="起始月份" :editable="false" :clearable="false" v-model="startTime"
                                     style="width:120px"></DatePicker>
                     </FormItem>
                 </Col>
-                <Col span="6" v-if="switchTime">
+                <Col span="4" v-if="switchTime">
                     <FormItem style="width:120px;">
-                        <DatePicker type="month" placeholder="终止月份" :editable="false" :clearable="false" v-model="endTime" style="width:120px"></DatePicker>
+                        <DatePicker type="month" placeholder="终止月份" :editable="false" :clearable="false" v-model="endTime" style="width:120px;margin-left: -30px"></DatePicker>
                     </FormItem>
                 </Col>
-                <Col span="6" v-if="switchTime">
-                    <FormItem label="记录日期：" style="width:120px;margin-left: 20px">
+                <Col span="4" v-if="switchTime">
+                    <FormItem label="记录日期：" style="width:120px">
                         <DatePicker type="date" placeholder="记录时间" :editable="false" :clearable="false" v-model="jiluTime"
                                     style="width:120px"></DatePicker>
                         <!--<DatePicker type="date"  placeholder="Select date" style="width: 150px" v-model="startTime"></DatePicker>-->
                     </FormItem>
                 </Col>
-                <Col span="8">
+                <Col span="4">
                     <FormItem label="发货量汇总方式：" style="width:120px;margin-left: 40px">
                         <Select style="width:120px" v-model="hz">
                             <Option value="1">去0统计</Option>
@@ -36,7 +36,7 @@
                     </FormItem>
                 </Col>
                 <Col span="2" style="margin-left: 90px">
-                    <Button @click="getList()" icon="ios-search">查询</Button>
+                    <Button @click="getList()" icon="ios-search" type="primary">查询</Button>
                 </Col>
             </Row>
         </Form>
@@ -53,31 +53,31 @@
                     {
                         title:'单位',
                         align: "center",
-                        width: 100,
+                        // width: 100,
                         key:'companyName'
                     },
                     {
                         title:'日期',
                         align: "center",
-                        width: 100,
+                        // width: 100,
                         key:'',
                         children:[
                             {
                                 title:"合同量",
                                 align: "center",
-                                width: 350,
+                                // width: 350,
                                 key:'contractWeight',
                             },
                             {
                                 title:"发货量",
                                 align: "center",
-                                width: 350,
+                                // width: 350,
                                 key:'deliveryWeight',
                             },
                             {
                                 title:"兑现率",
                                 align: "center",
-                                width: 350,
+                                // width: 350,
                                 key:'cashRate',
                             },
                         ]
@@ -149,11 +149,6 @@
                     }
                 }).then((res) => {
                     res = res && res.length > 0 ? JSON.parse(res) : [];
-                    console.log(startTime),
-                    console.log(endTime),
-                    console.log(jiluTime),
-                    console.log(params),
-                    window.console.log(res.list);
                     this.data =  res.list;
                 });
             }

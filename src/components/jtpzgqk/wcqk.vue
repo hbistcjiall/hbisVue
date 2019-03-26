@@ -10,7 +10,7 @@
                     </FormItem>
                 </Col>
                 <Col span="2" style="margin-left: 90px">
-                    <Button @click="getList()" icon="ios-search">查询</Button>
+                    <Button @click="getList()" icon="ios-search" type="primary">查询</Button>
                 </Col>
             </Row>
         </Form>
@@ -29,40 +29,33 @@
                     {
                         title: "单位",
                         align: "center",
-                        width: 150,
                         key: 'companyName',
                     },
                     {
                         title: "钢材总量(吨)",
                         align: "center",
-                        width: 150,
                         key: 'totalSteel',
                     },
                     {
                         title: "品种钢总量(吨)",
                         align: "center",
-                        width: 150,
                         key: 'totalSteelVarieties',
                     },
                     {
                         title: "品种钢比例(%)",
                         align: "center",
-                        width: 150,
                         key: 'scaleSteel',
                     }, {
                         title: "特色战略产品(吨)",
                         align: "center",
-                        width: 150,
                         key: 'featuresProducts',
                     }, {
                         title: "高端产品(吨)",
                         align: "center",
-                        width: 150,
                         key: 'highProducts',
                     }, {
                         title: "一般品种钢(吨)",
                         align: "center",
-                        width: 150,
                         key: 'steelVarieties',
                     },
                 ],
@@ -90,8 +83,6 @@
                     }
                 }).then((res) => {
                     res = res && res.length > 0 ? JSON.parse(res) : [];
-                    console.log(startTime);
-                    window.console.log(res.list);
                     this.data = res.list;
                 });
             }

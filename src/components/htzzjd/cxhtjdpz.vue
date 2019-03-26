@@ -2,19 +2,25 @@
     <div>
         <Form :label-width="100">
             <Row>
-                <Col span="6">
+                <Col span="4">
                     <FormItem label="品种：" style="width:120px">
                         <Select v-model="pz" style="width:120px" placeholder="请选择品种">
-                            <Option v-for="item in pzData" :value="item.value" :key="item.value">{{ item.label }}</Option>
+                            <!--<Option v-for="item in pzData" :value="item.value" :key="item.value">{{ item.label }}</Option>-->
+                            <Option value="">全部</Option>
+                            <Option value="热板">热板</Option>
+                            <Option value="冷板">冷板</Option>
+                            <Option value="宽厚板">宽厚板</Option>
+                            <Option value="棒线">棒线</Option>
+                            <Option value="型带">型带</Option>
                         </Select>
                     </FormItem>
                 </Col>
-                <Col span="6">
+                <Col span="4">
                     <FormItem label="月份：" style="width:150px">
                         <DatePicker type="month" placeholder="起始月份" :editable="false" :clearable="false" v-model="startTime" style="width:150px"></DatePicker>
                     </FormItem>
                 </Col>
-                <Col span="6">
+                <Col span="4">
                     <FormItem style="width:150px">
                         <DatePicker type="month" placeholder="终止月份"  :editable="false" :clearable="false" v-model="endTime" style="width:150px"></DatePicker>
                     </FormItem>
@@ -35,7 +41,7 @@
                 pz:'',
                 startTime:new Date(),
                 endTime:this.utils.formatMonthEnd(),
-                pzData:[],
+                // pzData:[],
                 columns: [
                     {
                         title: '品种',
@@ -171,21 +177,21 @@
         },
         mounted() {
             this.getList();
-            fetch(this.$store.state.fetchPath + "/scm-steel-settle/getzyjhcxtjpz", {
-                method: "POST",
-                headers: this.$store.state.fetchHeader,
-                body: '',
-                credentials: 'include'
-            }).then((res) => {
-                if(res.status!=200){
-                    this.$Message.error('请求失败！');
-                }else{
-                    return res.text();
-                }
-            }).then((res) => {
-                res = res && res.length > 0 ? JSON.parse(res) : [];
-                this.pzData = this.utils.getPz(res)
-            });
+            // fetch(this.$store.state.fetchPath + "/scm-steel-settle/getzyjhcxtjpz", {
+            //     method: "POST",
+            //     headers: this.$store.state.fetchHeader,
+            //     body: '',
+            //     credentials: 'include'
+            // }).then((res) => {
+            //     if(res.status!=200){
+            //         this.$Message.error('请求失败！');
+            //     }else{
+            //         return res.text();
+            //     }
+            // }).then((res) => {
+            //     res = res && res.length > 0 ? JSON.parse(res) : [];
+            //     this.pzData = this.utils.getPz(res)
+            // });
         },
         methods: {
             getList() {

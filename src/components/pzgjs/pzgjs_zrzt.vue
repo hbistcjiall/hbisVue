@@ -12,7 +12,7 @@
                         <DatePicker type="month" placeholder="起始月份" :editable="false" :clearable="false" v-model="startTime" style="width:150px"></DatePicker>
                     </FormItem>
                 </Col>
-                <Col span="4" v-if="switchTime">
+                <Col span="4" v-if="switchTime" style="margin-left: -40px">
                     <FormItem style="width:150px">
                         <DatePicker type="month" placeholder="终止月份" :editable="false" :clearable="false" v-model="endTime" style="width:150px"></DatePicker>
                     </FormItem>
@@ -45,11 +45,11 @@
                     </FormItem>
                 </Col>
                 <Col span="4">
-                    <Button @click="getList()">查询</Button>
+                    <Button @click="getList()" icon="ios-search" type="primary">查询</Button>
                 </Col>
             </Row>
         </Form>
-        <Table :columns="columns" :width="900" :data="data" border height="500"></Table>
+        <Table :columns="columns" :data="data" border height="500"></Table>
     </div>
 </template>
 
@@ -68,48 +68,41 @@
                         title: '责任部门',
                         key: 'COMPANYNAME',
                         align: 'center',
-                        width: 150
                     },
                     {
                         title: '2019年1月内贸结算',
                         key: 'nmjs',
                         align: 'center',
-                        width: 750,
                         children:[
                             {
 
                                 title: '总量',
                                 key: 'FKIMG',
                                 align: 'center',
-                                width: 150,
                             },
                             {
 
                                 title: '品种钢量',
                                 key: 'PZGL',
                                 align: 'center',
-                                width: 150,
                             },
                             {
 
                                 title: '比重',
                                 key: 'BZ',
                                 align: 'center',
-                                width: 150,
                             },
                             {
 
                                 title: '目标量',
                                 key: 'MBL',
                                 align: 'center',
-                                width: 150,
                             },
                             {
 
                                 title: '完成/目标',
                                 key: 'PZGL/MBL',
                                 align: 'center',
-                                width: 150,
                             }
 
                         ]
