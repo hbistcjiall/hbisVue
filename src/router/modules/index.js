@@ -124,13 +124,22 @@ const indexchild=[
             isLogin: true
         },
     },
-    // /zgspzgqk/wcqk
     {
         path: '/zgspzgqk/wcqk',
         name: 'wcqk',
         component: resolve => require(['@/components/jtpzgqk/wcqk'], resolve),
         meta: {
             title: '完成情况',
+            keepAlive: true,
+            isLogin: true
+        },
+    },
+    {
+        path: '/indexSet',
+        name: 'sypz',
+        component: resolve => require(['@/components/system/sypz/sypz'], resolve),
+        meta: {
+            title: '首页配置',
             keepAlive: true,
             isLogin: true
         },
