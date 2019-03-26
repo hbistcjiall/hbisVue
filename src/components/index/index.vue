@@ -17,16 +17,14 @@
     }
 
     .layout-logo {
-        /*width: 238px;*/
-        /*height: 74px;*/
-        width: 190px;
+        width: 370px;
         height: 59px;
         border-radius: 3px;
-        top: 5px;
+        top: 4px;
         float: left;
         margin-left: -30px;
         position: relative;
-        background-image: url("../../assets/indexImg/indexLog.png");
+        background-image: url("../../assets/indexImg/indexImage.png");
         background-size: 100% 100%;
     }
 
