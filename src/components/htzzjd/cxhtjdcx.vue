@@ -19,11 +19,14 @@
                         <DatePicker type="month" placeholder="终止月份"  :editable="false" :clearable="false" v-model="endTime" style="width:150px"></DatePicker>
                     </FormItem>
                 </Col>
-                <Col span="4"><Button @click="getList()" icon="ios-search">查询</Button></Col>
+                <Col span="4">
+                    <Button @click="getList()" icon="ios-search">查询</Button>
+                    <Button @click="downLoad()" icon="ios-cloud-download-outline">导出</Button>
+                </Col>
             </Row>
 
         </Form>
-        <Table :columns="columns" :data="data" border height="500"></Table>
+        <Table :columns="columns" :data="data" border height="500" ref="table"></Table>
     </div>
 </template>
 
@@ -233,6 +236,11 @@
                     this.cxData = this.utils.getCx(res)
                 });
             },
+            downLoad(){
+                this.$refs.table.exportCsv({
+                    filename: '产线合同进度（产线）明细'
+                });
+            }
             // getCx(){
             //     this.cxCx.pz = this.zyjhcx.pz
             //     this.getCxData()

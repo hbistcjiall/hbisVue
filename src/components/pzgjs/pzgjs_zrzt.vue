@@ -46,10 +46,11 @@
                 </Col>
                 <Col span="4">
                     <Button @click="getList()" icon="ios-search" type="primary">查询</Button>
+                    <Button @click="downLoad()" icon="ios-cloud-download-outline">导出</Button>
                 </Col>
             </Row>
         </Form>
-        <Table :columns="columns" :data="data" border height="500"></Table>
+        <Table :columns="columns" :data="data" border height="500" ref="table"></Table>
     </div>
 </template>
 
@@ -141,6 +142,11 @@
                 }).then((res) => {
                     res =res && res.length > 0 ? JSON.parse(res) : [];
                     this.data = res;
+                });
+            },
+            downLoad(){
+                this.$refs.table.exportCsv({
+                    filename: '结算完成（责任主体）明细'
                 });
             }
         }

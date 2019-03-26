@@ -6,7 +6,6 @@
                     <FormItem label="记录日期：" style="width:150px">
                         <DatePicker type="date" placeholder="记录时间" :editable="false" :clearable="false" v-model="startTime"
                                     style="width:150px"></DatePicker>
-                        <!--<DatePicker type="date"  placeholder="Select date" style="width: 150px" v-model="startTime"></DatePicker>-->
                     </FormItem>
                 </Col>
                 <Col span="4">
@@ -19,10 +18,11 @@
                 </Col>
                 <Col span="4" style="margin-left: 80px">
                     <Button @click="getList()" icon="ios-search">查询</Button>
+                    <Button @click="downLoad()" icon="ios-cloud-download-outline" type="primary">导出</Button>
                 </Col>
             </Row>
         </Form>
-        <Table :columns="columns" :data="data" border height="500"></Table>
+        <Table :columns="columns" :data="data" border height="500" ref="table"></Table>
     </div>
 </template>
 
@@ -330,11 +330,8 @@
         methods: {
             getList() {
                 let params={};
-                // this.dw?params.dw=this.dw:'';
                 this.cx?params.company=this.cx:'';
                 let startTime='endMonth=';
-                // let endTime='&endTime=';
-                // this.switchTime?(startTime=startTime+this.utils.formatMonthStart(this.startTime),endTime=endTime+this.utils.formatMonthStart(this.endTime)):(startTime=startTime+ this.utils.formatYearStart(this.year),endTime=endTime+this.utils.formatYearEnd(this.year));
                 this.switchTime?(startTime=(startTime+ this.utils.formatdate(this.startTime)).substring(0, 20)):(startTime=startTime+ this.utils.formatYearStart(this.year));
                 fetch(this.$store.state.fetchPath + "/reportSpotPriceBreakdown/list", {
                     method: "POST",
@@ -349,10 +346,13 @@
                     }
                 }).then((res) => {
                     res = res && res.length > 0 ? JSON.parse(res) : [];
-                    window.console.log(res.dayList);
                     this.data =  res.dayList;
-                    // ORDERDAY
                     this.data=this.utils.mergeRow(res.dayList,'ORDERDAY');
+                });
+            },
+            downLoad(){
+                this.$refs.table.exportCsv({
+                    filename: '北京市场明细'
                 });
             }
         }
