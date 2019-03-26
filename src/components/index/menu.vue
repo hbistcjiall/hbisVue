@@ -1,5 +1,5 @@
 <template>
-    <Menu width="180px" ref="side_menu" @on-open-change="getParentName" @on-select="getName" accordion>
+    <Menu width="182px" ref="side_menu" @on-open-change="getParentName" @on-select="getName" accordion>
         <div v-for="(item,index) of menulist" :key="index">
             <MenuItem v-if="!item.children" :name="item.name" >{{item.name}}</MenuItem>
             <Submenu v-if="item.children"  :name="item.name" >
