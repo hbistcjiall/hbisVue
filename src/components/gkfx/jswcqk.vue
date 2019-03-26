@@ -162,7 +162,6 @@
                     case 1:
                         startTime=startTime+this.utils.formatMonthStart();
                         endTime=endTime+this.utils.formatMonthEnd();
-                        window.console.log(startTime)
                         this.SubStarTime_year = startTime.substring(10, 14);
                         this.SubStarTime_month = startTime.substring(15, 17);
                         this.pie.title.text = '<span style="font-size:14px;color:black;font-weight: bold">'+this.SubStarTime_year+"年"+this.SubStarTime_month+"月"+"结算完成情况（品种）"+'</span>';
@@ -187,7 +186,6 @@
                 fetch(this.$store.state.fetchPath + "/scm-steel-settle/getpzjszl", {
                     method: "POST",
                     headers: this.$store.state.fetchHeader,
-                    // body:this.utils.formatParams(this.byValue),
                     body:startTime+endTime,
                     credentials:'include'
                 })
@@ -199,25 +197,28 @@
                         }
                     }).then((res) => {
                     res = res&&res.length>0?JSON.parse(res):[]
-                    let chartsData1=[];
-                    let chartsData2=[];
-                    let chartsData3=[];
-                    for(let k=0;k<res.length;k++){
-                        chartsData1.push(res[k].JSL);
-                        chartsData2.push(res[k].JSJJ);
-                        chartsData3.push(res[k].VARIETY);
+                    if(res.length>0){
+                        let chartsData1=[];
+                        let chartsData2=[];
+                        let chartsData3=[];
+                        let chartsData =[];
+                        for(let k=0;k<res.length;k++){
+                            chartsData1.push(res[k].JSL);
+                            chartsData2.push(res[k].JSJJ);
+                            chartsData3.push(res[k].VARIETY);
+                            chartsData.push({name:res[k].VARIETY,y:res[k].JSL});
+                        }
+                        this.column.series[1].data=chartsData2;
+                        this.column.series[0].data=chartsData1;
+                        this.column.xAxis[0].categories=chartsData3;
+                        this.pie.series[0].data=chartsData;
+                    }else{
+                        this.column.series[1].data=[0,0,0,0,0];
+                        this.column.series[0].data=[0,0,0,0,0];
+                        this.column.xAxis[0].categories=['热板','冷板','宽厚板','棒线','型带'];
+                        this.pie.series[0].data=[{name:'热板',y:0},{name:'冷板',y:0},{name:'宽厚板',y:0},{name:'棒线',y:0},{name:'型带',y:0}];
                     }
-                    this.column.series[1].data=chartsData2;
-                    this.column.series[0].data=chartsData1;
-                    this.column.xAxis[0].categories=chartsData3;
                     this.option=this.column;
-
-
-                    let chartsData =[];
-                    for(let i=1;i<res.length;i++){
-                        chartsData.push({name:res[i].VARIETY,y:res[i].JSL});
-                    }
-                    this.pie.series[0].data=chartsData;
                     this.pieOption=this.pie;
 
                 })
