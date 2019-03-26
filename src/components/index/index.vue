@@ -136,21 +136,22 @@
                 <Menu mode="horizontal" active-name="1">
                     <div class="layout-logo"></div>
                     <!--<div class="layout-title">河钢销售营销数据中心</div>-->
-                    <div @mouseenter="mousein()"  style="background-color: #134598;width: 180px;float: right;height: 64px"  >
-                        <img src="../../assets/indexImg/guanliyuan.png" style="position: relative;right: 10px;top: 10px;"/>
-                        <span style="color: white;margin-top:-10px">系统管理员</span>
-                        <Icon type="ios-arrow-down" style="position: relative;" size="20" />
-                    </div>
-                    <div class="content_div" v-if="isdiv" @mouseleave="mouseout()">
-                        <ul class="content_ul">
-                            <li>修改密码</li>
-                            <li>版本信息</li>
-                            <li @click="loginOut()">安全退出</li>
-                        </ul>
-                    </div>
-                    <div class="layout-nav">
+                    <div @mouseleave="mouseout()">
+                        <div @mouseenter="mousein()"  style="background-color: #134598;width: 180px;float: right;height: 64px"  >
+                            <img src="../../assets/indexImg/guanliyuan.png" style="position: relative;right: 10px;top: 10px;"/>
+                            <span style="color: white;margin-top:-10px">系统管理员</span>
+                            <Icon type="ios-arrow-down" style="position: relative;" size="20" />
+                        </div>
+                        <div class="content_div" v-if="isdiv" @mouseleave="mouseout()">
+                            <ul class="content_ul">
+                                <li>修改密码</li>
+                                <li>版本信息</li>
+                                <li @click="loginOut()">安全退出</li>
+                            </ul>
+                        </div>
+                        </div>
+                        <div class="layout-nav">
                         <!--<Button type="info" style="float: right;margin-top: 14px" @click="loginOut()">退 出</Button>-->
-
                     </div>
                 </Menu>
             </Header>
