@@ -37,14 +37,13 @@
                 </FormItem>
             </Col>
             <Col span="6" style="float: right">
-                <Button type="info" @click="search" style="magin-left:20px" >查询</Button>
-                <Button type="info" @click="clearall" style="magin-left:20px">清空</Button>
-                <Button type="info" @click="checkedel" style="magin-left:20px">批量删除</Button>
-                <Button type="info" @click="downLoad" style="magin-left:20px">导出</Button>
+                <Button type="primary" @click="search" style="magin-left:20px" icon="ios-search">查询</Button>
+                <Button type="primary" @click="clearall" style="magin-left:20px">清空</Button>
+                <Button type="primary" @click="downLoad" style="magin-left:20px" icon="ios-cloud-download-outline">导出</Button>
             </Col>
         </Row>
         </Form>
-        <Table border stripe :columns="columns12" :data="fecthdata6" style="margin-top: 20px">
+        <Table border stripe :columns="columns12" :data="fecthdata6" style="margin-top: 20px" ref="table">
             <template slot-scope="{ row }" slot="name">
                 <strong>{{ row.name }}</strong>
             </template>
@@ -271,10 +270,28 @@
                 this.year = ''
             },
             checkedel(){
-                window.console.log('checkedel')
+                this.xyhmxlbData.varieties=''
+                this.year=''
+                this.xyhmxlbData.steelMills=''
+
             },
             downLoad(){
-                window.console.log('downLoad')
+                fetch(this.$store.state.fetchPath + "/protocolAccountDetails/exportlist", {
+                    method: "POST",
+                    headers: this.$store.state.fetchHeader,
+                    body: this.utils.formatParams(this.xyhmxlbData),
+                    credentials:'include'
+                })
+                    .then((res) => {
+                        if(res.status!=200){
+                            this.$Message.error('请求失败！');
+                        }else{
+                            return res.text();
+                        }
+                    })
+                    .then(() => {
+                        this.handleListApproveHistory();
+                    })
             },
             remove (r) {
                 this.$Modal.confirm({
@@ -346,9 +363,5 @@
     }
     FormItem {
         float: left;
-    }
-    table button{
-        background: #f2f4f7;
-        color:#546c8c;
     }
 </style>
