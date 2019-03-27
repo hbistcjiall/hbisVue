@@ -1,10 +1,10 @@
 <template>
     <div>
-        <div>
-            <button @click="getTime(1)">本月</button>
-            <button @click="getTime(2)">上月</button>
-            <button @click="getTime(3)">本年</button>
-        </div>
+        <Row>
+            <button @click="getTime(1)" type="primary">本月</button>
+            <button @click="getTime(2)" type="primary">上月</button>
+            <button @click="getTime(3)" type="primary">本年</button>
+        </Row>
         <div class="chartStyle">
             <div style="width:50%;float:left;border-right:1px solid #3497db">
                 <x-chart id="pieValue"  :option="pieOption"></x-chart>
@@ -228,15 +228,17 @@
 </script>
 
 <style scoped>
-    button{
-        background: #3497db;
-        color:#fff;
+    Button{
         width:100px;
         height:30px;
-        margin-left:20px;
-        outline: none;
+        background: #f3f4f7;
         border:none;
-        cursor: pointer;
+        color:#6c819b;
+        margin-right:10px;
+    }
+    Button:hover{
+        background: #d3dae4;
+        color:#6c819b;
     }
     .chartStyle{
         margin-top:20px;
