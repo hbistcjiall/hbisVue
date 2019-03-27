@@ -259,7 +259,7 @@
                 })
             },
             changepage(index) {
-                this.dictData.page=index;
+                this.xyhmxlbData.page=index;
                 this.handleListApproveHistory();
             },
             serTime(e){
