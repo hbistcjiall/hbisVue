@@ -8,11 +8,13 @@
             <Button @click="getBx" type="primary" style="margin-left: 9px">棒线</Button>
             <Button @click="getXd" type="primary" style="margin-left: 9px">型带</Button>
         </Row>
-        <div>
+        <div style="margin-top:20px;">
             <div class="LeftImg">
+                <div class="chartTitleStyle">销售主体</div>
                 <x-chart id="all_pieValue" :option="pieOption"></x-chart>
             </div>
             <div class="RigtImg">
+                <div class="chartTitleStyle">钢厂计划</div>
                 <x-chart id="all_columnValue"  :option="option"></x-chart>
             </div>
         </div>
@@ -102,7 +104,7 @@
                     },
                     colors:['#386489','#3689cf'],
                     title: {
-                        text: '<span style="font-size:16px;font-weight: bold">钢厂计划</span><br>'
+                        text: ''
                     },
                     xAxis: {
                         categories: [],
@@ -111,7 +113,7 @@
                     yAxis: {
                         min: 0,
                         title: {
-                            text: '单位（万）',
+                            text: '单位（万吨）',
                             align: 'high'
                         },
                         labels: {
@@ -179,6 +181,7 @@
         },
         mounted() {
             this.handleListApproveHistory();
+            this.TableData();
         },
         methods: {
             handleListApproveHistory() {
@@ -260,6 +263,8 @@
                     this.option=this.column;
                 })
 
+            },
+            TableData(){
                 //品种表格
                 fetch(this.$store.state.fetchPath + "/protocolAccountDetails/resourceplanthrid", {
                     method: "POST",
@@ -305,7 +310,8 @@
             },
             getAll(){
                 this.byValue.type = ''
-                this.handleListApproveHistory()
+                this.handleListApproveHistory();
+                this.TableData()
             },
             getRb(){
                 this.byValue.type = '热板'
@@ -343,5 +349,29 @@
     }
     .highcharts-credits{
         display: none;
+    }
+    .chartTitleStyle{
+        height:30px;
+        background: #d4d4d4;
+        text-align: left;
+        line-height: 30px;
+        font-size: 16px;
+        padding-left:20px;
+        color:#7a7a7a;
+        font-weight:bold;
+    }
+    .ivu-table th{
+        background-color: #d4d4d4 !important;
+    }
+    Button{
+        width:100px;
+        height:30px;
+        background: #f3f4f7;
+        border:none;
+        color:#6c819b;
+    }
+    Button:hover{
+        background: #d3dae4;
+        color:#6c819b;
     }
 </style>
