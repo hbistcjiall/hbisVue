@@ -3,8 +3,8 @@
         <Input placeholder="责任单位名称" style="width: 300px" v-model="dictData.companyname"/>
         <Button @click="search" style="magin-left:20px;" icon="ios-search">查询</Button>
         <Button @click="addNew" style="magin-left:20px;" icon ="ios-add">新增</Button>
-        <!--<Button type="primary" @click="downLoadTab" style="magin-left:20px" icon="ios-download-outline">导出</Button>-->
-        <Table border stripe :columns="columns12" :data="fecthdata6" style="margin-top: 20px">
+        <!--<Button @click="downLoad()" icon="ios-cloud-download-outline" type="primary">导出</Button>-->
+        <Table border stripe :columns="columns12" :data="fecthdata6" style="margin-top: 20px" ref="table">
             <template slot-scope="{ row }" slot="name">
                 <strong>{{ row.name }}</strong>
             </template>
@@ -210,7 +210,10 @@
                     .then(() => {
                         this.handleListApproveHistory();
                     })
-            }
+            },
+            // downLoad(){
+            //     alert('导出')
+            // }
 
         }
     }
