@@ -54,7 +54,7 @@
             </template>
         </Table>
         <Page :total="dataCount" :page-size="pageSize" show-total show-elevator show-sizer class="paging" @on-change="changepage" style="margin-top:20px;"></Page>
-        <Modal v-model="updModal" title="角色编辑" :closable='false' @on-ok="updok">
+        <Modal v-model="updModal" title="协议户编辑" :closable='false' @on-ok="updok">
             <Form :model="updformValidate" :rules="updruleValidate" :label-width="90">
                 <FormItem label="协议年份" prop="Yearofagreement">
                     <DatePicker type="year" v-model='updYear'></DatePicker>
