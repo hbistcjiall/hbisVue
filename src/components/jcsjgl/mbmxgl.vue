@@ -10,7 +10,7 @@
 
         <Button @click="search" style="magin-left:20px;" icon="ios-search">查询</Button>
         <Button @click="addNew" style="magin-left:20px;" icon ="ios-add">新增</Button>
-        <!--<Button type="primary" @click="downLoadTab" style="magin-left:20px" icon="ios-download-outline">导出</Button>-->
+        <!--<Button type="primary" @click="downLoad" style="magin-left:20px" icon="ios-cloud-download-outline">导出</Button>-->
         <Table border stripe :columns="columns12" :data="fecthdata6" style="margin-top: 20px">
             <template slot-scope="{ row }" slot="name">
                 <strong>{{ row.name }}</strong>
@@ -311,6 +311,24 @@
                 });
 
             },
+            downLoad(){
+                // fetch(this.$store.state.fetchPath + "/protocolAccountDetails/exportlist", {
+                //     method: "POST",
+                //     headers: this.$store.state.fetchHeader,
+                //     body: this.utils.formatParams(this.dictData),
+                //     credentials:'include'
+                // })
+                //     .then((res) => {
+                //         if(res.status!=200){
+                //             this.$Message.error('请求失败！');
+                //         }else{
+                //             return res.text();
+                //         }
+                //     })
+                //     .then(() => {
+                //         this.handleListApproveHistory();
+                //     })
+            }
 
         }
     }

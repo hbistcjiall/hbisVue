@@ -10,8 +10,8 @@
             </div>
             <div class="headlist">
                 <ul>
-                    <li>河钢官网</li>
-                    <li>客户服务</li>
+                    <li><a style="color:#B3B3B3 " href="http://www.hbisco.com">河钢集团官网</a></li>
+                    <li><a style="color:#B3B3B3 " href="http://sale.hbistc.com/saleweb/login.htm">客户服务中心</a></li>
                 </ul>
             </div>
         </div>
@@ -21,7 +21,7 @@
         <div class="LoginCss">
             <Form ref="formInline" :model="formInline" :rules="ruleInline" inline class="form">
                 <p style="font-size:23px;color: #5e9cdb;font-weight: 700;padding-top: 37px">河钢销售营销数据中心</p>
-                <p style="color: #B3B3B3;padding-bottom: 30px;font-size:17px">Hbis Sales Data Center</p>
+                <p style="color: #B3B3B3;padding-bottom: 30px;font-size:17px">Hbis Sales Marketing Data Center</p>
                 <FormItem prop="username" class="formitem">
                     <Input type="text" v-model="formInline.username" placeholder="用户">
                         <Icon type="ios-person-outline" slot="prepend" style="font-size: 20px;color: #8ABEF2;font-weight: 800"></Icon>

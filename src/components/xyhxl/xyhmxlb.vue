@@ -14,17 +14,17 @@
                     </Select>
                 </FormItem>
             </Col>
-            <Col span="4">
+            <Col span="2">
                 <FormItem label="上传时间:">
-                    <DatePicker type="datetimerange" @on-change="serTime" format="yyyy-MM-dd" placeholder="请选择上传时间" style="width: 180px"></DatePicker>
+                    <DatePicker type="datetimerange" @on-change="serTime" format="yyyy-MM-dd" placeholder="请选择上传时间" style="width: 130px"></DatePicker>
                 </FormItem>
             </Col>
-            <Col span="4" style="margin-left: 80px">
+            <Col span="3" style="margin-left: 120px">
                 <FormItem label="协议年份:">
-                <DatePicker type="year" v-model='year'></DatePicker>
+                <DatePicker type="year" v-model='year' style="width: 100px"></DatePicker>
                 </FormItem>
             </Col>
-            <Col span="4">
+            <Col span="4" style="margin-left: 20px">
                 <FormItem label="钢厂:">
                     <Select v-model="xyhmxlbData.steelMills">
                         <Option value="">全部</Option>
@@ -36,14 +36,15 @@
                     </Select>
                 </FormItem>
             </Col>
-            <Col span="6" style="float: right">
+            <Col span="8" style="float: right">
                 <Button type="primary" @click="search" style="magin-left:20px" icon="ios-search">查询</Button>
                 <Button type="primary" @click="clearall" style="magin-left:20px">清空</Button>
+                <Button type="primary" @click="pldelect" style="magin-left:20px">批量删除</Button>
                 <Button type="primary" @click="downLoad" style="magin-left:20px" icon="ios-cloud-download-outline">导出</Button>
             </Col>
         </Row>
         </Form>
-        <Table border stripe :columns="columns12" :data="fecthdata6" style="margin-top: 20px" ref="table">
+        <Table border stripe :columns="columns12" :data="fecthdata6"  style="margin-top: 20px" ref="table"  >
             <template slot-scope="{ row }" slot="name">
                 <strong>{{ row.name }}</strong>
             </template>
@@ -121,14 +122,20 @@
                 xia: 0,
                 columns12: [
                     {
+                        type: 'selection',
+                        width:50,
+                        align:"center"
+                    },
+                    {
                         title: '序号',
                         align: "center",
-                        type:'index'
+                        type:'index',
+                        width:60
                     },
                     {
                         title: '上传时间',
                         align: "center",
-                        width:100,
+                        width:150,
                         key: 'UPLOADTIME'
                     },
                     {
@@ -139,12 +146,14 @@
                     {
                         title: '用户名称(全称)',
                         align: "center",
-                        key: 'ACCOUNTNAME'
+                        key: 'ACCOUNTNAME',
+                        width:130
                     },
                     {
                         title: '品种',
                         align: "center",
-                        key: 'VARIETIES'
+                        key: 'VARIETIES',
+                        width:70
                     },
                     {
                         title: '主销售区域',
@@ -164,7 +173,8 @@
                     {
                         title: '钢厂',
                         align: "center",
-                        key: 'STEELMILLS'
+                        key: 'STEELMILLS',
+                        width:70
                     },
                     {
                         title: '年协议量(吨)',
@@ -175,11 +185,12 @@
                         title: '操作',
                         slot: 'action',
                         align: 'center',
-                        width: '260px'
+                        width: '150px'
                     },
                 ],
                 fecthdata6: [],
                 resDatas:[],
+                plDelectData:[],
                 updformValidate: {
                     accountName:'',
                     aidedSalesRegionalOne:'',
@@ -299,10 +310,11 @@
                     content: '确认删除吗？',
                     onOk: () => {
                         this.protocolAccountId=r.PROTOCOLACCOUNTID;
+                        window.console.log(this.protocolAccountId);
                         fetch(this.$store.state.fetchPath + "/protocolAccountDetails/delete", {
                             method: "POST",
                             headers: this.$store.state.fetchHeader,
-                            body: this.utils.formatParams(this.delData),
+                            body: "protocolAccountId="+this.protocolAccountId,
                             credentials:'include'
                         })
                             .then((res) => {
@@ -349,6 +361,35 @@
                     .then(() => {
                         this.handleListApproveHistory();
                     })
+            },
+            pldelect(){
+                this.$Modal.confirm({
+                    title: '提示',
+                    content: '确认删除吗？',
+                    onOk: () => {
+                        let a=this.$refs.table.getSelection();
+                        for(let i=0;i<a.length;i++){
+                            this.plDelectData.push(a[i].PROTOCOLACCOUNTID);
+                        }
+                        window.console.log(this.plDelectData);
+                        fetch(this.$store.state.fetchPath + "/protocolAccountDetails/deleteList", {
+                            method: "POST",
+                            headers: this.$store.state.fetchHeader,
+                            body: "idList="+this.plDelectData,
+                            credentials:'include'
+                        })
+                            .then((res) => {
+                                if(res.status!=200){
+                                    this.$Message.error('请求失败！');
+                                }else{
+                                    return res.text();
+                                }
+                            })
+                            .then(() => {
+                                this.handleListApproveHistory();
+                            })
+                    }
+                });
             }
         }
     }
