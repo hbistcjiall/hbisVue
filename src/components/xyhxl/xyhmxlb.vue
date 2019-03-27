@@ -123,12 +123,13 @@
                     {
                         title: '序号',
                         align: "center",
-                        type:'index'
+                        type:'index',
+                        width:60
                     },
                     {
                         title: '上传时间',
                         align: "center",
-                        width:100,
+                        width:150,
                         key: 'UPLOADTIME'
                     },
                     {
@@ -139,12 +140,14 @@
                     {
                         title: '用户名称(全称)',
                         align: "center",
-                        key: 'ACCOUNTNAME'
+                        key: 'ACCOUNTNAME',
+                        width:130
                     },
                     {
                         title: '品种',
                         align: "center",
-                        key: 'VARIETIES'
+                        key: 'VARIETIES',
+                        width:70
                     },
                     {
                         title: '主销售区域',
@@ -164,7 +167,8 @@
                     {
                         title: '钢厂',
                         align: "center",
-                        key: 'STEELMILLS'
+                        key: 'STEELMILLS',
+                        width:70
                     },
                     {
                         title: '年协议量(吨)',
@@ -175,7 +179,7 @@
                         title: '操作',
                         slot: 'action',
                         align: 'center',
-                        width: '260px'
+                        width: '150px'
                     },
                 ],
                 fecthdata6: [],
