@@ -324,6 +324,13 @@
                         })
                     },
                     onOk: () => {
+                        if(this.formValidate.birthday==''||this.formValidate.birthday=='NaN-NaN-NaN'){
+                            let birDay = new Date();
+                            this.formValidate.birthday= this.utils.format(birDay)
+                        }else{
+                            this.formValidate.birthday=this.formValidate.birthday
+                        }
+                        alert(this.formValidate.birthday)
                         fetch(this.$store.state.fetchPath + "/mgr/add", {
                             method: "POST",
                             headers: this.$store.state.fetchHeader,
