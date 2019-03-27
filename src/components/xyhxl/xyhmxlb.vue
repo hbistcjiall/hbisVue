@@ -64,7 +64,6 @@
                 </FormItem>
                 <FormItem label="品种" prop="varieties">
                     <Select v-model="updformValidate.varieties">
-                        <Option value="">全部</Option>
                         <Option value="热板">热板</Option>
                         <Option value="冷板">冷板</Option>
                         <Option value="宽厚板">宽厚板</Option>
@@ -83,7 +82,6 @@
                 </FormItem>
                 <FormItem label="钢厂" prop="steelMills">
                     <Select v-model="updformValidate.steelMills">
-                        <Option value="">全部</Option>
                         <Option value="唐钢">唐钢</Option>
                         <Option value="邯钢">邯钢</Option>
                         <Option value="宣钢">宣钢</Option>
