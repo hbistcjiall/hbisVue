@@ -56,7 +56,7 @@
         <Page :total="dataCount" :page-size="pageSize" show-total show-elevator show-sizer class="paging" @on-change="changepage" style="margin-top:20px;"></Page>
         <Modal v-model="updModal" title="角色编辑" :closable='false' @on-ok="updok">
             <Form :model="updformValidate" :rules="updruleValidate" :label-width="90">
-                <FormItem label="协议年份">
+                <FormItem label="协议年份" prop="Yearofagreement">
                     <DatePicker type="year" v-model='updYear'></DatePicker>
                 </FormItem>
                 <FormItem label="用户名称" prop="accountName">
@@ -72,7 +72,7 @@
                         <Option value="型带">型带</Option>
                     </Select>
                 </FormItem>
-                <FormItem label="主销售区域">
+                <FormItem label="主销售区域" prop="Mainsalesarea">
                     <Input v-model="updformValidate.mainSalesRegional" placeholder="请输入主销售区域"></Input>
                 </FormItem>
                 <FormItem label="辅助销售区域一">
@@ -204,6 +204,15 @@
                 },
                 updYear:'',
                 updruleValidate: {
+                    annualAgreementVolume:[
+                        { required: true, message: '年协议量(吨)', trigger: 'blur' }
+                    ],
+                    Mainsalesarea:[
+                        { required: true, message: '主销售区域', trigger: 'blur' }
+                    ],
+                    Yearofagreement:[
+                        {required: true, message: '协议年份', trigger: 'blur'}
+                    ],
                     accountName: [
                         { required: true, message: '用户名称', trigger: 'blur' }
                     ],
