@@ -115,6 +115,8 @@
         right: 0px;
         top: 64px;
         width: 180px;
+        border: none;
+        z-index: 90;
     }
     .content_ul li:hover{
         color: white;
@@ -135,12 +137,12 @@
                     <div class="layout-logo"></div>
                     <!--<div class="layout-title">河钢销售营销数据中心</div>-->
                     <div @mouseleave="mouseout()">
-                        <div @click="mousein()"  style="background-color: #134598;width: 180px;float: right;height: 64px;cursor: pointer;"  >
+                        <div @click="mousein()"  style="background-color: #134598;width: 180px;float: right;height: 64px;cursor: pointer;;z-index: 80"  >
                             <img src="../../assets/indexImg/guanliyuan.png" style="position: relative;right: 10px;top: 10px;"/>
                             <span style="color: white;margin-top:-10px;">系统管理员</span>
                             <Icon type="ios-arrow-down" style="position: relative;" size="20" />
                         </div>
-                        <div class="content_div" v-if="isdiv" @mouseleave="mouseout()">
+                        <div class="content_div" v-if="isdiv">
                             <ul class="content_ul">
                                 <li>修改密码</li>
                                 <li>版本信息</li>
