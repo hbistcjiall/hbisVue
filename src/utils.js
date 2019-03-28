@@ -93,11 +93,11 @@ const htjdTree = (tree) => {
     tree.forEach((item) => {
         // 解构赋值
         let {
-            PZNAME: title,
-            YIELD: ycl,
-            PLANNUM : jhl,
-            SCHEDULE : wcbl,
-            CXNAME:cxtitle,
+            pzName: title,
+            yield: ycl,
+            planNum : jhl,
+            schedule : wcbl,
+            cxName:cxtitle,
         } = item
         result.push({
             title,
