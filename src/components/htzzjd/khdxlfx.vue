@@ -76,7 +76,7 @@
                                 key:'deliveryWeight',
                             },
                             {
-                                title:"兑现率",
+                                title:"兑现率(%)",
                                 align: "center",
                                 // width: 350,
                                 key:'cashRate',
