@@ -2,10 +2,10 @@
     <div>
         <div style="margin:0px auto;width:600px;margin-bottom:20px;height:30px">
             <div @click="getAll" :class="{ 'class-a': isA, 'class-b': isB}">全部</div>
-            <div @click="getRb"  style="margin-left: 9px" :class="{ 'class-c': isC, 'class-d': isD}">热板</div>
-            <div @click="getLb"  style="margin-left: 9px" :class="{ 'class-e': isE, 'class-f': isF}">冷板</div>
-            <div @click="getKhb"  style="margin-left: 9px" :class="{ 'class-h': isH, 'class-i': isI}">宽厚板</div>
-            <div @click="getBx"  style="margin-left: 9px" :class="{ 'class-j': isJ, 'class-k': isK}">棒线</div>
+            <div @click="getRb" style="margin-left: 9px" :class="{ 'class-c': isC, 'class-d': isD}">热板</div>
+            <div @click="getLb" style="margin-left: 9px" :class="{ 'class-e': isE, 'class-f': isF}">冷板</div>
+            <div @click="getKhb" style="margin-left: 9px" :class="{ 'class-h': isH, 'class-i': isI}">宽厚板</div>
+            <div @click="getBx" style="margin-left: 9px" :class="{ 'class-j': isJ, 'class-k': isK}">棒线</div>
             <div @click="getXd" style="margin-left: 9px" :class="{ 'class-l': isL, 'class-m': isM}">型带</div>
         </div>
         <div style="margin-top:20px;">
@@ -15,7 +15,7 @@
             </div>
             <div class="RigtImg">
                 <div class="chartTitleStyle">钢厂计划</div>
-                <x-chart id="all_columnValue"  :option="option"></x-chart>
+                <x-chart id="all_columnValue" :option="option"></x-chart>
             </div>
         </div>
         <div>
@@ -39,6 +39,7 @@
 
 <script>
     import XChart from '../chart.vue'
+
     export default {
         name: "zyphjh",
         data() {
@@ -55,9 +56,9 @@
                 isK: false,
                 isL: true,
                 isM: false,
-                activeIndex:0,
-                byValue:{
-                    type:''
+                activeIndex: 0,
+                byValue: {
+                    type: ''
                 },
                 columns1: [
                     {
@@ -103,18 +104,18 @@
                         key: 'BILI'
                     },
                 ],
-                resDatas1:[],
-                resDatas2:[],
-                resDatas3:[],
-                resDatas4:[],
-                xhdata:[],
+                resDatas1: [],
+                resDatas2: [],
+                resDatas3: [],
+                resDatas4: [],
+                xhdata: [],
                 //柱状图
-                option:{},
+                option: {},
                 column: {
                     chart: {
                         type: 'column'
                     },
-                    colors:['#386489','#3689cf'],
+                    colors: ['#386489', '#3689cf'],
                     title: {
                         text: ''
                     },
@@ -133,9 +134,9 @@
                         }
                     },
                     plotOptions: {
-                        column:{
-                            dataLabels:{
-                                enabled:true, // dataLabels设为true
+                        column: {
+                            dataLabels: {
+                                enabled: true, // dataLabels设为true
                             }
                         }
                     },
@@ -147,16 +148,16 @@
                         data: []
                     }, {
                         name: '计划量',
-                        data:[]
+                        data: []
                     }]
                 },
                 //饼状图
-                pieOption:{},
+                pieOption: {},
                 pie: {
                     chart: {
                         type: 'pie'
                     },
-                    colors:['#75b9e6','#4aa3de','#c1e0ff','#77bbff','#33577b','#6ba6e0','#3d8ec4','#4fc1e9','#96bdd3','#73bbc4'],
+                    colors: ['#75b9e6', '#4aa3de', '#c1e0ff', '#77bbff', '#33577b', '#6ba6e0', '#3d8ec4', '#4fc1e9', '#96bdd3', '#73bbc4'],
                     title: {
                         text: '<span style="font-size:16px;font-weight: bold">销售主体</span><br>'
                     },
@@ -164,7 +165,7 @@
                         text: ''
                     },
                     tooltip: {
-                        percentageDecimals: 2 ,//百分比保留小数
+                        percentageDecimals: 2,//百分比保留小数
                         headerFormat: '<span style="font-size:11px">{series.name}</span><br>',
                         pointFormat: '<span style="color:{point.color}">{point.name}</span>: <b>{point.b:.2f}%</b><br/>',
                     },
@@ -201,99 +202,116 @@
                 fetch(this.$store.state.fetchPath + "/protocolAccountDetails/resourceplanone", {
                     method: "POST",
                     headers: this.$store.state.fetchHeader,
-                    body:this.utils.formatParams(this.byValue),
-                    credentials:'include'
+                    body: this.utils.formatParams(this.byValue),
+                    credentials: 'include'
                 })
                     .then((res) => {
-                        if(res.status!=200){
+                        if (res.status != 200) {
                             this.$Message.error('请求失败！');
-                        }else{
+                        } else {
                             return res.text();
                         }
                     }).then((res) => {
-                    res = res&&res.length>0?JSON.parse(res):[]
-                    this.resDatas1 =  res;
-                    if(res.length>0){
-                        let chartsData =[];
-                        for(let i=1;i<res.length;i++){
-                            chartsData.push({name:res[i].COMPANYNAME,y:res[i].ZYFKIMG,b:res[i].BILI});
+                    res = res && res.length > 0 ? JSON.parse(res) : []
+                    this.resDatas1 = res;
+                    if (res.length > 0) {
+                        let chartsData = [];
+                        for (let i = 1; i < res.length; i++) {
+                            chartsData.push({name: res[i].COMPANYNAME, y: res[i].ZYFKIMG, b: res[i].BILI});
                         }
-                        this.pie.series[0].data=chartsData;
-                        this.pie.subtitle.text = '<span style="font-size:14px;color:black;font-weight: bold">'+res[0].COMPANYNAME+':'+res[0].ZYFKIMG+"万吨"+'</span>'
+                        this.pie.series[0].data = chartsData;
+                        this.pie.subtitle.text = '<span style="font-size:14px;color:black;font-weight: bold">' + res[0].COMPANYNAME + ':' + res[0].ZYFKIMG + "万吨" + '</span>'
 
-                    }else{
-                        this.pie.series[0].data=[
-                            {name:'唐钢',y:0,b:0},
-                            {name:'邯钢',y:0,b:0},
-                            {name:'宣钢',y:0,b:0},
-                            {name:'承钢',y:0,b:0},
-                            {name:'舞钢',y:0,b:0},
-                            {name:'石钢',y:0,b:0},
-                            {name:'衡板',y:0,b:0},
-                            {name:'邯宝',y:0,b:0}
+                    } else {
+                        this.pie.series[0].data = [
+                            {name: '唐钢', y: 0, b: 0},
+                            {name: '邯钢', y: 0, b: 0},
+                            {name: '宣钢', y: 0, b: 0},
+                            {name: '承钢', y: 0, b: 0},
+                            {name: '舞钢', y: 0, b: 0},
+                            {name: '石钢', y: 0, b: 0},
+                            {name: '衡板', y: 0, b: 0},
+                            {name: '邯宝', y: 0, b: 0}
                         ]
-                        this.pie.subtitle.text = '<span style="font-size:14px;color:black;font-weight: bold">'+"集团产销资源总量：0万吨"+'</span>'
+                        this.pie.subtitle.text = '<span style="font-size:14px;color:black;font-weight: bold">' + "集团产销资源总量：0万吨" + '</span>'
 
                     }
-                   this.pieOption=this.pie;
+                    this.pie.series[0].data = [
+                        {
+                            b: "1837",
+                            name: "出口",
+                            y: 20
+                        },
+                        {
+                            b: "1837",
+                            name: "子公司",
+                            y: 30
+                        },
+                        {
+                            b: "1837",
+                            name: "销售总公司",
+                            y: 50
+                        },
+                    ];
+                    this.pieOption = this.pie;
                 })
 
                 //钢厂计划
                 fetch(this.$store.state.fetchPath + "/protocolAccountDetails/resourceplantwo", {
                     method: "POST",
                     headers: this.$store.state.fetchHeader,
-                    body:this.utils.formatParams(this.byValue),
-                    credentials:'include'
+                    body: this.utils.formatParams(this.byValue),
+                    credentials: 'include'
                 })
                     .then((res) => {
-                        if(res.status!=200){
+                        if (res.status != 200) {
                             this.$Message.error('请求失败！');
-                        }else{
+                        } else {
                             return res.text();
                         }
                     }).then((res) => {
-                    res = res&&res.length>0?JSON.parse(res):[]
-                    this.resDatas2 =  res;
-                    if(res.length>0){
-                        let chartsData1=[];
-                        let chartsData2=[];
-                        let chartsData3=[];
-                        for(let k=0;k<res.length;k++){
+                    res = res && res.length > 0 ? JSON.parse(res) : []
+                    this.resDatas2 = res;
+                    if (res.length > 0) {
+                        let chartsData1 = [];
+                        let chartsData2 = [];
+                        let chartsData3 = [];
+                        for (let k = 0; k < res.length; k++) {
                             chartsData2.push(res[k].JH);
                             chartsData1.push(res[k].XH);
                             chartsData3.push(res[k].COMPANYNAME);
                         }
-                        this.column.series[1].data=chartsData2;
-                        this.column.series[0].data=chartsData1;
-                        this.column.xAxis.categories=chartsData3;
-                    }else{
-                        this.column.series[1].data=[0,0,0,0,0,0,0,0];
-                        this.column.series[0].data=[0,0,0,0,0,0,0,0];
-                        this.column.xAxis.categories=['唐钢','邯钢','宣钢','承钢','舞钢','石钢','衡板','邯宝'];
+                        this.column.series[1].data = chartsData2;
+                        this.column.series[0].data = chartsData1;
+                        this.column.xAxis.categories = chartsData3;
+                    } else {
+                        this.column.series[1].data = [0, 0, 0, 0, 0, 0, 0, 0];
+                        this.column.series[0].data = [0, 0, 0, 0, 0, 0, 0, 0];
+                        this.column.xAxis.categories = ['唐钢', '邯钢', '宣钢', '承钢', '舞钢', '石钢', '衡板', '邯宝'];
                     }
 
-                    this.option=this.column;
+                    this.option = this.column;
                 })
 
             },
-            TableData(){
+            TableData() {
                 //品种表格
                 fetch(this.$store.state.fetchPath + "/protocolAccountDetails/resourceplanthrid", {
                     method: "POST",
                     headers: this.$store.state.fetchHeader,
-                    body:this.utils.formatParams(this.byValue),
-                    credentials:'include'
+                    body: this.utils.formatParams(this.byValue),
+                    credentials: 'include'
                 })
                     .then((res) => {
-                        if(res.status!=200){
+                        if (res.status != 200) {
                             this.$Message.error('请求失败！');
-                        }else{
+                        } else {
                             return res.text();
                         }
                     }).then((res) => {
-                    res = res&&res.length>0?JSON.parse(res):[]
-                    this.resDatas3 =  res;
-                    for(var i=0;i<this.resDatas3.length;i++){
+                    res = res && res.length > 0 ? JSON.parse(res) : []
+                    this.resDatas3 = res;
+                    for (var i = 0; i < this.resDatas3.length; i++) {
                         this.resDatas3[i].BILI = this.resDatas3[i].BILI;
                     }
                 })
@@ -303,118 +321,118 @@
                 fetch(this.$store.state.fetchPath + "/protocolAccountDetails/resourceplanfour", {
                     method: "POST",
                     headers: this.$store.state.fetchHeader,
-                    body:this.utils.formatParams(this.byValue),
-                    credentials:'include'
+                    body: this.utils.formatParams(this.byValue),
+                    credentials: 'include'
                 })
                     .then((res) => {
-                        if(res.status!=200){
+                        if (res.status != 200) {
                             this.$Message.error('请求失败！');
-                        }else{
+                        } else {
                             return res.text();
                         }
                     }).then((res) => {
-                    res = res&&res.length>0?JSON.parse(res):[]
-                    this.resDatas4 =  res;
-                    for(var i=0;i<this.resDatas4.length;i++){
+                    res = res && res.length > 0 ? JSON.parse(res) : []
+                    this.resDatas4 = res;
+                    for (var i = 0; i < this.resDatas4.length; i++) {
                         this.resDatas4[i].BILI = this.resDatas4[i].BILI;
                     }
                 })
             },
-            getAll(){
-                    this.isA= false,
-                    this.isB= true,
-                    this.isC= true,
-                    this.isD= false,
-                    this.isE= true,
-                    this.isF= false,
-                    this.isH= true,
-                    this.isI= false,
-                    this.isJ= true,
-                    this.isK= false,
-                    this.isL= true,
-                    this.isM= false,
-                this.byValue.type = ''
+            getAll() {
+                this.isA = false,
+                    this.isB = true,
+                    this.isC = true,
+                    this.isD = false,
+                    this.isE = true,
+                    this.isF = false,
+                    this.isH = true,
+                    this.isI = false,
+                    this.isJ = true,
+                    this.isK = false,
+                    this.isL = true,
+                    this.isM = false,
+                    this.byValue.type = ''
                 this.handleListApproveHistory();
                 this.TableData()
             },
-            getRb(){
-                    this.isA= true,
-                    this.isB= false,
-                    this.isC= false,
-                    this.isD= true,
-                    this.isE= true,
-                    this.isF= false,
-                    this.isH= true,
-                    this.isI= false,
-                    this.isJ= true,
-                    this.isK= false,
-                    this.isL= true,
-                    this.isM= false,
-                this.byValue.type = '热板'
+            getRb() {
+                this.isA = true,
+                    this.isB = false,
+                    this.isC = false,
+                    this.isD = true,
+                    this.isE = true,
+                    this.isF = false,
+                    this.isH = true,
+                    this.isI = false,
+                    this.isJ = true,
+                    this.isK = false,
+                    this.isL = true,
+                    this.isM = false,
+                    this.byValue.type = '热板'
                 this.handleListApproveHistory()
             },
-            getLb(){
-                    this.isA= true,
-                    this.isB= false,
-                    this.isC= true,
-                    this.isD= false,
-                    this.isE= false,
-                    this.isF= true,
-                    this.isH= true,
-                    this.isI= false,
-                    this.isJ= true,
-                    this.isK= false,
-                    this.isL= true,
-                    this.isM= false,
-                this.byValue.type = '冷板'
+            getLb() {
+                this.isA = true,
+                    this.isB = false,
+                    this.isC = true,
+                    this.isD = false,
+                    this.isE = false,
+                    this.isF = true,
+                    this.isH = true,
+                    this.isI = false,
+                    this.isJ = true,
+                    this.isK = false,
+                    this.isL = true,
+                    this.isM = false,
+                    this.byValue.type = '冷板'
                 this.handleListApproveHistory()
             },
-            getKhb(){
-                    this.isA= true,
-                    this.isB= false,
-                    this.isC= true,
-                    this.isD= false,
-                    this.isE= true,
-                    this.isF= false,
-                    this.isH= false,
-                    this.isI= true,
-                    this.isJ= true,
-                    this.isK= false,
-                    this.isL= true,
-                    this.isM= false,
-                this.byValue.type = '宽厚板'
+            getKhb() {
+                this.isA = true,
+                    this.isB = false,
+                    this.isC = true,
+                    this.isD = false,
+                    this.isE = true,
+                    this.isF = false,
+                    this.isH = false,
+                    this.isI = true,
+                    this.isJ = true,
+                    this.isK = false,
+                    this.isL = true,
+                    this.isM = false,
+                    this.byValue.type = '宽厚板'
                 this.handleListApproveHistory()
             },
-            getXd(){
-                this.isA= true,
-                    this.isB= false,
-                    this.isC= true,
-                    this.isD= false,
-                    this.isE= true,
-                    this.isF= false,
-                    this.isH= true,
-                    this.isI= false,
-                    this.isJ= true,
-                    this.isK= false,
-                    this.isL= false,
-                    this.isM= true,
-                this.byValue.type = '型带'
+            getXd() {
+                this.isA = true,
+                    this.isB = false,
+                    this.isC = true,
+                    this.isD = false,
+                    this.isE = true,
+                    this.isF = false,
+                    this.isH = true,
+                    this.isI = false,
+                    this.isJ = true,
+                    this.isK = false,
+                    this.isL = false,
+                    this.isM = true,
+                    this.byValue.type = '型带'
                 this.handleListApproveHistory()
             },
-            getBx(){
-                this.isA= true,
-                    this.isB= false,
-                    this.isC= true,
-                    this.isD= false,
-                    this.isE= true,
-                    this.isF= false,
-                    this.isH= true,
-                    this.isI= false,
-                    this.isJ= false,
-                    this.isK= true,
-                    this.isL= true,
-                    this.isM= false,
-                this.byValue.type = '棒线'
+            getBx() {
+                this.isA = true,
+                    this.isB = false,
+                    this.isC = true,
+                    this.isD = false,
+                    this.isE = true,
+                    this.isF = false,
+                    this.isH = true,
+                    this.isI = false,
+                    this.isJ = false,
+                    this.isK = true,
+                    this.isL = true,
+                    this.isM = false,
+                    this.byValue.type = '棒线'
                 this.handleListApproveHistory()
             },
 
@@ -423,54 +441,60 @@
 </script>
 
 <style scoped>
-    .RigtImg{
-        width:49%;
-        float:right;
+    .RigtImg {
+        width: 49%;
+        float: right;
     }
-    .LeftImg{
-        width:50%;
-        float:left;
+
+    .LeftImg {
+        width: 50%;
+        float: left;
     }
-    .highcharts-credits{
+
+    .highcharts-credits {
         display: none;
     }
-    .chartTitleStyle{
-        height:30px;
+
+    .chartTitleStyle {
+        height: 30px;
         background: #d4d4d4;
         text-align: left;
         line-height: 30px;
         font-size: 16px;
-        padding-left:20px;
-        color:#7a7a7a;
-        font-weight:bold;
+        padding-left: 20px;
+        color: #7a7a7a;
+        font-weight: bold;
     }
-    .ivu-table th{
+
+    .ivu-table th {
         background-color: #d4d4d4 !important;
     }
-    .class-a,.class-c,.class-e,.class-h,.class-j,.class-l{
-        width:70px;
-        height:30px;
+
+    .class-a, .class-c, .class-e, .class-h, .class-j, .class-l {
+        width: 70px;
+        height: 30px;
         background: #f2f3f7;
-        border:none;
-        color:#6c819b;
-        margin-right:10px;
+        border: none;
+        color: #6c819b;
+        margin-right: 10px;
         cursor: pointer;
-        float:left;
+        float: left;
         text-align: center;
         line-height: 30px;
         font-size: 16px;
         border-radius: 3px;
         font-weight: bold;
     }
-    .class-b,.class-d,.class-f,.class-i,.class-k,.class-m{
-        width:70px;
-        height:30px;
+
+    .class-b, .class-d, .class-f, .class-i, .class-k, .class-m {
+        width: 70px;
+        height: 30px;
         background: #d2d9e3;
-        border:none;
-        color:#6c819b;
-        margin-right:10px;
+        border: none;
+        color: #6c819b;
+        margin-right: 10px;
         cursor: pointer;
-        float:left;
+        float: left;
         text-align: center;
         line-height: 30px;
         font-size: 16px;

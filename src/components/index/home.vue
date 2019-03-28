@@ -17,9 +17,8 @@
             <pzgwcqk></pzgwcqk>
         </div>
         <div @mouseleave="mouseout()">
-            <div @click="mousein()"  style="background-color: #134598;width: 180px;float: right;height: 64px;cursor: pointer;;z-index: 1000"  >
-                <img src="../../assets/indexImg/xialaanniu.png" style="position: fixed;right: 80px;top: 100px;z-index: 1000;"/>
-            </div>
+
+            <Icon type="ios-apps-outline" class="mainMenu" @mouseover.native="mousein"/>
             <div class="content_div" v-if="isdiv">
                 <ul class="content_ul">
                     <a href="#zyphjh"><li>资源平衡计划</li></a>
@@ -54,6 +53,7 @@
                 this.isdiv=false;
             },
             mousein(){
+                window.console.log(1111);
                 this.isdiv=true;
             },
 
@@ -83,8 +83,8 @@
     .content_div{
         background-color: white;
         position: fixed;
-        right: 0px;
-        top: 135px;
+        right: 60px;
+        top: 120px;
         width: 180px;
         border: none;
         z-index: 90;
@@ -97,5 +97,14 @@
     .content_div li{
         height: 45px;
         line-height: 45px;
+    }
+    .mainMenu{
+        font-size: 3rem;
+        position:fixed;
+        _position:absolute;
+        right:20px;
+        top:120px;
+        padding:4px;
+        color: #09c;
     }
 </style>
