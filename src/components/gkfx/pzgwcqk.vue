@@ -1,11 +1,10 @@
 <template>
     <div>
-        <div class="searchDate">
-            <ul>
-                <li v-for="(item, index) in searchV" v-on:click="getTime(index,$event)"
-                    v-bind:addClass="{ dateStyle:index==datev}">{{ item.text }}</li>
-            </ul>
-        </div>
+        <Row style="width:330px;margin:0px auto;">
+            <div @click="getTime(0)" type="primary" :class="{ 'class-a': isA, 'class-b': isB}">本月</div>
+            <div @click="getTime(1)" type="primary" :class="{ 'class-c': isC, 'class-d': isD}">上月</div>
+            <div @click="getTime(2)" type="primary" :class="{ 'class-e': isE, 'class-f': isF}">本年</div>
+        </Row>
         <div style="overflow: hidden;" class="PZGC">
             <ul style="width:100px;float:right;">
                 <li v-for="(todo, index) in todos" v-on:click="tabsClick(index,$event)"
@@ -25,17 +24,17 @@
         name: "pzgwcqk",
         data() {
             return {
-                datev:0,
+                isA: true,
+                isB: false,
+                isC: true,
+                isD: false,
+                isE: true,
+                isF: false,
                 active:0,
                 zt:1,
                 todos: [
                     { text: '品种' },
                     { text: '钢厂' },
-                ],
-                searchV: [
-                    { text: '本月' },
-                    { text: '上月' },
-                    { text: '本年' },
                 ],
                 resDatas : [],
                 resDatas1 : [],
@@ -80,7 +79,6 @@
         },
         methods: {
             getTime(index){
-                this.datev=index;
                 let params = {
                     zt:this.zt
                 }
@@ -88,15 +86,32 @@
                 let endTime='&endTime=';
                 switch (index) {
                     case 0:
+                        this.isA= false;
+                        this.isB= true;
+                        this.isC= true;
+                        this.isD= false
+                        this.isE= true;
+                        this.isF= false;
                         startTime=startTime+this.utils.formatMonthStart();
                         endTime=endTime+this.utils.formatMonthEnd();
-
                         break;
                     case 1:
+                        this.isA= true;
+                        this.isB= false;
+                        this.isC= false;
+                        this.isD= true
+                        this.isE= true;
+                        this.isF= false;
                         startTime=startTime+this.utils.formatMonthBefore();
                         endTime=endTime+this.utils.formatMonthStart();
                         break;
                     case 2:
+                        this.isA= true;
+                        this.isB= false;
+                        this.isC= true;
+                        this.isD= false
+                        this.isE= false;
+                        this.isF= true;
                         startTime=startTime+ this.utils.formatYearStart(new Date());
                         endTime=endTime+this.utils.formatYearEnd(new Date());
                         break;
@@ -147,13 +162,10 @@
         padding-right:5px;
     }
     .blue {color: #2175bc;}
-    .dateStyle{
-        background: red;
-    }
-    .searchDate ul li{
+    .class-a,.class-c,.class-e{
         width:100px;
         height:30px;
-        background: #f3f4f7;
+        background: #f2f3f7;
         border:none;
         color:#6c819b;
         margin-right:10px;
@@ -165,12 +177,20 @@
         border-radius: 3px;
         font-weight: bold;
     }
-    .searchDate{
-        overflow: hidden;
-    }
-    .searchDate ul{
-        width: 330px;
-        margin: 0 auto;
+    .class-b,.class-d,.class-f{
+        width:100px;
+        height:30px;
+        background: #d2d9e3;
+        border:none;
+        color:#6c819b;
+        margin-right:10px;
+        cursor: pointer;
+        float:left;
+        text-align: center;
+        line-height: 30px;
+        font-size: 16px;
+        border-radius: 3px;
+        font-weight: bold;
     }
 </style>
 
