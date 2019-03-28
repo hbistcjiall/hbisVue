@@ -1,9 +1,9 @@
 <template>
     <div>
-        <Row>
-            <button @click="getTime(1)" type="primary">本月</button>
-            <button @click="getTime(2)" type="primary">上月</button>
-            <button @click="getTime(3)" type="primary">本年</button>
+        <Row style="width:330px;margin:0px auto;">
+            <div @click="getTime(1)" type="primary" :class="{ 'class-a': isA, 'class-b': isB}">本月</div>
+            <div @click="getTime(2)" type="primary" :class="{ 'class-c': isC, 'class-d': isD}">上月</div>
+            <div @click="getTime(3)" type="primary" :class="{ 'class-e': isE, 'class-f': isF}">本年</div>
         </Row>
         <div class="chartStyle">
             <div style="width:50%;float:left;border-right:1px solid #3497db">
@@ -22,10 +22,12 @@
         name: "jswcqk",
         data(){
             return {
-                byValue:{
-                    endTime:'2019-06-01 00:00:00',
-                    startTime:'2016-01-01 00:00:00',
-                },
+                isA: true,
+                isB: false,
+                isC: true,
+                isD: false,
+                isE: true,
+                isF: false,
                 active:'',
                 SubStarTime_month :'',
                 SubStarTime_year :'',
@@ -166,8 +168,20 @@
                         this.SubStarTime_month = startTime.substring(15, 17);
                         this.pie.title.text = '<span style="font-size:14px;color:black;font-weight: bold">'+this.SubStarTime_year+"年"+this.SubStarTime_month+"月"+"结算完成情况（品种）"+'</span>';
                         this.column.title.text = '<span style="font-size:14px;color:black;font-weight: bold">'+this.SubStarTime_year+"年"+this.SubStarTime_month+"月"+"结算完成情况（品种）"+'</span>';
+                        this.isA= false;
+                        this.isB= true;
+                        this.isC= true;
+                        this.isD= false
+                        this.isE= true;
+                        this.isF= false;
                         break;
                     case 2:
+                        this.isA= true;
+                        this.isB= false;
+                        this.isC= false;
+                        this.isD= true
+                        this.isE= true;
+                        this.isF= false;
                         startTime=startTime+this.utils.formatMonthBefore();
                         endTime=endTime+this.utils.formatMonthStart();
                         this.SubStarTime_year = startTime.substring(10, 14);
@@ -176,6 +190,12 @@
                         this.column.title.text = '<span style="font-size:14px;color:black;font-weight: bold">'+this.SubStarTime_year+"年"+this.SubStarTime_month+"月"+"结算完成情况（品种）"+'</span>';
                         break;
                     case 3:
+                        this.isA= true;
+                        this.isB= false;
+                        this.isC= true;
+                        this.isD= false
+                        this.isE= false;
+                        this.isF= true;
                         startTime=startTime+ this.utils.formatYearStart(new Date());
                         endTime=endTime+this.utils.formatYearEnd(new Date());
                         this.SubStarTime_year = startTime.substring(10, 14);
@@ -228,17 +248,35 @@
 </script>
 
 <style scoped>
-    Button{
+    .class-a,.class-c,.class-e{
         width:100px;
         height:30px;
-        background: #f3f4f7;
+        background: #f2f3f7;
         border:none;
         color:#6c819b;
         margin-right:10px;
+        cursor: pointer;
+        float:left;
+        text-align: center;
+        line-height: 30px;
+        font-size: 16px;
+        border-radius: 3px;
+        font-weight: bold;
     }
-    Button:hover{
-        background: #d3dae4;
+    .class-b,.class-d,.class-f{
+        width:100px;
+        height:30px;
+        background: #d2d9e3;
+        border:none;
         color:#6c819b;
+        margin-right:10px;
+        cursor: pointer;
+        float:left;
+        text-align: center;
+        line-height: 30px;
+        font-size: 16px;
+        border-radius: 3px;
+        font-weight: bold;
     }
     .chartStyle{
         margin-top:20px;

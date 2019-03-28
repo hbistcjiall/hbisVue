@@ -1,13 +1,13 @@
 <template>
     <div>
-        <Row>
-            <Button @click="getAll" type="primary">全部</Button>
-            <Button @click="getRb" type="primary" style="margin-left: 9px">热板</Button>
-            <Button @click="getLb" type="primary" style="margin-left: 9px">冷板</Button>
-            <Button @click="getKhb" type="primary" style="margin-left: 9px">宽厚板</Button>
-            <Button @click="getBx" type="primary" style="margin-left: 9px">棒线</Button>
-            <Button @click="getXd" type="primary" style="margin-left: 9px">型带</Button>
-        </Row>
+        <div style="margin:0px auto;width:600px;margin-bottom:20px;height:30px">
+            <div @click="getAll" :class="{ 'class-a': isA, 'class-b': isB}">全部</div>
+            <div @click="getRb"  style="margin-left: 9px" :class="{ 'class-c': isC, 'class-d': isD}">热板</div>
+            <div @click="getLb"  style="margin-left: 9px" :class="{ 'class-e': isE, 'class-f': isF}">冷板</div>
+            <div @click="getKhb"  style="margin-left: 9px" :class="{ 'class-h': isH, 'class-i': isI}">宽厚板</div>
+            <div @click="getBx"  style="margin-left: 9px" :class="{ 'class-j': isJ, 'class-k': isK}">棒线</div>
+            <div @click="getXd" style="margin-left: 9px" :class="{ 'class-l': isL, 'class-m': isM}">型带</div>
+        </div>
         <div style="margin-top:20px;">
             <div class="LeftImg">
                 <div class="chartTitleStyle">销售主体</div>
@@ -43,6 +43,18 @@
         name: "zyphjh",
         data() {
             return {
+                isA: false,
+                isB: true,
+                isC: true,
+                isD: false,
+                isE: true,
+                isF: false,
+                isH: true,
+                isI: false,
+                isJ: true,
+                isK: false,
+                isL: true,
+                isM: false,
                 activeIndex:0,
                 byValue:{
                     type:''
@@ -309,27 +321,99 @@
                 })
             },
             getAll(){
+                    this.isA= false,
+                    this.isB= true,
+                    this.isC= true,
+                    this.isD= false,
+                    this.isE= true,
+                    this.isF= false,
+                    this.isH= true,
+                    this.isI= false,
+                    this.isJ= true,
+                    this.isK= false,
+                    this.isL= true,
+                    this.isM= false,
                 this.byValue.type = ''
                 this.handleListApproveHistory();
                 this.TableData()
             },
             getRb(){
+                    this.isA= true,
+                    this.isB= false,
+                    this.isC= false,
+                    this.isD= true,
+                    this.isE= true,
+                    this.isF= false,
+                    this.isH= true,
+                    this.isI= false,
+                    this.isJ= true,
+                    this.isK= false,
+                    this.isL= true,
+                    this.isM= false,
                 this.byValue.type = '热板'
                 this.handleListApproveHistory()
             },
             getLb(){
+                    this.isA= true,
+                    this.isB= false,
+                    this.isC= true,
+                    this.isD= false,
+                    this.isE= false,
+                    this.isF= true,
+                    this.isH= true,
+                    this.isI= false,
+                    this.isJ= true,
+                    this.isK= false,
+                    this.isL= true,
+                    this.isM= false,
                 this.byValue.type = '冷板'
                 this.handleListApproveHistory()
             },
             getKhb(){
+                    this.isA= true,
+                    this.isB= false,
+                    this.isC= true,
+                    this.isD= false,
+                    this.isE= true,
+                    this.isF= false,
+                    this.isH= false,
+                    this.isI= true,
+                    this.isJ= true,
+                    this.isK= false,
+                    this.isL= true,
+                    this.isM= false,
                 this.byValue.type = '宽厚板'
                 this.handleListApproveHistory()
             },
             getXd(){
+                this.isA= true,
+                    this.isB= false,
+                    this.isC= true,
+                    this.isD= false,
+                    this.isE= true,
+                    this.isF= false,
+                    this.isH= true,
+                    this.isI= false,
+                    this.isJ= true,
+                    this.isK= false,
+                    this.isL= false,
+                    this.isM= true,
                 this.byValue.type = '型带'
                 this.handleListApproveHistory()
             },
             getBx(){
+                this.isA= true,
+                    this.isB= false,
+                    this.isC= true,
+                    this.isD= false,
+                    this.isE= true,
+                    this.isF= false,
+                    this.isH= true,
+                    this.isI= false,
+                    this.isJ= false,
+                    this.isK= true,
+                    this.isL= true,
+                    this.isM= false,
                 this.byValue.type = '棒线'
                 this.handleListApproveHistory()
             },
@@ -363,15 +447,34 @@
     .ivu-table th{
         background-color: #d4d4d4 !important;
     }
-    Button{
-        width:100px;
+    .class-a,.class-c,.class-e,.class-h,.class-j,.class-l{
+        width:70px;
         height:30px;
-        background: #f3f4f7;
+        background: #f2f3f7;
         border:none;
         color:#6c819b;
+        margin-right:10px;
+        cursor: pointer;
+        float:left;
+        text-align: center;
+        line-height: 30px;
+        font-size: 16px;
+        border-radius: 3px;
+        font-weight: bold;
     }
-    Button:hover{
-        background: #d3dae4;
+    .class-b,.class-d,.class-f,.class-i,.class-k,.class-m{
+        width:70px;
+        height:30px;
+        background: #d2d9e3;
+        border:none;
         color:#6c819b;
+        margin-right:10px;
+        cursor: pointer;
+        float:left;
+        text-align: center;
+        line-height: 30px;
+        font-size: 16px;
+        border-radius: 3px;
+        font-weight: bold;
     }
 </style>
