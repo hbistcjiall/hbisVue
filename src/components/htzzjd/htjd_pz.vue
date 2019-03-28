@@ -90,10 +90,6 @@
                 isC2: true,
                 isD1: false,
                 isD2: true,
-                // isE1: false,
-                // isE2: true,
-                // isF1: false,
-                // isF2: true,
                 lists:[],
                 CXQ:[],
                 CXH:[],
@@ -129,6 +125,7 @@
                 }).then((res) => {
                     res = res.length>0?JSON.parse(res):[];
                     this.lists =  this.utils.htjdTree(res);
+                    window.console.log(this.lists)
                 })
 
                 fetch(this.$store.state.fetchPath + "/allocation/selScheduleByCx", {
@@ -172,10 +169,6 @@
                     this.isC2= true,
                     this.isD1= false,
                     this.isD2= true,
-                    // this.isE1= false,
-                    // this.isE2= true,
-                    // this.isF1= false,
-                    // this.isF2= true,
                 this.Csvj.flName = '';
                 this.CXQvalue.flName = '';
                 this.CXQvalue.sort = '0';
@@ -192,10 +185,6 @@
                     this.isC2= true,
                     this.isD1= false,
                     this.isD2= true,
-                    // this.isE1= false,
-                    // this.isE2= true,
-                    // this.isF1= false,
-                    // this.isF2= true,
                 this.Csvj.flName = '3';
                 this.CXQvalue.flName = '3';
                 this.CXQvalue.sort = '0';
@@ -213,10 +202,6 @@
                     this.isC2= false
                     this.isD1= false,
                     this.isD2= true,
-                    // this.isE1= false,
-                    // this.isE2= true,
-                    // this.isF1= false,
-                    // this.isF2= true,
                 this.Csvj.flName = '4';
                 this.CXQvalue.flName = '4';
                 this.CXQvalue.sort = '0';
@@ -233,10 +218,6 @@
                     this.isC2= true,
                     this.isD1= true,
                     this.isD2= false,
-                    // this.isE1= false,
-                    // this.isE2= true,
-                    // this.isF1= false,
-                    // this.isF2= true,
                 this.Csvj.flName = '2';
                 this.CXQvalue.flName = '2';
                 this.CXQvalue.sort = '0';
