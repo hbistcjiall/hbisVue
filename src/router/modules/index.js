@@ -15,6 +15,16 @@ const indexchild=[
         },
     },
     {
+        path: '/home',
+        name: 'home',
+        component: resolve => require(['@/components/index/home'], resolve),
+        meta: {
+            title: '概况分析',
+            keepAlive: true,
+            isLogin: true
+        },
+    },
+    {
         path: '/role',
         name: 'role',
         component: resolve => require(['@/components/system/role/roleMsg'], resolve),

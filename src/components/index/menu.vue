@@ -1,7 +1,7 @@
 <template>
     <Menu width="182px" ref="side_menu" @on-open-change="getParentName" @on-select="getName" accordion>
         <div v-for="(item,index) of menulist" :key="index">
-            <MenuItem v-if="!item.children" :name="item.name" >{{item.name}}</MenuItem>
+            <MenuItem v-if="!item.children" :name="item.name" :to="item.url">{{item.name}}</MenuItem>
             <Submenu v-if="item.children"  :name="item.name" >
                 <template slot="title">
                     <span>{{item.name}}</span>
@@ -29,6 +29,7 @@
                 this.components=e[0];
             },
             getName(e){
+
                 this.layout=e;
                 this.getNames=[];
                 if(this.components){

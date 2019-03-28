@@ -10,13 +10,6 @@
 <script>
     export default {
         name: "headerList",
-        data(){
-            return {
-                headerss:[{
-                    name: '首页'
-                }]
-            }
-        },
         computed:{
             headers(){
               return this.$store.state.headers;
