@@ -43,7 +43,7 @@
                 },
                 formValidate: {
                     year:'',
-                    code:'',
+                    targetname:'',
                     jan:'',
                     feb:'',
                     mar:'',
@@ -65,6 +65,7 @@
                         title: '年份',
                         align: "center",
                         key: 'YEAR',
+                        width:80
                     },
                     {
                         title: '责任公司名称',
@@ -224,7 +225,7 @@
                                     this.formValidate.year=year
                                 },
                                 code: (code) => {
-                                    this.formValidate.code=code
+                                    this.formValidate.targetname=code
                                 },
                                 jan: (jan) => {
                                     this.formValidate.jan=jan
