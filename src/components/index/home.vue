@@ -20,12 +20,12 @@
 
             <Icon type="ios-apps-outline" class="mainMenu" @mouseover.native="mousein"/>
             <div class="content_div" v-if="isdiv">
-                <ul class="content_ul">
-                    <a href="#zyphjh"><li>资源平衡计划</li></a>
-                    <a href="#htzzjd"><li>合同组织进度</li></a>
-                    <a href="#wcqk"><li>结算完成情况</li></a>
-                    <a href="#pzgwcqk"><li>品种钢完成情况</li></a>
-                </ul>
+                <Anchor show-ink>
+                    <AnchorLink href="#zyphjh" title="资源平衡计划" />
+                    <AnchorLink href="#htzzjd" title="合同组织进度" />
+                    <AnchorLink href="#wcqk" title="结算完成情况" />
+                    <AnchorLink href="#pzgwcqk" title="品种钢完成情况" />
+                </Anchor>
             </div>
         </div>
     </div>
@@ -53,7 +53,6 @@
                 this.isdiv=false;
             },
             mousein(){
-                window.console.log(1111);
                 this.isdiv=true;
             },
 
