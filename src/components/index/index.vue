@@ -5,7 +5,7 @@
 
     .newheader {
         /*background-image: url("../../assets/indexImg/bg.jpg");*/
-        background-color: #134598;
+        background-color: #0075C3;
     }
 
     .layout {
@@ -137,7 +137,7 @@
                     <div class="layout-logo"></div>
                     <!--<div class="layout-title">河钢销售营销数据中心</div>-->
                     <div @mouseleave="mouseout()">
-                        <div @click="mousein()"  style="background-color: #134598;width: 180px;float: right;height: 64px;cursor: pointer;;z-index: 80"  >
+                        <div @click="mousein()"  style="background-color: #0075C3;width: 180px;float: right;height: 64px;cursor: pointer;;z-index: 80"  >
                             <img src="../../assets/indexImg/guanliyuan.png" style="position: relative;right: 10px;top: 10px;"/>
                             <span style="color: white;margin-top:-10px;">系统管理员</span>
                             <Icon type="ios-arrow-down" style="position: relative;" size="20" />
