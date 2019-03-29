@@ -10,12 +10,12 @@
         </div>
         <div style="margin-top:20px;">
             <div class="LeftImg">
-                <div class="chartTitleStyle">销售主体</div>
-                <x-chart id="all_pieValue" :option="pieOption"></x-chart>
+                <div class="chartTitleStyle">销售组织</div>
+                <x-chart id="all_pieValue" :option="pie"></x-chart>
             </div>
             <div class="RigtImg">
-                <div class="chartTitleStyle">钢厂计划</div>
-                <x-chart id="all_columnValue" :option="option"></x-chart>
+                <div class="chartTitleStyle">钢厂</div>
+                <x-chart id="all_columnValue" :option="column"></x-chart>
             </div>
         </div>
         <div>
@@ -64,7 +64,7 @@
                     {
                         title: '品种',
                         align: "center",
-                        key: 'NAME'
+                        key: 'NAME',
                     },
                     {
                         title: '计划量',
@@ -120,7 +120,7 @@
                         text: ''
                     },
                     xAxis: {
-                        categories: [],
+                        categories: ['唐钢', '邯钢', '宣钢', '承钢', '舞钢', '石钢', '衡板', '邯宝'],
                         crosshair: true
                     },
                     yAxis: {
@@ -144,11 +144,11 @@
                         enabled: false,
                     },
                     series: [{
-                        name: '现货',
-                        data: []
+                        name: '现货（万吨）',
+                        data: [34,57,78,129,456,213,87,98]
                     }, {
-                        name: '计划量',
-                        data: []
+                        name: '计划量（万吨）',
+                        data: [78,56,124,345,220,156,45,88]
                     }]
                 },
                 //饼状图
@@ -159,10 +159,10 @@
                     },
                     colors: ['#75b9e6', '#4aa3de', '#c1e0ff', '#77bbff', '#33577b', '#6ba6e0', '#3d8ec4', '#4fc1e9', '#96bdd3', '#73bbc4'],
                     title: {
-                        text: '<span style="font-size:16px;font-weight: bold">销售主体</span><br>'
+                        text: ''
                     },
                     subtitle: {
-                        text: ''
+                        text: '<span style="font-size:14px;color:black;font-weight: bold">' + "集团产销资源总量：411万吨" + '</span>'
                     },
                     tooltip: {
                         percentageDecimals: 2,//百分比保留小数
@@ -184,7 +184,16 @@
                     },
                     series: [{
                         name: '百分比',
-                        data: []
+                        data: [
+                            {name: '唐钢', y: 20, b: 12.3},
+                            {name: '邯钢', y: 40, b: 34.56},
+                            {name: '宣钢', y: 60, b: 43.25},
+                            {name: '承钢', y: 100, b: 53.24},
+                            {name: '舞钢', y: 30, b: 23.45},
+                            {name: '石钢', y: 22, b: 32.04},
+                            {name: '衡板', y: 47, b: 78.22},
+                            {name: '邯宝', y: 82, b: 35.78}
+                        ]
                     }]
                 },
             }
@@ -193,107 +202,107 @@
             XChart
         },
         mounted() {
-            this.handleListApproveHistory();
+            // this.handleListApproveHistory();
             this.TableData();
         },
         methods: {
-            handleListApproveHistory() {
-                //销售主体
-                fetch(this.$store.state.fetchPath + "/protocolAccountDetails/resourceplanone", {
-                    method: "POST",
-                    headers: this.$store.state.fetchHeader,
-                    body: this.utils.formatParams(this.byValue),
-                    credentials: 'include'
-                })
-                    .then((res) => {
-                        if (res.status != 200) {
-                            this.$Message.error('请求失败！');
-                        } else {
-                            return res.text();
-                        }
-                    }).then((res) => {
-                    res = res && res.length > 0 ? JSON.parse(res) : []
-                    this.resDatas1 = res;
-                    if (res.length > 0) {
-                        let chartsData = [];
-                        for (let i = 1; i < res.length; i++) {
-                            chartsData.push({name: res[i].COMPANYNAME, y: res[i].ZYFKIMG, b: res[i].BILI});
-                        }
-                        this.pie.series[0].data = chartsData;
-                        this.pie.subtitle.text = '<span style="font-size:14px;color:black;font-weight: bold">' + res[0].COMPANYNAME + ':' + res[0].ZYFKIMG + "万吨" + '</span>'
-
-                    } else {
-                        this.pie.series[0].data = [
-                            {name: '唐钢', y: 0, b: 0},
-                            {name: '邯钢', y: 0, b: 0},
-                            {name: '宣钢', y: 0, b: 0},
-                            {name: '承钢', y: 0, b: 0},
-                            {name: '舞钢', y: 0, b: 0},
-                            {name: '石钢', y: 0, b: 0},
-                            {name: '衡板', y: 0, b: 0},
-                            {name: '邯宝', y: 0, b: 0}
-                        ]
-                        this.pie.subtitle.text = '<span style="font-size:14px;color:black;font-weight: bold">' + "集团产销资源总量：0万吨" + '</span>'
-
-                    }
-                    this.pie.series[0].data = [
-                        {
-                            b: "1837",
-                            name: "出口",
-                            y: 20
-                        },
-                        {
-                            b: "1837",
-                            name: "子公司",
-                            y: 30
-                        },
-                        {
-                            b: "1837",
-                            name: "销售总公司",
-                            y: 50
-                        },
-                    ];
-                    this.pieOption = this.pie;
-                })
-
-                //钢厂计划
-                fetch(this.$store.state.fetchPath + "/protocolAccountDetails/resourceplantwo", {
-                    method: "POST",
-                    headers: this.$store.state.fetchHeader,
-                    body: this.utils.formatParams(this.byValue),
-                    credentials: 'include'
-                })
-                    .then((res) => {
-                        if (res.status != 200) {
-                            this.$Message.error('请求失败！');
-                        } else {
-                            return res.text();
-                        }
-                    }).then((res) => {
-                    res = res && res.length > 0 ? JSON.parse(res) : []
-                    this.resDatas2 = res;
-                    if (res.length > 0) {
-                        let chartsData1 = [];
-                        let chartsData2 = [];
-                        let chartsData3 = [];
-                        for (let k = 0; k < res.length; k++) {
-                            chartsData2.push(res[k].JH);
-                            chartsData1.push(res[k].XH);
-                            chartsData3.push(res[k].COMPANYNAME);
-                        }
-                        this.column.series[1].data = chartsData2;
-                        this.column.series[0].data = chartsData1;
-                        this.column.xAxis.categories = chartsData3;
-                    } else {
-                        this.column.series[1].data = [0, 0, 0, 0, 0, 0, 0, 0];
-                        this.column.series[0].data = [0, 0, 0, 0, 0, 0, 0, 0];
-                        this.column.xAxis.categories = ['唐钢', '邯钢', '宣钢', '承钢', '舞钢', '石钢', '衡板', '邯宝'];
-                    }
-
-                    this.option = this.column;
-                })
-
-            },
+            // handleListApproveHistory() {
+            //     //销售主体
+            //     fetch(this.$store.state.fetchPath + "/protocolAccountDetails/resourceplanone", {
+            //         method: "POST",
+            //         headers: this.$store.state.fetchHeader,
+            //         body: this.utils.formatParams(this.byValue),
+            //         credentials: 'include'
+            //     })
+            //         .then((res) => {
+            //             if (res.status != 200) {
+            //                 this.$Message.error('请求失败！');
+            //             } else {
+            //                 return res.text();
+            //             }
+            //         }).then((res) => {
+            //         res = res && res.length > 0 ? JSON.parse(res) : []
+            //         this.resDatas1 = res;
+            //         if (res.length > 0) {
+            //             let chartsData = [];
+            //             for (let i = 1; i < res.length; i++) {
+            //                 chartsData.push({name: res[i].COMPANYNAME, y: res[i].ZYFKIMG, b: res[i].BILI});
+            //             }
+            //             this.pie.series[0].data = chartsData;
+            //             this.pie.subtitle.text = '<span style="font-size:14px;color:black;font-weight: bold">' + res[0].COMPANYNAME + ':' + res[0].ZYFKIMG + "万吨" + '</span>'
+            //
+            //         } else {
+            //             this.pie.series[0].data = [
+            //                 {name: '唐钢', y: 0, b: 0},
+            //                 {name: '邯钢', y: 0, b: 0},
+            //                 {name: '宣钢', y: 0, b: 0},
+            //                 {name: '承钢', y: 0, b: 0},
+            //                 {name: '舞钢', y: 0, b: 0},
+            //                 {name: '石钢', y: 0, b: 0},
+            //                 {name: '衡板', y: 0, b: 0},
+            //                 {name: '邯宝', y: 0, b: 0}
+            //             ]
+            //             this.pie.subtitle.text = '<span style="font-size:14px;color:black;font-weight: bold">' + "集团产销资源总量：0万吨" + '</span>'
+            //
+            //         }
+            //         this.pie.series[0].data = [
+            //             {
+            //                 b: "1837",
+            //                 name: "出口",
+            //                 y: 20
+            //             },
+            //             {
+            //                 b: "1837",
+            //                 name: "子公司",
+            //                 y: 30
+            //             },
+            //             {
+            //                 b: "1837",
+            //                 name: "销售总公司",
+            //                 y: 50
+            //             },
+            //         ];
+            //         this.pieOption = this.pie;
+            //     })
+            //
+            //     //钢厂计划
+            //     fetch(this.$store.state.fetchPath + "/protocolAccountDetails/resourceplantwo", {
+            //         method: "POST",
+            //         headers: this.$store.state.fetchHeader,
+            //         body: this.utils.formatParams(this.byValue),
+            //         credentials: 'include'
+            //     })
+            //         .then((res) => {
+            //             if (res.status != 200) {
+            //                 this.$Message.error('请求失败！');
+            //             } else {
+            //                 return res.text();
+            //             }
+            //         }).then((res) => {
+            //         res = res && res.length > 0 ? JSON.parse(res) : []
+            //         this.resDatas2 = res;
+            //         if (res.length > 0) {
+            //             let chartsData1 = [];
+            //             let chartsData2 = [];
+            //             let chartsData3 = [];
+            //             for (let k = 0; k < res.length; k++) {
+            //                 chartsData2.push(res[k].JH);
+            //                 chartsData1.push(res[k].XH);
+            //                 chartsData3.push(res[k].COMPANYNAME);
+            //             }
+            //             this.column.series[1].data = chartsData2;
+            //             this.column.series[0].data = chartsData1;
+            //             this.column.xAxis.categories = chartsData3;
+            //         } else {
+            //             this.column.series[1].data = [0, 0, 0, 0, 0, 0, 0, 0];
+            //             this.column.series[0].data = [0, 0, 0, 0, 0, 0, 0, 0];
+            //             this.column.xAxis.categories = ['唐钢', '邯钢', '宣钢', '承钢', '舞钢', '石钢', '衡板', '邯宝'];
+            //         }
+            //
+            //         this.option = this.column;
+            //     })
+            //
+            // },
             TableData() {
                 //品种表格
                 fetch(this.$store.state.fetchPath + "/protocolAccountDetails/resourceplanthrid", {
@@ -311,9 +320,6 @@
                     }).then((res) => {
                     res = res && res.length > 0 ? JSON.parse(res) : []
                     this.resDatas3 = res;
-                    for (var i = 0; i < this.resDatas3.length; i++) {
-                        this.resDatas3[i].BILI = this.resDatas3[i].BILI;
-                    }
                 })
 
 
@@ -333,9 +339,6 @@
                     }).then((res) => {
                     res = res && res.length > 0 ? JSON.parse(res) : []
                     this.resDatas4 = res;
-                    for (var i = 0; i < this.resDatas4.length; i++) {
-                        this.resDatas4[i].BILI = this.resDatas4[i].BILI;
-                    }
                 })
             },
             getAll() {
@@ -352,7 +355,7 @@
                     this.isL = true,
                     this.isM = false,
                     this.byValue.type = ''
-                this.handleListApproveHistory();
+                // this.handleListApproveHistory();
                 this.TableData()
             },
             getRb() {
@@ -369,7 +372,7 @@
                     this.isL = true,
                     this.isM = false,
                     this.byValue.type = '热板'
-                this.handleListApproveHistory()
+                // this.handleListApproveHistory()
             },
             getLb() {
                 this.isA = true,
@@ -385,7 +388,7 @@
                     this.isL = true,
                     this.isM = false,
                     this.byValue.type = '冷板'
-                this.handleListApproveHistory()
+                // this.handleListApproveHistory()
             },
             getKhb() {
                 this.isA = true,
@@ -401,7 +404,7 @@
                     this.isL = true,
                     this.isM = false,
                     this.byValue.type = '宽厚板'
-                this.handleListApproveHistory()
+                // this.handleListApproveHistory()
             },
             getXd() {
                 this.isA = true,
@@ -417,7 +420,7 @@
                     this.isL = false,
                     this.isM = true,
                     this.byValue.type = '型带'
-                this.handleListApproveHistory()
+                // this.handleListApproveHistory()
             },
             getBx() {
                 this.isA = true,
@@ -433,7 +436,7 @@
                     this.isL = true,
                     this.isM = false,
                     this.byValue.type = '棒线'
-                this.handleListApproveHistory()
+                // this.handleListApproveHistory()
             },
 
         }

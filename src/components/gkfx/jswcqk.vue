@@ -13,6 +13,20 @@
                 <x-chart id="columnValue"  :option="option"></x-chart>
             </div>
         </div>
+        <div style="margin-top:500px;">
+            <div style="width:100%;height:30px;font-size: 16px;font-weight: bold;padding-left:10px;text-align: left;background:#dddddd;line-height: 30px;margin-bottom:10px;">品种钢结算完成情况</div>
+            <div style="overflow: hidden;" class="PZGC">
+                <ul style="width:100px;float:right;">
+                    <li v-for="(todo, index) in todos" v-on:click="tabsClick(index,$event)"
+                        v-bind:class="{ blue:index==active1}"> {{ todo.text }}</li>
+                </ul>
+            </div>
+            <Table :columns="columns" :data="resDatas" border height="500">
+                <template slot-scope="{ row }" slot="name">
+                    <strong>{{ row.name }}</strong>
+                </template>
+            </Table>
+        </div>
     </div>
 </template>
 
@@ -146,22 +160,67 @@
                         data: []
                     }]
                 },
+                active1:0,
+                zt:1,
+                todos: [
+                    { text: '品种' },
+                    { text: '钢厂' },
+                ],
+                resDatas : [],
+                resDatas1 : [],
+                columns: [
+                    {
+                        title: '总量',
+                        key: 'zl',
+                        align: 'center',
+                        children: [
+                            {
+                                title: '品种',
+                                key: 'NAME',
+                                align: 'center',
+                            },
+                            {
+                                title: '完成量',
+                                key: 'JSL',
+                                align: 'center',
+                            },
+                        ]
+                    },
+                    {
+                        title: '品种钢量',
+                        key: 'pzgl',
+                        align: 'center',
+                        children: [{
+                            title: '品种钢',
+                            key: 'PZGL',
+                            align: 'center',
+                        },{
+                            title: '完成比例',
+                            key: 'WCL',
+                            align: 'center',
+                        },
+                        ]
+                    }
+                ],
             }
         },
         components: {
             XChart
         },
         mounted() {
-            this.getTime(1);
+            this.getTime(0,1);
         },
         methods: {
             getTime(e) {
+                let params = {
+                    zt:this.zt
+                }
                 this.pieOption = {};
                 this.option = {};
                 let startTime='startTime=';
                 let endTime='&endTime=';
                 switch (e) {
-                    case 1:
+                    case 0:
                         startTime=startTime+this.utils.formatMonthStart();
                         endTime=endTime+this.utils.formatMonthEnd();
                         this.SubStarTime_year = startTime.substring(10, 14);
@@ -175,7 +234,7 @@
                         this.isE= true;
                         this.isF= false;
                         break;
-                    case 2:
+                    case 1:
                         this.isA= true;
                         this.isB= false;
                         this.isC= false;
@@ -189,7 +248,7 @@
                         this.pie.title.text = '<span style="font-size:14px;color:black;font-weight: bold">'+this.SubStarTime_year+"年"+this.SubStarTime_month+"月"+"结算完成情况（品种）"+'</span>';
                         this.column.title.text = '<span style="font-size:14px;color:black;font-weight: bold">'+this.SubStarTime_year+"年"+this.SubStarTime_month+"月"+"结算完成情况（品种）"+'</span>';
                         break;
-                    case 3:
+                    case 2:
                         this.isA= true;
                         this.isB= false;
                         this.isC= true;
@@ -217,6 +276,7 @@
                         }
                     }).then((res) => {
                     res = res&&res.length>0?JSON.parse(res):[]
+                    window.console.log(res)
                     if(res.length>0){
                         let chartsData1=[];
                         let chartsData2=[];
@@ -242,7 +302,33 @@
                     this.pieOption=this.pie;
 
                 })
-            }
+                fetch(this.$store.state.fetchPath + "/scm-steel-settle/getpzgjswc", {
+                    method: "POST",
+                    headers: this.$store.state.fetchHeader,
+                    body:startTime+endTime+'&'+this.utils.formatParams(params),
+                    credentials:'include'
+                })
+                    .then((res) => {
+                        if(res.status!=200){
+                            this.$Message.error('请求失败！');
+                        }else{
+                            return res.text();
+                        }
+                    }).then((res) => {
+                    res = res&&res.length>0?JSON.parse(res):[]
+                    this.resDatas =  res;
+                })
+            },
+            tabsClick(index){
+                this.active=index;
+                this.zt = this.active+1;
+                this.getTime(0,this.zt);
+                if(index ==0){
+                    this.columns[0].children[0].title = '品种'
+                }else if(index == 1){
+                    this.columns[0].children[0].title = '钢厂'
+                }
+            },
         }
     }
 </script>
@@ -284,4 +370,18 @@
   .highcharts-credits{
       display: none !important;
   }
+  ul{
+      list-style-type: none;
+  }
+    .PZGC ul li{
+        font-size: 16px;
+        cursor: pointer;
+        float:left;
+        margin-right:5px;
+    }
+    .PZGC ul li:first-child{
+        border-right:1px solid #000;
+        padding-right:5px;
+    }
+    .blue {color: #2175bc;}
 </style>

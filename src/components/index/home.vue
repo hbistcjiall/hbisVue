@@ -1,21 +1,21 @@
 <template>
     <div>
         <Row class="titleH" id="zyphjh"><span>资源平衡计划</span></Row>
-        <div class="content">
+        <div class="content" style="height:900px">
             <zyphjh></zyphjh>
         </div>
-        <Row class="titleH" id="htzzjd" style="margin-top:50px"><span>合同组织进度</span></Row>
-        <div class="content">
+        <Row class="titleH" id="htzzjd"><span>合同组织进度</span></Row>
+        <div class="content" style="height:700px">
             <htzzjd></htzzjd>
         </div>
         <Row class="titleH" id="wcqk"><span>完成情况</span></Row>
-        <div class="content">
+        <div class="content" style="height:1100px">
             <jswcqk></jswcqk>
         </div>
-        <Row class="titleH" style="margin-top: -300px" id="pzgwcqk"><span>品种钢结算完成情况</span></Row>
-        <div class="content">
-            <pzgwcqk></pzgwcqk>
-        </div>
+        <!--<Row class="titleH" style="margin-top: -300px" id="pzgwcqk"><span>品种钢结算完成情况</span></Row>-->
+        <!--<div class="content">-->
+            <!--<pzgwcqk></pzgwcqk>-->
+        <!--</div>-->
         <div @mouseleave="mouseout()">
 
             <Icon type="ios-apps-outline" class="mainMenu" @mouseover.native="mousein"/>
@@ -64,16 +64,17 @@
         width: 100%;
         height: 30px;
         margin-bottom: 30px;
+        background:#d4d4d4;
         /*background-color:beige;*/
     }
     .titleH span{
         float: left;
-        font-size: 24px;
+        font-size: 20px;
         font-weight: bold;
+        padding-left:10px;
     }
     .content{
         width: 100%;
-        height: 800px;
     }
     li{
         list-style: none;
