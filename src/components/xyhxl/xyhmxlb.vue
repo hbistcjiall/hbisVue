@@ -294,22 +294,25 @@
 
             },
             downLoad(){
-                fetch(this.$store.state.fetchPath + "/protocolAccountDetails/exportlist", {
-                    method: "POST",
-                    headers: this.$store.state.fetchHeader,
-                    body: this.utils.formatParams(this.xyhmxlbData),
-                    credentials:'include'
-                })
-                    .then((res) => {
-                        if(res.status!=200){
-                            this.$Message.error('请求失败！');
-                        }else{
-                            return res.text();
-                        }
-                    })
-                    .then(() => {
-                        this.handleListApproveHistory();
-                    })
+                // fetch(this.$store.state.fetchPath + "/protocolAccountDetails/exportlist", {
+                //     method: "POST",
+                //     headers: this.$store.state.fetchHeader,
+                //     body: this.utils.formatParams(this.xyhmxlbData),
+                //     credentials:'include'
+                // })
+                //     .then((res) => {
+                //         if(res.status!=200){
+                //             this.$Message.error('请求失败！');
+                //         }else{
+                //             return res.text();
+                //         }
+                //     })
+                //     .then(() => {
+                //         this.handleListApproveHistory();
+                //     })
+                    this.$refs.table.exportCsv({
+                        filename: '协议户明细列表'
+                    });
             },
             remove (r) {
                 this.$Modal.confirm({
