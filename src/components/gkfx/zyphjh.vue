@@ -143,13 +143,15 @@
                     credits: {
                         enabled: false,
                     },
-                    series: [{
+                    series: [
+                        {
                         name: '现货（万吨）',
                         data: [34,57,78,129,456,213,87,98]
                     }, {
                         name: '计划量（万吨）',
                         data: [78,56,124,345,220,156,45,88]
-                    }]
+                    }
+                    ]
                 },
                 //饼状图
                 pieOption: {},
@@ -202,11 +204,11 @@
             XChart
         },
         mounted() {
-            // this.handleListApproveHistory();
+            this.handleListApproveHistory();
             this.TableData();
         },
         methods: {
-            // handleListApproveHistory() {
+            handleListApproveHistory() {
             //     //销售主体
             //     fetch(this.$store.state.fetchPath + "/protocolAccountDetails/resourceplanone", {
             //         method: "POST",
@@ -298,11 +300,10 @@
             //             this.column.series[0].data = [0, 0, 0, 0, 0, 0, 0, 0];
             //             this.column.xAxis.categories = ['唐钢', '邯钢', '宣钢', '承钢', '舞钢', '石钢', '衡板', '邯宝'];
             //         }
-            //
             //         this.option = this.column;
             //     })
             //
-            // },
+            },
             TableData() {
                 //品种表格
                 fetch(this.$store.state.fetchPath + "/protocolAccountDetails/resourceplanthrid", {

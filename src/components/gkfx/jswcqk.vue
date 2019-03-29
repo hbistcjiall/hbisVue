@@ -1,9 +1,9 @@
 <template>
     <div>
         <Row style="width:330px;margin:0px auto;">
-            <div @click="getTime(1)" type="primary" :class="{ 'class-a': isA, 'class-b': isB}">本月</div>
-            <div @click="getTime(2)" type="primary" :class="{ 'class-c': isC, 'class-d': isD}">上月</div>
-            <div @click="getTime(3)" type="primary" :class="{ 'class-e': isE, 'class-f': isF}">本年</div>
+            <div @click="getTime(0)" type="primary" :class="{ 'class-a': isA, 'class-b': isB}">本月</div>
+            <div @click="getTime(1)" type="primary" :class="{ 'class-c': isC, 'class-d': isD}">上月</div>
+            <div @click="getTime(2)" type="primary" :class="{ 'class-e': isE, 'class-f': isF}">本年</div>
         </Row>
         <div class="chartStyle">
             <div style="width:50%;float:left;border-right:1px solid #3497db">
@@ -276,7 +276,6 @@
                         }
                     }).then((res) => {
                     res = res&&res.length>0?JSON.parse(res):[]
-                    window.console.log(res)
                     if(res.length>0){
                         let chartsData1=[];
                         let chartsData2=[];
@@ -320,8 +319,8 @@
                 })
             },
             tabsClick(index){
-                this.active=index;
-                this.zt = this.active+1;
+                this.active1=index;
+                this.zt = this.active1+1;
                 this.getTime(0,this.zt);
                 if(index ==0){
                     this.columns[0].children[0].title = '品种'

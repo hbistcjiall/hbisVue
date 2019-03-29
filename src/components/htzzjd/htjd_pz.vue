@@ -31,7 +31,7 @@
                                 </div>
                             </div>
                             <div class="progressContainer" style="margin-bottom:15px;">
-                                <div class="progress" :style="{width:100+'%','background-color':'#33b7f6','margin-top':'5px'}">
+                                <div class="progress" :style="{width:100+'%','background-color':'#33b7f6'}">
                                     <b>计划量:{{list.jhl}}吨/100%</b>
                                 </div>
                             </div>
@@ -51,7 +51,7 @@
                     <div class="progressContainer">
                         <div class="PCtitle">进度:</div>
                         <div class="progress" :style="{width:list.wcbl*100+'%','background-color':'#3793cf'}">
-                            <b>{{list.wcbl*100}}%</b>
+                            <b style="position: absolute;left:13%">{{list.wcbl*100}}%</b>
                         </div>
                     </div>
                 </li>
@@ -68,7 +68,7 @@
                     <div class="progressContainer">
                         <div class="PCtitle">进度:</div>
                         <div class="progress" :style="{width:list.wcbl*100+'%','background-color':'#3793cf'}">
-                            <b>{{list.wcbl*100}}%</b>
+                            <b style="position: absolute;left:13%">{{list.wcbl*100}}%</b>
                         </div>
                     </div>
                 </li>
@@ -317,14 +317,13 @@
         border-radius: 10px;
         height:18px;
         line-height: 18px;
-
     }
     b {
         color: #fff;
         font-weight: 100;
         font-size: 12px;
         position: absolute;
-        left: 13%;
+        left: 2%;
     }
     .PCtitle{
         position:absolute;
