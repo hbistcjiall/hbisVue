@@ -1,7 +1,7 @@
 <template>
     <div>
         <DatePicker type="datetimerange" @on-change="time1" format="yyyy-MM-dd HH:mm:ss" placeholder="请选择查询时间" style="width: 300px;margin-right:20px"></DatePicker>
-        <Button type="primary" @click="search()" style="magin-left:'20px'">查询日志</Button>
+        <Button type="primary" @click="search()" style="margin-left:'20px'">查询日志</Button>
 
         <Table stripe :columns="loggerColumns" :data="loggerData" style="margin-top: 20px"></Table>
         <Page :total="dataCount" :page-size="pageSize" show-total class="paging" @on-change="changepage"></Page>

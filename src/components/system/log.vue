@@ -7,8 +7,8 @@
             <Option value=1>业务日志</Option>
             <Option value=2>异常日志</Option>
         </Select>
-        <Button @click="search" style="magin-left:20px;background: #3497db;color:#fff;" icon="ios-search">搜索</Button>
-        <Button type="warning" @click="clearAll" style="magin-left:20px">清空日志</Button>
+        <Button @click="search" style="margin-left:20px;background: #3497db;color:#fff;" icon="ios-search">搜索</Button>
+        <Button type="warning" @click="clearAll" style="margin-left:10px">清空日志</Button>
         <Table border stripe :columns="columns12" :data="fecthdata6" style="margin-top: 20px">
             <template slot-scope="{ row }" slot="name">
                 <strong>{{ row.name }}</strong>

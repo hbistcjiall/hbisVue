@@ -2,8 +2,8 @@
     <div>
     <Input placeholder="账号/姓名/手机号" style="width: 300px" v-model="MsgData.name"/>
         <DatePicker type="datetimerange" @on-change="serTime" format="yyyy-MM-dd" placeholder="请选择查询时间" style="width: 300px;margin-right:20px"></DatePicker>
-        <Button @click="search" style="magin-left:20px;" icon="ios-search">搜索</Button>
-        <Button @click="addNew" style="magin-left:20px;" icon ="ios-add">添加</Button>
+        <Button @click="search" style="margin-left:20px;" icon="ios-search">搜索</Button>
+        <Button @click="addNew" style="margin-left:10px;" icon ="ios-add">添加</Button>
         <!--<Button type="primary" @click="downLoadTab" style="magin-left:20px" icon="ios-download-outline">导出</Button>-->
     <Table border stripe :columns="columns12" :data="fecthdata6" style="margin-top: 20px">
         <template slot-scope="{ row }" slot="name">

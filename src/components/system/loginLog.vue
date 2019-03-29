@@ -2,8 +2,8 @@
     <div>
         <Input placeholder="日志名称" style="width: 300px" v-model="MsgData.logName"/>
         <DatePicker type="datetimerange" @on-change="serTime" format="yyyy-MM-dd" placeholder="请选择查询时间" style="width: 300px;margin-right:20px"></DatePicker>
-        <Button @click="search" style="magin-left:20px;background: #3497db;color:#fff;" icon="ios-search">搜索</Button>
-        <Button type="warning" @click="clearAll" style="magin-left:20px">清空日志</Button>
+        <Button @click="search" style="margin-left:20px;background: #3497db;color:#fff;" icon="ios-search">搜索</Button>
+        <Button type="warning" @click="clearAll" style="margin-left:10px">清空日志</Button>
         <Table border stripe :columns="columns12" :data="fecthdata6" style="margin-top: 20px"></Table>
         <Page :total="dataCount" :page-size="pageSize" show-total show-elevator show-sizer class="paging" @on-change="changepage" style="margin-top:20px;"></Page>
     </div>
