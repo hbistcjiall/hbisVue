@@ -37,10 +37,10 @@
                 </FormItem>
             </Col>
             <Col span="8" style="float: right">
-                <Button type="primary" @click="search" style="magin-left:20px" icon="ios-search">查询</Button>
-                <Button type="primary" @click="clearall" style="magin-left:20px">清空</Button>
-                <Button type="primary" @click="pldelect" style="magin-left:20px">批量删除</Button>
-                <Button type="primary" @click="downLoad" style="magin-left:20px" icon="ios-cloud-download-outline">导出</Button>
+                <Button type="primary" @click="search" style="margin-left:20px" icon="ios-search">查询</Button>
+                <Button type="primary" @click="clearall" style="margin-left:10px">清空</Button>
+                <Button type="primary" @click="pldelect" style="margin-left:10px">批量删除</Button>
+                <Button type="primary" @click="downLoad" style="margin-left:10px" icon="ios-cloud-download-outline">导出</Button>
             </Col>
         </Row>
         </Form>

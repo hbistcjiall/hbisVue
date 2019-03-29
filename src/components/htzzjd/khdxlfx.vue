@@ -35,8 +35,8 @@
                         </Select>
                     </FormItem>
                 </Col>
-                <Col span="4" style="margin-left: 90px">
-                    <Button @click="getList()" icon="ios-search" type="primary">查询</Button>
+                <Col span="4" style="margin-left: 90px;margin-bottom:20px;">
+                    <Button @click="getList()" icon="ios-search" type="primary" style="margin-right:10px;">查询</Button>
                     <Button @click="downLoad()" icon="ios-cloud-download-outline" type="primary">导出</Button>
                 </Col>
             </Row>

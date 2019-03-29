@@ -23,8 +23,8 @@
         </FormItem>
         <FormItem>
             <Button type="primary" @click="handleSubmit('formValidate')">保存</Button>
-            <Button @click="handleReset('formValidate')" style="margin-left: 8px">重置</Button>
-            <Button v-if="createRoleShow||createGroupShow" @click="cancelInput" type="error" style="margin-left: 8px">取消</Button>
+            <Button @click="handleReset('formValidate')" style="margin-left: 10px">重置</Button>
+            <Button v-if="createRoleShow||createGroupShow" @click="cancelInput" type="error" style="margin-left: 10px">取消</Button>
         </FormItem>
     </Form>
 </template>

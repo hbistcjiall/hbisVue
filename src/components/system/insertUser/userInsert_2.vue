@@ -16,7 +16,7 @@
         <p class="newputh">权限不够用？试试&nbsp;<router-link to="insertAuth"><a>创建一套权限</a></router-link></p>
         <FormItem>
             <Button type="primary" @click="handleSubmit('formValidate')">保存</Button>
-            <Button @click="handleReset('formValidate')" style="margin-left: 8px">重置</Button>
+            <Button @click="handleReset('formValidate')" style="margin-left: 10px">重置</Button>
         </FormItem>
     </Form>
 </template>

@@ -45,7 +45,7 @@
                     </FormItem>
                 </Col>
                 <Col span="4">
-                    <Button @click="getList()" icon="ios-search" type="primary">查询</Button>
+                    <Button @click="getList()" icon="ios-search" type="primary" style="margin-right:10px;">查询</Button>
                     <Button @click="downLoad()" icon="ios-cloud-download-outline">导出</Button>
                 </Col>
             </Row>

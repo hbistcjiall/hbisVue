@@ -14,7 +14,7 @@
         </FormItem>
         <FormItem>
             <Button type="primary" @click="handleSubmit('formCustom')">保存</Button>
-            <Button @click="handleReset('formCustom')" style="margin-left: 8px">重置</Button>
+            <Button @click="handleReset('formCustom')" style="margin-left: 10px">重置</Button>
         </FormItem>
     </Form>
 </template>

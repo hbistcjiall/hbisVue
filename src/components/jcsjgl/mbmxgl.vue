@@ -8,7 +8,7 @@
             </Option>
         </Select>
 
-        <Button @click="search" style="magin-left:20px;" icon="ios-search">查询</Button>
+        <Button @click="search" style="magin-left:20px;margin-right:10px;" icon="ios-search">查询</Button>
         <Button @click="addNew" style="magin-left:20px;" icon="ios-add">新增</Button>
         <!--<Button type="primary" @click="downLoad" style="magin-left:20px" icon="ios-cloud-download-outline">导出</Button>-->
         <Table border stripe :columns="columns12" :data="fecthdata6" style="margin-top: 20px">

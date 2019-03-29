@@ -2,8 +2,8 @@
     <div>
         <Input placeholder="菜单名称/编码" style="width: 300px" v-model="menuData.menuName"/>
         <Input placeholder="层级" style="width: 300px" v-model="menuData.level"/>
-        <Button @click="search" style="magin-left:20px;" icon="ios-search">搜索</Button>
-        <Button @click="addNew" style="magin-left:20px;" icon ="ios-add">添加</Button>
+        <Button @click="search" style="margin-left:20px;" icon="ios-search">搜索</Button>
+        <Button @click="addNew" style="margin-left:10px;" icon ="ios-add">添加</Button>
         <!--<Button type="primary" @click="downLoadTab" style="magin-left:20px" icon="ios-download-outline">导出</Button>-->
         <Table border stripe :columns="columns12" :data="fecthdata6" style="margin-top: 20px">
             <template slot-scope="{ row }" slot="name">

@@ -59,7 +59,7 @@
             </Row>
             <Row style="margin-bottom: 10px">
                 <Col span="4">
-                    <Button @click="getList()" icon="ios-search">查询</Button>
+                    <Button @click="getList()" icon="ios-search" style="margin-right:10px;">查询</Button>
                     <Button @click="downLoad()" icon="ios-cloud-download-outline">导出</Button>
                 </Col>
                 <Col span="2" style="line-height: 30px;margin-top: 10px;float: right">
