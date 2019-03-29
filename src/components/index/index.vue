@@ -145,6 +145,7 @@
                         <div class="content_div" v-if="isdiv">
                             <ul class="content_ul">
                                 <li>修改密码</li>
+                                <li>个人信息</li>
                                 <li>版本信息</li>
                                 <li @click="loginOut()">安全退出</li>
                             </ul>
