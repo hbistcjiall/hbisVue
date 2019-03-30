@@ -1,9 +1,11 @@
 <template>
     <div>
-        <ul v-for="item in arry2">
+        <ul v-for="item in arry2" style="margin-left:1%;">
             <router-link :to="item.URL">
-                <li :style="{'background-color':item.color}">
-                    {{item.MENUNAME}}
+                <!--<li :style="{'background-image':item.background}">-->
+                <li>
+                    <p>{{item.MENUNAME}}</p>
+                    <img v-bind:src="item.background" alt="">
                 </li>
             </router-link>
         </ul>
@@ -25,31 +27,31 @@
                 },
                 bkcolor: [
                     {
-                        color: "#90dcec",
+                        background: require("../../assets/indexImg/jggImg1.png"),
                     },
                     {
-                        color: "#02abdc"
+                        background: require("../../assets/indexImg/jggImg2.png"),
                     },
                     {
-                        color: "#96e89c"
+                        background: require("../../assets/indexImg/jggImg3.png"),
                     },
                     {
-                        color: "#4cc6ea"
+                        background: require("../../assets/indexImg/jggImg4.png"),
                     },
                     {
-                        color: "#0093d8"
+                        background: require("../../assets/indexImg/jggImg5.png"),
                     },
                     {
-                        color: "#52c985"
+                        background: require("../../assets/indexImg/jggImg6.png"),
                     },
                     {
-                        color: "#14b5e4"
+                        background: require("../../assets/indexImg/jggImg7.png"),
                     },
                     {
-                        color: "#027ad6"
+                        background: require("../../assets/indexImg/jggImg8.png"),
                     },
                     {
-                        color: "#1dc063"
+                        background: require("../../assets/indexImg/jggImg9.png"),
                     },
                 ]
             }
@@ -74,9 +76,10 @@
                     this.list.map(((item, index) => {
                         if (index >= this.bkcolor.length) {
                             let x = index - this.bkcolor.length;
-                            this.arry2.push(Object.assign({}, item, {color: this.bkcolor[x].color,}))
+                            this.arry2.push(Object.assign({}, item, {background: this.bkcolor[x].background,}))
+                            window.console.log(this.arry2)
                         } else {
-                            this.arry2.push(Object.assign({}, item, {color: this.bkcolor[index].color,}))
+                            this.arry2.push(Object.assign({}, item, {background: this.bkcolor[index].background,}))
                         }
 
                     }))
@@ -98,12 +101,29 @@
     }
 
     li {
-        width: 33%;
+        width: 28%;
         height: 150px;
-        line-height: 150px;
-        text-align: center;
         float: left;
+        position: relative;
+        margin-left:5%;
+        margin-bottom:20px;
+    }
+    li p{
         color: #ffffff;
         font-size: 20px;
+        font-weight: bold;
+        position: absolute;
+        bottom:10px;
+        left:0;
+        z-index: 100;
+        width:100%;
+        height:30px;
+    }
+    li img{
+        width:100%;
+        height:100%;
+        position: absolute;
+        top:0;
+        left:0
     }
 </style>
