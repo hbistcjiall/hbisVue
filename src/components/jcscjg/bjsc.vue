@@ -22,7 +22,7 @@
                 </Col>
             </Row>
         </Form>
-        <Table :columns="columns" :data="data" border height="500" ref="table"></Table>
+        <Table :loading="loading" :columns="columns" :data="data" border height="500" ref="table"></Table>
     </div>
 </template>
 
@@ -31,6 +31,7 @@
         name: "bjsc",
         data() {
             return {
+                loading:true,
                 switchTime: true,
                 startTime: new Date(),
                 cx: '',
@@ -348,6 +349,7 @@
                     res = res && res.length > 0 ? JSON.parse(res) : [];
                     this.data =  res.dayList;
                     this.data=this.utils.mergeRow(res.dayList,'ORDERDAY');
+                    this.loading = false;
                 });
             },
             downLoad(){

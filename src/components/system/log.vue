@@ -9,7 +9,7 @@
         </Select>
         <Button @click="search" style="margin-left:20px;background: #3497db;color:#fff;" icon="ios-search">搜索</Button>
         <Button type="warning" @click="clearAll" style="margin-left:10px">清空日志</Button>
-        <Table border stripe :columns="columns12" :data="fecthdata6" style="margin-top: 20px">
+        <Table :loading="loading" border stripe :columns="columns12" :data="fecthdata6" style="margin-top: 20px">
             <template slot-scope="{ row }" slot="name">
                 <strong>{{ row.name }}</strong>
             </template>
@@ -28,6 +28,7 @@
         name:'log',
         data () {
             return {
+                loading:true,
                 MsgData : {
                     beginTime:'',
                     page:'0',
@@ -122,6 +123,7 @@
                     }else{
                         this.fecthdata6 = this.resDatas.slice(0,this.pageSize);
                     }
+                    this.loading = false;
                 })
             },
             changepage(index) {

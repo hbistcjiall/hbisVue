@@ -5,7 +5,7 @@
         <Button @click="search" style="margin-left:20px;" icon="ios-search">搜索</Button>
         <Button @click="addNew" style="margin-left:10px;" icon ="ios-add">添加</Button>
         <!--<Button type="primary" @click="downLoadTab" style="magin-left:20px" icon="ios-download-outline">导出</Button>-->
-    <Table border stripe :columns="columns12" :data="fecthdata6" style="margin-top: 20px">
+    <Table :loading="loading" border stripe :columns="columns12" :data="fecthdata6" style="margin-top: 20px">
         <template slot-scope="{ row }" slot="name">
             <strong>{{ row.name }}</strong>
         </template>
@@ -64,6 +64,7 @@
         name:'userManager',
         data () {
             return {
+                loading:true,
                 updModal:false,
                 setModal:false,
                 MsgData : {
@@ -266,6 +267,7 @@
                     }else{
                         this.fecthdata6 = this.resDatas.slice(0,this.pageSize);
                     }
+                    this.loading = false;
                 })
             },
             changepage(index) {

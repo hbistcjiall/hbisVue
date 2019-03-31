@@ -78,7 +78,7 @@
                         }
                     }, { // Secondary yAxis
                         title: {
-                            text: '结算(万吨)',
+                            text: '结算(吨)',
                             style: {
                                 color:''
                             }
@@ -114,7 +114,7 @@
                         y: 20,
                     },
                     series: [{
-                        name: '结算（万吨）',
+                        name: '结算（吨）',
                         type: 'column',
                         yAxis: 1,
                         data: [],
@@ -148,7 +148,7 @@
                             cursor: 'pointer',
                             dataLabels: {
                                 enabled: true,
-                                format: '<b>{point.name}</b>: {point.y:.2f}万吨',
+                                format: '<b>{point.name}</b>: {point.y:.2f}吨',
                             },
                             showInLegend: true
                         }

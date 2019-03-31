@@ -3,22 +3,22 @@
         <Form :label-width="50">
             <Row>
                 <Col span="6" v-if="!switchTime">
-                    <FormItem label="年份：" style="width:250px">
+                    <FormItem label="年份：">
                         <DatePicker type="year" placeholder="请选择年份" :editable="false" :clearable="false"  v-model="year" style="width:150px"></DatePicker>
                     </FormItem>
                 </Col>
                 <Col span="4"  v-if="switchTime">
-                    <FormItem label="月份：" style="width:150px">
+                    <FormItem label="月份：">
                         <DatePicker type="month" placeholder="起始月份" :editable="false" :clearable="false" v-model="startTime" style="width:150px"></DatePicker>
                     </FormItem>
                 </Col>
-                <Col span="4" v-if="switchTime" style="margin-left: -40px">
-                    <FormItem style="width:150px">
+                <Col span="4" v-if="switchTime">
+                    <FormItem>
                         <DatePicker type="month" placeholder="终止月份"  :editable="false" :clearable="false" v-model="endTime" style="width:150px"></DatePicker>
                     </FormItem>
                 </Col>
                 <Col span="3">
-                    <FormItem style="width:50px">
+                    <FormItem>
                         <i-switch v-model="switchTime" @on-change="changeSwitch">
                             <span slot="open">年</span>
                             <span slot="close">月</span>
@@ -27,8 +27,8 @@
                 </Col>
 
                 <Col span="4">
-                    <FormItem label="单位：" style="width:120px">
-                        <Select v-model="dw" style="width:120px" placeholder="请选择单位">
+                    <FormItem label="单位：">
+                        <Select v-model="dw" placeholder="请选择单位">
                             <Option value="">全部</Option>
                             <Option value="9580">唐钢</Option>
                             <Option value="9727">邯钢</Option>
@@ -42,8 +42,8 @@
                     </FormItem>
                 </Col>
                 <Col span="4">
-                    <FormItem label="产线：" style="width:120px">
-                        <Select style="width:120px"  v-model="cx" placeholder="请选择产线">
+                    <FormItem label="产线：">
+                        <Select  v-model="cx" placeholder="请选择产线">
                             <Option v-for="item in cxData" :value="item.value" :key="item.value">{{ item.label }}</Option>
                         </Select>
                     </FormItem>
@@ -56,7 +56,7 @@
             </Row>
 
         </Form>
-        <Table :columns="columns" :data="data" border height="500" ref="table"></Table>
+        <Table :loading="loading" :columns="columns" :data="data" border height="500" ref="table"></Table>
     </div>
 </template>
 
@@ -65,6 +65,7 @@
         name: "pzgjs_cx",
         data() {
             return {
+                loading:true,
                 dw:'',
                 switchTime:true,
                 year:new Date(),
@@ -229,6 +230,7 @@
                 }).then((res) => {
                     res = res && res.length > 0 ? JSON.parse(res) : [];
                     this.data = this.utils.mergeRow(res, 'COMPANYNAME');
+                    this.loading = false;
                 });
             },
             downLoad(){

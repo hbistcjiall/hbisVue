@@ -26,7 +26,7 @@
             </Row>
 
         </Form>
-        <Table :columns="columns" :data="data" border height="500" ref="table"></Table>
+        <Table :loading="loading" :columns="columns" :data="data" border height="500" ref="table"></Table>
     </div>
 </template>
 
@@ -35,6 +35,7 @@
         name: "cxhtjdcx",
         data() {
             return {
+                loading:true,
                 cx:'',
                 startTime:new Date(),
                 endTime:this.utils.formatMonthEnd(),
@@ -217,6 +218,7 @@
                 }).then((res) => {
                     res = res && res.length > 0 ? JSON.parse(res) : [];
                     this.data =  res;
+                    this.loading = false;
                 });
             },
             getCxData(){

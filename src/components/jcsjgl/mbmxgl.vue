@@ -11,7 +11,7 @@
         <Button @click="search" style="magin-left:20px;margin-right:10px;" icon="ios-search">查询</Button>
         <Button @click="addNew" style="magin-left:20px;" icon="ios-add">新增</Button>
         <!--<Button type="primary" @click="downLoad" style="magin-left:20px" icon="ios-cloud-download-outline">导出</Button>-->
-        <Table border stripe :columns="columns12" :data="fecthdata6" style="margin-top: 20px">
+        <Table :loading="loading" border stripe :columns="columns12" :data="fecthdata6" style="margin-top: 20px">
             <template slot-scope="{ row }" slot="name">
                 <strong>{{ row.name }}</strong>
             </template>
@@ -77,6 +77,7 @@
         name: 'mbmxgl',
         data() {
             return {
+                loading:true,
                 test: "9683",
                 updformValidate: {
                     id: '',
@@ -140,62 +141,74 @@
                     {
                         title: '一月',
                         align: "center",
-                        key: 'JANUARY'
+                        key: 'JANUARY',
+                        width:120
                     },
                     {
                         title: '二月',
                         align: "center",
-                        key: 'FEBRUARY'
+                        key: 'FEBRUARY',
+                        width:120
                     },
                     {
                         title: '三月',
                         align: "center",
-                        key: 'MARCH'
+                        key: 'MARCH',
+                        width:120
                     },
                     {
                         title: '四月',
                         align: "center",
-                        key: 'APRIL'
+                        key: 'APRIL',
+                        width:120
                     },
                     {
                         title: '五月',
                         align: "center",
-                        key: 'MAY'
+                        key: 'MAY',
+                        width:120
                     },
                     {
                         title: '六月',
                         align: "center",
-                        key: 'JUNE'
+                        key: 'JUNE',
+                        width:120
                     },
                     {
                         title: '七月',
                         align: "center",
-                        key: 'JULY'
+                        key: 'JULY',
+                        width:120
                     },
                     {
                         title: '八月',
                         align: "center",
-                        key: 'AUGUST'
+                        key: 'AUGUST',
+                        width:120
                     },
                     {
                         title: '九月',
                         align: "center",
-                        key: 'SEPTEMBER'
+                        key: 'SEPTEMBER',
+                        width:120
                     },
                     {
                         title: '十月',
                         align: "center",
-                        key: 'OCTOBER'
+                        key: 'OCTOBER',
+                        width:120
                     },
                     {
                         title: '十一月',
                         align: "center",
-                        key: 'NOVEMBER'
+                        key: 'NOVEMBER',
+                        width:120
                     },
                     {
                         title: '十二月',
                         align: "center",
-                        key: 'DECEMBER'
+                        key: 'DECEMBER',
+                        width:120
                     },
                     {
                         title: '操作',
@@ -266,6 +279,7 @@
                     } else {
                         this.fecthdata6 = this.resDatas.slice(0, this.pageSize);
                     }
+                    this.loading = false;
                 })
             },
             changepage(index) {

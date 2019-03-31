@@ -128,7 +128,7 @@
                     yAxis: {
                         min: 0,
                         title: {
-                            text: '单位（万吨）',
+                            text: '单位（吨）',
                             align: 'high'
                         },
                         labels: {
@@ -147,10 +147,10 @@
                     },
                     series: [
                         {
-                        name: '现货（万吨）',
+                        name: '现货（吨）',
                         data: []
                     }, {
-                        name: '计划量（万吨）',
+                        name: '计划量（吨）',
                         data: []
                     }
                     ]
@@ -179,7 +179,7 @@
                             cursor: 'pointer',
                             dataLabels: {
                                 enabled: true,
-                                format: '<b>{point.name}</b>: {point.y:.2f}万吨',
+                                format: '<b>{point.name}</b>: {point.y:.2f}吨',
                             }
                         }
                     },
@@ -225,7 +225,7 @@
                             chartsData.push({name: res[i].COMPANYNAME, y: res[i].ZYFKIMG, b: res[i].BILI});
                         }
                         this.pie.series[0].data = chartsData;
-                        this.pie.subtitle.text = '<span style="font-size:14px;color:black;font-weight: bold">' + res[0].COMPANYNAME + ':' + res[0].ZYFKIMG + "万吨" + '</span>'
+                        this.pie.subtitle.text = '<span style="font-size:14px;color:black;font-weight: bold">' + res[0].COMPANYNAME + ':' + res[0].ZYFKIMG + "吨" + '</span>'
 
                     } else {
                         this.pie.series[0].data = [
@@ -238,7 +238,7 @@
                             {name: '衡板', y: 0, b: 0},
                             {name: '邯宝', y: 0, b: 0}
                         ]
-                        this.pie.subtitle.text = '<span style="font-size:14px;color:black;font-weight: bold">' + "集团产销资源总量：0万吨" + '</span>'
+                        this.pie.subtitle.text = '<span style="font-size:14px;color:black;font-weight: bold">' + "集团产销资源总量：0吨" + '</span>'
 
                     }
                     this.pieOption = this.pie;

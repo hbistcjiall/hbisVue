@@ -20,14 +20,14 @@
                         <li class="item-icon-right" v-for="list in lists">
                             <div class="titleStyle" style="margin-top:10px;">{{list.title}}</div>
                             <div class="progressContainer">
-                                <div class="progress" :style="{width:list.wcbl*100+'%','background-color':'#ed4117'}" v-if="list.wcbl <= 0.49">
-                                    <b>已产量:{{list.ycl}}吨/{{list.wcbl*100}}%</b>
+                                <div class="progress" :style="{width:list.wcbl+'%','background-color':'#ed4117'}" v-if="list.wcbl <= 0.49">
+                                    <b>已产量:{{list.ycl}}吨/{{list.wcbl}}%</b>
                                 </div>
-                                <div class="progress" :style="{width:list.wcbl*100+'%','background-color':'#fa9909'}" v-else-if="list.wcbl >0.49 && list.wcbl <= 0.79">
-                                    <b>已产量:{{list.ycl}}吨/{{list.wcbl*100}}%</b>
+                                <div class="progress" :style="{width:list.wcbl+'%','background-color':'#fa9909'}" v-else-if="list.wcbl >0.49 && list.wcbl <= 0.79">
+                                    <b>已产量:{{list.ycl}}吨/{{list.wcbl}}%</b>
                                 </div>
-                                <div class="progress" :style="{width:list.wcbl*100+'%','background-color':'#2ebf6b'}" v-else>
-                                    <b>已产量:{{list.ycl}}吨/{{list.wcbl*100}}%</b>
+                                <div class="progress" :style="{width:list.wcbl+'%','background-color':'#2ebf6b'}" v-else>
+                                    <b>已产量:{{list.ycl}}吨/{{list.wcbl}}%</b>
                                 </div>
                             </div>
                             <div class="progressContainer" style="margin-bottom:15px;">
@@ -50,8 +50,8 @@
                     <div class="titleStyle">{{list.cxtitle}}<span style="margin-left:10px;">合同量:{{list.ycl}}万</span></div>
                     <div class="progressContainer">
                         <div class="PCtitle">进度:</div>
-                        <div class="progress" :style="{width:list.wcbl*100+'%','background-color':'#3793cf'}">
-                            <b style="position: absolute;left:13%">{{list.wcbl*100}}%</b>
+                        <div class="progress" :style="{width:list.wcbl+'%','background-color':'#3793cf'}">
+                            <b style="position: absolute;left:13%">{{list.wcbl}}%</b>
                         </div>
                     </div>
                 </li>
@@ -67,8 +67,8 @@
                     <div class="titleStyle">{{list.cxtitle}}<span style="margin-left:10px;">合同量:{{list.ycl}}万</span></div>
                     <div class="progressContainer">
                         <div class="PCtitle">进度:</div>
-                        <div class="progress" :style="{width:list.wcbl*100+'%','background-color':'#3793cf'}">
-                            <b style="position: absolute;left:13%">{{list.wcbl*100}}%</b>
+                        <div class="progress" :style="{width:list.wcbl+'%','background-color':'#3793cf'}">
+                            <b style="position: absolute;left:13%">{{list.wcbl}}%</b>
                         </div>
                     </div>
                 </li>
@@ -130,6 +130,7 @@
                 }).then((res) => {
                     res = res.length>0?JSON.parse(res):[];
                     this.lists =  this.utils.htjdTree(res);
+                    window.console.log(this.lists)
                 })
 
                 fetch(this.$store.state.fetchPath + "/allocation/selScheduleByCx", {

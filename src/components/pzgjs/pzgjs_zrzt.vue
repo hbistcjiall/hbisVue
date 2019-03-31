@@ -3,22 +3,22 @@
         <Form :label-width="100">
             <Row>
                 <Col span="6" v-if="!switchTime">
-                    <FormItem label="年份：" style="width:250px">
+                    <FormItem label="年份：">
                         <DatePicker type="year" placeholder="请选择年份" :editable="false" :clearable="false" v-model="year" style="width:150px"></DatePicker>
                     </FormItem>
                 </Col>
                 <Col span="4"  v-if="switchTime">
-                    <FormItem label="月份：" style="width:150px">
+                    <FormItem label="月份：">
                         <DatePicker type="month" placeholder="起始月份" :editable="false" :clearable="false" v-model="startTime" style="width:150px"></DatePicker>
                     </FormItem>
                 </Col>
-                <Col span="4" v-if="switchTime" style="margin-left: -40px">
-                    <FormItem style="width:150px">
+                <Col span="4" v-if="switchTime">
+                    <FormItem>
                         <DatePicker type="month" placeholder="终止月份" :editable="false" :clearable="false" v-model="endTime" style="width:150px"></DatePicker>
                     </FormItem>
                 </Col>
                 <Col span="3">
-                    <FormItem style="width:50px">
+                    <FormItem>
                         <i-switch v-model="switchTime" @on-change="changeSwitch">
                             <span slot="open">年</span>
                             <span slot="close">月</span>
@@ -50,7 +50,7 @@
                 </Col>
             </Row>
         </Form>
-        <Table :columns="columns" :data="data" border height="500" ref="table"></Table>
+        <Table :loading="loading" :columns="columns" :data="data" border height="500" ref="table"></Table>
     </div>
 </template>
 
@@ -59,6 +59,7 @@
         name: "pzgjs_zrzt",
         data() {
             return {
+                loading:true,
                 switchTime:true,
                 year:new Date(),
                 startTime:new Date(),
@@ -142,6 +143,7 @@
                 }).then((res) => {
                     res =res && res.length > 0 ? JSON.parse(res) : [];
                     this.data = res;
+                    this.loading = false;
                 });
             },
             downLoad(){

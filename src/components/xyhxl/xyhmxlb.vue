@@ -44,7 +44,7 @@
             </Col>
         </Row>
         </Form>
-        <Table border stripe :columns="columns12" :data="fecthdata6"  style="margin-top: 20px" ref="table"  >
+        <Table :loading="loading" border stripe :columns="columns12" :data="fecthdata6"  style="margin-top: 20px" ref="table"  >
             <template slot-scope="{ row }" slot="name">
                 <strong>{{ row.name }}</strong>
             </template>
@@ -101,6 +101,7 @@
         name:'xyhmxlb',
         data () {
             return {
+                loading:true,
                 updModal:false,
                 xyhmxlbData: {
                     beginTime:'',
@@ -256,6 +257,7 @@
                     }else{
                         this.fecthdata6 = this.resDatas.slice(0,this.pageSize);
                     }
+                    this.loading = false;
                 })
             },
             changepage(index) {

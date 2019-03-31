@@ -3,7 +3,7 @@
         <Input placeholder="菜单名" style="width: 300px" v-model="roleData.menuname"/>
         <Button @click="search" style="margin-left:20px;" icon="ios-search">搜索</Button>
         <Button @click="addNew" style="margin-left:10px;" icon="ios-add">添加</Button>
-        <Table border stripe :columns="columns12" :data="fecthdata6" style="margin-top: 20px">
+        <Table :loading="loading" border stripe :columns="columns12" :data="fecthdata6" style="margin-top: 20px">
             <template slot-scope="{row}" slot="action">
                 <Button size="small" @click="remove(row)" style="background:#ff6969;color:#fff;">删除</Button>
             </template>
@@ -20,6 +20,7 @@
         name: "sypz",
         data() {
             return {
+                loading:true,
                 columns12: [
                     {
                         title: '序号',
@@ -124,6 +125,7 @@
                     }else{
                         this.fecthdata6 = this.resDatas.slice(0,this.pageSize);
                     }
+                    this.loading = false;
                 })
             },
             changepage(index) {
