@@ -93,36 +93,10 @@
                 isD1: false,
                 isD2: true,
                 lists:[
-                    {title:'合计',ycl:30,jhl:50,wcbl:0.6},
-                    {title:'热板',ycl:60,jhl:120,wcbl:0.5},
-                    {title:'冷板',ycl:70,jhl:200,wcbl:0.35},
-                    {title:'宽厚板',ycl:30,jhl:150,wcbl:0.2},
-                    {title:'棒线',ycl:24,jhl:240,wcbl:0.1},
-                    {title:'型带',ycl:120,jhl:100,wcbl:1.2},
                 ],
                 CXQ:[
-                    {cxtitle:'唐钢1700/1810',ycl:30,jhl:50,wcbl:0.6},
-                    {cxtitle:'唐钢酸洗',ycl:60,jhl:120,wcbl:0.5},
-                    {cxtitle:'唐钢线材',ycl:70,jhl:200,wcbl:0.35},
-                    {cxtitle:'唐钢热基镀锌',ycl:30,jhl:150,wcbl:0.2},
-                    {cxtitle:'唐钢棒材',ycl:24,jhl:240,wcbl:0.1},
-                    {cxtitle:'唐钢新区镀锌',ycl:80,jhl:100,wcbl:0.8},
-                    {cxtitle:'唐钢-冷冷基镀锌',ycl:130,jhl:100,wcbl:1.3},
-                    {cxtitle:'唐钢冷罩退',ycl:60,jhl:100,wcbl:0.6},
-                    {cxtitle:'唐钢冷酸轧',ycl:90,jhl:100,wcbl:0.9},
-                    {cxtitle:'唐钢中型',ycl:30,jhl:100,wcbl:0.3},
                 ],
                 CXH:[
-                    {cxtitle:'合计',ycl:30,jhl:50,wcbl:0.6},
-                    {cxtitle:'唐钢新区连退',ycl:60,jhl:120,wcbl:0.5},
-                    {cxtitle:'邯钢CSP',ycl:70,jhl:200,wcbl:0.35},
-                    {cxtitle:'唐钢1700/1810',ycl:30,jhl:150,wcbl:0.2},
-                    {cxtitle:'唐钢-冷酸轧',ycl:24,jhl:240,wcbl:0.1},
-                    {cxtitle:'唐钢中型',ycl:80,jhl:100,wcbl:0.8},
-                    {cxtitle:'唐钢新区镀锌',ycl:135,jhl:100,wcbl:1.35},
-                    {cxtitle:'唐钢棒材',ycl:60,jhl:100,wcbl:0.6},
-                    {cxtitle:'唐钢热基镀锌',ycl:90,jhl:100,wcbl:0.9},
-                    {cxtitle:'唐钢线材',ycl:30,jhl:100,wcbl:0.3},
                 ],
                 Csvj:{
                     flName:"",
@@ -138,58 +112,58 @@
             }
         },
         created() {
-            // this.handleListApproveHistory();
+            this.handleListApproveHistory();
         },
         methods: {
-            // handleListApproveHistory(){
-            //     fetch(this.$store.state.fetchPath + "/allocation/selAllocation", {
-            //         method: "POST",
-            //         headers: this.$store.state.fetchHeader,
-            //         body: this.utils.formatParams(this.Csvj),
-            //         credentials: 'include'
-            //     }).then((res) => {
-            //         if(res.status!=200){
-            //             this.$Message.error('请求失败！');
-            //         }else{
-            //             return res.text();
-            //         }
-            //     }).then((res) => {
-            //         res = res.length>0?JSON.parse(res):[];
-            //         this.lists =  this.utils.htjdTree(res);
-            //     })
-            //
-            //     fetch(this.$store.state.fetchPath + "/allocation/selScheduleByCx", {
-            //         method: "POST",
-            //         headers: this.$store.state.fetchHeader,
-            //         body:this.utils.formatParams(this.CXQvalue),
-            //         credentials: 'include'
-            //     }).then((res) => {
-            //         if(res.status!=200){
-            //             this.$Message.error('请求失败！');
-            //         }else{
-            //             return res.text();
-            //         }
-            //     }).then((res) => {
-            //         res = res.length>0?JSON.parse(res):[];
-            //         this.CXQ =  this.utils.htjdTree(res);
-            //     })
-            //
-            //     fetch(this.$store.state.fetchPath + "/allocation/selScheduleByCx", {
-            //         method: "POST",
-            //         headers: this.$store.state.fetchHeader,
-            //         body:this.utils.formatParams(this.CXHvalue),
-            //         credentials: 'include'
-            //     }).then((res) => {
-            //         if(res.status!=200){
-            //             this.$Message.error('请求失败！');
-            //         }else{
-            //             return res.text();
-            //         }
-            //     }).then((res) => {
-            //         res = res.length>0?JSON.parse(res):[];
-            //         this.CXH =  this.utils.htjdTree(res);
-            //     })
-            // },
+            handleListApproveHistory(){
+                fetch(this.$store.state.fetchPath + "/allocation/selAllocation", {
+                    method: "POST",
+                    headers: this.$store.state.fetchHeader,
+                    body: this.utils.formatParams(this.Csvj),
+                    credentials: 'include'
+                }).then((res) => {
+                    if(res.status!=200){
+                        this.$Message.error('请求失败！');
+                    }else{
+                        return res.text();
+                    }
+                }).then((res) => {
+                    res = res.length>0?JSON.parse(res):[];
+                    this.lists =  this.utils.htjdTree(res);
+                })
+
+                fetch(this.$store.state.fetchPath + "/allocation/selScheduleByCx", {
+                    method: "POST",
+                    headers: this.$store.state.fetchHeader,
+                    body:this.utils.formatParams(this.CXQvalue),
+                    credentials: 'include'
+                }).then((res) => {
+                    if(res.status!=200){
+                        this.$Message.error('请求失败！');
+                    }else{
+                        return res.text();
+                    }
+                }).then((res) => {
+                    res = res.length>0?JSON.parse(res):[];
+                    this.CXQ =  this.utils.htjdTree(res);
+                })
+
+                fetch(this.$store.state.fetchPath + "/allocation/selScheduleByCx", {
+                    method: "POST",
+                    headers: this.$store.state.fetchHeader,
+                    body:this.utils.formatParams(this.CXHvalue),
+                    credentials: 'include'
+                }).then((res) => {
+                    if(res.status!=200){
+                        this.$Message.error('请求失败！');
+                    }else{
+                        return res.text();
+                    }
+                }).then((res) => {
+                    res = res.length>0?JSON.parse(res):[];
+                    this.CXH =  this.utils.htjdTree(res);
+                })
+            },
             getJt(){
                     this.isA1= true,
                     this.isA2= false,
@@ -199,12 +173,12 @@
                     this.isC2= true,
                     this.isD1= false,
                     this.isD2= true
-                // this.Csvj.flName = '';
-                // this.CXQvalue.flName = '';
-                // this.CXQvalue.sort = '0';
-                // this.CXHvalue.flName = '';
-                // this.CXHvalue.sort = '1';
-                // this.handleListApproveHistory();
+                this.Csvj.flName = '';
+                this.CXQvalue.flName = '';
+                this.CXQvalue.sort = '0';
+                this.CXHvalue.flName = '';
+                this.CXHvalue.sort = '1';
+                this.handleListApproveHistory();
             },
             getXszgs(){
                     this.isA1= false,
@@ -215,12 +189,12 @@
                     this.isC2= true,
                     this.isD1= false,
                     this.isD2= true
-                // this.Csvj.flName = '3';
-                // this.CXQvalue.flName = '3';
-                // this.CXQvalue.sort = '0';
-                // this.CXHvalue.flName = '3';
-                // this.CXHvalue.sort = '1';
-                // this.handleListApproveHistory();
+                this.Csvj.flName = '3';
+                this.CXQvalue.flName = '3';
+                this.CXQvalue.sort = '0';
+                this.CXHvalue.flName = '3';
+                this.CXHvalue.sort = '1';
+                this.handleListApproveHistory();
 
             },
             getZgs(){
@@ -232,12 +206,12 @@
                     this.isC2= false
                     this.isD1= false,
                     this.isD2= true
-                // this.Csvj.flName = '4';
-                // this.CXQvalue.flName = '4';
-                // this.CXQvalue.sort = '0';
-                // this.CXHvalue.flName = '4';
-                // this.CXHvalue.sort = '1';
-                // this.handleListApproveHistory();
+                this.Csvj.flName = '4';
+                this.CXQvalue.flName = '4';
+                this.CXQvalue.sort = '0';
+                this.CXHvalue.flName = '4';
+                this.CXHvalue.sort = '1';
+                this.handleListApproveHistory();
             },
             getCk(){
                     this.isA1= false,
@@ -248,12 +222,12 @@
                     this.isC2= true,
                     this.isD1= true,
                     this.isD2= false
-                // this.Csvj.flName = '2';
-                // this.CXQvalue.flName = '2';
-                // this.CXQvalue.sort = '0';
-                // this.CXHvalue.flName = '2';
-                // this.CXHvalue.sort = '1';
-                // this.handleListApproveHistory();
+                this.Csvj.flName = '2';
+                this.CXQvalue.flName = '2';
+                this.CXQvalue.sort = '0';
+                this.CXHvalue.flName = '2';
+                this.CXHvalue.sort = '1';
+                this.handleListApproveHistory();
             }
         }
     }
