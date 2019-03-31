@@ -3,19 +3,20 @@
         <Form :label-width="100">
             <Row>
                 <Col span="4" v-if="switchTime">
-                    <FormItem label="记录日期：" style="width:150px">
+                    <FormItem label="记录日期：">
                         <DatePicker type="date" placeholder="记录时间" :editable="false" :clearable="false" v-model="startTime"
                                     style="width:150px"></DatePicker>
                     </FormItem>
                 </Col>
                 <Col span="4">
-                    <FormItem label="钢厂：" style="width:120px;margin-left: 50px">
+                    <FormItem label="钢厂：" style="margin-left: 50px">
                         <Select style="width:120px" v-model="cx" placeholder="请选择">
                             <Option value="1">宣钢</Option>
                             <Option value="2">承钢</Option>
                         </Select>
                     </FormItem>
                 </Col>
+                <Col span="1">&nbsp;</Col>
                 <Col span="4" style="margin-left: 80px">
                     <Button @click="getList()" icon="ios-search" style="margin-right:10px;">查询</Button>
                     <Button @click="downLoad()" icon="ios-cloud-download-outline" type="primary">导出</Button>

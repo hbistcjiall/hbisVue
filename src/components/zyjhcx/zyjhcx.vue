@@ -3,7 +3,7 @@
         <Form :label-width="100">
             <Row>
                 <Col span="4">
-                    <FormItem label="年份：">
+                    <FormItem label="年份：" style="margin-left:-30px;">
                         <DatePicker type="year" placeholder="年份" :editable="false" :clearable="false" v-model="zyjhcx.nf" style="width:150px"></DatePicker>
                     </FormItem>
                 </Col>

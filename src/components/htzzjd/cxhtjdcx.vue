@@ -10,14 +10,17 @@
                     </FormItem>
                 </Col>
                 <Col span="4">
-                    <FormItem label="月份：" style="width:150px">
+                    <FormItem label="月份：" style="margin-left:10px">
                         <DatePicker type="month" placeholder="起始月份" :editable="false" :clearable="false" v-model="startTime" style="width:150px"></DatePicker>
                     </FormItem>
                 </Col>
                 <Col span="4">
-                    <FormItem style="width:150px">
+                    <FormItem>
                         <DatePicker type="month" placeholder="终止月份"  :editable="false" :clearable="false" v-model="endTime" style="width:150px"></DatePicker>
                     </FormItem>
+                </Col>
+                <Col span="4">
+                    <span>&nbsp;</span>
                 </Col>
                 <Col span="4">
                     <Button @click="getList()" icon="ios-search" style="margin-right:10px;">查询</Button>
