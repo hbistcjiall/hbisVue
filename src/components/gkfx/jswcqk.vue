@@ -21,7 +21,7 @@
                         v-bind:class="{ blue:index==active1}"> {{ todo.text }}</li>
                 </ul>
             </div>
-            <Table :columns="columns" :data="resDatas" border height="500">
+            <Table :loading="loading" :columns="columns" :data="resDatas" border height="500">
                 <template slot-scope="{ row }" slot="name">
                     <strong>{{ row.name }}</strong>
                 </template>
@@ -42,6 +42,7 @@
                 isD: false,
                 isE: true,
                 isF: false,
+                loading:true,
                 active:'',
                 SubStarTime_month :'',
                 SubStarTime_year :'',
@@ -316,6 +317,7 @@
                     }).then((res) => {
                     res = res&&res.length>0?JSON.parse(res):[]
                     this.resDatas =  res;
+                    this.loading = false;
                 })
             },
             tabsClick(index){

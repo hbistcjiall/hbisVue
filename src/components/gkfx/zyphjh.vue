@@ -20,14 +20,14 @@
         </div>
         <div>
             <div class="LeftImg">
-                <Table border stripe :columns="columns1" :data="resDatas3" style="margin-top: 20px" id="allTable1">
+                <Table :loading="loading" border stripe :columns="columns1" :data="resDatas3" style="margin-top: 20px" id="allTable1">
                     <template slot-scope="{ row }" slot="name">
                         <strong>{{ row.name }}</strong>
                     </template>
                 </Table>
             </div>
             <div class="RigtImg">
-                <Table border stripe :columns="columns2" :data="resDatas4" style="margin-top: 20px" id="allTable2">
+                <Table :loading="loading1" border stripe :columns="columns2" :data="resDatas4" style="margin-top: 20px" id="allTable2">
                     <template slot-scope="{ row }" slot="name">
                         <strong>{{ row.name }}</strong>
                     </template>
@@ -56,6 +56,8 @@
                 isK: false,
                 isL: true,
                 isM: false,
+                loading:true,
+                loading1:true,
                 activeIndex: 0,
                 byValue: {
                     type: ''
@@ -296,6 +298,7 @@
                     }).then((res) => {
                     res = res && res.length > 0 ? JSON.parse(res) : []
                     this.resDatas3 = res;
+                    this.loading = false;
                 })
 
 
@@ -315,6 +318,7 @@
                     }).then((res) => {
                     res = res && res.length > 0 ? JSON.parse(res) : []
                     this.resDatas4 = res;
+                    this.loading1 = false;
                 })
             },
             getAll() {
