@@ -76,7 +76,6 @@
                         if (index >= this.bkcolor.length) {
                             let x = index - this.bkcolor.length;
                             this.arry2.push(Object.assign({}, item, {background: this.bkcolor[x].background,}))
-                            window.console.log(this.arry2)
                         } else {
                             this.arry2.push(Object.assign({}, item, {background: this.bkcolor[index].background,}))
                         }

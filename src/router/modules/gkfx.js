@@ -35,4 +35,13 @@ export default [
             isLogin: true
         }
     },
+    {
+        path: '/gkfx/zxlmxtj_bb',
+        name: 'zxlmxtj_bb',
+        component: resolve => require(['@/components/gkfx/zxlmxtj_bb'], resolve),
+        meta: {
+            title: '销售总公司协议户总销量明细统计',
+            isLogin: true
+        }
+    },
 ]

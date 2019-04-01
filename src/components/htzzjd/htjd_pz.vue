@@ -11,7 +11,7 @@
                 <div style="width:100%;margin-top:10px;overflow: hidden">
                 <div style="float:right;">
                      <div class="CStyle">1%-49%<span style="background: #ed4117;"></span></div>
-                     <div class="CStyle">5%0-79%<span style="background: #fa9909;"></span></div>
+                     <div class="CStyle">50%-79%<span style="background: #fa9909;"></span></div>
                      <div class="CStyle">80%-100%<span style="background: #2ebf6b;"></span></div>
                 </div>
                 </div>
@@ -20,10 +20,10 @@
                         <li class="item-icon-right" v-for="list in lists">
                             <div class="titleStyle" style="margin-top:10px;">{{list.title}}</div>
                             <div class="progressContainer">
-                                <div class="progress" :style="{width:list.wcbl+'%','background-color':'#ed4117'}" v-if="list.wcbl <= 0.49">
+                                <div class="progress" :style="{width:list.wcbl+'%','background-color':'#ed4117'}" v-if="list.wcbl <= 49">
                                     <b>已产量:{{list.ycl}}吨/{{list.wcbl}}%</b>
                                 </div>
-                                <div class="progress" :style="{width:list.wcbl+'%','background-color':'#fa9909'}" v-else-if="list.wcbl >0.49 && list.wcbl <= 0.79">
+                                <div class="progress" :style="{width:list.wcbl+'%','background-color':'#fa9909'}" v-else-if="list.wcbl >49 && list.wcbl <= 79">
                                     <b>已产量:{{list.ycl}}吨/{{list.wcbl}}%</b>
                                 </div>
                                 <div class="progress" :style="{width:list.wcbl+'%','background-color':'#2ebf6b'}" v-else>
@@ -45,7 +45,7 @@
             <div class="cxTitleStyle">产线</div>
             <div style="border:1px solid #e0e0e0;">
             <div class="pxTitleStyle">前10</div>
-            <ul>
+            <ul class="ulStyle">
                 <li class="item-icon-right" v-for="list in CXQ">
                     <div class="titleStyle">{{list.cxtitle}}<span style="margin-left:10px;">合同量:{{list.ycl}}万</span></div>
                     <div class="progressContainer">
@@ -62,7 +62,7 @@
             <div class="cxTitleStyle">产线</div>
             <div style="border:1px solid #e0e0e0;">
                 <div class="pxTitleStyle">后10</div>
-            <ul>
+            <ul class="ulStyle">
                 <li class="item-icon-right" v-for="list in CXH" style="font-size: 5px">
                     <div class="titleStyle">{{list.cxtitle}}<span style="margin-left:10px;">合同量:{{list.ycl}}万</span></div>
                     <div class="progressContainer">
@@ -290,6 +290,13 @@
 <style scoped>
     ul{
         list-style-type: none;
+
+    }
+    .ulStyle{
+        height:600px;
+        white-space: nowrap;
+        overflow-x:visible;
+        overflow-y:scroll ;
     }
     ul li{
         border-bottom:1px solid #e0e0e0;
@@ -352,6 +359,7 @@
         font-size: 12px;
         position: absolute;
         left: 2%;
+        z-index: 1000;
     }
     .PCtitle{
         position:absolute;
