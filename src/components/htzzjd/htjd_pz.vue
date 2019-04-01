@@ -1,6 +1,6 @@
 <template>
     <div>
-        <div style="width:40%;float:left;">
+        <div style="width:45%;float:left;">
             <div style="width:100%;overflow: hidden">
                 <button @click="getJt" :class="{ 'class-a1': isA1, 'class-a2': isA2}">集团</button>
                 <button @click="getXszgs" :class="{ 'class-b1': isB1, 'class-b2': isB2}">销售总公司</button>
@@ -40,8 +40,8 @@
                 </div>
              </div>
         </div>
-        <div style="margin-left:10%;width:50%;float:right;">
-        <div style="float:left;width:40%;">
+        <div style="margin-left:5%;width:50%;float:right;">
+        <div style="float:left;width:45%;">
             <div class="cxTitleStyle">产线</div>
             <div style="border:1px solid #e0e0e0;">
             <div class="pxTitleStyle">前10</div>
@@ -58,7 +58,7 @@
             </ul>
             </div>
         </div>
-        <div style="float:right;width:40%;">
+        <div style="float:right;width:45%;">
             <div class="cxTitleStyle">产线</div>
             <div style="border:1px solid #e0e0e0;">
                 <div class="pxTitleStyle">后10</div>
@@ -104,7 +104,7 @@
                 },
                 CXQvalue:{
                     flName:"",
-                    sort:"1",
+                    sort:"0",
                     date:'2019-03'
                 },
                 CXHvalue:{
@@ -116,6 +116,7 @@
         },
         created() {
             this.handleListApproveHistory();
+
         },
         methods: {
             handleListApproveHistory(){
@@ -149,7 +150,25 @@
                 }).then((res) => {
                     res = res.length>0?JSON.parse(res):[];
                     this.CXQ =  this.utils.htjdTree(res);
-                    window.console.log(typeof (this.CXQ))
+                    const compare = (name, minor) => {
+                        return function (o, p) {
+                            var a, b;
+                            if (o && p && typeof o === 'object' && typeof p === 'object') {
+                                a = o[name];
+                                b = p[name];
+                                if (a === b) {
+                                    return typeof minor === 'function' ? minor(o, p) : 0;
+                                }
+                                if (typeof a === typeof b) {
+                                    return a < b ? 1 : -1;
+                                }
+                                return typeof a < typeof b ? 1 : -1;
+                            } else {
+                                this.$Message.error("error");
+                            }
+                        }
+                    };
+                    this.CXQ.sort(compare('wcbl'))
                 })
 
                 fetch(this.$store.state.fetchPath + "/allocation/selScheduleByCx", {
@@ -166,6 +185,25 @@
                 }).then((res) => {
                     res = res.length>0?JSON.parse(res):[];
                     this.CXH =  this.utils.htjdTree(res);
+                    const compare = (name, minor) => {
+                        return function (o, p) {
+                            var a, b;
+                            if (o && p && typeof o === 'object' && typeof p === 'object') {
+                                a = o[name];
+                                b = p[name];
+                                if (a === b) {
+                                    return typeof minor === 'function' ? minor(o, p) : 0;
+                                }
+                                if (typeof a === typeof b) {
+                                    return a < b ? -1 : 1;
+                                }
+                                return typeof a < typeof b ? -1 : 1;
+                            } else {
+                                this.$Message.error("error");
+                            }
+                        }
+                    };
+                    this.CXH.sort(compare('wcbl'))
                 })
             },
             getJt(){
@@ -179,7 +217,7 @@
                     this.isD2= true
                 this.Csvj.flName = '';
                 this.CXQvalue.flName = '';
-                this.CXQvalue.sort = '1';
+                this.CXQvalue.sort = '0';
                 this.CXHvalue.flName = '';
                 this.CXHvalue.sort = '1';
                 this.CXHvalue.date = '2019-03';
