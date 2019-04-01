@@ -219,29 +219,13 @@
                     }).then((res) => {
                     res = res && res.length > 0 ? JSON.parse(res) : []
                     this.resDatas1 = res;
-                    if (res.length > 0) {
                         let chartsData = [];
                         for (let i = 1; i < res.length; i++) {
                             chartsData.push({name: res[i].COMPANYNAME, y: res[i].ZYFKIMG, b: res[i].BILI});
                         }
                         this.pie.series[0].data = chartsData;
                         this.pie.subtitle.text = '<span style="font-size:14px;color:black;font-weight: bold">' + res[0].COMPANYNAME + ':' + res[0].ZYFKIMG + "吨" + '</span>'
-
-                    } else {
-                        this.pie.series[0].data = [
-                            {name: '唐钢', y: 0, b: 0},
-                            {name: '邯钢', y: 0, b: 0},
-                            {name: '宣钢', y: 0, b: 0},
-                            {name: '承钢', y: 0, b: 0},
-                            {name: '舞钢', y: 0, b: 0},
-                            {name: '石钢', y: 0, b: 0},
-                            {name: '衡板', y: 0, b: 0},
-                            {name: '邯宝', y: 0, b: 0}
-                        ]
-                        this.pie.subtitle.text = '<span style="font-size:14px;color:black;font-weight: bold">' + "集团产销资源总量：0吨" + '</span>'
-
-                    }
-                    this.pieOption = this.pie;
+                        this.pieOption = this.pie;
                 })
 
                 //钢厂计划
@@ -260,23 +244,17 @@
                     }).then((res) => {
                     res = res && res.length > 0 ? JSON.parse(res) : []
                     this.resDatas2 = res;
-                    if (res.length > 0) {
-                        let chartsData1 = [];
-                        let chartsData2 = [];
-                        let chartsData3 = [];
-                        for (let k = 0; k < res.length; k++) {
-                            chartsData2.push(res[k].JH);
-                            chartsData1.push(res[k].XH);
-                            chartsData3.push(res[k].COMPANYNAME);
-                        }
-                        this.column.series[1].data = chartsData2;
-                        this.column.series[0].data = chartsData1;
-                        this.column.xAxis.categories = chartsData3;
-                    } else {
-                        this.column.series[1].data = [0, 0, 0, 0, 0, 0, 0, 0];
-                        this.column.series[0].data = [0, 0, 0, 0, 0, 0, 0, 0];
-                        this.column.xAxis.categories = ['唐钢', '邯钢', '宣钢', '承钢', '舞钢', '石钢', '衡板', '邯宝'];
+                    let chartsData1 = [];
+                    let chartsData2 = [];
+                    let chartsData3 = [];
+                    for (let k = 0; k < res.length; k++) {
+                        chartsData2.push(res[k].JH);
+                        chartsData1.push(res[k].XH);
+                        chartsData3.push(res[k].COMPANYNAME);
                     }
+                    this.column.series[1].data = chartsData2;
+                    this.column.series[0].data = chartsData1;
+                    this.column.xAxis.categories = chartsData3;
                     this.option = this.column;
                 })
 
@@ -322,6 +300,8 @@
                 })
             },
             getAll() {
+                this.option = {};
+                this.pieOption = {};
                 this.isA = false,
                     this.isB = true,
                     this.isC = true,
@@ -339,6 +319,8 @@
                 this.TableData()
             },
             getRb() {
+                this.option = {};
+                this.pieOption = {};
                 this.isA = true,
                     this.isB = false,
                     this.isC = false,
@@ -355,6 +337,8 @@
                 this.handleListApproveHistory()
             },
             getLb() {
+                this.option = {};
+                this.pieOption = {};
                 this.isA = true,
                     this.isB = false,
                     this.isC = true,
@@ -371,6 +355,8 @@
                 this.handleListApproveHistory()
             },
             getKhb() {
+                this.option = {};
+                this.pieOption = {};
                 this.isA = true,
                     this.isB = false,
                     this.isC = true,
@@ -387,6 +373,8 @@
                 this.handleListApproveHistory()
             },
             getXd() {
+                this.option = {};
+                this.pieOption = {};
                 this.isA = true,
                     this.isB = false,
                     this.isC = true,
@@ -403,6 +391,8 @@
                 this.handleListApproveHistory()
             },
             getBx() {
+                this.option = {};
+                this.pieOption = {};
                 this.isA = true,
                     this.isB = false,
                     this.isC = true,

@@ -9,7 +9,9 @@
             <label class="yfgc">统计月份：
                 <DatePicker type="month" placeholder="起始月份" :editable="false" :clearable="false" v-model="startTime" style="width:120px">
                 </DatePicker>
-                <DatePicker type="month" placeholder="结束月份" :editable="false" :clearable="false" v-model="endTime" style="width:120px">
+            </label>
+            <label>
+                <DatePicker type="month" placeholder="结束月份" :editable="false" :clearable="false" v-model="endTime" style="width:120px;">
                 </DatePicker>
             </label>
         </div>
@@ -19,7 +21,7 @@
                     <Option v-for="item in ghfsList" :value="item.label" :key="item.label">{{ item.label }}</Option>
                 </Select>
             </label>
-                <CheckboxGroup v-model="checkText" class="yfgc">钢厂：
+                <CheckboxGroup v-model="checkText" class="yfgc" @on-change="change(data)">钢厂：
                     <Checkbox label="全部"></Checkbox>
                     <Checkbox label="唐钢"></Checkbox>
                     <Checkbox label="邯钢"></Checkbox>
@@ -142,19 +144,18 @@
             handleListApproveHistory() {
                 let startTime = 'beginTime=';
                 let endTime='&endTime=';
-                this.switchTime ? (startTime = startTime + (this.utils.formatMonthStart(this.startTime)).substring(0, 7)) : (startTime = startTime + (this.utils.formatYearStart(this.year)).substring(0, 7));
-                this.switchTime2 ? (endTime = endTime + (this.utils.formatMonthEnd(this.endTime)).substring(0, 7)) : (endTime = endTime + (this.utils.formatYearEnd(this.year)).substring(0, 7));
+                this.switchTime?(startTime=startTime+this.utils.formatMonthStart(this.startTime),endTime=endTime+this.utils.formatMonthStart(this.endTime)):(startTime=startTime+ this.utils.formatYearStart(this.year),endTime=endTime+this.utils.formatYearEnd(this.year));
+                let idList = "idList="+this.checkText.toString();
                 let params = {
                     page: '0',
                     limit: '10',
-                    idList:this.checkText,
                     supplyMode : this.model2,
                     varieties : this.model1,
                 }
                 fetch(this.$store.state.fetchPath + "/protocolAccountDetailsStatistics/list", {
                     method: "POST",
                     headers: this.$store.state.fetchHeader,
-                    body:startTime+endTime+'&'+this.utils.formatParams(params),
+                    body:startTime+endTime+'&'+this.utils.formatParams(params)+'&'+idList,
                     credentials:'include'
                 })
                     .then((res) => {
@@ -166,7 +167,7 @@
                     }).then((res) => {
                     res = res&&res.length>0?JSON.parse(res):[]
                     this.resDatas =  res;
-                    window.console.log(res)
+
                 })
             },
             changepage(index) {
