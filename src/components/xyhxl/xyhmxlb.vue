@@ -322,7 +322,6 @@
                     content: '确认删除吗？',
                     onOk: () => {
                         this.protocolAccountId=r.PROTOCOLACCOUNTID;
-                        window.console.log(this.protocolAccountId);
                         fetch(this.$store.state.fetchPath + "/protocolAccountDetails/delete", {
                             method: "POST",
                             headers: this.$store.state.fetchHeader,
@@ -383,7 +382,6 @@
                         for(let i=0;i<a.length;i++){
                             this.plDelectData.push(a[i].PROTOCOLACCOUNTID);
                         }
-                        window.console.log(this.plDelectData);
                         fetch(this.$store.state.fetchPath + "/protocolAccountDetails/deleteList", {
                             method: "POST",
                             headers: this.$store.state.fetchHeader,

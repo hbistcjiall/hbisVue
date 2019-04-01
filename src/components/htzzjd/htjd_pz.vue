@@ -134,7 +134,6 @@
                 }).then((res) => {
                     res = res.length>0?JSON.parse(res):[];
                     this.lists =  this.utils.htjdTree(res);
-                     window.console.log(this.lists)
                 })
 
                 fetch(this.$store.state.fetchPath + "/allocation/selScheduleByCx", {
