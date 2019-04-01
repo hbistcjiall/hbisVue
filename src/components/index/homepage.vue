@@ -1,8 +1,7 @@
 <template>
     <div>
-        <ul v-for="item in arry2" style="margin-left:1%;">
+        <ul v-for="item in arry2" style="margin-left:12%;">
             <router-link :to="item.URL">
-                <!--<li :style="{'background-image':item.background}">-->
                 <li>
                     <p>{{item.MENUNAME}}</p>
                     <img v-bind:src="item.background" alt="">
@@ -98,11 +97,14 @@
 
     ul {
         list-style: none;
+        margin-top: 80px;
+        width:80%;
+        margin-left: 30%;
     }
 
     li {
-        width: 28%;
-        height: 150px;
+        width: 25%;
+        height: 130px;
         float: left;
         position: relative;
         margin-left:5%;
