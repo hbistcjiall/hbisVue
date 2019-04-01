@@ -11,7 +11,7 @@
                     v-bind:class="{ blue:index==active}"> {{ todo.text }}</li>
             </ul>
         </div>
-        <Table :columns="columns" :data="resDatas" border height="500">
+        <Table :loading="loading" :columns="columns" :data="resDatas" border height="500">
             <template slot-scope="{ row }" slot="name">
             <strong>{{ row.name }}</strong>
             </template>
@@ -30,6 +30,7 @@
                 isD: false,
                 isE: true,
                 isF: false,
+                loading:true,
                 active:0,
                 zt:1,
                 todos: [
@@ -131,6 +132,7 @@
                     }).then((res) => {
                     res = res&&res.length>0?JSON.parse(res):[]
                         this.resDatas =  res;
+                        this.loading = false;
                 })
 
             },
