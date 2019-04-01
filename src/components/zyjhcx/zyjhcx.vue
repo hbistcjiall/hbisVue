@@ -63,7 +63,7 @@
                     <Button @click="downLoad()" icon="ios-cloud-download-outline">导出</Button>
                 </Col>
                 <Col span="2" style="line-height: 30px;margin-top: 10px;float: right">
-                    <p>单位：元</p>
+                    <p>单位：吨</p>
                 </Col>
             </Row>
         </Form>
@@ -80,8 +80,8 @@
                 zyjhcx:{
                     pz:'',
                     cx:'',
-                    nf:'',
-                    yf:'1',
+                    nf:'2019',
+                    yf:'4',
                     xszt:''
                 },
                 pzData:[],

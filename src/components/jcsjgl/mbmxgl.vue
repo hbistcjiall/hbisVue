@@ -95,7 +95,7 @@
                     nov: '',
                     dec: ''
                 },
-                year: '',
+                year: '2019',
                 updModal: false,
                 dictData: {
                     code: '',

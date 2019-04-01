@@ -16,10 +16,10 @@
             </Col>
             <Col span="2">
                 <FormItem label="上传时间:">
-                    <DatePicker type="datetimerange" @on-change="serTime" format="yyyy-MM-dd" placeholder="请选择上传时间" style="width: 130px"></DatePicker>
+                    <DatePicker type="datetimerange" @on-change="serTime" format="yyyy-MM-dd" placeholder="请选择上传时间" style="width: 175px"></DatePicker>
                 </FormItem>
             </Col>
-            <Col span="3" style="margin-left: 120px">
+            <Col span="3" style="margin-left: 160px">
                 <FormItem label="协议年份:">
                 <DatePicker type="year" v-model='year' style="width: 100px"></DatePicker>
                 </FormItem>
@@ -114,7 +114,7 @@
                 },
                 begin:'',
                 end:'',
-                year:'',
+                year:'2019',
                 protocolAccountId:'',
                 dataCount: 0,
                 pageSize: 10,
