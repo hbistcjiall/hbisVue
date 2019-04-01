@@ -145,6 +145,25 @@
                 }).then((res) => {
                     res = res && res.length > 0 ? JSON.parse(res) : [];
                     this.data =  res;
+                    const compare = (name, minor) => {
+                        return function (o, p) {
+                            var a, b;
+                            if (o && p && typeof o === 'object' && typeof p === 'object') {
+                                a = o[name];
+                                b = p[name];
+                                if (a === b) {
+                                    return typeof minor === 'function' ? minor(o, p) : 0;
+                                }
+                                if (typeof a === typeof b) {
+                                    return a < b ? -1 : 1;
+                                }
+                                return typeof a < typeof b ? -1 : 1;
+                            } else {
+                                this.$Message.error("error");
+                            }
+                        }
+                    };
+                    this.data.sort(compare('RQ', compare('CX', compare('XSZT',compare('PZ')))))
                     this.loading = false;
                 });
             },
