@@ -49,7 +49,7 @@
                         title: '单位',
                         align: "center",
                         width: 85,
-                        key: 'COMPANY'
+                        key: 'company'
                     },
                     {
                         title: ' ',
@@ -69,25 +69,25 @@
                                         title: 'φ6.5mm',
                                         align: 'center',
                                         width: 85,
-                                        key: 'GXDATA1'
+                                        key: 'gxData1'
                                     },
                                     {
                                         title: 'φ8mm',
                                         align: 'center',
                                         width: 85,
-                                        key: 'GXDATA2'
+                                        key: 'gxData2'
                                     },
                                     {
                                         title: 'φ10mm',
                                         align: 'center',
                                         width: 85,
-                                        key: 'GXDATA3'
+                                        key: 'gxData3'
                                     },
                                     {
                                         title: 'φ12mm',
                                         align: 'center',
                                         width: 85,
-                                        key: 'GXDATA4'
+                                        key: 'gxData4'
                                     }
                                 ]
                             },
@@ -99,25 +99,25 @@
                                         title: 'φ6mm',
                                         align: 'center',
                                         width: 85,
-                                        key: 'PLDATA1'
+                                        key: 'plData1'
                                     },
                                     {
                                         title: 'φ8mm',
                                         align: 'center',
                                         width: 85,
-                                        key: 'PLDATA2'
+                                        key: 'plData2'
                                     },
                                     {
                                         title: 'φ10mm',
                                         align: 'center',
                                         width: 85,
-                                        key: 'PLDATA3'
+                                        key: 'plData3'
                                     },
                                     {
                                         title: 'φ12mm',
                                         align: 'center',
                                         width: 85,
-                                        key: 'PLDATA4'
+                                        key: 'plData4'
                                     }
                                 ]
                             },
@@ -129,25 +129,25 @@
                                         title: 'φ6mm',
                                         align: 'center',
                                         width: 85,
-                                        key: 'PLDATA5'
+                                        key: 'plData5'
                                     },
                                     {
                                         title: 'φ8mm',
                                         align: 'center',
                                         width: 85,
-                                        key: 'PLDATA6'
+                                        key: 'plData6'
                                     },
                                     {
                                         title: 'φ10mm',
                                         align: 'center',
                                         width: 85,
-                                        key: 'PLDATA7'
+                                        key: 'plData7'
                                     },
                                     {
                                         title: 'φ12mm',
                                         align: 'center',
                                         width: 85,
-                                        key: 'PLDATA8'
+                                        key: 'plData8'
                                     }
                                 ]
                             },
@@ -159,79 +159,79 @@
                                         title: 'φ10mm',
                                         align: 'center',
                                         width: 85,
-                                        key: 'LWDATA1'
+                                        key: 'lwData1'
                                     },
                                     {
                                         title: 'φ12mm',
                                         align: 'center',
                                         width: 85,
-                                        key: 'LWDATA2'
+                                        key: 'lwData2'
                                     },
                                     {
                                         title: 'φ14mm',
                                         align: 'center',
                                         width: 85,
-                                        key: 'LWDATA3'
+                                        key: 'lwData3'
                                     },
                                     {
                                         title: 'φ16mm',
                                         align: 'center',
                                         width: 85,
-                                        key: 'LWDATA4'
+                                        key: 'lwData4'
                                     },
                                     {
                                         title: 'φ18mm',
                                         align: 'center',
                                         width: 85,
-                                        key: 'LWDATA5'
+                                        key: 'lwData5'
                                     },
                                     {
                                         title: 'φ20mm',
                                         align: 'center',
                                         width: 85,
-                                        key: 'LWDATA6'
+                                        key: 'lwData6'
                                     },
                                     {
                                         title: 'φ22mm',
                                         align: 'center',
                                         width: 85,
-                                        key: 'LWDATA7'
+                                        key: 'lwData7'
                                     },
                                     {
                                         title: 'φ25mm',
                                         align: 'center',
                                         width: 85,
-                                        key: 'LWDATA8'
+                                        key: 'lwData8'
                                     },
                                     {
                                         title: 'φ28mm',
                                         align: 'center',
                                         width: 85,
-                                        key: 'LWDATA9'
+                                        key: 'lwData9'
                                     },
                                     {
                                         title: 'φ32mm',
                                         align: 'center',
                                         width: 85,
-                                        key: 'LWDATA10'
+                                        key: 'lwData10'
                                     },
                                     {
                                         title: 'φ36mm',
                                         align: 'center',
                                         width: 85,
-                                        key: 'LWDATA11'
+                                        key: 'lwData11'
                                     },
                                     {
                                         title: 'φ40mm',
                                         align: 'center',
                                         width: 85,
-                                        key: 'LWDATA12'
+                                        key: 'lwData12'
                                     },
                                     {
                                         title: 'φ18-25mm',
                                         align: 'center',
                                         width: 100,
-                                        key: 'LWDATA13'
+                                        key: 'lwData13'
                                     },
                                 ]
                             },
@@ -243,79 +243,79 @@
                                         title: 'φ10mm',
                                         align: 'center',
                                         width: 85,
-                                        key: 'LWDATA14'
+                                        key: 'lwData14'
                                     },
                                     {
                                         title: 'φ12mm',
                                         align: 'center',
                                         width: 85,
-                                        key: 'LWDATA15'
+                                        key: 'lwData15'
                                     },
                                     {
                                         title: 'φ14mm',
                                         align: 'center',
                                         width: 85,
-                                        key: 'LWDATA16'
+                                        key: 'lwData16'
                                     },
                                     {
                                         title: 'φ16mm',
                                         align: 'center',
                                         width: 85,
-                                        key: 'LWDATA17'
+                                        key: 'lwData17'
                                     },
                                     {
                                         title: 'φ18mm',
                                         align: 'center',
                                         width: 85,
-                                        key: 'LWDATA18'
+                                        key: 'lwData18'
                                     },
                                     {
                                         title: 'φ20mm',
                                         align: 'center',
                                         width: 85,
-                                        key: 'LWDATA19'
+                                        key: 'lwData19'
                                     },
                                     {
                                         title: 'φ22mm',
                                         align: 'center',
                                         width: 85,
-                                        key: 'LWDATA20'
+                                        key: 'lwData20'
                                     },
                                     {
                                         title: 'φ25mm',
                                         align: 'center',
                                         width: 85,
-                                        key: 'LWDATA21'
+                                        key: 'lwData21'
                                     },
                                     {
                                         title: 'φ28mm',
                                         align: 'center',
                                         width: 85,
-                                        key: 'LWDATA22'
+                                        key: 'lwData22'
                                     },
                                     {
                                         title: 'φ32mm',
                                         align: 'center',
                                         width: 85,
-                                        key: 'LWDATA23'
+                                        key: 'lwData23'
                                     },
                                     {
                                         title: 'φ36mm',
                                         align: 'center',
                                         width: 85,
-                                        key: 'LWDATA24'
+                                        key: 'lwData24'
                                     },
                                     {
                                         title: 'φ40mm',
                                         align: 'center',
                                         width: 85,
-                                        key: 'LWDATA25'
+                                        key: 'lwData25'
                                     },
                                     {
                                         title: 'φ18-25mm',
                                         align: 'center',
                                         width: 100,
-                                        key: 'LWDATA26'
+                                        key: 'lwData26'
                                     },
                                 ]
                             },
