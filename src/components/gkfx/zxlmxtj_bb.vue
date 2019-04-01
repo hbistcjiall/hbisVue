@@ -1,0 +1,212 @@
+<template>
+    <div>
+        <div class="divStyle">
+            <label style="float:left">产品类别：
+                <Select v-model="model1" style="width:200px">
+                     <Option v-for="item in cplbList" :value="item.label" :key="item.label">{{ item.label }}</Option>
+                </Select>
+            </label>
+            <label class="yfgc">统计月份：
+                <DatePicker type="month" placeholder="起始月份" :editable="false" :clearable="false" v-model="startTime" style="width:120px">
+                </DatePicker>
+                <DatePicker type="month" placeholder="结束月份" :editable="false" :clearable="false" v-model="endTime" style="width:120px">
+                </DatePicker>
+            </label>
+        </div>
+        <div class="divStyle">
+            <label style="float:left">供货方式：
+                <Select v-model="model2" style="width:200px">
+                    <Option v-for="item in ghfsList" :value="item.label" :key="item.label">{{ item.label }}</Option>
+                </Select>
+            </label>
+                <CheckboxGroup v-model="checkText" class="yfgc">钢厂：
+                    <Checkbox label="全部"></Checkbox>
+                    <Checkbox label="唐钢"></Checkbox>
+                    <Checkbox label="邯钢"></Checkbox>
+                    <Checkbox label="宣钢"></Checkbox>
+                    <Checkbox label="承钢"></Checkbox>
+                    <Checkbox label="舞钢"></Checkbox>
+                </CheckboxGroup>
+        </div>
+        <div>
+            <Button @click="search()" icon="ios-search" type="primary" style="margin-right:20px;">查询</Button>
+            <Button @click="downLoad()" icon="ios-cloud-download-outline" type="primary">导出</Button>
+        </div>
+        <Table border stripe :columns="columns12" :data="resDatas" style="margin-top: 20px" ref="table">
+            <template slot-scope="{ row }" slot="name">
+                <strong>{{ row.name }}</strong>
+            </template>
+        </Table>
+        <Page :total="dataCount" :page-size="pageSize" show-total show-elevator show-sizer class="paging" @on-change="changepage" style="margin-top:20px;"></Page>
+    </div>
+
+</template>
+<script>
+    export default {
+        name:'zxlmxtj_bb',
+        data () {
+            return {
+                dataCount: 0,
+                pageSize: 10,
+                xia: 0,
+                model1:'全部',
+                cplbList:[
+                    {label:'全部',value:'0'},
+                    {label:'热板',value:'1'},
+                    {label:'冷板',value:'2'},
+                    {label:'宽厚板',value:'3'},
+                    {label:'棒线',value:'4'},
+                    {label:'型带',value:'5'},
+                ],
+                startTime: new Date(),
+                endTime: new Date(),
+                switchTime: true,
+                switchTime2:true,
+                model2:'全部',
+                ghfsList:[
+                    {label:'全部',value:'0'},
+                    {label:'直供',value:'1'},
+                    {label:'三方',value:'2'},
+                    {label:'资办公司',value:'3'},
+                ],
+                checkText:['全部'],
+                resDatas : [],
+                columns12: [
+                    {
+                        title: '序号',
+                        align: "center",
+                        type: 'index',
+                    },
+                    {
+                        title: '统计月份',
+                        align: "center",
+                        key: 'STATISTICSTIME'
+                    },
+                    {
+                        title: '用户名称（全称）',
+                        align: "center",
+                        key: 'ACCOUNTNAME'
+                    },
+                    {
+                        title: '供货方式',
+                        align: "center",
+                        key: 'SUPPLYMODE'
+                    },
+                    {
+                        title: '品种',
+                        align: "center",
+                        key: 'VARIETIES'
+                    },
+                    {
+                        title: '主销售区域',
+                        align: "center",
+                        key: 'MAINSALESREGIONAL'
+                    },
+                    {
+                        title: '辅助销售区域一',
+                        align: "center",
+                        key: 'AIDEDSALESREGIONALONE'
+                    },
+                    {
+                        title: '辅助销售区域二',
+                        align: "center",
+                        key: 'AIDEDSALESREGIONALTWO'
+                    },
+                    {
+                        title: '钢厂',
+                        align: "center",
+                        key: 'STEELMILLS'
+                    },
+                    {
+                        title: '协议议量（吨）',
+                        align: "center",
+                        key: 'ANNUALAGREEMENTVOLUME'
+                    },
+                    {
+                        title: '当期协议销量（吨）',
+                        align: "center",
+                        key: 'ORDERMOUNT'
+                    },
+                    {
+                        title: '当期执行集团协议加值销量（吨）',
+                        align: "center",
+                        key: 'PROTOCOLORDERMOUNT'
+                    },
+                ],
+            }
+        },
+        created() {
+            this.handleListApproveHistory();
+        },
+        methods: {
+            handleListApproveHistory() {
+                let startTime = 'beginTime=';
+                let endTime='&endTime=';
+                this.switchTime ? (startTime = startTime + (this.utils.formatMonthStart(this.startTime)).substring(0, 7)) : (startTime = startTime + (this.utils.formatYearStart(this.year)).substring(0, 7));
+                this.switchTime2 ? (endTime = endTime + (this.utils.formatMonthEnd(this.endTime)).substring(0, 7)) : (endTime = endTime + (this.utils.formatYearEnd(this.year)).substring(0, 7));
+                let params = {
+                    page: '0',
+                    limit: '10',
+                    idList:this.checkText,
+                    supplyMode : this.model2,
+                    varieties : this.model1,
+                }
+                fetch(this.$store.state.fetchPath + "/protocolAccountDetailsStatistics/list", {
+                    method: "POST",
+                    headers: this.$store.state.fetchHeader,
+                    body:startTime+endTime+'&'+this.utils.formatParams(params),
+                    credentials:'include'
+                })
+                    .then((res) => {
+                        if(res.status!=200){
+                            this.$Message.error('请求失败！');
+                        }else{
+                            return res.text();
+                        }
+                    }).then((res) => {
+                    res = res&&res.length>0?JSON.parse(res):[]
+                    this.resDatas =  res;
+                    window.console.log(res)
+                })
+            },
+            changepage(index) {
+                this.dictData.page=index;
+                this.handleListApproveHistory();
+            },
+            search(){
+                this.handleListApproveHistory();
+            },
+            downLoad(){
+                this.$refs.table.exportCsv({
+                    filename: '完成情况明细'
+                });
+            }
+        }
+    }
+</script>
+<style scoped>
+    .paging{
+        float:right;
+        margin-top:10px;
+    }
+    .userbtn{
+        margin-right:10px;
+    }
+    button{
+        background: #3497db;
+        color:#fff;
+    }
+    table button{
+        background: #f2f4f7;
+        color:#546c8c;
+    }
+    .divStyle{
+        width:700px;
+        height:30px;
+        margin:0 auto;
+        margin-bottom:20px;
+    }
+    .yfgc{
+        margin-left:20px;
+    }
+</style>
