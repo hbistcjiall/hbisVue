@@ -1,7 +1,7 @@
 <template>
     <div>
         <Row class="titleH" id="zyphjh"><span>资源平衡计划</span></Row>
-        <div class="content" style="height:900px">
+        <div class="content" style="height:950px">
             <zyphjh></zyphjh>
         </div>
         <Row class="titleH" id="htzzjd"><span>合同组织进度</span></Row>
@@ -24,7 +24,7 @@
                     <AnchorLink href="#zyphjh" title="资源平衡计划" />
                     <AnchorLink href="#htzzjd" title="合同组织进度" />
                     <AnchorLink href="#wcqk" title="结算完成情况" />
-                    <AnchorLink href="#pzgwcqk" title="品种钢完成情况" />
+                    <!--<AnchorLink href="#pzgwcqk" title="品种钢完成情况" />-->
                 </Anchor>
             </div>
         </div>
@@ -34,7 +34,7 @@
     import zyphjh from '../gkfx/zyphjh'
     import htzzjd from '../htzzjd/htjd_pz'
     import jswcqk from '../gkfx/jswcqk'
-    import pzgwcqk from '../gkfx/pzgwcqk'
+    // import pzgwcqk from '../gkfx/pzgwcqk'
     export default {
         name: "home",
         data(){
@@ -46,7 +46,7 @@
             zyphjh,
             htzzjd,
             jswcqk,
-            pzgwcqk
+            // pzgwcqk
         },
         methods:{
             mouseout(){

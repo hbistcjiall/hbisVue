@@ -100,14 +100,17 @@
                 ],
                 Csvj:{
                     flName:"",
+                    date:'2019-03'
                 },
                 CXQvalue:{
                     flName:"",
-                    sort:"0"
+                    sort:"1",
+                    date:'2019-03'
                 },
                 CXHvalue:{
                     flName:"",
-                    sort:"1"
+                    sort:"1",
+                    date:'2019-03'
                 },
             }
         },
@@ -130,7 +133,6 @@
                 }).then((res) => {
                     res = res.length>0?JSON.parse(res):[];
                     this.lists =  this.utils.htjdTree(res);
-                    window.console.log(this.lists)
                 })
 
                 fetch(this.$store.state.fetchPath + "/allocation/selScheduleByCx", {
@@ -147,6 +149,7 @@
                 }).then((res) => {
                     res = res.length>0?JSON.parse(res):[];
                     this.CXQ =  this.utils.htjdTree(res);
+                    window.console.log(typeof (this.CXQ))
                 })
 
                 fetch(this.$store.state.fetchPath + "/allocation/selScheduleByCx", {
@@ -176,9 +179,12 @@
                     this.isD2= true
                 this.Csvj.flName = '';
                 this.CXQvalue.flName = '';
-                this.CXQvalue.sort = '0';
+                this.CXQvalue.sort = '1';
                 this.CXHvalue.flName = '';
                 this.CXHvalue.sort = '1';
+                this.CXHvalue.date = '2019-03';
+                this.Csvj.date = '2019-03';
+                this.CXQvalue.date = '2019-03';
                 this.handleListApproveHistory();
             },
             getXszgs(){
@@ -195,6 +201,9 @@
                 this.CXQvalue.sort = '0';
                 this.CXHvalue.flName = '3';
                 this.CXHvalue.sort = '1';
+                this.CXHvalue.date = '2019-03';
+                this.Csvj.date = '2019-03';
+                this.CXQvalue.date = '2019-03';
                 this.handleListApproveHistory();
 
             },
@@ -212,6 +221,9 @@
                 this.CXQvalue.sort = '0';
                 this.CXHvalue.flName = '4';
                 this.CXHvalue.sort = '1';
+                this.CXHvalue.date = '2019-03';
+                this.Csvj.date = '2019-03';
+                this.CXQvalue.date = '2019-03';
                 this.handleListApproveHistory();
             },
             getCk(){
@@ -228,6 +240,9 @@
                 this.CXQvalue.sort = '0';
                 this.CXHvalue.flName = '2';
                 this.CXHvalue.sort = '1';
+                this.CXHvalue.date = '2019-03';
+                this.Csvj.date = '2019-03';
+                this.CXQvalue.date = '2019-03';
                 this.handleListApproveHistory();
             }
         }
