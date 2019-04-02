@@ -50,7 +50,7 @@
                 columns: [
                     {
                         title: '品种',
-                        key: 'VARIETY',
+                        key: 'PZNAME',
                         align: 'center',
                         width: 100,
                     },
@@ -62,19 +62,19 @@
                         children: [
                             {
                                 title: '计划量',
-                                key: 'ZJHL',
+                                key: 'HJJHL',
                                 align: 'center',
                                 width: 100,
                             },
                             {
                                 title: '合同量',
-                                key: 'ZHTL',
+                                key: 'HJHTL',
                                 align: 'center',
                                 width: 100,
                             },
                             {
-                                title: '完成比例',
-                                key: 'ZWCBL',
+                                title: '完成比例（%）',
+                                key: 'SCHEDULEHJ',
                                 align: 'center',
                                 width: 100,
                             }
@@ -86,31 +86,31 @@
                         align: 'center',
                         children: [{
                             title: '计划量',
-                            key: 'ZYJHL',
+                            key: 'PLANNUMXSZ',
                             align: 'center',
                             width: 100
                         },
                             {
                                 title: '合同量（专业公司）',
-                                key: 'ZYHTL',
+                                key: 'ZYGSHTL',
                                 align: 'center',
                                 width: 100,
                             },
                             {
                                 title: '合同量（分公司）',
-                                key: 'HTL',
+                                key: 'ZYFGSHTL',
                                 align: 'center',
                                 width: 100,
                             },
                             {
-                                title: '完成比例',
-                                key: 'ZYWCBL',
+                                title: '完成比例（%）',
+                                key: 'SCHEDULEXSZ',
                                 align: 'center',
                                 width: 100,
                             },
                             {
                                 title: '进度',
-                                key: 'ZYJD',
+                                key: 'JDXSZ',
                                 align: 'center',
                                 width: 100,
                             }
@@ -122,7 +122,7 @@
                         align: 'center',
                         children: [{
                             title: '计划量',
-                            key: 'ZGSJHL',
+                            key: 'PLANNUMZGS',
                             align: 'center',
                             width: 100
                         },
@@ -133,14 +133,14 @@
                                 width: 100,
                             },
                             {
-                                title: '完成比例',
-                                key: 'ZGSWCBL',
+                                title: '完成比例（%）',
+                                key: 'SCHEDULEZGS',
                                 align: 'center',
                                 width: 100
                             },
                             {
                                 title: '进度',
-                                key: 'ZGSJD',
+                                key: 'JDZGS',
                                 align: 'center',
                                 width: 100
                             }
@@ -152,7 +152,7 @@
                         align: 'center',
                         children: [{
                             title: '计划量',
-                            key: 'CKJHL',
+                            key: 'PLANNUMCK',
                             align: 'center',
                             width: 100
                         },
@@ -163,14 +163,14 @@
                                 width: 100,
                             },
                             {
-                                title: '完成比例',
-                                key: 'CKWCBL',
+                                title: '完成比例（%）',
+                                key: 'SCHEDULECK',
                                 align: 'center',
                                 width: 100
                             },
                             {
                                 title: '进度',
-                                key: 'CKJD',
+                                key: 'JDCK',
                                 align: 'center',
                                 width: 100
                             }
@@ -202,7 +202,7 @@
             getList() {
                 let params={};
                 params.pz = this.pz
-                let startTime='startTime=';
+                let startTime='date=';
                 let endTime='&endTime=';
                 startTime=startTime+this.utils.formatMonthStart(this.startTime);
                 endTime=endTime+this.utils.formatMonthStart(this.endTime);
@@ -220,6 +220,12 @@
                 }).then((res) => {
                     res = res && res.length > 0 ? JSON.parse(res) : [];
                     this.data =  res;
+                    // for(var i=0;this.data.length>0;i++){
+                        // this.data[i].SCHEDULE = this.data[i].SCHEDULE+'%';
+                        // this.data[i].ZGSSCHEDULE = this.data[i].ZGSSCHEDULE+'%'
+                        // this.data[i].SCHEDULEZ = this.data[i].SCHEDULEZ+'%'
+                        // this.data[i].SCHEDULEC = this.data[i].SCHEDULEC+'%'
+                    // }
                     this.loading = false;
                 });
             },

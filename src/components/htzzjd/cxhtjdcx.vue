@@ -14,11 +14,11 @@
                         <DatePicker type="month" placeholder="起始月份" :editable="false" :clearable="false" v-model="startTime" style="width:150px"></DatePicker>
                     </FormItem>
                 </Col>
-                <Col span="4">
-                    <FormItem>
-                        <DatePicker type="month" placeholder="终止月份"  :editable="false" :clearable="false" v-model="endTime" style="width:150px"></DatePicker>
-                    </FormItem>
-                </Col>
+                <!--<Col span="4">-->
+                    <!--<FormItem>-->
+                        <!--<DatePicker type="month" placeholder="终止月份"  :editable="false" :clearable="false" v-model="endTime" style="width:150px"></DatePicker>-->
+                    <!--</FormItem>-->
+                <!--</Col>-->
                 <Col span="4">
                     <span>&nbsp;</span>
                 </Col>
@@ -37,11 +37,12 @@
     export default {
         name: "cxhtjdcx",
         data() {
+            let ckjhl = 'CKJHL';
             return {
                 loading:true,
                 cx:'',
                 startTime:new Date(),
-                endTime:this.utils.formatMonthEnd(),
+                // endTime:this.utils.formatMonthEnd(),
                 // pzData:[],
                 cxData:[],
                 cxCx:{
@@ -50,7 +51,7 @@
                 columns: [
                     {
                         title: '产线',
-                        key: 'NAME',
+                        key: 'DNAME',
                         align: 'center',
                         width: 100,
                     },
@@ -62,19 +63,19 @@
                         children: [
                             {
                                 title: '计划量',
-                                key: 'ZJHL',
+                                key: 'HJJHL',
                                 align: 'center',
                                 width: 100,
                             },
                             {
                                 title: '合同量',
-                                key: 'ZHTL',
+                                key: 'HJHTL',
                                 align: 'center',
                                 width: 100,
                             },
                             {
-                                title: '完成比例',
-                                key: 'ZWCBL',
+                                title: '完成比例（%）',
+                                key: 'SCHEDULEHJ',
                                 align: 'center',
                                 width: 100,
                             }
@@ -86,31 +87,31 @@
                         align: 'center',
                         children: [{
                             title: '计划量',
-                            key: 'ZYJHL',
+                            key: 'PLANNUMXSZ',
                             align: 'center',
                             width: 100
                         },
                             {
                                 title: '合同量（专业公司）',
-                                key: 'ZYHTL',
+                                key: 'ZYGSHTL',
                                 align: 'center',
                                 width: 100,
                             },
                             {
                                 title: '合同量（分公司）',
-                                key: 'HTL',
+                                key: 'ZYFGSHTL',
                                 align: 'center',
                                 width: 100,
                             },
                             {
-                                title: '完成比例',
-                                key: 'WCBL',
+                                title: '完成比例（%）',
+                                key: 'SCHEDULEXSZ',
                                 align: 'center',
                                 width: 100,
                             },
                             {
                                 title: '进度',
-                                key: 'JD',
+                                key: 'JDXSZ',
                                 align: 'center',
                                 width: 100,
                             }
@@ -122,7 +123,7 @@
                         align: 'center',
                         children: [{
                             title: '计划量',
-                            key: 'ZGSJHL',
+                            key: 'PLANNUMZGS',
                             align: 'center',
                             width: 100
                         },
@@ -133,14 +134,14 @@
                                 width: 100,
                             },
                             {
-                                title: '完成比例',
-                                key: 'ZGSWCBL',
+                                title: '完成比例（%）',
+                                key: 'SCHEDULEZGS',
                                 align: 'center',
                                 width: 100
                             },
                             {
                                 title: '进度',
-                                key: 'ZGSJD',
+                                key: 'JDZGS',
                                 align: 'center',
                                 width: 100
                             }
@@ -163,14 +164,14 @@
                                 width: 100,
                             },
                             {
-                                title: '完成比例',
-                                key: 'CKWCBL',
+                                title: '完成比例（%）',
+                                key: 'SCHEDULECK',
                                 align: 'center',
                                 width: 100
                             },
                             {
                                 title: '进度',
-                                key: 'CKJD',
+                                key: 'JDCK',
                                 align: 'center',
                                 width: 100
                             }
@@ -202,15 +203,15 @@
         methods: {
             getList() {
                 let params={};
-                params.cx = this.cx
-                let startTime='startTime=';
-                let endTime='&endTime=';
+                params.cxName = this.cx
+                let startTime='date=';
+                // let endTime='&endTime=';
                 startTime=startTime+this.utils.formatMonthStart(this.startTime);
-                endTime=endTime+this.utils.formatMonthStart(this.endTime);
+                // endTime=endTime+this.utils.formatMonthStart(this.endTime);
                 fetch(this.$store.state.fetchPath + "/scm-steel-settle/getcxhtjd", {
                     method: "POST",
                     headers: this.$store.state.fetchHeader,
-                    body: startTime+endTime+'&'+this.utils.formatParams(params),
+                    body: startTime+'&'+this.utils.formatParams(params),
                     credentials: 'include'
                 }).then((res) => {
                     if(res.status!=200){
@@ -221,6 +222,12 @@
                 }).then((res) => {
                     res = res && res.length > 0 ? JSON.parse(res) : [];
                     this.data =  res;
+                    // for(var i=0;this.data.length>0;i++){
+                    //     this.data[i].ZWCBL = this.data[i].ZWCBL+'%';
+                    //     this.data[i].WCBL = this.data[i].WCBL+'%'
+                    //     this.data[i].ZGSWCBL = this.data[i].ZGSWCBL+'%'
+                    //     this.data[i].CKWCBL = this.data[i].CKWCBL+'%'
+                    // }
                     this.loading = false;
                 });
             },
