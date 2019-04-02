@@ -63,6 +63,8 @@
                 switchTime:true,
                 year:new Date(),
                 startTime:new Date(),
+                titleYear:'',
+                titleMonth:'',
                 endTime:this.utils.formatMonthEnd(),
                 zrbm: '',
                 columns:[
@@ -72,7 +74,7 @@
                         align: 'center',
                     },
                     {
-                        title: '2019年1月内贸结算',
+                        title: '',
                         key: 'nmjs',
                         align: 'center',
                         children:[
@@ -115,20 +117,34 @@
         },
         mounted() {
             this.getList();
+            this.titleMonth = this.utils.formatMonthStart(this.startTime).substring(5,7);
+            this.titleYear = this.utils.formatYearStart(this.startTime).substring(0,4);
+            this.columns[1].title = this.titleYear+'年'+ this.titleMonth+'月内贸结算'
         },
         methods:{
             changeSwitch(){
                 let date=new Date();
                 this.switchTime?(this.startTime=date,this.endTime=this.utils.formatMonthEnd()):this.year=date;
+                if(this.switchTime == true){
+                    this.columns[1].title = this.titleYear+'年'+ this.titleMonth+'月内贸结算'
+                }else{
+                    this.columns[1].title = this.titleYear+'年内贸结算'
+                }
             },
             getList() {
-
                 let params={
                 };
                 this.zrbm?params.zrbm=this.zrbm:'';
                 let startTime='startTime=';
                 let endTime='&endTime=';
                 this.switchTime?(startTime=startTime+this.utils.formatMonthStart(this.startTime),endTime=endTime+this.utils.formatMonthStart(this.endTime)):(startTime=startTime+ this.utils.formatYearStart(this.year),endTime=endTime+this.utils.formatYearEnd(this.year));
+                this.titleMonth = this.utils.formatMonthStart(this.startTime).substring(5,7);
+                this.titleYear = this.utils.formatYearStart(this.startTime).substring(0,4);
+                if(this.switchTime == true){
+                    this.columns[1].title = this.titleYear+'年'+ this.titleMonth+'月内贸结算'
+                }else{
+                    this.columns[1].title = this.titleYear+'年内贸结算'
+                }
                 fetch(this.$store.state.fetchPath + "/scm-steel-settle/getzrbm", {
                     method: "POST",
                     headers: this.$store.state.fetchHeader,

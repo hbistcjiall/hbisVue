@@ -6,11 +6,11 @@
                      <Option v-for="item in cplbList" :value="item.label" :key="item.label">{{ item.label }}</Option>
                 </Select>
             </label>
-            <label class="yfgc">统计月份：
+            <label class="yfgc" style="margin-left:-20px;">统计月份：
                 <DatePicker type="month" placeholder="起始月份" :editable="false" :clearable="false" v-model="startTime" style="width:120px">
                 </DatePicker>
             </label>
-            <label>
+            <label style="margin-left:50px">
                 <DatePicker type="month" placeholder="结束月份" :editable="false" :clearable="false" v-model="endTime" style="width:120px;">
                 </DatePicker>
             </label>
@@ -63,7 +63,6 @@
                 startTime: new Date(),
                 endTime: new Date(),
                 switchTime: true,
-                switchTime2:true,
                 model2:'全部',
                 ghfsList:[
                     {label:'全部',value:'0'},
@@ -166,8 +165,11 @@
                         }
                     }).then((res) => {
                     res = res&&res.length>0?JSON.parse(res):[]
-                    this.resDatas =  res;
-
+                    if(res.list.data.length<0 || res.list.data.length == 0){
+                        return;
+                    }else{
+                        this.resDatas =  res;
+                    }
                 })
             },
             changepage(index) {
