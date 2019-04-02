@@ -36,6 +36,7 @@
         name: "jswcqk",
         data(){
             return {
+                eData:'',
                 isA: true,
                 isB: false,
                 isC: true,
@@ -211,11 +212,15 @@
         mounted() {
             this.getTime(0,1);
         },
+        created(){
+            this.getIndex();
+        },
         methods: {
             getTime(e) {
                 let params = {
                     zt:this.zt
                 }
+                this.eData = e
                 this.pieOption = {};
                 this.option = {};
                 let startTime='startTime=';
@@ -320,15 +325,54 @@
                     this.loading = false;
                 })
             },
+            getIndex(){
+                let e = this.eData
+                let params = {
+                    zt:this.zt
+                }
+                let startTime='startTime=';
+                let endTime='&endTime=';
+                switch (e) {
+                    case 0:
+                        startTime=startTime+this.utils.formatMonthStart();
+                        endTime=endTime+this.utils.formatMonthEnd();
+                        break;
+                    case 1:
+                        startTime=startTime+this.utils.formatMonthBefore();
+                        endTime=endTime+this.utils.formatMonthStart();break;
+                    case 2:
+                        startTime=startTime+ this.utils.formatYearStart(new Date());
+                        endTime=endTime+this.utils.formatYearEnd(new Date());
+                        break;
+                }
+                fetch(this.$store.state.fetchPath + "/scm-steel-settle/getpzgjswc", {
+                    method: "POST",
+                    headers: this.$store.state.fetchHeader,
+                    body:startTime+endTime+'&'+this.utils.formatParams(params),
+                    credentials:'include'
+                })
+                    .then((res) => {
+                        if(res.status!=200){
+                            this.$Message.error('请求失败！');
+                        }else{
+                            return res.text();
+                        }
+                    }).then((res) => {
+                    res = res&&res.length>0?JSON.parse(res):[]
+                    this.resDatas =  res;
+                    this.loading = false;
+                })
+            },
             tabsClick(index){
                 this.active1=index;
                 this.zt = this.active1+1;
-                this.getTime(0,this.zt);
+                // this.getTime(0,this.zt);
                 if(index ==0){
                     this.columns[0].children[0].title = '品种'
                 }else if(index == 1){
                     this.columns[0].children[0].title = '钢厂'
                 }
+                this.getIndex()
             },
         }
     }
