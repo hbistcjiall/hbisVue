@@ -100,17 +100,17 @@
                 ],
                 Csvj:{
                     flName:"",
-                    date:'2019-03'
+                    date:'201903'
                 },
                 CXQvalue:{
                     flName:"",
                     sort:"0",
-                    date:'2019-03'
+                    date:'201903'
                 },
                 CXHvalue:{
                     flName:"",
                     sort:"1",
-                    date:'2019-03'
+                    date:'201903'
                 },
             }
         },
@@ -220,9 +220,9 @@
                 this.CXQvalue.sort = '0';
                 this.CXHvalue.flName = '';
                 this.CXHvalue.sort = '1';
-                this.CXHvalue.date = '2019-03';
-                this.Csvj.date = '2019-03';
-                this.CXQvalue.date = '2019-03';
+                this.CXHvalue.date = '201903';
+                this.Csvj.date = '201903';
+                this.CXQvalue.date = '201903';
                 this.handleListApproveHistory();
             },
             getXszgs(){
@@ -239,9 +239,9 @@
                 this.CXQvalue.sort = '0';
                 this.CXHvalue.flName = '3';
                 this.CXHvalue.sort = '1';
-                this.CXHvalue.date = '2019-03';
-                this.Csvj.date = '2019-03';
-                this.CXQvalue.date = '2019-03';
+                this.CXHvalue.date = '201903';
+                this.Csvj.date = '201903';
+                this.CXQvalue.date = '201903';
                 this.handleListApproveHistory();
 
             },
@@ -259,9 +259,9 @@
                 this.CXQvalue.sort = '0';
                 this.CXHvalue.flName = '4';
                 this.CXHvalue.sort = '1';
-                this.CXHvalue.date = '2019-03';
-                this.Csvj.date = '2019-03';
-                this.CXQvalue.date = '2019-03';
+                this.CXHvalue.date = '201903';
+                this.Csvj.date = '201903';
+                this.CXQvalue.date = '201903';
                 this.handleListApproveHistory();
             },
             getCk(){
@@ -278,9 +278,9 @@
                 this.CXQvalue.sort = '0';
                 this.CXHvalue.flName = '2';
                 this.CXHvalue.sort = '1';
-                this.CXHvalue.date = '2019-03';
-                this.Csvj.date = '2019-03';
-                this.CXQvalue.date = '2019-03';
+                this.CXHvalue.date = '201903';
+                this.Csvj.date = '201903';
+                this.CXQvalue.date = '201903';
                 this.handleListApproveHistory();
             }
         }
