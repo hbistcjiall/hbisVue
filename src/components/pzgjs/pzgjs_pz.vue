@@ -62,7 +62,7 @@
                 pz:'',
                 columns: [{
                     title: '品种',
-                    key: 'VARIETY',
+                    key: 'NAME',
                     align: 'center',
                     width: 100,
                     fixed: 'left'
