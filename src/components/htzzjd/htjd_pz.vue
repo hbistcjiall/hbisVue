@@ -66,7 +66,7 @@
             <div class="pxTitleStyle">前10</div>
             <ul class="ulStyle">
                 <li class="item-icon-right" v-for="list in CXQ">
-                    <div class="titleStyle">{{list.cxtitle}}<span style="margin-left:10px;">合同量:{{list.ycl}}万</span></div>
+                    <div class="titleStyle">{{list.cxtitle}}<span style="margin-left:10px;">合同量:{{list.ycl}}吨</span></div>
                     <div class="progressContainer">
                         <div class="PCtitle">进度:</div>
                         <div class="progress" :style="{width:list.wcbl+'%','background-color':'#3793cf'}">
@@ -83,7 +83,7 @@
                 <div class="pxTitleStyle">后10</div>
             <ul class="ulStyle">
                 <li class="item-icon-right" v-for="list in CXH" style="font-size: 5px">
-                    <div class="titleStyle">{{list.cxtitle}}<span style="margin-left:10px;">合同量:{{list.ycl}}万</span></div>
+                    <div class="titleStyle">{{list.cxtitle}}<span style="margin-left:10px;">合同量:{{list.ycl}}吨</span></div>
                     <div class="progressContainer">
                         <div class="PCtitle">进度:</div>
                         <div class="progress" :style="{width:list.wcbl+'%','background-color':'#3793cf'}">
