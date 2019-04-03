@@ -74,7 +74,7 @@
                                 width: 100,
                             },
                             {
-                                title: '完成比例（%）',
+                                title: '完成比例',
                                 key: 'SCHEDULEHJ',
                                 align: 'center',
                                 width: 100,
@@ -104,7 +104,7 @@
                                 width: 100,
                             },
                             {
-                                title: '完成比例（%）',
+                                title: '完成比例',
                                 key: 'SCHEDULEXSZ',
                                 align: 'center',
                                 width: 100,
@@ -134,7 +134,7 @@
                                 width: 100,
                             },
                             {
-                                title: '完成比例（%）',
+                                title: '完成比例',
                                 key: 'SCHEDULEZGS',
                                 align: 'center',
                                 width: 100
@@ -164,7 +164,7 @@
                                 width: 100,
                             },
                             {
-                                title: '完成比例（%）',
+                                title: '完成比例',
                                 key: 'SCHEDULECK',
                                 align: 'center',
                                 width: 100
@@ -223,12 +223,12 @@
                 }).then((res) => {
                     res = res && res.length > 0 ? JSON.parse(res) : [];
                     this.data =  res;
-                    // for(var i=0;this.data.length>0;i++){
-                    //     this.data[i].ZWCBL = this.data[i].ZWCBL+'%';
-                    //     this.data[i].WCBL = this.data[i].WCBL+'%'
-                    //     this.data[i].ZGSWCBL = this.data[i].ZGSWCBL+'%'
-                    //     this.data[i].CKWCBL = this.data[i].CKWCBL+'%'
-                    // }
+                    for(var i=0;this.data.length>i;i++){
+                        this.data[i].SCHEDULECK = this.data[i].SCHEDULECK+'%';
+                        this.data[i].SCHEDULEZGS = this.data[i].SCHEDULEZGS+'%'
+                        this.data[i].SCHEDULEXSZ = this.data[i].SCHEDULEXSZ+'%'
+                        this.data[i].SCHEDULEHJ = this.data[i].SCHEDULEHJ+'%'
+                    }
                     this.loading = false;
                 });
             },

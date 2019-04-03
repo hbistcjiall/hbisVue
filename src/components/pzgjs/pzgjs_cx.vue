@@ -108,7 +108,7 @@
                     },
                     {
                         title: '环比',
-                        key: 'hb',
+                        key: 'HB',
                         align: 'center',
                     },
                     {
