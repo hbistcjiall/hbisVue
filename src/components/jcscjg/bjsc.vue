@@ -385,7 +385,6 @@
                             }
                         }
                     }
-                    window.console.log(newArray);
                     this.data =  newArray;
                     this.data=this.utils.mergeRow(newArray,'orderDay');
                     this.loading = false;
