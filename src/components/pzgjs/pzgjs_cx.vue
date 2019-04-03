@@ -205,7 +205,6 @@
                 });
             },
             changeSwitch(){
-                this.loading = true;
                 let date=new Date();
                 this.switchTime?(this.startTime=date,this.endTime=this.utils.formatMonthEnd()):this.year=date;
             },
