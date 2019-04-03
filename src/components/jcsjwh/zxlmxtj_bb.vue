@@ -3,17 +3,17 @@
         <div class="divStyle">
             <label style="float:left">产品类别：
                 <Select v-model="model1" style="width:200px">
-                     <Option v-for="item in cplbList" :value="item.label" :key="item.label">{{ item.label }}</Option>
+                    <Option v-for="item in cplbList" :value="item.label" :key="item.label">{{ item.label }}</Option>
                 </Select>
             </label>
             <label class="yfgc" style="margin-left:-20px;">统计月份：
-                <DatePicker type="month" placeholder="起始月份" :editable="false" :clearable="false" v-model="startTime" style="width:120px">
-                </DatePicker>
             </label>
-            <label style="margin-left:50px">
-                <DatePicker type="month" placeholder="结束月份" :editable="false" :clearable="false" v-model="endTime" style="width:120px;">
-                </DatePicker>
-            </label>
+            <DatePicker type="month" placeholder="起始月份" :editable="false" :clearable="false" v-model="startTime"
+                        style="width:120px">
+            </DatePicker>
+            <DatePicker style="margin-left:50px;width:120px;" type="month" placeholder="结束月份" :editable="false" :clearable="false"
+                        v-model="endTime" >
+            </DatePicker>
         </div>
         <div class="divStyle">
             <label style="float:left">供货方式：
@@ -21,14 +21,14 @@
                     <Option v-for="item in ghfsList" :value="item.label" :key="item.label">{{ item.label }}</Option>
                 </Select>
             </label>
-                <CheckboxGroup v-model="checkText" class="yfgc" @on-change="change(data)">钢厂：
-                    <Checkbox label="全部"></Checkbox>
-                    <Checkbox label="唐钢"></Checkbox>
-                    <Checkbox label="邯钢"></Checkbox>
-                    <Checkbox label="宣钢"></Checkbox>
-                    <Checkbox label="承钢"></Checkbox>
-                    <Checkbox label="舞钢"></Checkbox>
-                </CheckboxGroup>
+            <CheckboxGroup v-model="checkText" class="yfgc" @on-change="change(data)">钢厂：
+                <Checkbox label="全部"></Checkbox>
+                <Checkbox label="唐钢"></Checkbox>
+                <Checkbox label="邯钢"></Checkbox>
+                <Checkbox label="宣钢"></Checkbox>
+                <Checkbox label="承钢"></Checkbox>
+                <Checkbox label="舞钢"></Checkbox>
+            </CheckboxGroup>
         </div>
         <div>
             <Button @click="search()" icon="ios-search" type="primary" style="margin-right:20px;">查询</Button>
@@ -39,39 +39,40 @@
                 <strong>{{ row.name }}</strong>
             </template>
         </Table>
-        <Page :total="dataCount" :page-size="pageSize" show-total show-elevator show-sizer class="paging" @on-change="changepage" style="margin-top:20px;"></Page>
+        <Page :total="dataCount" :page-size="pageSize" show-total show-elevator show-sizer class="paging"
+              @on-change="changepage" style="margin-top:20px;"></Page>
     </div>
 
 </template>
 <script>
     export default {
-        name:'zxlmxtj_bb',
-        data () {
+        name: 'zxlmxtj_bb',
+        data() {
             return {
                 dataCount: 0,
                 pageSize: 10,
                 xia: 0,
-                model1:'全部',
-                cplbList:[
-                    {label:'全部',value:'0'},
-                    {label:'热板',value:'1'},
-                    {label:'冷板',value:'2'},
-                    {label:'宽厚板',value:'3'},
-                    {label:'棒线',value:'4'},
-                    {label:'型带',value:'5'},
+                model1: '全部',
+                cplbList: [
+                    {label: '全部', value: '0'},
+                    {label: '热板', value: '1'},
+                    {label: '冷板', value: '2'},
+                    {label: '宽厚板', value: '3'},
+                    {label: '棒线', value: '4'},
+                    {label: '型带', value: '5'},
                 ],
                 startTime: new Date(),
                 endTime: new Date(),
                 switchTime: true,
-                model2:'全部',
-                ghfsList:[
-                    {label:'全部',value:'0'},
-                    {label:'直供',value:'1'},
-                    {label:'三方',value:'2'},
-                    {label:'资办公司',value:'3'},
+                model2: '全部',
+                ghfsList: [
+                    {label: '全部', value: '0'},
+                    {label: '直供', value: '1'},
+                    {label: '三方', value: '2'},
+                    {label: '资办公司', value: '3'},
                 ],
-                checkText:['全部'],
-                resDatas : [],
+                checkText: ['全部'],
+                resDatas: [],
                 columns12: [
                     {
                         title: '序号',
@@ -142,44 +143,44 @@
         methods: {
             handleListApproveHistory() {
                 let startTime = 'beginTime=';
-                let endTime='&endTime=';
-                this.switchTime?(startTime=startTime+this.utils.formatMonthStart(this.startTime),endTime=endTime+this.utils.formatMonthStart(this.endTime)):(startTime=startTime+ this.utils.formatYearStart(this.year),endTime=endTime+this.utils.formatYearEnd(this.year));
-                let idList = "idList="+this.checkText.toString();
+                let endTime = '&endTime=';
+                this.switchTime ? (startTime = startTime + this.utils.formatMonthStart(this.startTime), endTime = endTime + this.utils.formatMonthStart(this.endTime)) : (startTime = startTime + this.utils.formatYearStart(this.year), endTime = endTime + this.utils.formatYearEnd(this.year));
+                let idList = "idList=" + this.checkText.toString();
                 let params = {
                     page: '0',
                     limit: '10',
-                    supplyMode : this.model2,
-                    varieties : this.model1,
+                    supplyMode: this.model2,
+                    varieties: this.model1,
                 }
                 fetch(this.$store.state.fetchPath + "/protocolAccountDetailsStatistics/list", {
                     method: "POST",
                     headers: this.$store.state.fetchHeader,
-                    body:startTime+endTime+'&'+this.utils.formatParams(params)+'&'+idList,
-                    credentials:'include'
+                    body: startTime + endTime + '&' + this.utils.formatParams(params) + '&' + idList,
+                    credentials: 'include'
                 })
                     .then((res) => {
-                        if(res.status!=200){
+                        if (res.status != 200) {
                             this.$Message.error('请求失败！');
-                        }else{
+                        } else {
                             return res.text();
                         }
                     }).then((res) => {
-                    res = res&&res.length>0?JSON.parse(res):[]
-                    if(res.list.data.length<0 || res.list.data.length == 0){
+                    res = res && res.length > 0 ? JSON.parse(res) : []
+                    if (res.list.data.length < 0 || res.list.data.length == 0) {
                         return;
-                    }else{
-                        this.resDatas =  res;
+                    } else {
+                        this.resDatas = res;
                     }
                 })
             },
             changepage(index) {
-                this.dictData.page=index;
+                this.dictData.page = index;
                 this.handleListApproveHistory();
             },
-            search(){
+            search() {
                 this.handleListApproveHistory();
             },
-            downLoad(){
+            downLoad() {
                 this.$refs.table.exportCsv({
                     filename: '完成情况明细'
                 });
@@ -188,28 +189,33 @@
     }
 </script>
 <style scoped>
-    .paging{
-        float:right;
-        margin-top:10px;
+    .paging {
+        float: right;
+        margin-top: 10px;
     }
-    .userbtn{
-        margin-right:10px;
+
+    .userbtn {
+        margin-right: 10px;
     }
-    button{
+
+    button {
         background: #3497db;
-        color:#fff;
+        color: #fff;
     }
-    table button{
+
+    table button {
         background: #f2f4f7;
-        color:#546c8c;
+        color: #546c8c;
     }
-    .divStyle{
-        width:700px;
-        height:30px;
-        margin:0 auto;
-        margin-bottom:20px;
+
+    .divStyle {
+        width: 700px;
+        height: 30px;
+        margin: 0 auto;
+        margin-bottom: 20px;
     }
-    .yfgc{
-        margin-left:20px;
+
+    .yfgc {
+        margin-left: 20px;
     }
 </style>

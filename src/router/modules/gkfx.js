@@ -27,11 +27,47 @@ export default [
         }
     },
     {
-        path: '/gkfx/zxlmxtj_bb',
+        path: '/xyhxl/xszgsmx',
         name: 'zxlmxtj_bb',
-        component: resolve => require(['@/components/gkfx/zxlmxtj_bb'], resolve),
+        component: resolve => require(['@/components/jcsjwh/zxlmxtj_bb'], resolve),
         meta: {
             title: '销售总公司协议户总销量明细统计',
+            isLogin: true
+        }
+    },
+    {
+        path: '/xyhxl/cpzxl',
+        name: 'cpzxljxsgsxyhxltjgn',
+        component: resolve => require(['@/components/jcsjwh/cpzxljxsgsxyhxltjgn'], resolve),
+        meta: {
+            title: '产品总销量及销售公司协议户销量统计',
+            isLogin: true
+        }
+    },
+    {
+        path: '/jcsjgl/xsylhztdy',
+        name: 'xsztylhztdy',
+        component: resolve => require(['@/components/jcsjwh/xsztylhztdy'], resolve),
+        meta: {
+            title: '销售主体与例会主体对应',
+            isLogin: true
+        }
+    },
+    {
+        path: '/jcsjgl/xyhyhtdwdy',
+        name: 'xyhyhtdwdy',
+        component: resolve => require(['@/components/jcsjwh/xyhyhtdwdy'], resolve),
+        meta: {
+            title: '协议户与合同单位对应',
+            isLogin: true
+        }
+    },
+    {
+        path: '/jcsjgl/ddyjglxdy',
+        name: 'ddlxyjglxdy',
+        component: resolve => require(['@/components/jcsjwh/ddlxyjglxdy'], resolve),
+        meta: {
+            title: '订单类型与价格类型对应',
             isLogin: true
         }
     },
