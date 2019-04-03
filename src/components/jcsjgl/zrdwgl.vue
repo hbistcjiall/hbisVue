@@ -95,6 +95,7 @@
         },
         methods: {
             handleListApproveHistory() {
+                this.loading =true
                 fetch(this.$store.state.fetchPath + "/acctabilityunit/selaccountmanager", {
                     method: "POST",
                     headers: this.$store.state.fetchHeader,

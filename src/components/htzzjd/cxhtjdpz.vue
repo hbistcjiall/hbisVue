@@ -200,6 +200,7 @@
         },
         methods: {
             getList() {
+                this.loading = true;
                 let params={};
                 params.pz = this.pz
                 let startTime='date=';

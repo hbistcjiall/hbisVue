@@ -331,6 +331,7 @@
         },
         methods: {
             getList() {
+                this.loading = true;
                 let params={};
                 this.cx?params.company=this.cx:'';
                 let startTime='endMonth=';

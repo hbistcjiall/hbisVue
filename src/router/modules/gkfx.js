@@ -18,15 +18,6 @@ export default [
         }
     },
     {
-        path: '/gkfx/pzgwcqk',
-        name: 'pzgwcqk',
-        component: resolve => require(['@/components/gkfx/pzgwcqk'], resolve),
-        meta: {
-            title: '品种钢完成情况',
-            isLogin: true
-        }
-    },
-    {
         path: '/gkfx/jswcqk',
         name: 'jswcqk',
         component: resolve => require(['@/components/gkfx/jswcqk'], resolve),

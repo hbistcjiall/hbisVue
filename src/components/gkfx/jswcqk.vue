@@ -220,6 +220,7 @@
                 let params = {
                     zt:this.zt
                 }
+                this.loading = true;
                 this.eData = e
                 this.pieOption = {};
                 this.option = {};
@@ -326,6 +327,7 @@
                 })
             },
             getIndex(){
+                this.loading = true;
                 let e = this.eData
                 let params = {
                     zt:this.zt

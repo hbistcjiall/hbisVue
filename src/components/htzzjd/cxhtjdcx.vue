@@ -202,6 +202,7 @@
         },
         methods: {
             getList() {
+                this.loading = true;
                 let params={};
                 params.cxName = this.cx
                 let startTime='date=';

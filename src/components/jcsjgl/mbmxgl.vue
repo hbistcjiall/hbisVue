@@ -259,7 +259,7 @@
         },
         methods: {
             handleListApproveHistory() {
-
+                this.loading = true
                 this.year ? this.dictData.year = new Date(this.year).getFullYear() : '';
                 fetch(this.$store.state.fetchPath + "/TargetManage/selTargetManage", {
                     method: "POST",

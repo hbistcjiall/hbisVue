@@ -130,6 +130,7 @@
         },
         methods: {
             getList() {
+                this.loading = true;
                 let params={};
                 this.zgs?params.companyId=this.zgs:'';
                 this.hz?params.summaryType=this.hz:'';
