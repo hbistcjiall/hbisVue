@@ -159,6 +159,7 @@
         },
         methods: {
             handleListApproveHistory() {
+                this.loading = true;
                 fetch(this.$store.state.fetchPath + "/role/list", {
                     method: "POST",
                     headers: this.$store.state.fetchHeader,

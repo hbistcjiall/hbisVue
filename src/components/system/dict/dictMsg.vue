@@ -120,6 +120,7 @@
         },
         methods: {
             handleListApproveHistory() {
+                this.loading = true;
                 fetch(this.$store.state.fetchPath + "/dict/list", {
                     method: "POST",
                     headers: this.$store.state.fetchHeader,

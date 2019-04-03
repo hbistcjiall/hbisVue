@@ -180,11 +180,12 @@
         },
         methods: {
             changeSwitch(){
+                this.loading = true;
                 let date=new Date();
                 this.switchTime?(this.startTime=date,this.endTime=this.utils.formatMonthEnd()):this.year=date;
             },
             getList() {
-
+                this.loading = true;
                 let params={
                 };
                 this.pz?params.pz=this.pz:'';

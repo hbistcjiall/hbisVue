@@ -275,6 +275,7 @@
                 }
             },
             search(){
+                this.loading = true;
                 this.handleListApproveHistory();
             },
             clearall(){

@@ -174,6 +174,7 @@
         },
         methods: {
             handleListApproveHistory() {
+                this.loading = true;
                 fetch(this.$store.state.fetchPath + "/menu/list", {
                     method: "POST",
                     headers: this.$store.state.fetchHeader,

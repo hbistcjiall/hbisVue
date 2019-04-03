@@ -126,6 +126,7 @@
         },
         methods: {
             getList() {
+                this.loading = true;
                 if(this.zyjhcx.nf!=''){
                     this.zyjhcx.nf=new Date(this.zyjhcx.nf).getFullYear().toString()
                 }else{

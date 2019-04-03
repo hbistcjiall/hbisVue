@@ -138,6 +138,7 @@
         methods: {
             // 获取日志记录信息
             handleListApproveHistory() {
+                this.loading = true;
                 fetch(this.$store.state.fetchPath + "/dept/list", {
                     method: "POST",
                     headers: this.$store.state.fetchHeader,

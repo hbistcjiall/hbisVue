@@ -103,6 +103,7 @@
                     })
             },
             handleListApproveHistory() {
+                this.loading = true;
                 fetch(this.$store.state.fetchPath + "/settings/selsettings", {
                     method: "POST",
                     headers: this.$store.state.fetchHeader,

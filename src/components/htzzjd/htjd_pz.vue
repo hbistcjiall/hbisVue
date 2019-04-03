@@ -17,6 +17,25 @@
                 </div>
                 <div>
                     <ul>
+                        <li class="item-icon-right" >
+                            <div class="titleStyle" style="margin-top:10px;">合计</div>
+                            <div class="progressContainer">
+                                <div class="progress" :style="{width:this.wcblValue+'%','background-color':'#ed4117'}" v-if="this.wcblValue <= 49">
+                                    <b>已产量:{{this.yclValue}}吨/{{this.wcblValue}}%</b>
+                                </div>
+                                <div class="progress" :style="{width:this.wcblValue+'%','background-color':'#fa9909'}" v-else-if="this.wcblValue >49 && this.wcblValue <= 79">
+                                    <b>已产量:{{this.yclValue}}吨/{{this.wcblValue}}%</b>
+                                </div>
+                                <div class="progress" :style="{width:this.wcblValue+'%','background-color':'#2ebf6b'}" v-else>
+                                    <b>已产量:{{this.yclValue}}吨/{{this.wcblValue}}%</b>
+                                </div>
+                            </div>
+                            <div class="progressContainer" style="margin-bottom:15px;">
+                                <div class="progress" :style="{width:100+'%','background-color':'#33b7f6'}">
+                                    <b>计划量:{{this.jhlValue}}吨/100%</b>
+                                </div>
+                            </div>
+                        </li>
                         <li class="item-icon-right" v-for="list in lists">
                             <div class="titleStyle" style="margin-top:10px;">{{list.title}}</div>
                             <div class="progressContainer">
@@ -92,6 +111,9 @@
                 isC2: true,
                 isD1: false,
                 isD2: true,
+                jhlValue:'',
+                yclValue:'',
+                wcblValue:'',
                 lists:[
                 ],
                 CXQ:[
@@ -133,7 +155,16 @@
                     }
                 }).then((res) => {
                     res = res.length>0?JSON.parse(res):[];
+                    let result = 0;
+                    let result1 = 0;
                     this.lists =  this.utils.htjdTree(res);
+                    for(let i=0; i<this.lists.length; i++){
+                        result += this.lists[i].jhl;
+                        result1 += this.lists[i].ycl;
+                    }
+                    this.jhlValue = result.toFixed(2);
+                    this.yclValue = result1.toFixed(2);
+                    this.wcblValue = (result1/result*100).toFixed(2);
                 })
 
                 fetch(this.$store.state.fetchPath + "/allocation/selScheduleByCx", {

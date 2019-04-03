@@ -123,6 +123,7 @@
         },
         methods:{
             changeSwitch(){
+                this.loading = true;
                 let date=new Date();
                 this.switchTime?(this.startTime=date,this.endTime=this.utils.formatMonthEnd()):this.year=date;
                 if(this.switchTime == true){
@@ -132,6 +133,7 @@
                 }
             },
             getList() {
+                this.loading = true;
                 let params={
                 };
                 this.zrbm?params.zrbm=this.zrbm:'';
