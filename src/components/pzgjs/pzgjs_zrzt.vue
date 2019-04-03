@@ -160,11 +160,11 @@
                 }).then((res) => {
                     res =res && res.length > 0 ? JSON.parse(res) : [];
                     this.data = res;
-                    for(let i=0; i<this.data.length; i++){
-                        this.data[i].WCBL = this.data[i].WCBL.toFixed(2)+'%'
-                    }
-                    window.console.log(this.data)
                     this.loading = false;
+                    for(let i=0; i<this.data.length; i++){
+                        this.data[i].WCBL = Number(this.data[i].WCBL).toFixed(2)+'%'
+                    }
+
                 });
             },
             downLoad(){
