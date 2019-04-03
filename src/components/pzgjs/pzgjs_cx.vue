@@ -231,6 +231,13 @@
                 }).then((res) => {
                     res = res && res.length > 0 ? JSON.parse(res) : [];
                     this.data = this.utils.mergeRow(res, 'COMPANYNAME');
+                    for(let i=0;i<this.data.length;i++){
+                        this.data[i].HB = (Number(this.data[i].HB)*100).toFixed(2)+'%';
+                        this.data[i].ZGSBZ = (Number(this.data[i].ZGSBZ)*100).toFixed(2)+'%';
+                        this.data[i].FGSBZ = (Number(this.data[i].FGSBZ)*100).toFixed(2)+'%';
+                        this.data[i].ZYBZ = (Number(this.data[i].ZYBZ)*100).toFixed(2)+'%';
+                        this.data[i].BZ = (Number(this.data[i].BZ)*100).toFixed(2)+'%';
+                    }
                     this.loading = false;
                 });
             },

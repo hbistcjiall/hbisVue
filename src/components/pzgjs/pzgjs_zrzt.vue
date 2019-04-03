@@ -162,9 +162,9 @@
                     this.data = res;
                     this.loading = false;
                     for(let i=0; i<this.data.length; i++){
-                        this.data[i].WCBL = Number(this.data[i].WCBL).toFixed(2)+'%'
+                        this.data[i].WCBL = Number(this.data[i].WCBL).toFixed(2)+'%';
+                        this.data[i].BZ = (Number(this.data[i].BZ)*100).toFixed(2)+'%'
                     }
-
                 });
             },
             downLoad(){
