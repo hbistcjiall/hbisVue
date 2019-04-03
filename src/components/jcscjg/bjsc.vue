@@ -42,7 +42,7 @@
                         align: "center",
                         width: 100,
                         isMergeRow:true,
-                        key: 'ORDERDAY',
+                        key: 'orderDay',
                         fixed: 'left'
                     },
                     {
@@ -55,7 +55,7 @@
                         title: ' ',
                         align: "center",
                         width: 85,
-                        key: ''
+                        key: 'type'
                     },
                     {
                         title: '2019年以来建材北京市场现货数量、出库价汇总',
@@ -349,8 +349,44 @@
                     }
                 }).then((res) => {
                     res = res && res.length > 0 ? JSON.parse(res) : [];
-                    this.data =  res.dayList;
-                    this.data=this.utils.mergeRow(res.dayList,'ORDERDAY');
+                    let newArray = [];
+                    newArray = res.dayList.concat(res.monthList).concat(res.xunList).concat(res.yearList);
+                    for(let i=0;i<newArray.length;i++)
+                    {
+                        if(newArray[i].type=='1')
+                        {
+                            newArray[i].type='结算数量';
+                        }
+                        else if(newArray[i].type=='2')
+                        {
+                            newArray[i].type='结算价格';
+                        }
+                        else{
+                            newArray[i].type='';
+                        }
+                        if(newArray[i].orderDay=='')
+                        {
+                            if(newArray[i].orderXun==''&&newArray[i].orderYear=='')
+                            {
+                                newArray[i].orderDay=newArray[i].orderMonth+"月";
+                            }
+                            else if(newArray[i].orderYear=='')
+                            {
+                                if(newArray[i].orderXun=='0')
+                                {newArray[i].orderDay=newArray[i].orderMonth+"月"+"上旬"}
+                                else if(newArray[i].orderXun=='1')
+                                {newArray[i].orderDay=newArray[i].orderMonth+"月"+"中旬"}
+                                else if(newArray[i].orderXun=='2')
+                                {newArray[i].orderDay=newArray[i].orderMonth+"月"+"下旬"}
+                            }
+                            else if(newArray[i].orderMonth==''&&newArray[i].orderXun=='')
+                            {
+                                newArray[i].orderDay=newArray[i].orderYear+"年";
+                            }
+                        }
+                    }
+                    this.data =  newArray;
+                    this.data=this.utils.mergeRow(newArray,'orderDay');
                     this.loading = false;
                 });
             },
