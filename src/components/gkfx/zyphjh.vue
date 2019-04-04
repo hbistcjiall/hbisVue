@@ -276,6 +276,9 @@
                     }).then((res) => {
                     res = res && res.length > 0 ? JSON.parse(res) : []
                     this.resDatas3 = res;
+                    for(let i=0;i<this.resDatas3.length;i++){
+                        this.resDatas3[i].BILI = this.resDatas3[i].BILI+'%'
+                    }
                     this.loading = false;
                 })
 
@@ -296,6 +299,9 @@
                     }).then((res) => {
                     res = res && res.length > 0 ? JSON.parse(res) : []
                     this.resDatas4 = res;
+                    for(let i=0;i<this.resDatas4.length;i++){
+                        this.resDatas4[i].BILI = this.resDatas4[i].BILI+'%'
+                    }
                     this.loading1 = false;
                 })
             },
