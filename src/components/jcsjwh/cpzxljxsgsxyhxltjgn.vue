@@ -170,17 +170,25 @@
                 }).then((res) => {
                     res = res && res.length > 0 ? JSON.parse(res) : [];
                     this.resDatas = res.data;
+                    for(let i=0;i<this.resDatas.length;i++)
+                    {
+                        this.resDatas[i].TOTALSALES=Number(this.resDatas[i].TOTALSALES).toFixed(2);
+                        this.resDatas[i].TOTALPROTOCOLSALES=Number(this.resDatas[i].TOTALPROTOCOLSALES).toFixed(2);
+                        this.resDatas[i].ZIBANPROTOCOLSALES=Number(this.resDatas[i].ZIBANPROTOCOLSALES).toFixed(2);
+                        this.resDatas[i].XIEYIPROTOCOLSALESOFTOTAL=Number(this.resDatas[i].XIEYIPROTOCOLSALESOFTOTAL).toFixed(2);
+                        this.resDatas[i].ZIBANPROTOCOLSALESOFTOTAL=this.resDatas[i].ZIBANPROTOCOLSALESOFTOTAL+'%';
+                        this.resDatas[i].TOTALPROTOCOLSALESOFYEAR=this.resDatas[i].TOTALPROTOCOLSALESOFYEAR+'%';
+                        this.resDatas[i].TOTALPROTOCOLSALESOFPRODUCT=this.resDatas[i].TOTALPROTOCOLSALESOFPRODUCT+'%';
+                        this.resDatas[i].XIEYIPROTOCOLSALESOFTOTAL=this.resDatas[i].XIEYIPROTOCOLSALESOFTOTAL+'%';
+                    }
                     this.dataCount = parseInt(res.count);
                     this.pageSize = parseInt(res.pageSize);
                     if (this.dataCount < this.pageSize) {
-                        // this.fecthdata6 = this.resDatas;
                         this.fecthdata6 = this.utils.mergeRow(res.data, 'COMPANYNAME');
                     } else {
                         // this.fecthdata6 = this.resDatas.slice(0, this.pageSize);
                         this.fecthdata6 = this.utils.mergeRow(res.data, 'COMPANYNAME').slice(0, this.pageSize);
                     }
-
-                    // this.fecthdata6 = this.utils.mergeRow(res, 'COMPANYNAME');
 
                     this.loading = false;
                 });
