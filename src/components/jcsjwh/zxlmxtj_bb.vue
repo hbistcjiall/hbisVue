@@ -142,6 +142,7 @@
         },
         methods: {
             handleListApproveHistory() {
+                this.loading = true;
                 let startTime = 'beginTime=';
                 let endTime = '&endTime=';
                 this.switchTime ? (startTime = startTime + this.utils.formatMonthStart(this.startTime), endTime = endTime + this.utils.formatMonthStart(this.endTime)) : (startTime = startTime + this.utils.formatYearStart(this.year), endTime = endTime + this.utils.formatYearEnd(this.year));
@@ -167,9 +168,11 @@
                     }).then((res) => {
                     res = res && res.length > 0 ? JSON.parse(res) : []
                     if (res.list.data.length < 0 || res.list.data.length == 0) {
+                        this.loading = false;
                         return;
                     } else {
                         this.resDatas = res;
+                        this.loading = false;
                     }
                 })
             },

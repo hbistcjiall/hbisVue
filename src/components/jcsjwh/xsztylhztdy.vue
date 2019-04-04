@@ -220,6 +220,7 @@
                 this.search();
             },
             search() {
+                this.loading = true;
                 fetch(this.$store.state.fetchPath + "/SalesSubjectMeetingSubject/list", {
                     method: "POST",
                     headers: this.$store.state.fetchHeader,

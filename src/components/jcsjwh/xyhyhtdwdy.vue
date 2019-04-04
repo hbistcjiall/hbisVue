@@ -131,6 +131,7 @@
                 this.search();
             },
             search() {
+                this.loading = true;
                 fetch(this.$store.state.fetchPath + "/ProtocolNameContractUnit/list", {
                     method: "POST",
                     headers: this.$store.state.fetchHeader,

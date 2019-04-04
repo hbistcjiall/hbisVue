@@ -150,6 +150,7 @@
                 this.search();
             },
             search(){
+                this.loading = true;
                 let params={};
                 this.cplb?params.cplb=this.cplb:'';
                 let startTime='beginTime=';
