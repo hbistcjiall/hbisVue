@@ -164,7 +164,11 @@
                     }
                     this.jhlValue = result.toFixed(2);
                     this.yclValue = result1.toFixed(2);
-                    this.wcblValue = (result1/result*100).toFixed(2);
+                    if(this.jhlValue == 0 || this.jhlValue == '' || this.jhlValue == null ||this.jhlValue == "0"){
+                        this.wcblValue = 0;
+                    }else{
+                        this.wcblValue = (result1/result*100).toFixed(2);
+                    }
                 })
 
                 fetch(this.$store.state.fetchPath + "/allocation/selScheduleByCx", {
@@ -282,9 +286,9 @@
                     this.isB1= false,
                     this.isB2= true,
                     this.isC1= true,
-                    this.isC2= false
+                    this.isC2= false,
                     this.isD1= false,
-                    this.isD2= true
+                    this.isD2= true,
                 this.Csvj.flName = '4';
                 this.CXQvalue.flName = '4';
                 this.CXQvalue.sort = '0';
