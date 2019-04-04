@@ -30,14 +30,14 @@
                     <FormItem label="单位：">
                         <Select v-model="dw" placeholder="请选择单位">
                             <Option value="">全部</Option>
-                            <Option value="9580">唐钢</Option>
-                            <Option value="9727">邯钢</Option>
-                            <Option value="9193">宣钢</Option>
-                            <Option value="9196">承钢</Option>
-                            <Option value="1932">舞钢</Option>
-                            <Option value="8110">石钢</Option>
-                            <Option value="8493">衡板</Option>
-                            <Option value="7778">邯宝</Option>
+                            <Option value="唐钢">唐钢</Option>
+                            <Option value="邯钢">邯钢</Option>
+                            <Option value="宣钢">宣钢</Option>
+                            <Option value="承钢">承钢</Option>
+                            <Option value="舞钢">舞钢</Option>
+                            <Option value="石钢">石钢</Option>
+                            <Option value="衡板">衡板</Option>
+                            <Option value="邯宝">邯宝</Option>
                         </Select>
                     </FormItem>
                 </Col>
