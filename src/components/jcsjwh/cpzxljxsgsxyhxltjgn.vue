@@ -27,7 +27,7 @@
                 </Col>
                 <Col span="8" style="float: left ">
                     <Button @click="search" style="margin-left:20px" icon="ios-search">查询</Button>
-                    <Button style="margin-left: 20px" icon="ios-cloud-download-outline">导出</Button>
+                    <Button @click="downLoad" style="margin-left: 20px" icon="ios-cloud-download-outline">导出</Button>
                 </Col>
             </Row>
         </Form>
@@ -185,6 +185,11 @@
                     this.loading = false;
                 });
             },
+            downLoad() {
+                this.$refs.table.exportCsv({
+                    filename: '产品总销量'
+                });
+            }
         },
     }
 </script>
