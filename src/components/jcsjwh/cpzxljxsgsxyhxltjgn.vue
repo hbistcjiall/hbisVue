@@ -185,10 +185,10 @@
                     this.dataCount = parseInt(res.count);
                     this.pageSize = parseInt(res.pageSize);
                     if (this.dataCount < this.pageSize) {
-                        this.fecthdata6 = this.utils.mergeRow(res.data, 'COMPANYNAME');
+                        this.fecthdata6 = this.utils.mergeRow(this.resDatas, 'COMPANYNAME');
                     } else {
                         // this.fecthdata6 = this.resDatas.slice(0, this.pageSize);
-                        this.fecthdata6 = this.utils.mergeRow(res.data, 'COMPANYNAME').slice(0, this.pageSize);
+                        this.fecthdata6 = this.utils.mergeRow(this.resDatas, 'COMPANYNAME').slice(0, this.pageSize);
                     }
 
                     this.loading = false;
