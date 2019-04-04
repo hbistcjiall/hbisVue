@@ -43,7 +43,7 @@
                 </Col>
                 <Col span="4">
                     <FormItem label="产线：">
-                        <Select  v-model="cx" placeholder="请选择产线">
+                        <Select  v-model="cx" placeholder="请选择产线" filterable>
                             <Option v-for="item in cxData" :value="item.value" :key="item.value">{{ item.label }}</Option>
                         </Select>
                     </FormItem>
@@ -202,6 +202,8 @@
                 }).then((res) => {
                     res = res && res.length > 0 ? JSON.parse(res) : [];
                     this.cxData = this.utils.getCx(res)
+                    let getall = {label:'全部',value:''};
+                    this.cxData.unshift(getall)
                 });
             },
             changeSwitch(){

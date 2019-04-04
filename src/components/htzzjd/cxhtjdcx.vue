@@ -4,13 +4,13 @@
             <Row>
                 <Col span="4">
                     <FormItem label="产线：" style="width:120px">
-                        <Select style="width:120px"  v-model="cx" placeholder="请选择产线">
+                        <Select style="width:150px"  v-model="cx" placeholder="请选择产线" filterable>
                             <Option v-for="item in cxData" :value="item.value" :key="item.value">{{ item.label }}</Option>
                         </Select>
                     </FormItem>
                 </Col>
                 <Col span="4">
-                    <FormItem label="月份：" style="margin-left:10px">
+                    <FormItem label="月份：" style="margin-left:20px">
                         <DatePicker type="month" placeholder="起始月份" :editable="false" :clearable="false" v-model="startTime" style="width:150px"></DatePicker>
                     </FormItem>
                 </Col>
@@ -247,6 +247,8 @@
                 }).then((res) => {
                     res = res && res.length > 0 ? JSON.parse(res) : [];
                     this.cxData = this.utils.getCx(res)
+                    let getall = {label:'全部',value:''};
+                    this.cxData.unshift(getall)
                 });
             },
             downLoad(){
