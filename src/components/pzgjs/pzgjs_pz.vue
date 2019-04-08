@@ -45,7 +45,7 @@
             </Row>
 
         </Form>
-        <Table :loading="loading" :columns="columns" :data="data" border height="500" ref="table"></Table>
+        <Table :loading="loading" :columns="columns" :data="data" border height="550" ref="table"></Table>
     </div>
 </template>
 
