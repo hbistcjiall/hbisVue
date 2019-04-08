@@ -22,7 +22,7 @@
             </template>
         </Table>
         <Page :total="dataCount" :page-size="pageSize" show-total show-elevator show-sizer class="paging"
-              @on-change="changepage" style="margin-top:20px;"></Page>
+              @on-change="changepage" @on-page-size-change='handlePageSize' style="margin-top:20px;"></Page>
         <Modal v-model="updModal" title="目标明细管理修改" :closable='false' @on-ok="updok">
             <Form :model="updformValidate" :label-width="80">
                 <FormItem label="年份：" style="width:150px" >
@@ -285,6 +285,10 @@
             changepage(index) {
                 this.dictData.page = index;
                 this.handleListApproveHistory();
+            },
+            handlePageSize(index){
+                this.dictData.limit = index;
+                this.search();
             },
             search() {
                 this.handleListApproveHistory();

@@ -50,7 +50,7 @@
             </template>
         </Table>
         <Page :total="dataCount" :page-size="pageSize" show-total show-elevator show-sizer class="paging"
-              @on-change="changepage" style="margin-top:20px;">
+              @on-change="changepage"  @on-page-size-change='handlePageSize' style="margin-top:20px;">
         </Page>
         <Modal v-model="updModal" title="新增订单类型与价格类型对应" :closable='false' @on-ok="addok">
             <Form :model="addddlxyjglxdyData" :rules="updrule" :label-width="90">
@@ -212,6 +212,10 @@
         methods: {
             changepage(index) {
                 this.ddlxyjglxdyData.page = index;
+                this.search();
+            },
+            handlePageSize(index){
+                this.ddlxyjglxdyData.limit = index;
                 this.search();
             },
             search() {

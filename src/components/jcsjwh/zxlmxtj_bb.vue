@@ -40,7 +40,7 @@
             </template>
         </Table>
         <Page :total="dataCount" :page-size="pageSize" show-total show-elevator show-sizer class="paging"
-              @on-change="changepage" style="margin-top:20px;"></Page>
+              @on-change="changepage" @on-page-size-change='handlePageSize' style="margin-top:20px;"></Page>
     </div>
 
 </template>
@@ -179,6 +179,10 @@
             changepage(index) {
                 this.dictData.page = index;
                 this.handleListApproveHistory();
+            },
+            handlePageSize(index){
+                this.xsztylhztdyData.limit = index;
+                this.search();
             },
             search() {
                 this.handleListApproveHistory();

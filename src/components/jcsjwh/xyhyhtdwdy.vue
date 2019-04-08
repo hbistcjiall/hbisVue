@@ -24,7 +24,7 @@
             </template>
         </Table>
         <Page :total="dataCount" :page-size="pageSize" show-total show-elevator show-sizer class="paging"
-              @on-change="changepage2" style="margin-top:20px;"></Page>
+              @on-change="changepage2" @on-page-size-change='handlePageSize' style="margin-top:20px;"></Page>
         <Modal v-model="updModal" title="新增协议户与合同单位对应" :closable='false' @on-ok="addok">
             <Form :model="addxyhyhtdata" :rules="updrule" :label-width="90">
                 <FormItem label="协议户名称" prop="xieyihumingcheng">
@@ -128,6 +128,10 @@
         methods: {
             changepage2(index) {
                 this.xyhyhtdata.page = index;
+                this.search();
+            },
+            handlePageSize(index) {
+                this.xsztylhztdyData.limit = index;
                 this.search();
             },
             search() {

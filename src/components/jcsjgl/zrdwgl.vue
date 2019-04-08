@@ -13,7 +13,7 @@
                 <Button size="small" @click="remove(row)" style="background:#ff6969;color:#fff;">删除</Button>
             </template>
         </Table>
-        <Page :total="dataCount" :page-size="pageSize" show-total show-elevator show-sizer class="paging" @on-change="changepage" style="margin-top:20px;"></Page>
+        <Page :total="dataCount" @on-page-size-change='handlePageSize' :page-size="pageSize" show-total show-elevator show-sizer class="paging" @on-change="changepage" style="margin-top:20px;"></Page>
         <Modal v-model="updModal" title="责任单位管理" :closable='false' @on-ok="updok">
             <Form :model="updformValidate" :rules="updruleValidate" :label-width="90">
                 <FormItem label="编码" prop="code">
@@ -124,6 +124,10 @@
             changepage(index) {
                 this.dictData.page=index;
                 this.handleListApproveHistory();
+            },
+            handlePageSize(index){
+                this.dictData.limit = index;
+                this.search();
             },
             search(){
                 this.handleListApproveHistory();

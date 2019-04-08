@@ -30,7 +30,8 @@
                 <Button size="small" @click="remove(row)" style="background:#ff6969;color:#fff;">删除</Button>
             </template>
         </Table>
-        <Page :total="dataCount" :page-size="pageSize" show-total show-elevator show-sizer class="paging"  @on-change="changepage1" style="margin-top:20px;"></Page>
+        <Page :total="dataCount" :page-size="pageSize" show-total show-elevator show-sizer class="paging"
+              @on-change="changepage1" @on-page-size-change='handlePageSize' style="margin-top:20px;"></Page>
         <Modal v-model="updModal" title="新增销售主体与例会主体" :closable='false' @on-ok="addok">
             <Form :model="addformValidate" :rules="updruleValidate" :label-width="90">
                 <FormItem label="钢厂" prop="gangchang">
@@ -217,6 +218,10 @@
             },
             changepage1(index) {
                 this.xsztylhztdyData.page = index;
+                this.search();
+            },
+            handlePageSize(index){
+                this.xsztylhztdyData.limit = index;
                 this.search();
             },
             search() {

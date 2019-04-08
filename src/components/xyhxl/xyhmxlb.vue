@@ -53,7 +53,7 @@
                 <Button size="small" @click="remove(row)" style="background:#ff6969;color:#fff;">删除</Button>
             </template>
         </Table>
-        <Page :total="dataCount" :page-size="pageSize" show-total show-elevator show-sizer class="paging" @on-change="changepage" style="margin-top:20px;"></Page>
+        <Page :total="dataCount" :page-size="pageSize" show-total show-elevator show-sizer class="paging" @on-change="changepage" @on-page-size-change='handlePageSize' style="margin-top:20px;"></Page>
         <Modal v-model="updModal" title="协议户编辑" :closable='false' @on-ok="updok">
             <Form :model="updformValidate" :rules="updruleValidate" :label-width="90">
                 <FormItem label="协议年份" prop="Yearofagreement">
@@ -263,6 +263,10 @@
             changepage(index) {
                 this.xyhmxlbData.page=index;
                 this.handleListApproveHistory();
+            },
+            handlePageSize(index){
+                this.xyhmxlbData.limit = index;
+                this.search();
             },
             serTime(e){
                 this.Dates=e;
