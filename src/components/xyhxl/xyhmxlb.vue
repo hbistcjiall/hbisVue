@@ -40,7 +40,7 @@
                 <Button type="primary" @click="search" style="margin-left:20px" icon="ios-search">查询</Button>
                 <Button type="primary" @click="clearall" style="margin-left:10px">清空</Button>
                 <Button type="primary" @click="pldelect" style="margin-left:10px">批量删除</Button>
-                <Button type="primary" @click="downLoad" style="margin-left:10px" icon="ios-cloud-download-outline">导出</Button>
+                <a :href="downloadUrl"><Button type="primary" style="margin-left:10px">导出</Button></a>
             </Col>
         </Row>
         </Form>
@@ -103,6 +103,8 @@
             return {
                 loading:true,
                 updModal:false,
+                downloadUrl:'',
+                downloadData:{},
                 xyhmxlbData: {
                     beginTime:'',
                     endTime:'',
@@ -257,6 +259,7 @@
                     }else{
                         this.fecthdata6 = this.resDatas.slice(0,this.pageSize);
                     }
+                    this.downLoad();
                     this.loading = false;
                 })
             },
@@ -301,25 +304,12 @@
 
             },
             downLoad(){
-                // fetch(this.$store.state.fetchPath + "/protocolAccountDetails/exportlist", {
-                //     method: "POST",
-                //     headers: this.$store.state.fetchHeader,
-                //     body: this.utils.formatParams(this.xyhmxlbData),
-                //     credentials:'include'
-                // })
-                //     .then((res) => {
-                //         if(res.status!=200){
-                //             this.$Message.error('请求失败！');
-                //         }else{
-                //             return res.text();
-                //         }
-                //     })
-                //     .then(() => {
-                //         this.handleListApproveHistory();
-                //     })
-                    this.$refs.table.exportCsv({
-                        filename: '协议户明细列表'
-                    });
+                this.downloadData.beginTime= this.xyhmxlbData.beginTime;
+                this.downloadData.endTime = this.xyhmxlbData.endTime;
+                this.downloadData.protocolYear = this.xyhmxlbData.protocolYear;
+                this.downloadData.varieties = this.xyhmxlbData.varieties;
+                this.downloadData.steelMills = this.xyhmxlbData.steelMills;
+                this.downloadUrl=this.$store.state.fetchPath + "/protocolAccountDetails/exportlist?"+this.utils.formatParams(this.downloadData);
             },
             remove (r) {
                 this.$Modal.confirm({
