@@ -20,14 +20,15 @@
         </div>
         <div>
             <div class="LeftImg">
-                <Table :loading="loading" border stripe :columns="columns1" :data="resDatas3" height="550" style="margin-top: 20px" id="allTable1">
+
+                <Table :loading="loading" border stripe :columns="columns1" :data="resDatas3"  style="margin-top: 20px" id="allTable1">
                     <template slot-scope="{ row }" slot="name">
                         <strong>{{ row.name }}</strong>
                     </template>
                 </Table>
             </div>
             <div class="RigtImg">
-                <Table :loading="loading1" border stripe :columns="columns2" :data="resDatas4" height="550" style="margin-top: 20px" id="allTable2">
+                <Table :loading="loading1" border stripe :columns="columns2" :data="resDatas4"  style="margin-top: 20px" id="allTable2">
                     <template slot-scope="{ row }" slot="name">
                         <strong>{{ row.name }}</strong>
                     </template>

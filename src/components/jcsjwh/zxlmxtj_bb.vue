@@ -14,8 +14,6 @@
             <DatePicker style="margin-left:50px;width:120px;" type="month" placeholder="结束月份" :editable="false" :clearable="false"
                         v-model="endTime" >
             </DatePicker>
-        </div>
-        <div class="divStyle">
             <label style="float:left">供货方式：
                 <Select v-model="model2" style="width:200px">
                     <Option v-for="item in ghfsList" :value="item.label" :key="item.label">{{ item.label }}</Option>
@@ -34,7 +32,7 @@
             <Button @click="search()" icon="ios-search" type="primary" style="margin-right:20px;">查询</Button>
             <Button @click="downLoad()" icon="ios-cloud-download-outline" type="primary">导出</Button>
         </div>
-        <Table border stripe :columns="columns12" :data="resDatas" style="margin-top: 20px" ref="table">
+        <Table border stripe :columns="columns12" :data="resDatas" style="margin-top: 40px" ref="table">
             <template slot-scope="{ row }" slot="name">
                 <strong>{{ row.name }}</strong>
             </template>
@@ -219,7 +217,8 @@
         width: 700px;
         height: 30px;
         margin: 0 auto;
-        margin-bottom: 20px;
+        /*margin-bottom: 20px;*/
+        float: left;
     }
 
     .yfgc {
