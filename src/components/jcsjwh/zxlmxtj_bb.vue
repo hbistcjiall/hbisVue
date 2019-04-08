@@ -2,24 +2,25 @@
     <div>
         <div class="divStyle">
             <label style="float:left">产品类别：
-                <Select v-model="model1" style="width:200px">
+                <Select v-model="model1" style="width:120px">
                     <Option v-for="item in cplbList" :value="item.label" :key="item.label">{{ item.label }}</Option>
                 </Select>
             </label>
-            <label class="yfgc" style="margin-left:-20px;">统计月份：
-            </label>
-            <DatePicker type="month" placeholder="起始月份" :editable="false" :clearable="false" v-model="startTime"
-                        style="width:120px">
-            </DatePicker>
-            <DatePicker style="margin-left:50px;width:120px;" type="month" placeholder="结束月份" :editable="false" :clearable="false"
-                        v-model="endTime" >
-            </DatePicker>
-            <label style="float:left">供货方式：
-                <Select v-model="model2" style="width:200px">
+
+            <label style="float:left;margin-left: 20px">供货方式：
+                <Select v-model="model2" style="width:120px">
                     <Option v-for="item in ghfsList" :value="item.label" :key="item.label">{{ item.label }}</Option>
                 </Select>
             </label>
-            <CheckboxGroup v-model="checkText" class="yfgc" @on-change="change(data)">钢厂：
+            <label class="yfgc" style="margin-left:20px;margin-top: 5px">统计月份：
+            </label>
+            <DatePicker  type="month" placeholder="起始月份" :editable="false" :clearable="false" v-model="startTime"
+                        style="width:120px;float: left;margin-left: 10px">
+            </DatePicker>
+            <DatePicker style=";width:120px;float: left" type="month" placeholder="结束月份" :editable="false" :clearable="false"
+                        v-model="endTime" >
+            </DatePicker>
+            <CheckboxGroup  v-model="checkText" class="yfgc" @on-change="change(data)">钢厂：
                 <Checkbox label="全部"></Checkbox>
                 <Checkbox label="唐钢"></Checkbox>
                 <Checkbox label="邯钢"></Checkbox>
@@ -27,12 +28,13 @@
                 <Checkbox label="承钢"></Checkbox>
                 <Checkbox label="舞钢"></Checkbox>
             </CheckboxGroup>
+
         </div>
-        <div>
+        <div style="both:clear;margin-left: -900px">
             <Button @click="search()" icon="ios-search" type="primary" style="margin-right:20px;">查询</Button>
             <Button @click="downLoad()" icon="ios-cloud-download-outline" type="primary">导出</Button>
         </div>
-        <Table border stripe :columns="columns12" :data="resDatas" style="margin-top: 40px" ref="table">
+        <Table border stripe :columns="columns12" :data="resDatas" style="margin-top: 20px" ref="table">
             <template slot-scope="{ row }" slot="name">
                 <strong>{{ row.name }}</strong>
             </template>
@@ -214,14 +216,16 @@
     }
 
     .divStyle {
-        width: 700px;
-        height: 30px;
+        width: 100%;
+        height: 60px;
         margin: 0 auto;
         /*margin-bottom: 20px;*/
         float: left;
     }
 
     .yfgc {
+        float: left;
         margin-left: 20px;
+        margin-top: 5px;
     }
 </style>
