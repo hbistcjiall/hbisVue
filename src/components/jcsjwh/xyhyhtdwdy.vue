@@ -1,23 +1,19 @@
 <template>
     <div>
-        <Form :label-width="80">
-            <Row>
-                <Col span="8" style="float: left">
-                    <FormItem label="协议户名称:">
-                        <Input v-model="xyhyhtdata.accontName" placeholder="请输入协议户名称"></Input>
-                    </FormItem>
-                </Col>
-                <Col span="8">
-                    <FormItem label="合同单位:">
-                        <Input v-model="xyhyhtdata.contractUnit" placeholder="请输入合同单位"></Input>
-                    </FormItem>
-                </Col>
+        <div class="divStyle">
+            <Form :label-width="80">
+                <FormItem label="协议户名称:" style="float: left">
+                    <Input style="width:100px" v-model="xyhyhtdata.accontName" placeholder="请输入协议户名称"></Input>
+                </FormItem>
+                <FormItem label="合同单位:" style="float: left">
+                    <Input style="width:100px" v-model="xyhyhtdata.contractUnit" placeholder="请输入合同单位"></Input>
+                </FormItem>
                 <Button @click="search" style="margin-left:20px" icon="ios-search">查询</Button>
                 <Button @click="updModal=true" style="margin-left: 20px" icon="ios-add">新增</Button>
-            </Row>
-        </Form>
-        <Table :loading="loading" border stripe :columns="columns12" :data="fecthdata6" style="margin-top: 20px"
-               ref="table">
+            </Form>
+        </div>
+        <Table :loading="loading" border stripe :columns="columns12" :data="fecthdata6" style="margin-top: 20px;float: left;width: 100%;"
+               ref="table" >
             <template slot-scope="{row}" slot="action">
                 <Button size="small" style="margin-right: 5px" @click="updD(row)">修改</Button>
                 <Button size="small" @click="remove(row)" style="background:#ff6969;color:#fff;">删除</Button>
@@ -59,11 +55,11 @@
         name: "xyhyhtdwdy",
         data() {
             return {
-                id:'',
-                resDatas:[],
+                id: '',
+                resDatas: [],
                 dataCount: 0,
                 pageSize: 10,
-                loading:true,
+                loading: true,
                 updModal: false,
                 updModa2: false,
                 fecthdata6: [],
@@ -81,16 +77,16 @@
                     page: '0',
                     limit: '10',
                 },
-                addxyhyhtdata:{
-                    accontName:'',
-                    contractUnit:'',
-                    note:'',
+                addxyhyhtdata: {
+                    accontName: '',
+                    contractUnit: '',
+                    note: '',
                 },
-                updxyhyhtdata:{
-                    accontName:'',
-                    contractUnit:'',
-                    note:'',
-                    nameContractUnitId:''
+                updxyhyhtdata: {
+                    accontName: '',
+                    contractUnit: '',
+                    note: '',
+                    nameContractUnitId: ''
                 },
                 columns12: [
                     {
@@ -161,7 +157,7 @@
                     this.loading = false;
                 })
             },
-            addok(){
+            addok() {
                 fetch(this.$store.state.fetchPath + "/ProtocolNameContractUnit/insert", {
                     method: "POST",
                     headers: this.$store.state.fetchHeader,
@@ -179,14 +175,14 @@
                         this.search();
                     })
             },
-            updD(r){
-                this.updModa2=true;
-                this.updxyhyhtdata.accontName=r.ACCONTNAME;
-                this.updxyhyhtdata.contractUnit=r.CONTRACTUNIT;
-                this.updxyhyhtdata.note=r.NOTE;
-                this.updxyhyhtdata.nameContractUnitId=r.NAMECONTRACTUNITID;
+            updD(r) {
+                this.updModa2 = true;
+                this.updxyhyhtdata.accontName = r.ACCONTNAME;
+                this.updxyhyhtdata.contractUnit = r.CONTRACTUNIT;
+                this.updxyhyhtdata.note = r.NOTE;
+                this.updxyhyhtdata.nameContractUnitId = r.NAMECONTRACTUNITID;
             },
-            updok(){
+            updok() {
                 fetch(this.$store.state.fetchPath + "/ProtocolNameContractUnit/update", {
                     method: "POST",
                     headers: this.$store.state.fetchHeader,
@@ -204,22 +200,22 @@
                         this.search();
                     })
             },
-            remove(r){
+            remove(r) {
                 this.$Modal.confirm({
                     title: '提示',
                     content: '确认删除吗？',
                     onOk: () => {
-                        this.id=r.NAMECONTRACTUNITID;
+                        this.id = r.NAMECONTRACTUNITID;
                         fetch(this.$store.state.fetchPath + "/ProtocolNameContractUnit/delete", {
                             method: "POST",
                             headers: this.$store.state.fetchHeader,
-                            body: "nameContractUnitId="+this.id,
-                            credentials:'include'
+                            body: "nameContractUnitId=" + this.id,
+                            credentials: 'include'
                         })
                             .then((res) => {
-                                if(res.status!=200){
+                                if (res.status != 200) {
                                     this.$Message.error('请求失败！');
-                                }else{
+                                } else {
                                     return res.text();
                                 }
                             })
@@ -243,5 +239,12 @@
     table button {
         background: #f2f4f7;
         color: #546c8c;
+    }
+    .divStyle {
+        width: 100%;
+        height: 60px;
+        margin: 0 auto;
+        /*margin-bottom: 20px;*/
+        float: left;
     }
 </style>

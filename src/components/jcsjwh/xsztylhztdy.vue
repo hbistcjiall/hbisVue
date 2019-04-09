@@ -1,26 +1,23 @@
 <template>
     <div>
-        <Form :label-width="80">
-            <Row>
-                <Col span="4">
-                    <FormItem label="钢厂:">
-                        <Select v-model="xsztylhztdyData.companyId">
-                            <Option value="">全部</Option>
-                            <Option value="9580">唐钢</Option>
-                            <Option value="9727">邯钢</Option>
-                            <Option value="9193">宣钢</Option>
-                            <Option value="9196">承钢</Option>
-                            <Option value="1932">舞钢</Option>
-                        </Select>
-                    </FormItem>
-                </Col>
-                <Col span="8" style="float: left ">
-                    <Button @click="search" style="margin-left:20px" icon="ios-search">查询</Button>
-                    <Button @click="updModal=true" style="margin-left: 20px" icon="ios-add">新增</Button>
-                </Col>
-            </Row>
-        </Form>
-        <Table :loading="loading" border stripe :columns="columns12" :data="fecthdata6" style="margin-top: 20px"
+        <div class="divStyle">
+            <Form :label-width="80">
+                <FormItem label="钢厂:" style="float: left">
+                    <Select style="width: 100px" v-model="xsztylhztdyData.companyId">
+                        <Option value="">全部</Option>
+                        <Option value="9580">唐钢</Option>
+                        <Option value="9727">邯钢</Option>
+                        <Option value="9193">宣钢</Option>
+                        <Option value="9196">承钢</Option>
+                        <Option value="1932">舞钢</Option>
+                    </Select>
+                </FormItem>
+                <Button @click="search" style="margin-left:20px" icon="ios-search">查询</Button>
+                <Button @click="updModal=true" style="margin-left: 20px" icon="ios-add">新增</Button>
+
+            </Form>
+        </div>
+        <Table :loading="loading" border stripe :columns="columns12" :data="fecthdata6" style="margin-top: 20px;float: left;width: 100%;"
                ref="table">
             <template slot-scope="{ row }" slot="name">
                 <strong>{{ row.name }}</strong>
@@ -35,7 +32,7 @@
         <Modal v-model="updModal" title="新增销售主体与例会主体" :closable='false' @on-ok="addok">
             <Form :model="addformValidate" :rules="updruleValidate" :label-width="90">
                 <FormItem label="钢厂" prop="gangchang">
-                    <Select v-model="addformValidate.companyId" >
+                    <Select v-model="addformValidate.companyId">
                         <Option value="9580">唐钢</Option>
                         <Option value="9727">邯钢</Option>
                         <Option value="9193">宣钢</Option>
@@ -54,7 +51,7 @@
         <Modal v-model="updModa2" title="修改销售主体与例会主体" :closable='false' @on-ok="updok">
             <Form :model="updformValidate" :rules="updruleValidate" :label-width="90">
                 <FormItem label="钢厂" prop="gangchang">
-                    <Select v-model="updformValidate.companyID" >
+                    <Select v-model="updformValidate.companyID">
                         <Option value="唐钢">唐钢</Option>
                         <Option value="邯钢">邯钢</Option>
                         <Option value="宣钢">宣钢</Option>
@@ -78,15 +75,15 @@
         name: "xsztylhztdy",
         data() {
             return {
-                updModa2:false,
-                resDatas:[],
+                updModa2: false,
+                resDatas: [],
                 xsztylhztdyData: {
                     companyId: '',
                     page: '0',
                     limit: '10',
                 },
-                id:'',
-                loading:true,
+                id: '',
+                loading: true,
                 updModal: false,
                 dataCount: 0,
                 pageSize: 10,
@@ -97,7 +94,7 @@
                     saleBodyDes: '',
                 },
                 updformValidate: {
-                    Id:'',
+                    Id: '',
                     companyID: '',
                     saleBodyDes: '',
                     saleBody: ''
@@ -147,39 +144,39 @@
             this.search();
         },
         methods: {
-            remove(r){
+            remove(r) {
                 this.$Modal.confirm({
                     title: '提示',
                     content: '确认删除吗？',
                     onOk: () => {
-                        this.id=r.ID;
+                        this.id = r.ID;
                         fetch(this.$store.state.fetchPath + "/SalesSubjectMeetingSubject/delete", {
                             method: "POST",
                             headers: this.$store.state.fetchHeader,
-                            body: "Id="+this.id,
-                            credentials:'include'
+                            body: "Id=" + this.id,
+                            credentials: 'include'
                         })
                             .then((res) => {
-                                if(res.status!=200){
+                                if (res.status != 200) {
                                     this.$Message.error('请求失败！');
-                                }else{
+                                } else {
                                     return res.text();
                                 }
                             })
                             .then(() => {
-                                 this.search();
+                                this.search();
                             })
                     }
                 });
             },
-            updD(r){
+            updD(r) {
                 this.updModa2 = true;
-                this.updformValidate.companyID=r.COMPANYNAME;
-                this.updformValidate.saleBodyDes=r.SALEBODYDES;
-                this.updformValidate.saleBody=r.SALEBODY;
-                this.updformValidate.Id=r.ID;
+                this.updformValidate.companyID = r.COMPANYNAME;
+                this.updformValidate.saleBodyDes = r.SALEBODYDES;
+                this.updformValidate.saleBody = r.SALEBODY;
+                this.updformValidate.Id = r.ID;
             },
-            updok(){
+            updok() {
                 fetch(this.$store.state.fetchPath + "/SalesSubjectMeetingSubject/update", {
                     method: "POST",
                     headers: this.$store.state.fetchHeader,
@@ -220,7 +217,7 @@
                 this.xsztylhztdyData.page = index;
                 this.search();
             },
-            handlePageSize(index){
+            handlePageSize(index) {
                 this.xsztylhztdyData.limit = index;
                 this.search();
             },
@@ -261,12 +258,22 @@
         float: right;
         margin-top: 10px;
     }
+
     button {
         background: #3497db;
         color: #fff;
     }
+
     table button {
         background: #f2f4f7;
         color: #546c8c;
+    }
+
+    .divStyle {
+        width: 100%;
+        height: 60px;
+        margin: 0 auto;
+        /*margin-bottom: 20px;*/
+        float: left;
     }
 </style>
