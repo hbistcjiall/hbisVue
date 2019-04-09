@@ -169,14 +169,9 @@
                         }
                     }).then((res) => {
                     res = res && res.length > 0 ? JSON.parse(res) : []
-                    if (res.list.data.length < 0 || res.list.data.length == 0) {
-                        this.loading = false;
-                        return;
-                    } else {
+                        this.downLoad();
                         this.resDatas = res;
                         this.loading = false;
-                    }
-                    this.downLoad();
                 })
             },
             changepage(index) {
@@ -199,7 +194,7 @@
                     supplyMode: this.model2,
                     varieties: this.model1,
                 }
-                this.downloadUrl="http://18.4.22.0:8081/protocolAccountDetailsStatistics/exportSubsidiaryVarietySteel?"+ startTime + endTime + '&' + this.utils.formatParams(params) + '&' + idList;
+                this.downloadUrl=this.$store.state.fetchPath +"/protocolAccountDetailsStatistics/exportSubsidiaryVarietySteel?"+ startTime + endTime + '&' + this.utils.formatParams(params) + '&' + idList;
             }
         }
     }
