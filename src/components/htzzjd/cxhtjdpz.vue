@@ -298,8 +298,8 @@
             getList() {
                 this.loading = true;
                 let params={};
-                params.pz = this.pz
-                let startTime='date=';
+                params.pzName = this.pz
+                let startTime='startTime=';
                 let endTime='&endTime=';
                 startTime=startTime+this.utils.formatMonthStart(this.startTime);
                 endTime=endTime+this.utils.formatMonthStart(this.endTime);

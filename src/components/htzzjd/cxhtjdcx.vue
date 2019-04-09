@@ -14,11 +14,11 @@
                         <DatePicker type="month" placeholder="起始月份" :editable="false" :clearable="false" v-model="startTime" style="width:150px"></DatePicker>
                     </FormItem>
                 </Col>
-                <!--<Col span="4">-->
-                    <!--<FormItem>-->
-                        <!--<DatePicker type="month" placeholder="终止月份"  :editable="false" :clearable="false" v-model="endTime" style="width:150px"></DatePicker>-->
-                    <!--</FormItem>-->
-                <!--</Col>-->
+                <Col span="4">
+                    <FormItem>
+                        <DatePicker type="month" placeholder="终止月份"  :editable="false" :clearable="false" v-model="endTime" style="width:150px"></DatePicker>
+                    </FormItem>
+                </Col>
                 <Col span="4">
                     <span>&nbsp;</span>
                 </Col>
@@ -42,7 +42,7 @@
                 loading:true,
                 cx:'',
                 startTime:new Date(),
-                // endTime:this.utils.formatMonthEnd(),
+                endTime:this.utils.formatMonthEnd(),
                 // pzData:[],
                 cxData:[],
                 cxCx:{
@@ -301,14 +301,14 @@
                 this.loading = true;
                 let params={};
                 params.cxName = this.cx
-                let startTime='date=';
-                // let endTime='&endTime=';
+                let startTime='startTime=';
+                let endTime='&endTime=';
                 startTime=startTime+this.utils.formatMonthStart(this.startTime);
-                // endTime=endTime+this.utils.formatMonthStart(this.endTime);
+                endTime=endTime+this.utils.formatMonthStart(this.endTime);
                 fetch(this.$store.state.fetchPath + "/scm-steel-settle/getcxhtjd", {
                     method: "POST",
                     headers: this.$store.state.fetchHeader,
-                    body: startTime+'&'+this.utils.formatParams(params),
+                    body: startTime+endTime+'&'+this.utils.formatParams(params),
                     credentials: 'include'
                 }).then((res) => {
                     if(res.status!=200){
