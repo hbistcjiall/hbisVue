@@ -26,7 +26,7 @@
                     </FormItem>
                 </Col>
                 <Col span="4">
-                    <FormItem label="品种：">
+                    <FormItem label="品种钢：">
                         <Select v-model="zyjhcx.pz" placeholder="请选择品种" @on-change="getCx">
                             <Option value="">全部</Option>
                             <Option value="热板">热板</Option>
