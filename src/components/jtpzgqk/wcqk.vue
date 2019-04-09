@@ -86,7 +86,13 @@
                     }
                 }).then((res) => {
                     res = res && res.length > 0 ? JSON.parse(res) : [];
-                    this.data = res.list;
+                    let newdata=res.list;
+                    for(let i=0;i<newdata.length;i++)
+                    {
+                        newdata[i].scaleSteel=newdata[i].scaleSteel==''?newdata[i].scaleSteel+'0%':newdata[i].scaleSteel+'%'
+                    }
+                    window.console.log(newdata);
+                    this.data = newdata;
                     this.loading = false;
                 });
             },
