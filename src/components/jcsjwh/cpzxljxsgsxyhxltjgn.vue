@@ -3,13 +3,13 @@
         <div class="divStyle">
             <Form :label-width="80">
                 <FormItem label="产品类别:" style="float: left">
-                    <Select v-bind="cplb" style="width: 100px">
+                    <Select v-model="cplb" style="width: 100px">
                         <Option value="">全部</Option>
-                        <Option value="">热板</Option>
-                        <Option value="">冷板</Option>
-                        <Option value="">宽厚板</Option>
-                        <Option value="">棒线</Option>
-                        <Option value="">型带</Option>
+                        <Option value="热板">热板</Option>
+                        <Option value="冷板">冷板</Option>
+                        <Option value="宽厚板">宽厚板</Option>
+                        <Option value="棒线">棒线</Option>
+                        <Option value="型带">型带</Option>
                     </Select>
                 </FormItem>
                 <FormItem label="月份:" style="float: left">
@@ -55,7 +55,7 @@
                 fecthdata6: [],
                 data: {
                     page: '0',
-                    limit: '20',
+                    limit: '10',
                 },
                 columns12: [
                     {
@@ -155,14 +155,14 @@
             search() {
                 this.loading = true;
                 let params = {};
-                this.cplb ? params.cplb = this.cplb : '';
+                params.cplb = this.cplb;
                 let startTime = 'beginTime=';
                 let endTime = '&endTime=';
                 this.switchTime ? (startTime = startTime + this.utils.formatMonthStart(this.startTime), endTime = endTime + this.utils.formatMonthStart(this.endTime)) : (startTime = startTime + this.utils.formatYearStart(this.year), endTime = endTime + this.utils.formatYearEnd(this.year));
                 fetch(this.$store.state.fetchPath + "/productSalesProtocolAccountSales/list", {
                     method: "POST",
                     headers: this.$store.state.fetchHeader,
-                    body: startTime + endTime + '&' + this.utils.formatParams(params) + this.utils.formatParams(this.data),
+                    body: startTime + endTime + '&' + this.utils.formatParams(params)+'&' + this.utils.formatParams(this.data),
                     credentials: 'include'
                 }).then((res) => {
                     if (res.status != 200) {
@@ -189,7 +189,6 @@
                     if (this.dataCount < this.pageSize) {
                         this.fecthdata6 = this.utils.mergeRow(this.resDatas, 'COMPANYNAME');
                     } else {
-                        // this.fecthdata6 = this.resDatas.slice(0, this.pageSize);
                         this.fecthdata6 = this.utils.mergeRow(this.resDatas, 'COMPANYNAME').slice(0, this.pageSize);
                     }
                     this.downLoad();
@@ -198,11 +197,11 @@
             },
             downLoad() {
                 let params = {};
-                this.cplb ? params.cplb = this.cplb : '';
+                params.cplb = this.cplb;
                 let startTime = 'beginTime=';
                 let endTime = '&endTime=';
-                this.switchTime ? (startTime = startTime + this.utils.formatMonthStart(this.startTime), endTime = endTime + this.utils.formatMonthStart(this.endTime)) : (startTime = startTime + this.utils.formatYearStart(this.year), endTime = endTime + this.utils.formatYearEnd(this.year));
-                this.downloadUrl = this.$store.state.fetchPath + "/protocolAccountDetailsStatistics/exportSubsidiaryVarietySteel?" + startTime + endTime + '&' + this.utils.formatParams(params);
+                this.switchTime ? (startTime = startTime + this.utils.formatMonthStart(this.startTime),endTime = endTime + this.utils.formatMonthStart(this.endTime)) : (startTime = startTime + this.utils.formatYearStart(this.year),endTime = endTime + this.utils.formatYearEnd(this.year));
+                this.downloadUrl = this.$store.state.fetchPath + "/productSalesProtocolAccountSales/export?" + startTime + endTime + '&' + this.utils.formatParams(params);
             }
         },
     }
@@ -227,7 +226,6 @@
         width: 100%;
         height: 60px;
         margin: 0 auto;
-        /*margin-bottom: 20px;*/
         float: left;
     }
 </style>
