@@ -170,11 +170,23 @@
                             title: "合同量",
                             align: "center",
                             key: 'contractWeight',
+                            render: (h, params) => {
+                                params.row[params.column.key]=params.row[params.column.key]==null?'0.00':params.row[params.column.key];
+                                return h('span',
+                                    Number(params.row[params.column.key]).toFixed(2)
+                                )
+                            }
                         },
                         {
                             title: "发货量",
                             align: "center",
                             key: 'deliveryWeight',
+                            render: (h, params) => {
+                                params.row[params.column.key]=params.row[params.column.key]==null?'0.00':params.row[params.column.key];
+                                return h('span',
+                                    Number(params.row[params.column.key]).toFixed(2)
+                                )
+                            }
                         },
                         {
                             title: "兑现率(%)",
@@ -193,12 +205,24 @@
                                 title: "合同量",
                                 align: "center",
                                 key: hetongyuefen[Number(startMonth) + i - 1],
+                                render: (h, params) => {
+                                    params.row[params.column.key]=params.row[params.column.key]==null?'0.00':params.row[params.column.key];
+                                    return h('span',
+                                        Number(params.row[params.column.key]).toFixed(2)
+                                    )
+                                }
 
                             },
                             {
                                 title: "发货量",
                                 align: "center",
                                 key: fahuoyuefen[Number(startMonth) + i - 1],
+                                render: (h, params) => {
+                                    params.row[params.column.key]=params.row[params.column.key]==null?'0.00':params.row[params.column.key];
+                                    return h('span',
+                                        Number(params.row[params.column.key]).toFixed(2)
+                                    )
+                                }
                             },
                             {
                                 title: "兑现率(%)",
