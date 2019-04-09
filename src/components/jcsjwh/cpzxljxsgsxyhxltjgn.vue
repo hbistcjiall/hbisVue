@@ -27,7 +27,7 @@
                 </Col>
                 <Col span="8" style="float: left ">
                     <Button @click="search" style="margin-left:20px" icon="ios-search">查询</Button>
-                    <Button @click="downLoad" style="margin-left: 20px" icon="ios-cloud-download-outline">导出</Button>
+                    <a :href="downloadUrl"><Button type="primary" style="margin-left:10px">导出</Button></a>
                 </Col>
             </Row>
         </Form>
@@ -45,6 +45,8 @@
         name: "cpzxljxsgsxyhxltjgn",
         data() {
             return {
+                downloadUrl:'',
+                downloadData:{},
                 switchTime:true,
                 resDatas:[],
                 dataCount: 0,
@@ -194,14 +196,17 @@
                         // this.fecthdata6 = this.resDatas.slice(0, this.pageSize);
                         this.fecthdata6 = this.utils.mergeRow(this.resDatas, 'COMPANYNAME').slice(0, this.pageSize);
                     }
-
+                    this.downLoad();
                     this.loading = false;
                 });
             },
             downLoad() {
-                this.$refs.table.exportCsv({
-                    filename: '产品总销量'
-                });
+                let params={};
+                this.cplb?params.cplb=this.cplb:'';
+                let startTime='beginTime=';
+                let endTime='&endTime=';
+                this.switchTime?(startTime=startTime+this.utils.formatMonthStart(this.startTime),endTime=endTime+this.utils.formatMonthStart(this.endTime)):(startTime=startTime+ this.utils.formatYearStart(this.year),endTime=endTime+this.utils.formatYearEnd(this.year));
+                this.downloadUrl=this.$store.state.fetchPath +"/protocolAccountDetailsStatistics/exportSubsidiaryVarietySteel?"+  startTime+endTime+'&'+this.utils.formatParams(params);
             }
         },
     }

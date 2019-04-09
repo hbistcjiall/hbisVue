@@ -20,7 +20,7 @@
             <DatePicker style=";width:120px;float: left" type="month" placeholder="结束月份" :editable="false" :clearable="false"
                         v-model="endTime" >
             </DatePicker>
-            <CheckboxGroup  v-model="checkText" class="yfgc" @on-change="change(data)">钢厂：
+            <CheckboxGroup  v-model="checkText" class="yfgc">钢厂：
                 <Checkbox label="全部"></Checkbox>
                 <Checkbox label="唐钢"></Checkbox>
                 <Checkbox label="邯钢"></Checkbox>
@@ -32,9 +32,9 @@
         </div>
         <div style="both:clear;margin-left: -900px">
             <Button @click="search()" icon="ios-search" type="primary" style="margin-right:20px;">查询</Button>
-            <Button @click="downLoad()" icon="ios-cloud-download-outline" type="primary">导出</Button>
+            <a :href="downloadUrl"><Button type="primary" style="margin-left:10px">导出</Button></a>
         </div>
-        <Table border stripe :columns="columns12" :data="resDatas" style="margin-top: 20px" ref="table">
+        <Table border stripe :columns="columns12" :data="resDatas" style="margin-top: 20px" ref="table" :loading="loading">
             <template slot-scope="{ row }" slot="name">
                 <strong>{{ row.name }}</strong>
             </template>
@@ -49,6 +49,8 @@
         name: 'zxlmxtj_bb',
         data() {
             return {
+                loading:true,
+                downloadUrl:'',
                 dataCount: 0,
                 pageSize: 10,
                 xia: 0,
@@ -174,6 +176,7 @@
                         this.resDatas = res;
                         this.loading = false;
                     }
+                    this.downLoad();
                 })
             },
             changepage(index) {
@@ -188,9 +191,15 @@
                 this.handleListApproveHistory();
             },
             downLoad() {
-                this.$refs.table.exportCsv({
-                    filename: '完成情况明细'
-                });
+                let startTime = 'beginTime=';
+                let endTime = '&endTime=';
+                this.switchTime ? (startTime = startTime + this.utils.formatMonthStart(this.startTime),endTime = endTime + this.utils.formatMonthStart(this.endTime)) : (startTime = startTime + this.utils.formatYearStart(this.year), endTime = endTime + this.utils.formatYearEnd(this.year));
+                let idList = "idList=" + this.checkText.toString();
+                let params = {
+                    supplyMode: this.model2,
+                    varieties: this.model1,
+                }
+                this.downloadUrl="http://18.4.22.0:8081/protocolAccountDetailsStatistics/exportSubsidiaryVarietySteel?"+ startTime + endTime + '&' + this.utils.formatParams(params) + '&' + idList;
             }
         }
     }
