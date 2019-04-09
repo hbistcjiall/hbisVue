@@ -14,7 +14,7 @@
                 </FormItem>
                 <FormItem label="月份:" style="float: left">
                     <DatePicker type="month" :editable="false" :clearable="false" v-model="startTime"
-                                style="width:120px;margin-left: -30px">
+                                style="width:120px;margin-left: 10px">
                     </DatePicker>
                     <span>一</span>
                     <DatePicker type="month" :editable="false" :clearable="false" v-model="endTime"
