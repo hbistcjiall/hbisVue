@@ -384,8 +384,50 @@
                                 newArray[i].orderDay=newArray[i].orderYear+"年";
                             }
                         }
+                        newArray[i].gxData1= Number(newArray[i].gxData1).toFixed(2);
+                        newArray[i].gxData2 = Number(newArray[i].gxData2).toFixed(2);
+                        newArray[i].gxData3 = Number(newArray[i].gxData3).toFixed(2);
+                        newArray[i].gxData4 = Number(newArray[i].gxData4).toFixed(2);
+                        newArray[i].plData1 = Number(newArray[i].plData1).toFixed(2);
+                        newArray[i].plData2= Number(newArray[i].plData2).toFixed(2);
+                        newArray[i].plData3 = Number(newArray[i].plData3).toFixed(2);
+                        newArray[i].plData4 = Number(newArray[i].plData4).toFixed(2);
+                        newArray[i].plData5 = Number(newArray[i].plData5).toFixed(2);
+                        newArray[i].plData6 = Number(newArray[i].plData6).toFixed(2);
+                        newArray[i].plData7 = Number(newArray[i].plData7).toFixed(2);
+                        newArray[i].plData8 = Number(newArray[i].plData8).toFixed(2);
+                        newArray[i].lwData1 = Number(newArray[i].lwData1).toFixed(2);
+                        newArray[i].lwData2 = Number(newArray[i].lwData2).toFixed(2);
+                        newArray[i].lwData3 = Number(newArray[i].lwData3).toFixed(2);
+                        newArray[i].lwData4 = Number(newArray[i].lwData4).toFixed(2);
+                        newArray[i].lwData5 = Number(newArray[i].lwData5).toFixed(2);
+                        newArray[i].lwData6 = Number(newArray[i].lwData6).toFixed(2);
+                        newArray[i].lwData7 = Number(newArray[i].lwData7).toFixed(2);
+                        newArray[i].lwData8 = Number(newArray[i].lwData8).toFixed(2);
+                        newArray[i].lwData9 = Number(newArray[i].lwData9).toFixed(2);
+                        newArray[i].lwData10 = Number(newArray[i].lwData10).toFixed(2);
+                        newArray[i].lwData11 = Number(newArray[i].lwData11).toFixed(2);
+                        newArray[i].lwData12 = Number(newArray[i].lwData12).toFixed(2);
+                        newArray[i].lwData13 = Number(newArray[i].lwData13).toFixed(2);
+                        newArray[i].lwData14 = Number(newArray[i].lwData14).toFixed(2);
+                        newArray[i].lwData15 = Number(newArray[i].lwData15).toFixed(2);
+                        newArray[i].lwData16 = Number(newArray[i].lwData16).toFixed(2);
+                        newArray[i].lwData17 = Number(newArray[i].lwData17).toFixed(2);
+                        newArray[i].lwData18 = Number(newArray[i].lwData18).toFixed(2);
+                        newArray[i].lwData19 = Number(newArray[i].lwData19).toFixed(2);
+                        newArray[i].lwData20 = Number(newArray[i].lwData20).toFixed(2);
+                        newArray[i].lwData21 = Number(newArray[i].lwData21).toFixed(2);
+                        newArray[i].lwData22 = Number(newArray[i].lwData22).toFixed(2);
+                        newArray[i].lwData23 = Number(newArray[i].lwData23).toFixed(2);
+                        newArray[i].lwData24 = Number(newArray[i].lwData24).toFixed(2);
+                        newArray[i].lwData25 = Number(newArray[i].lwData25).toFixed(2);
+                        newArray[i].lwData26 = Number(newArray[i].lwData26).toFixed(2);
                     }
+
+                        // this.newdata[i].duixian[Number(startMonth)+i-1] = this.newdata[i].duixian[Number(startMonth)+i-1] + "%";
+
                     this.data =  newArray;
+
                     this.data=this.utils.mergeRow(newArray,'orderDay');
                     this.loading = false;
                 });
