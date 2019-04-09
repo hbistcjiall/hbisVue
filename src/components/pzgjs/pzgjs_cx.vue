@@ -94,6 +94,7 @@
                                 key: 'FKIMG',
                                 align: 'center',
                                 render: (h, params) => {
+                                    params.row[params.column.key]=params.row[params.column.key]==null?'0.00':params.row[params.column.key];
                                     return h('span',
                                         Number(params.row[params.column.key]).toFixed(2)
                                     )
@@ -105,6 +106,7 @@
                                 key: 'PZGL',
                                 align: 'center',
                                 render: (h, params) => {
+                                    params.row[params.column.key]=params.row[params.column.key]==null?'0.00':params.row[params.column.key];
                                     return h('span',
                                         Number(params.row[params.column.key]).toFixed(2)
                                     )
@@ -117,6 +119,7 @@
                                 align: 'center',
                                 width:'90',
                                 render: (h, params) => {
+                                    params.row[params.column.key]=params.row[params.column.key]==null?'0.00':params.row[params.column.key];
                                     return h('span',
                                         Number(params.row[params.column.key]).toFixed(2)+'%'
                                     )
@@ -131,6 +134,7 @@
                         align: 'center',
                         width:'90',
                         render: (h, params) => {
+                            params.row[params.column.key]=params.row[params.column.key]==null?'0.00':params.row[params.column.key];
                             return h('span',
                                 Number(params.row[params.column.key]).toFixed(2)+'%'
                             )
@@ -146,6 +150,7 @@
                             width:'70',
                             align: 'center',
                             render: (h, params) => {
+                                params.row[params.column.key]=params.row[params.column.key]==null?'0.00':params.row[params.column.key];
                                 return h('span',
                                     Number(params.row[params.column.key]).toFixed(2)
                                 )
@@ -156,6 +161,7 @@
                                 key: 'ZYPZGL',
                                 align: 'center',
                                 render: (h, params) => {
+                                    params.row[params.column.key]=params.row[params.column.key]==null?'0.00':params.row[params.column.key];
                                     return h('span',
                                         Number(params.row[params.column.key]).toFixed(2)
                                     )
@@ -167,6 +173,7 @@
                                 align: 'center',
                                 width:'90',
                                 render: (h, params) => {
+                                    params.row[params.column.key]=params.row[params.column.key]==null?'0.00':params.row[params.column.key];
                                     return h('span',
                                         Number(params.row[params.column.key]).toFixed(2)+'%'
                                     )
@@ -183,6 +190,7 @@
                             key: 'FGSFKIMG',
                             align: 'center',
                             render: (h, params) => {
+                                params.row[params.column.key]=params.row[params.column.key]==null?'0.00':params.row[params.column.key];
                                 return h('span',
                                     Number(params.row[params.column.key]).toFixed(2)
                                 )
@@ -193,6 +201,7 @@
                                 key: 'FGSPZGL',
                                 align: 'center',
                                 render: (h, params) => {
+                                    params.row[params.column.key]=params.row[params.column.key]==null?'0.00':params.row[params.column.key];
                                     return h('span',
                                         Number(params.row[params.column.key]).toFixed(2)
                                     )
@@ -204,6 +213,7 @@
                                 align: 'center',
                                 width:'90',
                                 render: (h, params) => {
+                                    params.row[params.column.key]=params.row[params.column.key]==null?'0.00':params.row[params.column.key];
                                     return h('span',
                                         Number(params.row[params.column.key]).toFixed(2)+'%'
                                     )
@@ -221,6 +231,7 @@
                             align: 'center',
                             width:'70',
                             render: (h, params) => {
+                                params.row[params.column.key]=params.row[params.column.key]==null?'0.00':params.row[params.column.key];
                                 return h('span',
                                     Number(params.row[params.column.key]).toFixed(2)
                                 )
@@ -231,6 +242,7 @@
                                 key: 'ZGSPZGL',
                                 align: 'center',
                                 render: (h, params) => {
+                                    params.row[params.column.key]=params.row[params.column.key]==null?'0.00':params.row[params.column.key];
                                     return h('span',
                                         Number(params.row[params.column.key]).toFixed(2)
                                     )
@@ -242,6 +254,7 @@
                                 align: 'center',
                                 width:'90',
                                 render: (h, params) => {
+                                    params.row[params.column.key]=params.row[params.column.key]==null?'0.00':params.row[params.column.key];
                                     return h('span',
                                         Number(params.row[params.column.key]).toFixed(2)+'%'
                                     )
