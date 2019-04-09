@@ -78,18 +78,36 @@
                                 key: 'FKIMG',
                                 align: 'center',
                                 width: 100,
+                                render: (h, params) => {
+                                    params.row[params.column.key]=params.row[params.column.key]==null?'0.00':params.row[params.column.key];
+                                    return h('span',
+                                        Number(params.row[params.column.key]).toFixed(2)
+                                    )
+                                }
                             },
                             {
                                 title: '内贸总量-品种钢',
                                 key: 'PZGL',
                                 align: 'center',
                                 width: 100,
+                                render: (h, params) => {
+                                    params.row[params.column.key]=params.row[params.column.key]==null?'0.00':params.row[params.column.key];
+                                    return h('span',
+                                        Number(params.row[params.column.key]).toFixed(2)
+                                    )
+                                }
                             },
                             {
                                 title: '内贸总量-比重',
                                 key: 'BZ',
                                 align: 'center',
                                 width: 100,
+                                render: (h, params) => {
+                                    params.row[params.column.key]=params.row[params.column.key]==null?'0.00':params.row[params.column.key];
+                                    return h('span',
+                                        ((Number(params.row[params.column.key]))*100).toFixed(2)
+                                    )
+                                }
                             }
                         ]
                     },
@@ -98,6 +116,12 @@
                         key: 'HB',
                         align: 'center',
                         width: 100,
+                        render: (h, params) => {
+                            params.row[params.column.key]=params.row[params.column.key]==null?'0.00':params.row[params.column.key];
+                            return h('span',
+                                ((Number(params.row[params.column.key]))*100).toFixed(2)
+                            )
+                        }
                     },
                     {
                         title: '专业公司',
@@ -107,19 +131,38 @@
                             title: '专业公司-总量',
                             key: 'ZYFKIMG',
                             align: 'center',
-                            width: 100
+                            width: 100,
+                            render: (h, params) => {
+                                params.row[params.column.key]=params.row[params.column.key]==null?'0.00':params.row[params.column.key];
+                                return h('span',
+                                    Number(params.row[params.column.key]).toFixed(2)
+                                )
+                            }
+
                         },
                             {
                                 title: '专业公司-品种钢',
                                 key: 'ZYPZGL',
                                 align: 'center',
                                 width: 100,
+                                render: (h, params) => {
+                                    params.row[params.column.key]=params.row[params.column.key]==null?'0.00':params.row[params.column.key];
+                                    return h('span',
+                                        Number(params.row[params.column.key]).toFixed(2)
+                                    )
+                                }
                             },
                             {
                                 title: '专业公司-比重',
                                 key: 'ZYBZ',
                                 align: 'center',
                                 width: 100,
+                                render: (h, params) => {
+                                    params.row[params.column.key]=params.row[params.column.key]==null?'0.00':params.row[params.column.key];
+                                    return h('span',
+                                        ((Number(params.row[params.column.key]))*100).toFixed(2)
+                                    )
+                                }
                             }
                         ]
                     },
@@ -131,19 +174,37 @@
                             title: '分公司-总量',
                             key: 'FGSFKIMG',
                             align: 'center',
-                            width: 100
+                            width: 100,
+                            render: (h, params) => {
+                                params.row[params.column.key]=params.row[params.column.key]==null?'0.00':params.row[params.column.key];
+                                return h('span',
+                                    Number(params.row[params.column.key]).toFixed(2)
+                                )
+                            }
                         },
                             {
                                 title: '分公司-品种钢',
                                 key: 'FGSPZGL',
                                 align: 'center',
                                 width: 100,
+                                render: (h, params) => {
+                                    params.row[params.column.key]=params.row[params.column.key]==null?'0.00':params.row[params.column.key];
+                                    return h('span',
+                                        Number(params.row[params.column.key]).toFixed(2)
+                                    )
+                                }
                             },
                             {
                                 title: '分公司-比重',
                                 key: 'FGSBZ',
                                 align: 'center',
-                                width: 100
+                                width: 100,
+                                render: (h, params) => {
+                                    params.row[params.column.key]=params.row[params.column.key]==null?'0.00':params.row[params.column.key];
+                                    return h('span',
+                                        ((Number(params.row[params.column.key]))*100).toFixed(2)
+                                    )
+                                }
                             }
                         ]
                     },
@@ -155,19 +216,37 @@
                             title: '子公司-总量',
                             key: 'ZGSFKIMG',
                             align: 'center',
-                            width: 100
+                            width: 100,
+                            render: (h, params) => {
+                                params.row[params.column.key]=params.row[params.column.key]==null?'0.00':params.row[params.column.key];
+                                return h('span',
+                                    Number(params.row[params.column.key]).toFixed(2)
+                                )
+                            }
                         },
                             {
                                 title: '子公司-品种钢',
                                 key: 'ZGSPZGL',
                                 align: 'center',
-                                width: 100
+                                width: 100,
+                                render: (h, params) => {
+                                    params.row[params.column.key]=params.row[params.column.key]==null?'0.00':params.row[params.column.key];
+                                    return h('span',
+                                        Number(params.row[params.column.key]).toFixed(2)
+                                    )
+                                }
                             },
                             {
                                 title: '子公司-比重',
                                 key: 'ZGSBZ',
                                 align: 'center',
-                                width: 100
+                                width: 100,
+                                render: (h, params) => {
+                                    params.row[params.column.key]=params.row[params.column.key]==null?'0.00':params.row[params.column.key];
+                                    return h('span',
+                                        ((Number(params.row[params.column.key]))*100).toFixed(2)
+                                    )
+                                }
                             }
                         ]
                     }
@@ -205,34 +284,6 @@
                 }).then((res) => {
                     res = res && res.length > 0 ? JSON.parse(res) : [];
                     this.data = res;
-                    for(let i=0;i<this.data.length;i++){
-                        this.data[i].HB=this.data[i].HB==null?'0.00':this.data[i].HB;
-                        this.data[i].ZGSBZ=this.data[i].ZGSBZ==null?'0.00':this.data[i].ZGSBZ;
-                        this.data[i].FGSBZ=this.data[i].FGSBZ==null?'0.00':this.data[i].FGSBZ;
-                        this.data[i].ZYBZ=this.data[i].ZYBZ==null?'0.00':this.data[i].ZYBZ;
-                        this.data[i].BZ=this.data[i].BZ==null?'0.00':this.data[i].BZ;
-                        this.data[i].FKIMG=this.data[i].FKIMG==null?'0.00':this.data[i].FKIMG;
-                        this.data[i].PZGL=this.data[i].PZGL==null?'0.00':this.data[i].PZGL;
-                        this.data[i].ZYFKIMG=this.data[i].ZYFKIMG==null?'0.00':this.data[i].ZYFKIMG;
-                        this.data[i].ZYPZGL=this.data[i].ZYPZGL==null?'0.00':this.data[i].ZYPZGL;
-                        this.data[i].FGSFKIMG=this.data[i].FGSFKIMG==null?'0.00':this.data[i].FGSFKIMG;
-                        this.data[i].FGSPZGL=this.data[i].FGSPZGL==null?'0.00':this.data[i].FGSPZGL;
-                        this.data[i].ZGSFKIMG=this.data[i].ZGSFKIMG==null?'0.00':this.data[i].ZGSFKIMG;
-                        this.data[i].ZGSPZGL=this.data[i].ZGSPZGL==null?'0.00':this.data[i].ZGSPZGL;
-                        this.data[i].HB = (Number(this.data[i].HB)*100).toFixed(2)+'%';
-                        this.data[i].ZGSBZ = (Number(this.data[i].ZGSBZ)*100).toFixed(2)+'%';
-                        this.data[i].FGSBZ = (Number(this.data[i].FGSBZ)*100).toFixed(2)+'%';
-                        this.data[i].ZYBZ = (Number(this.data[i].ZYBZ)*100).toFixed(2)+'%';
-                        this.data[i].BZ = (Number(this.data[i].BZ)*100).toFixed(2)+'%';
-                        this.data[i].FKIMG=Number(this.data[i].FKIMG).toFixed(2);
-                        this.data[i].PZGL=Number(this.data[i].PZGL).toFixed(2);
-                        this.data[i].ZYFKIMG=Number(this.data[i].ZYFKIMG).toFixed(2);
-                        this.data[i].ZYPZGL=Number(this.data[i].ZYPZGL).toFixed(2);
-                        this.data[i].FGSFKIMG=Number(this.data[i].FGSFKIMG).toFixed(2);
-                        this.data[i].FGSPZGL=Number(this.data[i].FGSPZGL).toFixed(2);
-                        this.data[i].ZGSFKIMG=Number(this.data[i].ZGSFKIMG).toFixed(2);
-                        this.data[i].ZGSPZGL=Number(this.data[i].ZGSPZGL).toFixed(2);
-                    }
                     this.loading = false;
                 });
             },
