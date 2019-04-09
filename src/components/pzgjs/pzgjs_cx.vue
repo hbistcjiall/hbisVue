@@ -93,16 +93,35 @@
                                 title: '内贸总量-总量',
                                 key: 'FKIMG',
                                 align: 'center',
+                                render: (h, params) => {
+                                    return h('span',
+                                        Number(params.row[params.column.key]).toFixed(2)
+                                    )
+                                }
+
                             },
                             {
                                 title: '内贸总量-品种钢',
                                 key: 'PZGL',
                                 align: 'center',
+                                render: (h, params) => {
+                                    return h('span',
+                                        Number(params.row[params.column.key]).toFixed(2)
+                                    )
+                                }
+
                             },
                             {
                                 title: '内贸总量-比重',
                                 key: 'BZ',
                                 align: 'center',
+                                width:'90',
+                                render: (h, params) => {
+                                    return h('span',
+                                        Number(params.row[params.column.key]).toFixed(2)+'%'
+                                    )
+                                }
+
                             }
                         ]
                     },
@@ -110,6 +129,12 @@
                         title: '环比',
                         key: 'HB',
                         align: 'center',
+                        width:'90',
+                        render: (h, params) => {
+                            return h('span',
+                                Number(params.row[params.column.key]).toFixed(2)+'%'
+                            )
+                        }
                     },
                     {
                         title: '专业公司',
@@ -118,17 +143,34 @@
                         children: [{
                             title: '专业公司-总量',
                             key: 'ZYFKIMG',
+                            width:'70',
                             align: 'center',
+                            render: (h, params) => {
+                                return h('span',
+                                    Number(params.row[params.column.key]).toFixed(2)
+                                )
+                            }
                         },
                             {
                                 title: '专业公司-品种钢',
                                 key: 'ZYPZGL',
                                 align: 'center',
+                                render: (h, params) => {
+                                    return h('span',
+                                        Number(params.row[params.column.key]).toFixed(2)
+                                    )
+                                }
                             },
                             {
                                 title: '专业公司-比重',
                                 key: 'ZYBZ',
                                 align: 'center',
+                                width:'90',
+                                render: (h, params) => {
+                                    return h('span',
+                                        Number(params.row[params.column.key]).toFixed(2)+'%'
+                                    )
+                                }
                             }
                         ]
                     },
@@ -140,16 +182,32 @@
                             title: '分公司-总量',
                             key: 'FGSFKIMG',
                             align: 'center',
+                            render: (h, params) => {
+                                return h('span',
+                                    Number(params.row[params.column.key]).toFixed(2)
+                                )
+                            }
                         },
                             {
                                 title: '分公司-品种钢',
                                 key: 'FGSPZGL',
-                                align: 'center'
+                                align: 'center',
+                                render: (h, params) => {
+                                    return h('span',
+                                        Number(params.row[params.column.key]).toFixed(2)
+                                    )
+                                }
                             },
                             {
                                 title: '分公司-比重',
                                 key: 'FGSBZ',
-                                align: 'center'
+                                align: 'center',
+                                width:'90',
+                                render: (h, params) => {
+                                    return h('span',
+                                        Number(params.row[params.column.key]).toFixed(2)+'%'
+                                    )
+                                }
                             }
                         ]
                     },
@@ -160,17 +218,34 @@
                         children: [{
                             title: '子公司-总量',
                             key: 'ZGSFKIMG',
-                            align: 'center'
+                            align: 'center',
+                            width:'70',
+                            render: (h, params) => {
+                                return h('span',
+                                    Number(params.row[params.column.key]).toFixed(2)
+                                )
+                            }
                         },
                             {
                                 title: '子公司-品种钢',
                                 key: 'ZGSPZGL',
-                                align: 'center'
+                                align: 'center',
+                                render: (h, params) => {
+                                    return h('span',
+                                        Number(params.row[params.column.key]).toFixed(2)
+                                    )
+                                }
                             },
                             {
                                 title: '子公司-比重',
                                 key: 'ZGSBZ',
-                                align: 'center'
+                                align: 'center',
+                                width:'90',
+                                render: (h, params) => {
+                                    return h('span',
+                                        Number(params.row[params.column.key]).toFixed(2)+'%'
+                                    )
+                                }
                             }
                         ]
                     }
@@ -233,13 +308,6 @@
                 }).then((res) => {
                     res = res && res.length > 0 ? JSON.parse(res) : [];
                     this.data = this.utils.mergeRow(res, 'COMPANYNAME');
-                    for(let i=0;i<this.data.length;i++){
-                        this.data[i].HB = (Number(this.data[i].HB)*100).toFixed(2)+'%';
-                        this.data[i].ZGSBZ = (Number(this.data[i].ZGSBZ)*100).toFixed(2)+'%';
-                        this.data[i].FGSBZ = (Number(this.data[i].FGSBZ)*100).toFixed(2)+'%';
-                        this.data[i].ZYBZ = (Number(this.data[i].ZYBZ)*100).toFixed(2)+'%';
-                        this.data[i].BZ = (Number(this.data[i].BZ)*100).toFixed(2)+'%';
-                    }
                     this.loading = false;
                 });
             },
@@ -256,5 +324,9 @@
     button{
         background: #3497db;
         color:#fff;
+    }
+    .ivu-table-cell{
+        text-overflow: ellipsis !important;
+        word-break: break-all !important;
     }
 </style>
