@@ -252,6 +252,10 @@
                     }).then((res) => {
                     res = res&&res.length>0?JSON.parse(res):[]
                     this.resDatas =  res.data;
+                    for(let i=0;i<this.resDatas.length;i++)
+                    {
+                        this.resDatas[i].ANNUALAGREEMENTVOLUME=Number(this.resDatas[i].ANNUALAGREEMENTVOLUME).toFixed(2);
+                    }
                     this.dataCount =  parseInt(res.count);
                     this.pageSize = parseInt(res.pageSize);
                     if(this.dataCount < this.pageSize){
