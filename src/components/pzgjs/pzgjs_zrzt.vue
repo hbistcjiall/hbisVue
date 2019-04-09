@@ -83,30 +83,60 @@
                                 title: '总量',
                                 key: 'FKIMG',
                                 align: 'center',
+                                render: (h, params) => {
+                                    params.row[params.column.key]=params.row[params.column.key]==null?'0.00':params.row[params.column.key];
+                                    return h('span',
+                                        Number(params.row[params.column.key]).toFixed(2)
+                                    )
+                                }
                             },
                             {
 
                                 title: '品种钢量',
                                 key: 'PZGL',
                                 align: 'center',
+                                render: (h, params) => {
+                                    params.row[params.column.key]=params.row[params.column.key]==null?'0.00':params.row[params.column.key];
+                                    return h('span',
+                                        Number(params.row[params.column.key]).toFixed(2)
+                                    )
+                                }
                             },
                             {
 
                                 title: '比重',
                                 key: 'BZ',
                                 align: 'center',
+                                render: (h, params) => {
+                                    params.row[params.column.key]=params.row[params.column.key]==null?'0.00':params.row[params.column.key];
+                                    return h('span',
+                                        ((Number(params.row[params.column.key]))*100).toFixed(2)+'%'
+                                    )
+                                }
                             },
                             {
 
                                 title: '目标量',
                                 key: 'MBL',
                                 align: 'center',
+                                render: (h, params) => {
+                                    params.row[params.column.key]=params.row[params.column.key]==null?'0.00':params.row[params.column.key];
+                                    return h('span',
+                                        Number(params.row[params.column.key]).toFixed(2)
+                                    )
+                                }
                             },
                             {
 
                                 title: '完成/目标',
                                 key: 'WCBL',
                                 align: 'center',
+                                render: (h, params) => {
+                                    params.row[params.column.key]=params.row[params.column.key]==null?'0.00':params.row[params.column.key];
+                                    return h('span',
+                                        (Number(params.row[params.column.key])).toFixed(2)+'%'
+                                    )
+                                }
                             }
 
                         ]
@@ -161,10 +191,6 @@
                     res =res && res.length > 0 ? JSON.parse(res) : [];
                     this.data = res;
                     this.loading = false;
-                    for(let i=0; i<this.data.length; i++){
-                        this.data[i].WCBL = Number(this.data[i].WCBL).toFixed(2)+'%';
-                        this.data[i].BZ = (Number(this.data[i].BZ)*100).toFixed(2)+'%'
-                    }
                 });
             },
             downLoad(){
