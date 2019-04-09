@@ -66,18 +66,36 @@
                                 key: 'HJJHL',
                                 align: 'center',
                                 width: 100,
+                                render: (h, params) => {
+                                    params.row[params.column.key]=params.row[params.column.key]==null?'0.00':params.row[params.column.key];
+                                    return h('span',
+                                        Number(params.row[params.column.key]).toFixed(2)
+                                    )
+                                }
                             },
                             {
                                 title: '合同量',
                                 key: 'HJHTL',
                                 align: 'center',
                                 width: 100,
+                                render: (h, params) => {
+                                    params.row[params.column.key]=params.row[params.column.key]==null?'0.00':params.row[params.column.key];
+                                    return h('span',
+                                        Number(params.row[params.column.key]).toFixed(2)
+                                    )
+                                }
                             },
                             {
                                 title: '完成比例',
                                 key: 'SCHEDULEHJ',
                                 align: 'center',
                                 width: 100,
+                                render: (h, params) => {
+                                    params.row[params.column.key]=params.row[params.column.key]==null?'0.00':params.row[params.column.key];
+                                    return h('span',
+                                        (Number(params.row[params.column.key])).toFixed(2)
+                                    )
+                                }
                             }
                         ]
                     },
@@ -89,31 +107,61 @@
                             title: '计划量',
                             key: 'PLANNUMXSZ',
                             align: 'center',
-                            width: 100
+                            width: 100,
+                            render: (h, params) => {
+                                params.row[params.column.key]=params.row[params.column.key]==null?'0.00':params.row[params.column.key];
+                                return h('span',
+                                    Number(params.row[params.column.key]).toFixed(2)
+                                )
+                            }
                         },
                             {
                                 title: '合同量（专业公司）',
                                 key: 'ZYGSHTL',
                                 align: 'center',
                                 width: 100,
+                                render: (h, params) => {
+                                    params.row[params.column.key]=params.row[params.column.key]==null?'0.00':params.row[params.column.key];
+                                    return h('span',
+                                        Number(params.row[params.column.key]).toFixed(2)
+                                    )
+                                }
                             },
                             {
                                 title: '合同量（分公司）',
                                 key: 'ZYFGSHTL',
                                 align: 'center',
                                 width: 100,
+                                render: (h, params) => {
+                                    params.row[params.column.key]=params.row[params.column.key]==null?'0.00':params.row[params.column.key];
+                                    return h('span',
+                                        Number(params.row[params.column.key]).toFixed(2)
+                                    )
+                                }
                             },
                             {
                                 title: '完成比例',
                                 key: 'SCHEDULEXSZ',
                                 align: 'center',
                                 width: 100,
+                                render: (h, params) => {
+                                    params.row[params.column.key]=params.row[params.column.key]==null?'0.00':params.row[params.column.key];
+                                    return h('span',
+                                        (Number(params.row[params.column.key])).toFixed(2)
+                                    )
+                                }
                             },
                             {
                                 title: '进度',
                                 key: 'JDXSZ',
                                 align: 'center',
                                 width: 100,
+                                render: (h, params) => {
+                                    params.row[params.column.key]=params.row[params.column.key]==null?'0.00':params.row[params.column.key];
+                                    return h('span',
+                                        Number(params.row[params.column.key]).toFixed(2)
+                                    )
+                                }
                             }
                         ]
                     },
@@ -125,25 +173,49 @@
                             title: '计划量',
                             key: 'PLANNUMZGS',
                             align: 'center',
-                            width: 100
+                            width: 100,
+                            render: (h, params) => {
+                                params.row[params.column.key]=params.row[params.column.key]==null?'0.00':params.row[params.column.key];
+                                return h('span',
+                                    Number(params.row[params.column.key]).toFixed(2)
+                                )
+                            }
                         },
                             {
                                 title: '合同量',
                                 key: 'ZGSHTL',
                                 align: 'center',
                                 width: 100,
+                                render: (h, params) => {
+                                    params.row[params.column.key]=params.row[params.column.key]==null?'0.00':params.row[params.column.key];
+                                    return h('span',
+                                        Number(params.row[params.column.key]).toFixed(2)
+                                    )
+                                }
                             },
                             {
                                 title: '完成比例',
                                 key: 'SCHEDULEZGS',
                                 align: 'center',
-                                width: 100
+                                width: 100,
+                                render: (h, params) => {
+                                    params.row[params.column.key]=params.row[params.column.key]==null?'0.00':params.row[params.column.key];
+                                    return h('span',
+                                        (Number(params.row[params.column.key])).toFixed(2)
+                                    )
+                                }
                             },
                             {
                                 title: '进度',
                                 key: 'JDZGS',
                                 align: 'center',
-                                width: 100
+                                width: 100,
+                                render: (h, params) => {
+                                    params.row[params.column.key]=params.row[params.column.key]==null?'0.00':params.row[params.column.key];
+                                    return h('span',
+                                        Number(params.row[params.column.key]).toFixed(2)
+                                    )
+                                }
                             }
                         ]
                     },
@@ -155,25 +227,49 @@
                             title: '计划量',
                             key: 'CKJHL',
                             align: 'center',
-                            width: 100
+                            width: 100,
+                            render: (h, params) => {
+                                params.row[params.column.key]=params.row[params.column.key]==null?'0.00':params.row[params.column.key];
+                                return h('span',
+                                    Number(params.row[params.column.key]).toFixed(2)
+                                )
+                            }
                         },
                             {
                                 title: '合同量',
                                 key: 'CKHTL',
                                 align: 'center',
                                 width: 100,
+                                render: (h, params) => {
+                                    params.row[params.column.key]=params.row[params.column.key]==null?'0.00':params.row[params.column.key];
+                                    return h('span',
+                                        Number(params.row[params.column.key]).toFixed(2)
+                                    )
+                                }
                             },
                             {
                                 title: '完成比例',
                                 key: 'SCHEDULECK',
                                 align: 'center',
-                                width: 100
+                                width: 100,
+                                render: (h, params) => {
+                                    params.row[params.column.key]=params.row[params.column.key]==null?'0.00':params.row[params.column.key];
+                                    return h('span',
+                                        (Number(params.row[params.column.key])).toFixed(2)
+                                    )
+                                }
                             },
                             {
                                 title: '进度',
                                 key: 'JDCK',
                                 align: 'center',
-                                width: 100
+                                width: 100,
+                                render: (h, params) => {
+                                    params.row[params.column.key]=params.row[params.column.key]==null?'0.00':params.row[params.column.key];
+                                    return h('span',
+                                        Number(params.row[params.column.key]).toFixed(2)
+                                    )
+                                }
                             }
                         ]
                     },
@@ -223,12 +319,6 @@
                 }).then((res) => {
                     res = res && res.length > 0 ? JSON.parse(res) : [];
                     this.data =  res;
-                    for(var i=0;this.data.length>i;i++){
-                        this.data[i].SCHEDULECK = this.data[i].SCHEDULECK+'%';
-                        this.data[i].SCHEDULEZGS = this.data[i].SCHEDULEZGS+'%'
-                        this.data[i].SCHEDULEXSZ = this.data[i].SCHEDULEXSZ+'%'
-                        this.data[i].SCHEDULEHJ = this.data[i].SCHEDULEHJ+'%'
-                    }
                     this.loading = false;
                 });
             },
