@@ -72,6 +72,7 @@
                                         width: 85,
                                         key: 'gxData1',
                                         render: (h, params) => {
+                                            params.row[params.column.key]=params.row[params.column.key]==null?'0.00':params.row[params.column.key];
                                             return h('span',
                                                 params.row[params.column.key].toFixed(2)
                                             )
@@ -83,6 +84,7 @@
                                         width: 85,
                                         key: 'gxData2',
                                         render: (h, params) => {
+                                            params.row[params.column.key]=params.row[params.column.key]==null?'0.00':params.row[params.column.key];
                                             return h('span',
                                                 params.row[params.column.key].toFixed(2)
                                             )
@@ -94,6 +96,7 @@
                                         width: 85,
                                         key: 'gxData3',
                                         render: (h, params) => {
+                                            params.row[params.column.key]=params.row[params.column.key]==null?'0.00':params.row[params.column.key];
                                             return h('span',
                                                 params.row[params.column.key].toFixed(2)
                                             )
@@ -105,6 +108,7 @@
                                         width: 85,
                                         key: 'gxData4',
                                         render: (h, params) => {
+                                            params.row[params.column.key]=params.row[params.column.key]==null?'0.00':params.row[params.column.key];
                                             return h('span',
                                                 params.row[params.column.key].toFixed(2)
                                             )
@@ -122,6 +126,7 @@
                                         width: 85,
                                         key: 'plData1',
                                         render: (h, params) => {
+                                            params.row[params.column.key]=params.row[params.column.key]==null?'0.00':params.row[params.column.key];
                                             return h('span',
                                                 params.row[params.column.key].toFixed(2)
                                             )
@@ -133,6 +138,7 @@
                                         width: 85,
                                         key: 'plData2',
                                         render: (h, params) => {
+                                            params.row[params.column.key]=params.row[params.column.key]==null?'0.00':params.row[params.column.key];
                                             return h('span',
                                                 params.row[params.column.key].toFixed(2)
                                             )
@@ -144,6 +150,7 @@
                                         width: 85,
                                         key: 'plData3',
                                         render: (h, params) => {
+                                            params.row[params.column.key]=params.row[params.column.key]==null?'0.00':params.row[params.column.key];
                                             return h('span',
                                                 params.row[params.column.key].toFixed(2)
                                             )
@@ -155,6 +162,7 @@
                                         width: 85,
                                         key: 'plData4',
                                         render: (h, params) => {
+                                            params.row[params.column.key]=params.row[params.column.key]==null?'0.00':params.row[params.column.key];
                                             return h('span',
                                                 params.row[params.column.key].toFixed(2)
                                             )
@@ -172,6 +180,7 @@
                                         width: 85,
                                         key: 'plData5',
                                         render: (h, params) => {
+                                            params.row[params.column.key]=params.row[params.column.key]==null?'0.00':params.row[params.column.key];
                                             return h('span',
                                                 params.row[params.column.key].toFixed(2)
                                             )
@@ -183,6 +192,7 @@
                                         width: 85,
                                         key: 'plData6',
                                         render: (h, params) => {
+                                            params.row[params.column.key]=params.row[params.column.key]==null?'0.00':params.row[params.column.key];
                                             return h('span',
                                                 params.row[params.column.key].toFixed(2)
                                             )
@@ -194,6 +204,7 @@
                                         width: 85,
                                         key: 'plData7',
                                         render: (h, params) => {
+                                            params.row[params.column.key]=params.row[params.column.key]==null?'0.00':params.row[params.column.key];
                                             return h('span',
                                                 params.row[params.column.key].toFixed(2)
                                             )
@@ -205,6 +216,7 @@
                                         width: 85,
                                         key: 'plData8',
                                         render: (h, params) => {
+                                            params.row[params.column.key]=params.row[params.column.key]==null?'0.00':params.row[params.column.key];
                                             return h('span',
                                                 params.row[params.column.key].toFixed(2)
                                             )
@@ -222,6 +234,7 @@
                                         width: 85,
                                         key: 'lwData1',
                                         render: (h, params) => {
+                                            params.row[params.column.key]=params.row[params.column.key]==null?'0.00':params.row[params.column.key];
                                             return h('span',
                                                 params.row[params.column.key].toFixed(2)
                                             )
@@ -233,6 +246,7 @@
                                         width: 85,
                                         key: 'lwData2',
                                         render: (h, params) => {
+                                            params.row[params.column.key]=params.row[params.column.key]==null?'0.00':params.row[params.column.key];
                                             return h('span',
                                                 params.row[params.column.key].toFixed(2)
                                             )
@@ -244,6 +258,7 @@
                                         width: 85,
                                         key: 'lwData3',
                                         render: (h, params) => {
+                                            params.row[params.column.key]=params.row[params.column.key]==null?'0.00':params.row[params.column.key];
                                             return h('span',
                                                 params.row[params.column.key].toFixed(2)
                                             )
@@ -255,6 +270,7 @@
                                         width: 85,
                                         key: 'lwData4',
                                         render: (h, params) => {
+                                            params.row[params.column.key]=params.row[params.column.key]==null?'0.00':params.row[params.column.key];
                                             return h('span',
                                                 params.row[params.column.key].toFixed(2)
                                             )
@@ -266,6 +282,7 @@
                                         width: 85,
                                         key: 'lwData5',
                                         render: (h, params) => {
+                                            params.row[params.column.key]=params.row[params.column.key]==null?'0.00':params.row[params.column.key];
                                             return h('span',
                                                 params.row[params.column.key].toFixed(2)
                                             )
@@ -277,6 +294,7 @@
                                         width: 85,
                                         key: 'lwData6',
                                         render: (h, params) => {
+                                            params.row[params.column.key]=params.row[params.column.key]==null?'0.00':params.row[params.column.key];
                                             return h('span',
                                                 params.row[params.column.key].toFixed(2)
                                             )
@@ -288,6 +306,7 @@
                                         width: 85,
                                         key: 'lwData7',
                                         render: (h, params) => {
+                                            params.row[params.column.key]=params.row[params.column.key]==null?'0.00':params.row[params.column.key];
                                             return h('span',
                                                 params.row[params.column.key].toFixed(2)
                                             )
@@ -299,6 +318,7 @@
                                         width: 85,
                                         key: 'lwData8',
                                         render: (h, params) => {
+                                            params.row[params.column.key]=params.row[params.column.key]==null?'0.00':params.row[params.column.key];
                                             return h('span',
                                                 params.row[params.column.key].toFixed(2)
                                             )
@@ -310,6 +330,7 @@
                                         width: 85,
                                         key: 'lwData9',
                                         render: (h, params) => {
+                                            params.row[params.column.key]=params.row[params.column.key]==null?'0.00':params.row[params.column.key];
                                             return h('span',
                                                 params.row[params.column.key].toFixed(2)
                                             )
@@ -321,6 +342,7 @@
                                         width: 85,
                                         key: 'lwData10',
                                         render: (h, params) => {
+                                            params.row[params.column.key]=params.row[params.column.key]==null?'0.00':params.row[params.column.key];
                                             return h('span',
                                                 params.row[params.column.key].toFixed(2)
                                             )
@@ -332,6 +354,7 @@
                                         width: 85,
                                         key: 'lwData11',
                                         render: (h, params) => {
+                                            params.row[params.column.key]=params.row[params.column.key]==null?'0.00':params.row[params.column.key];
                                             return h('span',
                                                 params.row[params.column.key].toFixed(2)
                                             )
@@ -343,6 +366,7 @@
                                         width: 85,
                                         key: 'lwData12',
                                         render: (h, params) => {
+                                            params.row[params.column.key]=params.row[params.column.key]==null?'0.00':params.row[params.column.key];
                                             return h('span',
                                                 params.row[params.column.key].toFixed(2)
                                             )
@@ -354,6 +378,7 @@
                                         width: 100,
                                         key: 'lwData13',
                                         render: (h, params) => {
+                                            params.row[params.column.key]=params.row[params.column.key]==null?'0.00':params.row[params.column.key];
                                             return h('span',
                                                 params.row[params.column.key].toFixed(2)
                                             )
@@ -371,6 +396,7 @@
                                         width: 85,
                                         key: 'lwData14',
                                         render: (h, params) => {
+                                            params.row[params.column.key]=params.row[params.column.key]==null?'0.00':params.row[params.column.key];
                                             return h('span',
                                                 params.row[params.column.key].toFixed(2)
                                             )
@@ -382,6 +408,7 @@
                                         width: 85,
                                         key: 'lwData15',
                                         render: (h, params) => {
+                                            params.row[params.column.key]=params.row[params.column.key]==null?'0.00':params.row[params.column.key];
                                             return h('span',
                                                 params.row[params.column.key].toFixed(2)
                                             )
@@ -393,6 +420,7 @@
                                         width: 85,
                                         key: 'lwData16',
                                         render: (h, params) => {
+                                            params.row[params.column.key]=params.row[params.column.key]==null?'0.00':params.row[params.column.key];
                                             return h('span',
                                                 params.row[params.column.key].toFixed(2)
                                             )
@@ -404,6 +432,7 @@
                                         width: 85,
                                         key: 'lwData17',
                                         render: (h, params) => {
+                                            params.row[params.column.key]=params.row[params.column.key]==null?'0.00':params.row[params.column.key];
                                             return h('span',
                                                 params.row[params.column.key].toFixed(2)
                                             )
@@ -415,6 +444,7 @@
                                         width: 85,
                                         key: 'lwData18',
                                         render: (h, params) => {
+                                            params.row[params.column.key]=params.row[params.column.key]==null?'0.00':params.row[params.column.key];
                                             return h('span',
                                                 params.row[params.column.key].toFixed(2)
                                             )
@@ -426,6 +456,7 @@
                                         width: 85,
                                         key: 'lwData19',
                                         render: (h, params) => {
+                                            params.row[params.column.key]=params.row[params.column.key]==null?'0.00':params.row[params.column.key];
                                             return h('span',
                                                 params.row[params.column.key].toFixed(2)
                                             )
@@ -437,6 +468,7 @@
                                         width: 85,
                                         key: 'lwData20',
                                         render: (h, params) => {
+                                            params.row[params.column.key]=params.row[params.column.key]==null?'0.00':params.row[params.column.key];
                                             return h('span',
                                                 params.row[params.column.key].toFixed(2)
                                             )
@@ -448,6 +480,7 @@
                                         width: 85,
                                         key: 'lwData21',
                                         render: (h, params) => {
+                                            params.row[params.column.key]=params.row[params.column.key]==null?'0.00':params.row[params.column.key];
                                             return h('span',
                                                 params.row[params.column.key].toFixed(2)
                                             )
@@ -459,6 +492,7 @@
                                         width: 85,
                                         key: 'lwData22',
                                         render: (h, params) => {
+                                            params.row[params.column.key]=params.row[params.column.key]==null?'0.00':params.row[params.column.key];
                                             return h('span',
                                                 params.row[params.column.key].toFixed(2)
                                             )
@@ -470,6 +504,7 @@
                                         width: 85,
                                         key: 'lwData23',
                                         render: (h, params) => {
+                                            params.row[params.column.key]=params.row[params.column.key]==null?'0.00':params.row[params.column.key];
                                             return h('span',
                                                 params.row[params.column.key].toFixed(2)
                                             )
@@ -481,6 +516,7 @@
                                         width: 85,
                                         key: 'lwData24',
                                         render: (h, params) => {
+                                            params.row[params.column.key]=params.row[params.column.key]==null?'0.00':params.row[params.column.key];
                                             return h('span',
                                                 params.row[params.column.key].toFixed(2)
                                             )
@@ -492,6 +528,7 @@
                                         width: 85,
                                         key: 'lwData25',
                                         render: (h, params) => {
+                                            params.row[params.column.key]=params.row[params.column.key]==null?'0.00':params.row[params.column.key];
                                             return h('span',
                                                 params.row[params.column.key].toFixed(2)
                                             )
@@ -503,6 +540,7 @@
                                         width: 100,
                                         key: 'lwData26',
                                         render: (h, params) => {
+                                            params.row[params.column.key]=params.row[params.column.key]==null?'0.00':params.row[params.column.key];
                                             return h('span',
                                                 params.row[params.column.key].toFixed(2)
                                             )
