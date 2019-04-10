@@ -42,8 +42,7 @@
                         <Select  v-model="zyjhcx.xszt" placeholder="请选择销售主体">
                             <Option value="">全部</Option>
                             <Option value="销售总公司">销售总公司</Option>
-                            <Option value="技术中心">技术中心</Option>
-                            <Option value="事业部">事业部</Option>
+                            <Option value="技术中心、事业部">技术中心、事业部</Option>
                             <Option value="出口">出口</Option>
                             <Option value="现货">现货</Option>
                         </Select>
