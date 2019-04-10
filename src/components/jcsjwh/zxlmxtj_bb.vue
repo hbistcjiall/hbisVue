@@ -71,7 +71,7 @@
                     {label: '全部', value: '0'},
                     {label: '直供', value: '1'},
                     {label: '三方', value: '2'},
-                    {label: '资办公司', value: '3'},
+                    {label: '自办公司', value: '3'},
                 ],
                 checkText: ['全部'],
                 resDatas: [],
