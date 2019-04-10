@@ -122,17 +122,17 @@
                 ],
                 Csvj:{
                     flName:"",
-                    date:'201903'
+                    date:''
                 },
                 CXQvalue:{
                     flName:"",
                     sort:"0",
-                    date:'201903'
+                    date:''
                 },
                 CXHvalue:{
                     flName:"",
                     sort:"1",
-                    date:'201903'
+                    date:''
                 },
             }
         },
@@ -255,9 +255,9 @@
                 this.CXQvalue.sort = '0';
                 this.CXHvalue.flName = '';
                 this.CXHvalue.sort = '1';
-                this.CXHvalue.date = '201903';
-                this.Csvj.date = '201903';
-                this.CXQvalue.date = '201903';
+                this.CXHvalue.date = '';
+                this.Csvj.date = '';
+                this.CXQvalue.date = '';
                 this.handleListApproveHistory();
             },
             getXszgs(){
@@ -274,9 +274,9 @@
                 this.CXQvalue.sort = '0';
                 this.CXHvalue.flName = '3';
                 this.CXHvalue.sort = '1';
-                this.CXHvalue.date = '201903';
-                this.Csvj.date = '201903';
-                this.CXQvalue.date = '201903';
+                this.CXHvalue.date = '';
+                this.Csvj.date = '';
+                this.CXQvalue.date = '';
                 this.handleListApproveHistory();
 
             },
@@ -294,9 +294,9 @@
                 this.CXQvalue.sort = '0';
                 this.CXHvalue.flName = '4';
                 this.CXHvalue.sort = '1';
-                this.CXHvalue.date = '201903';
-                this.Csvj.date = '201903';
-                this.CXQvalue.date = '201903';
+                this.CXHvalue.date = '';
+                this.Csvj.date = '';
+                this.CXQvalue.date = '';
                 this.handleListApproveHistory();
             },
             getCk(){
@@ -313,9 +313,9 @@
                 this.CXQvalue.sort = '0';
                 this.CXHvalue.flName = '2';
                 this.CXHvalue.sort = '1';
-                this.CXHvalue.date = '201903';
-                this.Csvj.date = '201903';
-                this.CXQvalue.date = '201903';
+                this.CXHvalue.date = '';
+                this.Csvj.date = '';
+                this.CXQvalue.date = '';
                 this.handleListApproveHistory();
             }
         }

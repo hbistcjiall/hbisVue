@@ -1,7 +1,7 @@
 <template>
     <div>
         <Row class="titleH" id="zyphjh"><span>资源平衡计划</span></Row>
-        <div class="content" style="height:950px">
+        <div class="content" style="height:1000px">
             <zyphjh></zyphjh>
         </div>
         <Row class="titleH" id="htzzjd"><span>合同组织进度</span></Row>
