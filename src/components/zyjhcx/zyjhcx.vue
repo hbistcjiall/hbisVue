@@ -37,13 +37,6 @@
                         </Select>
                     </FormItem>
                 </Col>
-                <Col span="4">
-                    <FormItem label="产线：">
-                        <Select  v-model="zyjhcx.cx" style="width:145px" placeholder="请选择产线" filterable>
-                            <Option v-for="item in cxData" :value="item.value" :key="item.value">{{ item.label }}</Option>
-                        </Select>
-                    </FormItem>
-                </Col>
                 <Col span="5" style="margin-left: 20px">
                     <FormItem label="销售主体：" style="margin-left:30px">
                         <Select  v-model="zyjhcx.xszt" placeholder="请选择销售主体">
@@ -53,6 +46,13 @@
                             <Option value="事业部">事业部</Option>
                             <Option value="出口">出口</Option>
                             <Option value="现货">现货</Option>
+                        </Select>
+                    </FormItem>
+                </Col>
+                <Col span="6">
+                    <FormItem label="产线：">
+                        <Select  v-model="cx" style="width:300px" placeholder="请选择产线" filterable multiple>
+                            <Option v-for="item in cxData" :value="item.value" :key="item.value">{{ item.label }}</Option>
                         </Select>
                     </FormItem>
                 </Col>
@@ -79,11 +79,11 @@
                 loading:true,
                 zyjhcx:{
                     pz:'',
-                    cx:'',
                     nf:'2019',
                     yf:'4',
                     xszt:''
                 },
+                cx:[],
                 pzData:[],
                 cxData:[],
                 xsztData:[],
@@ -127,6 +127,7 @@
         methods: {
             getList() {
                 this.loading = true;
+                let cx = 'cx='+this.cx.toString();
                 if(this.zyjhcx.nf!=''){
                     this.zyjhcx.nf=new Date(this.zyjhcx.nf).getFullYear().toString()
                 }else{
@@ -135,7 +136,7 @@
                 fetch(this.$store.state.fetchPath + "/scm-steel-settle/getzyjh", {
                     method: "POST",
                     headers: this.$store.state.fetchHeader,
-                    body: this.utils.formatParams(this.zyjhcx),
+                    body: this.utils.formatParams(this.zyjhcx)+'&'+cx,
                     credentials: 'include'
                 }).then((res) => {
                     if(res.status!=200){

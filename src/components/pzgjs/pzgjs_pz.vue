@@ -25,7 +25,7 @@
                         </i-switch>
                     </FormItem>
                 </Col>
-                <Col span="8">
+                <Col span="6">
                     <FormItem label="品种：">
                         <Select v-model="pz" style="width:120px" placeholder="请选择品种">
                             <Option value="">全部</Option>
@@ -58,7 +58,7 @@
                 switchTime:true,
                 year:new Date(),
                 startTime:new Date(),
-                endTime:this.utils.formatMonthEnd(),
+                endTime:new Date(),
                 pz:'',
                 columns: [{
                     title: '品种',
@@ -105,7 +105,7 @@
                                 render: (h, params) => {
                                     params.row[params.column.key]=params.row[params.column.key]==null?'0.00':params.row[params.column.key];
                                     return h('span',
-                                        ((Number(params.row[params.column.key]))*100).toFixed(2)
+                                        (Number(params.row[params.column.key])).toFixed(2)
                                     )
                                 }
                             }
@@ -119,7 +119,7 @@
                         render: (h, params) => {
                             params.row[params.column.key]=params.row[params.column.key]==null?'0.00':params.row[params.column.key];
                             return h('span',
-                                ((Number(params.row[params.column.key]))*100).toFixed(2)
+                                (Number(params.row[params.column.key])).toFixed(2)
                             )
                         }
                     },
@@ -160,7 +160,7 @@
                                 render: (h, params) => {
                                     params.row[params.column.key]=params.row[params.column.key]==null?'0.00':params.row[params.column.key];
                                     return h('span',
-                                        ((Number(params.row[params.column.key]))*100).toFixed(2)
+                                        (Number(params.row[params.column.key])).toFixed(2)
                                     )
                                 }
                             }
@@ -202,7 +202,7 @@
                                 render: (h, params) => {
                                     params.row[params.column.key]=params.row[params.column.key]==null?'0.00':params.row[params.column.key];
                                     return h('span',
-                                        ((Number(params.row[params.column.key]))*100).toFixed(2)
+                                        (Number(params.row[params.column.key])).toFixed(2)
                                     )
                                 }
                             }
@@ -244,7 +244,7 @@
                                 render: (h, params) => {
                                     params.row[params.column.key]=params.row[params.column.key]==null?'0.00':params.row[params.column.key];
                                     return h('span',
-                                        ((Number(params.row[params.column.key]))*100).toFixed(2)
+                                        (Number(params.row[params.column.key])).toFixed(2)
                                     )
                                 }
                             }

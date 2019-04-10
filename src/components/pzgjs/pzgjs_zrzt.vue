@@ -65,7 +65,7 @@
                 startTime:new Date(),
                 titleYear:'',
                 titleMonth:'',
-                endTime:this.utils.formatMonthEnd(),
+                endTime:new Date(),
                 zrbm: '',
                 columns:[
                     {

@@ -2,9 +2,9 @@
     <div>
         <Form :label-width="70">
             <Row>
-                <Col span="4">
-                    <FormItem label="产线：" style="width:120px">
-                        <Select style="width:150px"  v-model="cx" placeholder="请选择产线" filterable>
+                <Col span="6">
+                    <FormItem label="产线：">
+                        <Select style="width:300px"  v-model="cx" placeholder="请选择产线" filterable multiple>
                             <Option v-for="item in cxData" :value="item.value" :key="item.value">{{ item.label }}</Option>
                         </Select>
                     </FormItem>
@@ -40,7 +40,7 @@
             let ckjhl = 'CKJHL';
             return {
                 loading:true,
-                cx:'',
+                cx:[],
                 startTime:new Date(),
                 endTime:this.utils.formatMonthEnd(),
                 // pzData:[],
@@ -299,8 +299,8 @@
         methods: {
             getList() {
                 this.loading = true;
-                let params={};
-                params.cxName = this.cx
+                // let params={};
+                let cxName = 'cxName='+this.cx.toString();
                 let startTime='startTime=';
                 let endTime='&endTime=';
                 startTime=startTime+this.utils.formatMonthStart(this.startTime);
@@ -308,7 +308,7 @@
                 fetch(this.$store.state.fetchPath + "/scm-steel-settle/getcxhtjd", {
                     method: "POST",
                     headers: this.$store.state.fetchHeader,
-                    body: startTime+endTime+'&'+this.utils.formatParams(params),
+                    body: startTime+endTime+'&'+cxName,
                     credentials: 'include'
                 }).then((res) => {
                     if(res.status!=200){
