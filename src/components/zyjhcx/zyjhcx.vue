@@ -37,8 +37,8 @@
                         </Select>
                     </FormItem>
                 </Col>
-                <Col span="5" style="margin-left: 20px">
-                    <FormItem label="销售主体：" style="margin-left:30px">
+                <Col span="5" style="">
+                    <FormItem label="销售主体：" style="">
                         <Select  v-model="zyjhcx.xszt" placeholder="请选择销售主体">
                             <Option value="">全部</Option>
                             <Option value="销售总公司">销售总公司</Option>
@@ -51,7 +51,7 @@
                 </Col>
                 <Col span="6">
                     <FormItem label="产线：">
-                        <Select  v-model="cx" style="width:300px" placeholder="请选择产线" filterable multiple>
+                        <Select  v-model="cx" style="width:235px" placeholder="请选择产线" filterable multiple>
                             <Option v-for="item in cxData" :value="item.value" :key="item.value">{{ item.label }}</Option>
                         </Select>
                     </FormItem>
