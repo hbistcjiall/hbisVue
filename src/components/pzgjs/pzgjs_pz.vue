@@ -74,7 +74,7 @@
                         width: 100,
                         children: [
                             {
-                                title: '内贸总量-总量',
+                                title: '总量',
                                 key: 'FKIMG',
                                 align: 'center',
                                 width: 100,
@@ -86,7 +86,7 @@
                                 }
                             },
                             {
-                                title: '内贸总量-品种钢',
+                                title: '品种钢',
                                 key: 'PZGL',
                                 align: 'center',
                                 width: 100,
@@ -98,7 +98,7 @@
                                 }
                             },
                             {
-                                title: '内贸总量-比重',
+                                title: '比重',
                                 key: 'BZ',
                                 align: 'center',
                                 width: 100,
@@ -128,7 +128,7 @@
                         key: 'zygs',
                         align: 'center',
                         children: [{
-                            title: '专业公司-总量',
+                            title: '总量',
                             key: 'ZYFKIMG',
                             align: 'center',
                             width: 100,
@@ -141,7 +141,7 @@
 
                         },
                             {
-                                title: '专业公司-品种钢',
+                                title: '品种钢',
                                 key: 'ZYPZGL',
                                 align: 'center',
                                 width: 100,
@@ -153,7 +153,7 @@
                                 }
                             },
                             {
-                                title: '专业公司-比重',
+                                title: '比重',
                                 key: 'ZYBZ',
                                 align: 'center',
                                 width: 100,
@@ -171,7 +171,7 @@
                         key: 'fgs',
                         align: 'center',
                         children: [{
-                            title: '分公司-总量',
+                            title: '总量',
                             key: 'FGSFKIMG',
                             align: 'center',
                             width: 100,
@@ -183,7 +183,7 @@
                             }
                         },
                             {
-                                title: '分公司-品种钢',
+                                title: '品种钢',
                                 key: 'FGSPZGL',
                                 align: 'center',
                                 width: 100,
@@ -195,7 +195,7 @@
                                 }
                             },
                             {
-                                title: '分公司-比重',
+                                title: '比重',
                                 key: 'FGSBZ',
                                 align: 'center',
                                 width: 100,
@@ -213,7 +213,7 @@
                         key: 'zgs',
                         align: 'center',
                         children: [{
-                            title: '子公司-总量',
+                            title: '总量',
                             key: 'ZGSFKIMG',
                             align: 'center',
                             width: 100,
@@ -225,7 +225,7 @@
                             }
                         },
                             {
-                                title: '子公司-品种钢',
+                                title: '品种钢',
                                 key: 'ZGSPZGL',
                                 align: 'center',
                                 width: 100,
@@ -237,7 +237,7 @@
                                 }
                             },
                             {
-                                title: '子公司-比重',
+                                title: '比重',
                                 key: 'ZGSBZ',
                                 align: 'center',
                                 width: 100,

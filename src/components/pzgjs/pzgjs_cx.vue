@@ -41,20 +41,22 @@
                         </Select>
                     </FormItem>
                 </Col>
-                <Col span="4">
+                <Col span="6" style="margin-left: 20px">
                     <FormItem label="产线：">
-                        <Select  v-model="cx" placeholder="请选择产线" filterable>
+                        <Select  v-model="cx" placeholder="请选择产线" filterable multiple style="width: 235px">
                             <Option v-for="item in cxData" :value="item.value" :key="item.value">{{ item.label }}</Option>
                         </Select>
                     </FormItem>
                 </Col>
+
+
+            </Row>
+            <Row style="margin-bottom: 20px">
                 <Col span="4">
                     <Button @click="getList()" icon="ios-search" style="margin-right:10px;">查询</Button>
                     <Button @click="downLoad()" icon="ios-cloud-download-outline">导出</Button>
                 </Col>
-
             </Row>
-
         </Form>
         <Table :loading="loading" :columns="columns" :data="data" border height="550" ref="table"></Table>
     </div>
@@ -90,7 +92,7 @@
                         align: 'center',
                         children: [
                             {
-                                title: '内贸总量-总量',
+                                title: '总量',
                                 key: 'FKIMG',
                                 align: 'center',
                                 render: (h, params) => {
@@ -102,7 +104,7 @@
 
                             },
                             {
-                                title: '内贸总量-品种钢',
+                                title: '品种钢',
                                 key: 'PZGL',
                                 align: 'center',
                                 render: (h, params) => {
@@ -114,7 +116,7 @@
 
                             },
                             {
-                                title: '内贸总量-比重',
+                                title: '比重',
                                 key: 'BZ',
                                 align: 'center',
                                 width:'90',
@@ -145,7 +147,7 @@
                         key: 'zygs',
                         align: 'center',
                         children: [{
-                            title: '专业公司-总量',
+                            title: '总量',
                             key: 'ZYFKIMG',
                             width:'70',
                             align: 'center',
@@ -157,7 +159,7 @@
                             }
                         },
                             {
-                                title: '专业公司-品种钢',
+                                title: '品种钢',
                                 key: 'ZYPZGL',
                                 align: 'center',
                                 render: (h, params) => {
@@ -168,7 +170,7 @@
                                 }
                             },
                             {
-                                title: '专业公司-比重',
+                                title: '比重',
                                 key: 'ZYBZ',
                                 align: 'center',
                                 width:'90',
@@ -186,7 +188,7 @@
                         key: 'fgs',
                         align: 'center',
                         children: [{
-                            title: '分公司-总量',
+                            title: '总量',
                             key: 'FGSFKIMG',
                             align: 'center',
                             render: (h, params) => {
@@ -197,7 +199,7 @@
                             }
                         },
                             {
-                                title: '分公司-品种钢',
+                                title: '品种钢',
                                 key: 'FGSPZGL',
                                 align: 'center',
                                 render: (h, params) => {
@@ -208,7 +210,7 @@
                                 }
                             },
                             {
-                                title: '分公司-比重',
+                                title: '比重',
                                 key: 'FGSBZ',
                                 align: 'center',
                                 width:'90',
@@ -226,7 +228,7 @@
                         key: 'zgs',
                         align: 'center',
                         children: [{
-                            title: '子公司-总量',
+                            title: '总量',
                             key: 'ZGSFKIMG',
                             align: 'center',
                             width:'70',
@@ -238,7 +240,7 @@
                             }
                         },
                             {
-                                title: '子公司-品种钢',
+                                title: '品种钢',
                                 key: 'ZGSPZGL',
                                 align: 'center',
                                 render: (h, params) => {
@@ -249,7 +251,7 @@
                                 }
                             },
                             {
-                                title: '子公司-比重',
+                                title: '比重',
                                 key: 'ZGSBZ',
                                 align: 'center',
                                 width:'90',

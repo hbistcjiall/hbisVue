@@ -115,7 +115,7 @@
                             }
                         },
                             {
-                                title: '合同量（专业公司）',
+                                title: '专业公司',
                                 key: 'ZYGSHTL',
                                 align: 'center',
                                 width: 100,
@@ -127,7 +127,7 @@
                                 }
                             },
                             {
-                                title: '合同量（分公司）',
+                                title: '分公司',
                                 key: 'ZYFGSHTL',
                                 align: 'center',
                                 width: 100,
