@@ -247,4 +247,7 @@
         /*margin-bottom: 20px;*/
         float: left;
     }
+    .paging{
+        float: right;
+    }
 </style>

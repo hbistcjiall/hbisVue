@@ -37,7 +37,7 @@
     export default {
         name: "cxhtjdcx",
         data() {
-            let ckjhl = 'CKJHL';
+            // let ckjhl = 'CKJHL';
             return {
                 loading:true,
                 cx:[],
@@ -93,7 +93,7 @@
                                 render: (h, params) => {
                                     params.row[params.column.key]=params.row[params.column.key]==null?'0.00':params.row[params.column.key];
                                     return h('span',
-                                        (Number(params.row[params.column.key])).toFixed(2)
+                                        (Number(params.row[params.column.key])).toFixed(2)+"%"
                                     )
                                 }
                             }
@@ -147,7 +147,7 @@
                                 render: (h, params) => {
                                     params.row[params.column.key]=params.row[params.column.key]==null?'0.00':params.row[params.column.key];
                                     return h('span',
-                                        (Number(params.row[params.column.key])).toFixed(2)
+                                        (Number(params.row[params.column.key])).toFixed(2)+"%"
                                     )
                                 }
                             },
@@ -159,7 +159,7 @@
                                 render: (h, params) => {
                                     params.row[params.column.key]=params.row[params.column.key]==null?'0.00':params.row[params.column.key];
                                     return h('span',
-                                        Number(params.row[params.column.key]).toFixed(2)
+                                        Number(params.row[params.column.key]).toFixed(2)+"%"
                                     )
                                 }
                             }
@@ -201,7 +201,7 @@
                                 render: (h, params) => {
                                     params.row[params.column.key]=params.row[params.column.key]==null?'0.00':params.row[params.column.key];
                                     return h('span',
-                                        (Number(params.row[params.column.key])).toFixed(2)
+                                        (Number(params.row[params.column.key])).toFixed(2)+"%"
                                     )
                                 }
                             },
@@ -213,7 +213,7 @@
                                 render: (h, params) => {
                                     params.row[params.column.key]=params.row[params.column.key]==null?'0.00':params.row[params.column.key];
                                     return h('span',
-                                        Number(params.row[params.column.key]).toFixed(2)
+                                        Number(params.row[params.column.key]).toFixed(2)+"%"
                                     )
                                 }
                             }
@@ -255,7 +255,7 @@
                                 render: (h, params) => {
                                     params.row[params.column.key]=params.row[params.column.key]==null?'0.00':params.row[params.column.key];
                                     return h('span',
-                                        (Number(params.row[params.column.key])).toFixed(2)
+                                        (Number(params.row[params.column.key])).toFixed(2)+"%"
                                     )
                                 }
                             },
@@ -267,7 +267,7 @@
                                 render: (h, params) => {
                                     params.row[params.column.key]=params.row[params.column.key]==null?'0.00':params.row[params.column.key];
                                     return h('span',
-                                        Number(params.row[params.column.key]).toFixed(2)
+                                        Number(params.row[params.column.key]).toFixed(2)+"%"
                                     )
                                 }
                             }

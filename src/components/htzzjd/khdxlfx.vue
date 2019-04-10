@@ -189,9 +189,15 @@
                             }
                         },
                         {
-                            title: "兑现率(%)",
+                            title: "兑现率",
                             align: "center",
                             key: 'cashRate',
+                            render: (h, params) => {
+                                params.row[params.column.key]=params.row[params.column.key]==null?'0.00':params.row[params.column.key];
+                                return h('span',
+                                    Number(params.row[params.column.key]).toFixed(2)+"%"
+                                )
+                            }
                         },
                     ]
                 });
