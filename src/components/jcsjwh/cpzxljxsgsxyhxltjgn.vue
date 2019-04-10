@@ -16,7 +16,6 @@
                     <DatePicker type="month" :editable="false" :clearable="false" v-model="startTime"
                                 style="width:120px;margin-left: 10px">
                     </DatePicker>
-                    <span>一</span>
                     <DatePicker type="month" :editable="false" :clearable="false" v-model="endTime"
                                 style="width:120px;">
                     </DatePicker>
@@ -27,9 +26,10 @@
                 </a>
             </Form>
         </div>
-        <Table :loading="loading" border stripe :columns="columns12" :data="fecthdata6" style="margin-top: 20px;float: left;width: 100%;"
+        <Table :loading="loading" border stripe :columns="columns12" :data="fecthdata6"
+               style="margin-top: 20px;float: left;width: 100%;"
                ref="table">"
-               ref="table">
+            ref="table">
         </Table>
         <Page :total="dataCount" :page-size="pageSize" show-total show-elevator show-sizer class="paging"
               @on-change="changepage" @on-page-size-change='handlePageSize' style="margin-top:20px;">
@@ -51,7 +51,7 @@
                 cplb: '',
                 loading: true,
                 startTime: new Date(),
-                endTime: this.utils.formatMonthEnd(),
+                endTime: new Date(),
                 fecthdata6: [],
                 data: {
                     page: '0',
@@ -73,17 +73,35 @@
                     {
                         title: '总销量',
                         align: "center",
-                        key: 'TOTALSALES'
+                        key: 'TOTALSALES',
+                        render: (h, params) => {
+                            params.row[params.column.key]=params.row[params.column.key]==null?'0.00':params.row[params.column.key];
+                            return h('span',
+                                params.row[params.column.key].toFixed(2)
+                            )
+                        }
                     },
                     {
                         title: '协议户数',
                         align: "center",
-                        key: 'PROTOCOLACCOUNTNUM'
+                        key: 'PROTOCOLACCOUNTNUM',
+                        render: (h, params) => {
+                            params.row[params.column.key]=params.row[params.column.key]==null?'0.00':params.row[params.column.key];
+                            return h('span',
+                                params.row[params.column.key].toFixed(2)
+                            )
+                        }
                     },
                     {
                         title: '年协议量',
                         align: "center",
-                        key: 'PROTOCOLSALESYEAR'
+                        key: 'PROTOCOLSALESYEAR',
+                        render: (h, params) => {
+                            params.row[params.column.key]=params.row[params.column.key]==null?'0.00':params.row[params.column.key];
+                            return h('span',
+                                params.row[params.column.key].toFixed(2)
+                            )
+                        }
                     },
                     {
                         title: '总公司协议户销量',
@@ -92,17 +110,35 @@
                             {
                                 title: '销售量',
                                 align: "center",
-                                key: 'TOTALPROTOCOLSALES'
+                                key: 'TOTALPROTOCOLSALES',
+                                render: (h, params) => {
+                                    params.row[params.column.key]=params.row[params.column.key]==null?'0.00':params.row[params.column.key];
+                                    return h('span',
+                                        params.row[params.column.key].toFixed(2)
+                                    )
+                                }
                             },
                             {
                                 title: '占年协议量比',
                                 align: "center",
-                                key: 'TOTALPROTOCOLSALESOFYEAR'
+                                key: 'TOTALPROTOCOLSALESOFYEAR',
+                                render: (h, params) => {
+                                    params.row[params.column.key]=params.row[params.column.key]==null?'0.00':params.row[params.column.key];
+                                    return h('span',
+                                        params.row[params.column.key].toFixed(2)+'%'
+                                    )
+                                }
                             },
                             {
                                 title: '占产品总销量',
                                 align: "center",
-                                key: 'TOTALPROTOCOLSALESOFPRODUCT'
+                                key: 'TOTALPROTOCOLSALESOFPRODUCT',
+                                render: (h, params) => {
+                                    params.row[params.column.key]=params.row[params.column.key]==null?'0.00':params.row[params.column.key];
+                                    return h('span',
+                                        params.row[params.column.key].toFixed(2)+'%'
+                                    )
+                                }
                             },
                         ],
                     }, {
@@ -112,12 +148,24 @@
                             {
                                 title: '销售量',
                                 align: "center",
-                                key: 'ZIBANPROTOCOLSALES'
+                                key: 'ZIBANPROTOCOLSALES',
+                                render: (h, params) => {
+                                    params.row[params.column.key]=params.row[params.column.key]==null?'0.00':params.row[params.column.key];
+                                    return h('span',
+                                        params.row[params.column.key].toFixed(2)
+                                    )
+                                }
                             },
                             {
                                 title: '占协议总销量比',
                                 align: "center",
-                                key: 'ZIBANPROTOCOLSALESOFTOTAL'
+                                key: 'ZIBANPROTOCOLSALESOFTOTAL',
+                                render: (h, params) => {
+                                    params.row[params.column.key]=params.row[params.column.key]==null?'0.00':params.row[params.column.key];
+                                    return h('span',
+                                        params.row[params.column.key].toFixed(2)+'%'
+                                    )
+                                }
                             },
                         ],
                     },
@@ -128,12 +176,24 @@
                             {
                                 title: '销售量',
                                 align: "center",
-                                key: 'XIEYIPROTOCOLSALES'
+                                key: 'XIEYIPROTOCOLSALES',
+                                render: (h, params) => {
+                                    params.row[params.column.key]=params.row[params.column.key]==null?'0.00':params.row[params.column.key];
+                                    return h('span',
+                                        params.row[params.column.key].toFixed(2)
+                                    )
+                                }
                             },
                             {
                                 title: '占协议总销量比',
                                 align: "center",
-                                key: 'XIEYIPROTOCOLSALESOFTOTAL'
+                                key: 'XIEYIPROTOCOLSALESOFTOTAL',
+                                render: (h, params) => {
+                                    params.row[params.column.key]=params.row[params.column.key]==null?'0.00':params.row[params.column.key];
+                                    return h('span',
+                                        params.row[params.column.key].toFixed(2)+'%'
+                                    )
+                                }
                             },
                         ],
                     },
@@ -162,7 +222,7 @@
                 fetch(this.$store.state.fetchPath + "/productSalesProtocolAccountSales/list", {
                     method: "POST",
                     headers: this.$store.state.fetchHeader,
-                    body: startTime + endTime + '&' + this.utils.formatParams(params)+'&' + this.utils.formatParams(this.data),
+                    body: startTime + endTime + '&' + this.utils.formatParams(params) + '&' + this.utils.formatParams(this.data),
                     credentials: 'include'
                 }).then((res) => {
                     if (res.status != 200) {
@@ -174,16 +234,6 @@
                 }).then((res) => {
                     res = res && res.length > 0 ? JSON.parse(res) : [];
                     this.resDatas = res.data;
-                    for (let i = 0; i < this.resDatas.length; i++) {
-                        this.resDatas[i].TOTALSALES = Number(this.resDatas[i].TOTALSALES).toFixed(2);
-                        this.resDatas[i].TOTALPROTOCOLSALES = Number(this.resDatas[i].TOTALPROTOCOLSALES).toFixed(2);
-                        this.resDatas[i].ZIBANPROTOCOLSALES = Number(this.resDatas[i].ZIBANPROTOCOLSALES).toFixed(2);
-                        this.resDatas[i].XIEYIPROTOCOLSALESOFTOTAL = Number(this.resDatas[i].XIEYIPROTOCOLSALESOFTOTAL).toFixed(2);
-                        this.resDatas[i].ZIBANPROTOCOLSALESOFTOTAL = this.resDatas[i].ZIBANPROTOCOLSALESOFTOTAL + '%';
-                        this.resDatas[i].TOTALPROTOCOLSALESOFYEAR = this.resDatas[i].TOTALPROTOCOLSALESOFYEAR + '%';
-                        this.resDatas[i].TOTALPROTOCOLSALESOFPRODUCT = this.resDatas[i].TOTALPROTOCOLSALESOFPRODUCT + '%';
-                        this.resDatas[i].XIEYIPROTOCOLSALESOFTOTAL = this.resDatas[i].XIEYIPROTOCOLSALESOFTOTAL + '%';
-                    }
                     this.dataCount = parseInt(res.count);
                     this.pageSize = parseInt(res.pageSize);
                     if (this.dataCount < this.pageSize) {
@@ -200,7 +250,7 @@
                 params.cplb = this.cplb;
                 let startTime = 'beginTime=';
                 let endTime = '&endTime=';
-                this.switchTime ? (startTime = startTime + this.utils.formatMonthStart(this.startTime),endTime = endTime + this.utils.formatMonthStart(this.endTime)) : (startTime = startTime + this.utils.formatYearStart(this.year),endTime = endTime + this.utils.formatYearEnd(this.year));
+                this.switchTime ? (startTime = startTime + this.utils.formatMonthStart(this.startTime), endTime = endTime + this.utils.formatMonthStart(this.endTime)) : (startTime = startTime + this.utils.formatYearStart(this.year), endTime = endTime + this.utils.formatYearEnd(this.year));
                 this.downloadUrl = this.$store.state.fetchPath + "/productSalesProtocolAccountSales/export?" + startTime + endTime + '&' + this.utils.formatParams(params);
             }
         },
@@ -222,6 +272,7 @@
         background: #f2f4f7;
         color: #546c8c;
     }
+
     .divStyle {
         width: 100%;
         height: 60px;

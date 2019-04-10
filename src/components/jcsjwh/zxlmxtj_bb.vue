@@ -124,17 +124,35 @@
                     {
                         title: '协议议量（吨）',
                         align: "center",
-                        key: 'ANNUALAGREEMENTVOLUME'
+                        key: 'ANNUALAGREEMENTVOLUME',
+                        render: (h, params) => {
+                            params.row[params.column.key]=params.row[params.column.key]==null?'0.00':params.row[params.column.key];
+                            return h('span',
+                                params.row[params.column.key].toFixed(2)
+                            )
+                        }
                     },
                     {
                         title: '当期协议销量（吨）',
                         align: "center",
-                        key: 'ORDERMOUNT'
+                        key: 'ORDERMOUNT',
+                        render: (h, params) => {
+                            params.row[params.column.key]=params.row[params.column.key]==null?'0.00':params.row[params.column.key];
+                            return h('span',
+                                params.row[params.column.key].toFixed(2)
+                            )
+                        }
                     },
                     {
                         title: '当期执行集团协议加值销量（吨）',
                         align: "center",
-                        key: 'PROTOCOLORDERMOUNT'
+                        key: 'PROTOCOLORDERMOUNT',
+                        render: (h, params) => {
+                            params.row[params.column.key]=params.row[params.column.key]==null?'0.00':params.row[params.column.key];
+                            return h('span',
+                                params.row[params.column.key].toFixed(2)
+                            )
+                        }
                     },
                 ],
             }
