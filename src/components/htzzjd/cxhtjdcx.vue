@@ -10,13 +10,13 @@
                     </FormItem>
                 </Col>
                 <Col span="4">
-                    <FormItem label="月份：" style="margin-left:20px">
+                    <FormItem label="月份：" style="margin-left:80px">
                         <DatePicker type="month" placeholder="起始月份" :editable="false" :clearable="false" v-model="startTime" style="width:150px"></DatePicker>
                     </FormItem>
                 </Col>
                 <Col span="4">
                     <FormItem>
-                        <DatePicker type="month" placeholder="终止月份"  :editable="false" :clearable="false" v-model="endTime" style="width:150px"></DatePicker>
+                        <DatePicker type="month" placeholder="终止月份"  :editable="false" :clearable="false" v-model="endTime" style="width:150px;margin-left: 50px"></DatePicker>
                     </FormItem>
                 </Col>
                 <Col span="4">
