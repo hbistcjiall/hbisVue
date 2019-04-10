@@ -70,7 +70,7 @@
                 switchTime:true,
                 year:new Date(),
                 startTime:new Date(),
-                endTime:this.utils.formatMonthEnd(),
+                endTime:new Date(),
                 cx:'',
                 columns: [{
                     title: '单位',
@@ -301,7 +301,9 @@
             getList() {
                 this.loading = true;
                 let params={};
-                this.dw?params.dw=this.dw:'';
+                // this.dw?params.dw=this.dw:'';
+                let dwStr = '&dw='+this.dw;
+                let cxArr = '&cx=' +this.cx.toString()
                 this.cx?params.cx=this.cx:'';
                 let startTime='startTime=';
                 let endTime='&endTime=';
@@ -309,7 +311,7 @@
                 fetch(this.$store.state.fetchPath + "/scm-steel-settle/getcx", {
                     method: "POST",
                     headers: this.$store.state.fetchHeader,
-                    body: startTime+endTime+'&'+this.utils.formatParams(params),
+                    body: startTime+endTime+dwStr+cxArr,
                     credentials: 'include'
                 }).then((res) => {
                     if(res.status!=200){

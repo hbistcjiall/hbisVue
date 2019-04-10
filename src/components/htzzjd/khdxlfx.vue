@@ -54,7 +54,7 @@
         data() {
             return {
                 startTime: new Date(),
-                endTime: this.utils.formatMonthEnd(),
+                endTime: new Date(),
                 NewStartTime: this.utils.formatMonthStart(this.startTime).substring(6, 7),
                 NewEndTime: this.utils.formatMonthEnd(this.endTime).substring(6, 7),
                 riqi: [],

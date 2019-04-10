@@ -42,7 +42,7 @@
                 loading:true,
                 cx:[],
                 startTime:new Date(),
-                endTime:this.utils.formatMonthEnd(),
+                endTime:new Date(),
                 // pzData:[],
                 cxData:[],
                 cxCx:{

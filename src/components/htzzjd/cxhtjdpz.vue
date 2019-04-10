@@ -45,7 +45,7 @@
                 loading:true,
                 pz:'',
                 startTime:new Date(),
-                endTime:this.utils.formatMonthEnd(),
+                endTime:new Date(),
                 // pzData:[],
                 columns: [
                     {
