@@ -180,7 +180,13 @@
                     {
                         title: '年协议量(吨)',
                         align: "center",
-                        key: 'ANNUALAGREEMENTVOLUME'
+                        key: 'ANNUALAGREEMENTVOLUME',
+                        render: (h, params) => {
+                            params.row[params.column.key] = params.row[params.column.key] == null ? '0.00' : params.row[params.column.key];
+                            return h('span',
+                                Number(params.row[params.column.key]).toFixed(2)
+                            )
+                        }
                     },
                     {
                         title: '操作',

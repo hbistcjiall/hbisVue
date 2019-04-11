@@ -2,7 +2,7 @@
     <div>
         <DatePicker type="year" placeholder="年份" v-model="year" style="width: 120px;margin-right:10px;"></DatePicker>
 
-        <Select style="width:200px;margin-right:10px;" placeholder="请输入责任单位名称" v-model="dictData.code">
+        <Select style="width:200px;margin-right:10px;" placeholder="请输入责任单位名称" v-model="dictData.companyname">
             <Option v-for="item in list" :value="item.value" :key="item.value">
                 {{item.label }}
             </Option>
@@ -98,7 +98,7 @@
                 year: '2019',
                 updModal: false,
                 dictData: {
-                    code: '',
+                    companyname: '',
                     page: '0',
                     limit: '10',
                     year: ''

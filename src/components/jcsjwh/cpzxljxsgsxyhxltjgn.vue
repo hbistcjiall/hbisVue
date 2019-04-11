@@ -215,7 +215,7 @@
             search() {
                 this.loading = true;
                 let params = {};
-                params.cplb = this.cplb;
+                params.varieties = this.cplb;
                 let startTime = 'beginTime=';
                 let endTime = '&endTime=';
                 this.switchTime ? (startTime = startTime + this.utils.formatMonthStart(this.startTime), endTime = endTime + this.utils.formatMonthStart(this.endTime)) : (startTime = startTime + this.utils.formatYearStart(this.year), endTime = endTime + this.utils.formatYearEnd(this.year));
