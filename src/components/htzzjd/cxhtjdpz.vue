@@ -20,11 +20,11 @@
                         <DatePicker type="month" placeholder="起始月份" :editable="false" :clearable="false" v-model="startTime" style="width:150px"></DatePicker>
                     </FormItem>
                 </Col>
-                <Col span="4">
-                    <FormItem>
-                        <DatePicker type="month" placeholder="终止月份"  :editable="false" :clearable="false" v-model="endTime" style="width:150px"></DatePicker>
-                    </FormItem>
-                </Col>
+                <!--<Col span="4">-->
+                    <!--<FormItem>-->
+                        <!--<DatePicker type="month" placeholder="终止月份"  :editable="false" :clearable="false" v-model="endTime" style="width:150px"></DatePicker>-->
+                    <!--</FormItem>-->
+                <!--</Col>-->
                 <Col span="2">&nbsp;</Col>
                 <Col span="4">
                     <Button @click="getList()" icon="ios-search" style="margin-right:10px;">查询</Button>
@@ -45,7 +45,7 @@
                 loading:true,
                 pz:'',
                 startTime:new Date(),
-                endTime:new Date(),
+                // endTime:new Date(),
                 // pzData:[],
                 columns: [
                     {
@@ -158,7 +158,7 @@
                                 render: (h, params) => {
                                     params.row[params.column.key]=params.row[params.column.key]==null?'0.00':params.row[params.column.key];
                                     return h('span',
-                                        Number(params.row[params.column.key]).toFixed(2)+"%"
+                                        Number(params.row[params.column.key]).toFixed(2)
                                     )
                                 }
                             }
@@ -212,7 +212,7 @@
                                 render: (h, params) => {
                                     params.row[params.column.key]=params.row[params.column.key]==null?'0.00':params.row[params.column.key];
                                     return h('span',
-                                        Number(params.row[params.column.key]).toFixed(2)+"%"
+                                        Number(params.row[params.column.key]).toFixed(2)
                                     )
                                 }
                             }
@@ -266,7 +266,7 @@
                                 render: (h, params) => {
                                     params.row[params.column.key]=params.row[params.column.key]==null?'0.00':params.row[params.column.key];
                                     return h('span',
-                                        Number(params.row[params.column.key]).toFixed(2)+"%"
+                                        Number(params.row[params.column.key]).toFixed(2)
                                     )
                                 }
                             }
@@ -300,13 +300,13 @@
                 let params={};
                 params.pzName = this.pz
                 let startTime='startTime=';
-                let endTime='&endTime=';
+                // let endTime='&endTime=';
                 startTime=startTime+this.utils.formatMonthStart(this.startTime);
-                endTime=endTime+this.utils.formatMonthStart(this.endTime);
+                // endTime=endTime+this.utils.formatMonthStart(this.endTime);
                 fetch(this.$store.state.fetchPath + "/scm-steel-settle/getpzhtjd", {
                     method: "POST",
                     headers: this.$store.state.fetchHeader,
-                    body: startTime+endTime+'&'+this.utils.formatParams(params),
+                    body: startTime+'&'+this.utils.formatParams(params),
                     credentials: 'include'
                 }).then((res) => {
                     if(res.status!=200){

@@ -13,7 +13,7 @@
                                 <Option value="1932">舞钢</Option>
                             </Select>
                         </FormItem>
-                        <FormItem label="品种:" style="float: left">
+                        <FormItem label="品种钢:" style="float: left">
                             <Select style="width: 100px" v-model="ddlxyjglxdyData.varieties">
                                 <Option value="">全部</Option>
                                 <Option value="热板">热板</Option>
@@ -45,7 +45,7 @@
         </Page>
         <Modal v-model="updModal" title="新增订单类型与价格类型对应" :closable='false' @on-ok="addok">
             <Form :model="addddlxyjglxdyData" :rules="updrule" :label-width="90">
-                <FormItem label="品种:">
+                <FormItem label="品种钢:">
                     <Select v-model="addddlxyjglxdyData.varieties">
                         <Option value="">全部</Option>
                         <Option value="热板">热板</Option>
@@ -78,7 +78,7 @@
         </Modal>
         <Modal v-model="updModa2" title="修改订单类型与价格类型对应" :closable='false' @on-ok="updok">
             <Form :model="updddlxyjglxdyData" :rules="updrule" :label-width="90">
-                <FormItem label="品种:">
+                <FormItem label="品种钢:">
                     <Select v-model="updddlxyjglxdyData.varieties">
                         <Option value="">全部</Option>
                         <Option value="热板">热板</Option>
@@ -164,7 +164,7 @@
                         width: 60
                     },
                     {
-                        title: '品种',
+                        title: '品种钢',
                         align: "center",
                         key: 'VARIETIES'
                     },

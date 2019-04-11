@@ -2,7 +2,21 @@
     <div>
         <Form :label-width="70">
             <Row>
-                <Col span="6">
+                <Col span="4">
+                    <FormItem label="单位：">
+                        <Select style="width:100px"  v-model="dw" placeholder="请选择单位" filterable >
+                            <Option value="">全部</Option>
+                            <Option value="9580">河钢唐钢</Option>
+                            <Option value="9727">河钢邯钢</Option>
+                            <Option value="9193">河钢宣钢</Option>
+                            <Option value="9196">河钢承钢</Option>
+                            <Option value="1932">河钢舞钢</Option>
+                            <Option value="8110">河钢石钢</Option>
+                            <Option value="8493">河钢衡板</Option>
+                        </Select>
+                    </FormItem>
+                </Col>
+                <Col span="4">
                     <FormItem label="产线：">
                         <Select style="width:300px"  v-model="cx" placeholder="请选择产线" filterable multiple>
                             <Option v-for="item in cxData" :value="item.value" :key="item.value">{{ item.label }}</Option>
@@ -10,15 +24,15 @@
                     </FormItem>
                 </Col>
                 <Col span="4">
-                    <FormItem label="月份：" style="margin-left:80px">
-                        <DatePicker type="month" placeholder="起始月份" :editable="false" :clearable="false" v-model="startTime" style="width:150px"></DatePicker>
+                    <FormItem label="月份：" style="margin-left:170px">
+                        <DatePicker type="month" placeholder="起始月份" :editable="false" :clearable="false" v-model="startTime" style="width:130px"></DatePicker>
                     </FormItem>
                 </Col>
-                <Col span="4">
-                    <FormItem>
-                        <DatePicker type="month" placeholder="终止月份"  :editable="false" :clearable="false" v-model="endTime" style="width:150px;margin-left: 50px"></DatePicker>
-                    </FormItem>
-                </Col>
+                <!--<Col span="4">-->
+                    <!--<FormItem>-->
+                        <!--<DatePicker type="month" placeholder="终止月份"  :editable="false" :clearable="false" v-model="endTime" style="width:130px;margin-left: 120px"></DatePicker>-->
+                    <!--</FormItem>-->
+                <!--</Col>-->
                 <Col span="4">
                     <span>&nbsp;</span>
                 </Col>
@@ -42,13 +56,20 @@
                 loading:true,
                 cx:[],
                 startTime:new Date(),
-                endTime:new Date(),
+                // endTime:new Date(),
+                dw:[],
                 // pzData:[],
                 cxData:[],
                 cxCx:{
                     pz:''
                 },
                 columns: [
+                    {
+                        title: '单位',
+                        key: 'COMPANYID',
+                        align: 'center',
+                        width: 100,
+                    },
                     {
                         title: '产线',
                         key: 'DNAME',
@@ -159,7 +180,7 @@
                                 render: (h, params) => {
                                     params.row[params.column.key]=params.row[params.column.key]==null?'0.00':params.row[params.column.key];
                                     return h('span',
-                                        Number(params.row[params.column.key]).toFixed(2)+"%"
+                                        Number(params.row[params.column.key]).toFixed(2)
                                     )
                                 }
                             }
@@ -213,7 +234,7 @@
                                 render: (h, params) => {
                                     params.row[params.column.key]=params.row[params.column.key]==null?'0.00':params.row[params.column.key];
                                     return h('span',
-                                        Number(params.row[params.column.key]).toFixed(2)+"%"
+                                        Number(params.row[params.column.key]).toFixed(2)
                                     )
                                 }
                             }
@@ -267,7 +288,7 @@
                                 render: (h, params) => {
                                     params.row[params.column.key]=params.row[params.column.key]==null?'0.00':params.row[params.column.key];
                                     return h('span',
-                                        Number(params.row[params.column.key]).toFixed(2)+"%"
+                                        Number(params.row[params.column.key]).toFixed(2)
                                     )
                                 }
                             }
@@ -301,14 +322,15 @@
                 this.loading = true;
                 // let params={};
                 let cxName = 'cxName='+this.cx.toString();
+                let dwName='companyId='+this.dw;
                 let startTime='startTime=';
-                let endTime='&endTime=';
+                // let endTime='&endTime=';
                 startTime=startTime+this.utils.formatMonthStart(this.startTime);
-                endTime=endTime+this.utils.formatMonthStart(this.endTime);
+                // endTime=endTime+this.utils.formatMonthStart(this.endTime);
                 fetch(this.$store.state.fetchPath + "/scm-steel-settle/getcxhtjd", {
                     method: "POST",
                     headers: this.$store.state.fetchHeader,
-                    body: startTime+endTime+'&'+cxName,
+                    body: startTime+'&'+cxName+'&'+dwName,
                     credentials: 'include'
                 }).then((res) => {
                     if(res.status!=200){

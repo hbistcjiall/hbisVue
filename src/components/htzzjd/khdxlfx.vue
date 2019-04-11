@@ -192,12 +192,6 @@
                             title: "兑现率",
                             align: "center",
                             key: 'cashRate',
-                            render: (h, params) => {
-                                params.row[params.column.key]=params.row[params.column.key]==null?'0.00':params.row[params.column.key];
-                                return h('span',
-                                    Number(params.row[params.column.key]).toFixed(2)+"%"
-                                )
-                            }
                         },
                     ]
                 });
@@ -212,7 +206,7 @@
                                 align: "center",
                                 key: hetongyuefen[Number(startMonth) + i - 1],
                                 render: (h, params) => {
-                                    params.row[params.column.key]=params.row[params.column.key]==null?'0.00':params.row[params.column.key];
+                                    params.row[params.column.key] = params.row[params.column.key] == null ? '0.00' : params.row[params.column.key];
                                     return h('span',
                                         Number(params.row[params.column.key]).toFixed(2)
                                     )
@@ -224,7 +218,7 @@
                                 align: "center",
                                 key: fahuoyuefen[Number(startMonth) + i - 1],
                                 render: (h, params) => {
-                                    params.row[params.column.key]=params.row[params.column.key]==null?'0.00':params.row[params.column.key];
+                                    params.row[params.column.key] = params.row[params.column.key] == null ? '0.00' : params.row[params.column.key];
                                     return h('span',
                                         Number(params.row[params.column.key]).toFixed(2)
                                     )
@@ -235,12 +229,10 @@
                                 align: "center",
                                 key: duixian[Number(startMonth) + i - 1],
                                 render: (h, params) => {
-                                    if(params.row[params.column.key]=='')
-                                    {
+                                    if (params.row[params.column.key] == '') {
                                         return h('span',
                                             params.row[params.column.key] + "0%")
-                                    }
-                                    else{
+                                    } else {
                                         return h('span',
                                             params.row[params.column.key] + "%"
                                         )
@@ -252,7 +244,6 @@
                     });
                     // this.newdata[i].duixian[Number(startMonth)+i-1] = this.newdata[i].duixian[Number(startMonth)+i-1] + "%";
                 }
-                window.console.log(this.columns);
                 this.loading = true;
                 let params = {};
                 this.zgs ? params.companyId = this.zgs : '';
