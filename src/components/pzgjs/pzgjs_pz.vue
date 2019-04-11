@@ -119,7 +119,7 @@
                         render: (h, params) => {
                             params.row[params.column.key]=params.row[params.column.key]==null?'0.00':params.row[params.column.key];
                             return h('span',
-                                (Number(params.row[params.column.key])*100).toFixed(2)+"%"
+                                Number(params.row[params.column.key]).toFixed(2)+"%"
                             )
                         }
                     },
