@@ -1,10 +1,16 @@
-﻿import Vue from 'vue'
+﻿import 'babel-polyfill'
+require('es6-promise').polyfill();
+require('isomorphic-fetch');
+import Vue from 'vue'
 import App from './App.vue'
 import store from './store/store'
 import router from './router/router'
 import utils from './utils';
 import iView from 'iview';
+
+
 import 'iview/dist/styles/iview.css';
+
 
 Vue.use(iView);
 Vue.prototype.utils=utils;

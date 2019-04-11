@@ -1,7 +1,11 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
 import index from './modules/index'
+import Promise from 'promise-polyfill'
 
+if (!window.Promise) {
+    window.Promise = Promise;
+}
 Vue.use(VueRouter)
 
 const routes = [
