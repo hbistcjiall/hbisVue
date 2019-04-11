@@ -3,7 +3,7 @@ import xyhxl from './xyhxl'
 import gkfx from './gkfx'
 import htzzjd from './htzzjd'
 const indexchild=[
-    {path:'',redirect:'/demo'},
+    {path:'',redirect:'/indexpage'},
     {
         path: '/mgr',
         name: 'mgr',
@@ -125,9 +125,9 @@ const indexchild=[
         },
     },
     {
-        path: '/demo',
-        name: 'demo',
-        component: resolve => require(['@/components/demo'], resolve),
+        path: '/indexpage',
+        name: 'indexpage',
+        component: resolve => require(['@/components/indexpage'], resolve),
         meta: {
             title: 'Demo',
             keepAlive: true,

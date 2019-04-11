@@ -197,7 +197,7 @@
                     that.screenHeight = document.documentElement.clientHeight - 110 + 'px';
                 })()
             };
-            this.$router.push('demo');
+            this.$router.push('indexpage');
         },
         watch: {
             screenHeight(val) {

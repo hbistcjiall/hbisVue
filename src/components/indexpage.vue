@@ -7,7 +7,7 @@
 <script>
     import homepage from '@/components/index/homepage'
     export default {
-        name: "demo",
+        name: "indexpage",
         components: {
             homepage
         }
