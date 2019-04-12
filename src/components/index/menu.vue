@@ -50,7 +50,6 @@
     .ivu-menu-item, .ivu-menu-submenu{
         text-align: left;
         color: #333;
-
     }
     .ivu-menu-item span{
         white-space:nowrap;
@@ -58,6 +57,9 @@
     .ivu-menu-light.ivu-menu-vertical .ivu-menu-item-active:not(.ivu-menu-submenu){
         color: white;
         background: #09c;
+    }
+    .ivu-menu-submenu-title span{
+        font-weight: bold;
     }
 
 </style>
