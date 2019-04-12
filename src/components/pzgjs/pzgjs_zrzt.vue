@@ -39,8 +39,8 @@
                             <Option value="宣钢分公司">宣钢分公司</Option>
                             <Option value="承钢分公司">承钢分公司</Option>
                             <Option value="舞钢分公司">舞钢分公司</Option>
-                            <Option value="石钢公司">石钢公司</Option>
-                            <Option value="衡板公司">衡板公司</Option>
+                            <Option value="石钢分公司">石钢分公司</Option>
+                            <Option value="衡板分公司">衡板分公司</Option>
                         </Select>
                     </FormItem>
                 </Col>
