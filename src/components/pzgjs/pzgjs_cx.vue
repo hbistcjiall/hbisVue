@@ -79,12 +79,14 @@
                     key: 'COMPANYNAME',
                     align: 'center',
                     fixed: 'left',
+                    width:'100',
                     isMergeRow: true
                 },
                     {
                         title: '产线',
                         key: 'NAME',
                         align: 'center',
+                        width:'100',
                     },
                     {
                         title: '内贸总量',
@@ -94,6 +96,7 @@
                             {
                                 title: '总量',
                                 key: 'FKIMG',
+                                width:'100',
                                 align: 'center',
                                 render: (h, params) => {
                                     params.row[params.column.key]=params.row[params.column.key]==null?'0.00':params.row[params.column.key];
@@ -107,6 +110,7 @@
                                 title: '品种钢',
                                 key: 'PZGL',
                                 align: 'center',
+                                width:'100',
                                 render: (h, params) => {
                                     params.row[params.column.key]=params.row[params.column.key]==null?'0.00':params.row[params.column.key];
                                     return h('span',
@@ -149,7 +153,7 @@
                         children: [{
                             title: '总量',
                             key: 'ZYFKIMG',
-                            width:'70',
+                            width:'100',
                             align: 'center',
                             render: (h, params) => {
                                 params.row[params.column.key]=params.row[params.column.key]==null?'0.00':params.row[params.column.key];
@@ -162,6 +166,7 @@
                                 title: '品种钢',
                                 key: 'ZYPZGL',
                                 align: 'center',
+                                width:'100',
                                 render: (h, params) => {
                                     params.row[params.column.key]=params.row[params.column.key]==null?'0.00':params.row[params.column.key];
                                     return h('span',
@@ -191,6 +196,7 @@
                             title: '总量',
                             key: 'FGSFKIMG',
                             align: 'center',
+                            width:'100',
                             render: (h, params) => {
                                 params.row[params.column.key]=params.row[params.column.key]==null?'0.00':params.row[params.column.key];
                                 return h('span',
@@ -202,6 +208,7 @@
                                 title: '品种钢',
                                 key: 'FGSPZGL',
                                 align: 'center',
+                                width:'100',
                                 render: (h, params) => {
                                     params.row[params.column.key]=params.row[params.column.key]==null?'0.00':params.row[params.column.key];
                                     return h('span',
@@ -231,7 +238,7 @@
                             title: '总量',
                             key: 'ZGSFKIMG',
                             align: 'center',
-                            width:'70',
+                            width:'100',
                             render: (h, params) => {
                                 params.row[params.column.key]=params.row[params.column.key]==null?'0.00':params.row[params.column.key];
                                 return h('span',
@@ -243,6 +250,7 @@
                                 title: '品种钢',
                                 key: 'ZGSPZGL',
                                 align: 'center',
+                                width:'100',
                                 render: (h, params) => {
                                     params.row[params.column.key]=params.row[params.column.key]==null?'0.00':params.row[params.column.key];
                                     return h('span',
@@ -345,5 +353,7 @@
     .ivu-table-cell{
         text-overflow: ellipsis !important;
         word-break: break-all !important;
+        padding-left:0px;
+        padding-right:0px;
     }
 </style>

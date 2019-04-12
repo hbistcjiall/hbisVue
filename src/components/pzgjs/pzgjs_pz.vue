@@ -101,7 +101,7 @@
                                 title: '比重',
                                 key: 'BZ',
                                 align: 'center',
-                                width: 100,
+                                width: 90,
                                 render: (h, params) => {
                                     params.row[params.column.key]=params.row[params.column.key]==null?'0.00':params.row[params.column.key];
                                     return h('span',
@@ -115,7 +115,7 @@
                         title: '环比',
                         key: 'HB',
                         align: 'center',
-                        width: 100,
+                        width: 90,
                         render: (h, params) => {
                             params.row[params.column.key]=params.row[params.column.key]==null?'0.00':params.row[params.column.key];
                             return h('span',
@@ -156,7 +156,7 @@
                                 title: '比重',
                                 key: 'ZYBZ',
                                 align: 'center',
-                                width: 100,
+                                width: 90,
                                 render: (h, params) => {
                                     params.row[params.column.key]=params.row[params.column.key]==null?'0.00':params.row[params.column.key];
                                     return h('span',
@@ -198,7 +198,7 @@
                                 title: '比重',
                                 key: 'FGSBZ',
                                 align: 'center',
-                                width: 100,
+                                width: 90,
                                 render: (h, params) => {
                                     params.row[params.column.key]=params.row[params.column.key]==null?'0.00':params.row[params.column.key];
                                     return h('span',
@@ -240,7 +240,7 @@
                                 title: '比重',
                                 key: 'ZGSBZ',
                                 align: 'center',
-                                width: 100,
+                                width: 90,
                                 render: (h, params) => {
                                     params.row[params.column.key]=params.row[params.column.key]==null?'0.00':params.row[params.column.key];
                                     return h('span',
@@ -301,5 +301,11 @@
     button{
         background: #3497db;
         color:#fff;
+    }
+    .ivu-table-cell{
+        text-overflow: ellipsis !important;
+        word-break: break-all !important;
+        padding-left:0px;
+        padding-right:0px;
     }
 </style>
