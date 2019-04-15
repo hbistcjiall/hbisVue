@@ -28,16 +28,15 @@
 
                 <Col span="4">
                     <FormItem label="单位：">
-                        <Select v-model="dw" placeholder="请选择单位">
-                            <Option value="">全部</Option>
-                            <Option value="唐钢">唐钢</Option>
-                            <Option value="邯钢">邯钢</Option>
-                            <Option value="宣钢">宣钢</Option>
-                            <Option value="承钢">承钢</Option>
-                            <Option value="舞钢">舞钢</Option>
-                            <Option value="石钢">石钢</Option>
-                            <Option value="衡板">衡板</Option>
-                            <Option value="邯宝">邯宝</Option>
+                        <Select v-model="dw" placeholder="请选择单位" @on-change="getCx">
+                            <Option value="全部">全部</Option>
+                            <Option value="9580">河钢唐钢</Option>
+                            <Option value="9727">河钢邯钢</Option>
+                            <Option value="9193">河钢宣钢</Option>
+                            <Option value="9196">河钢承钢</Option>
+                            <Option value="1932">河钢舞钢</Option>
+                            <Option value="8110">河钢石钢</Option>
+                            <Option value="8493">河钢衡板</Option>
                         </Select>
                     </FormItem>
                 </Col>
@@ -68,12 +67,12 @@
         data() {
             return {
                 loading:true,
-                dw:'',
+                dw:'全部',
                 switchTime:true,
                 year:new Date(),
                 startTime:new Date(),
                 endTime:new Date(),
-                cx:'',
+                cx:[],
                 columns: [{
                     title: '单位',
                     key: 'COMPANYNAME',
@@ -276,7 +275,7 @@
                 data: [],
                 cxData:[],
                 cxCx:{
-                    pz:''
+                    companyId:''
                 },
             }
         },
@@ -286,7 +285,8 @@
         },
         methods: {
             getCxData(){
-                fetch(this.$store.state.fetchPath + "/scm-steel-settle/getzyjhcxtjcx", {
+                this.cxCx.companyId = this.dw
+                fetch(this.$store.state.fetchPath + "/scm-steel-settle/getCxNamePzg", {
                     method: "POST",
                     headers: this.$store.state.fetchHeader,
                     body: this.utils.formatParams(this.cxCx),
@@ -300,9 +300,10 @@
                 }).then((res) => {
                     res = res && res.length > 0 ? JSON.parse(res) : [];
                     this.cxData = this.utils.getCx(res)
-                    let getall = {label:'全部',value:''};
-                    this.cxData.unshift(getall)
                 });
+            },
+            getCx(){
+                this.getCxData()
             },
             changeSwitch(){
                 let date=new Date();

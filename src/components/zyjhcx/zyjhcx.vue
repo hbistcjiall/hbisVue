@@ -28,7 +28,7 @@
                 <Col span="4">
                     <FormItem label="品种：">
                         <Select v-model="zyjhcx.pz" placeholder="请选择品种" @on-change="getCx">
-                            <Option value="">全部</Option>
+                            <Option value="全部">全部</Option>
                             <Option value="热板">热板</Option>
                             <Option value="冷板">冷板</Option>
                             <Option value="宽厚板">宽厚板</Option>
@@ -77,7 +77,7 @@
             return {
                 loading:true,
                 zyjhcx:{
-                    pz:'',
+                    pz:'全部',
                     nf:'2019',
                     yf:'4',
                     xszt:''
@@ -183,8 +183,8 @@
                 }).then((res) => {
                     res = res && res.length > 0 ? JSON.parse(res) : [];
                     this.cxData = this.utils.getCx(res);
-                    let getall = {label:'全部',value:''};
-                    this.cxData.unshift(getall)
+                    // let getall = {label:'全部',value:''};
+                    // this.cxData.unshift(getall)
                 });
             },
             getCx(){
