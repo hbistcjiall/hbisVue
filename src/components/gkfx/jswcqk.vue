@@ -324,7 +324,7 @@
                     res = res&&res.length>0?JSON.parse(res):[]
                     this.resDatas =  res;
                     for(let i=0; i<this.resDatas .length;i++){
-                        this.resDatas[i].WCL = this.resDatas[i].WCL+'%'
+                        this.resDatas[i].WCL = (Number(this.resDatas[i].WCL)*100).toFixed(2)+'%'
                     }
                     this.loading = false;
                 })
@@ -366,7 +366,7 @@
                     res = res&&res.length>0?JSON.parse(res):[]
                     this.resDatas =  res;
                     for(let i=0; i<this.resDatas .length;i++){
-                        this.resDatas[i].WCL = this.resDatas[i].WCL+'%'
+                        this.resDatas[i].WCL = (Number(this.resDatas[i].WCL)*100).toFixed(2)+'%'
                     }
                     this.loading = false;
                 })

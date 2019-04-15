@@ -234,5 +234,5 @@ export default {
     getPz,
     getCx,
     getXszt,
-    formatdate
+    formatdate,
 };
