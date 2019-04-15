@@ -246,7 +246,7 @@
                         align: 'center',
                         children: [{
                             title: '计划量',
-                            key: 'CKJHL',
+                            key: 'PLANNUMCK',
                             align: 'center',
                             width: 100,
                             render: (h, params) => {
