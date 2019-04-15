@@ -103,7 +103,7 @@
 
     li {
         width: 25%;
-        height: 130px;
+        height: 180px;
         float: left;
         position: relative;
         margin-left:5%;
