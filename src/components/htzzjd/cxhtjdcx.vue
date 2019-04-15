@@ -4,8 +4,8 @@
             <Row>
                 <Col span="4">
                     <FormItem label="单位：">
-                        <Select style="width:100px"  v-model="dw" placeholder="请选择单位" filterable >
-                            <Option value="">全部</Option>
+                        <Select style="width:100px"  v-model="dw" placeholder="请选择单位" filterable @on-change="getCx()" >
+                            <Option value="全部">全部</Option>
                             <Option value="9580">河钢唐钢</Option>
                             <Option value="9727">河钢邯钢</Option>
                             <Option value="9193">河钢宣钢</Option>
@@ -16,7 +16,7 @@
                         </Select>
                     </FormItem>
                 </Col>
-                <Col span="4">
+                <Col span="7">
                     <FormItem label="产线：">
                         <Select style="width:300px"  v-model="cx" placeholder="请选择产线" filterable multiple>
                             <Option v-for="item in cxData" :value="item.value" :key="item.value">{{ item.label }}</Option>
@@ -24,15 +24,10 @@
                     </FormItem>
                 </Col>
                 <Col span="4">
-                    <FormItem label="月份：" style="margin-left:170px">
+                    <FormItem label="月份：" style="margin-left:70px">
                         <DatePicker type="month" placeholder="起始月份" :editable="false" :clearable="false" v-model="startTime" style="width:130px"></DatePicker>
                     </FormItem>
                 </Col>
-                <!--<Col span="4">-->
-                    <!--<FormItem>-->
-                        <!--<DatePicker type="month" placeholder="终止月份"  :editable="false" :clearable="false" v-model="endTime" style="width:130px;margin-left: 120px"></DatePicker>-->
-                    <!--</FormItem>-->
-                <!--</Col>-->
                 <Col span="4">
                     <span>&nbsp;</span>
                 </Col>
@@ -57,11 +52,11 @@
                 cx:[],
                 startTime:new Date(),
                 // endTime:new Date(),
-                dw:[],
+                dw:'全部',
                 // pzData:[],
                 cxData:[],
                 cxCx:{
-                    pz:''
+                    companyId:''
                 },
                 columns: [
                     {
@@ -300,33 +295,15 @@
         },
         created() {
             this.getList();
-            // fetch(this.$store.state.fetchPath + "/scm-steel-settle/getzyjhcxtjpz", {
-            //     method: "POST",
-            //     headers: this.$store.state.fetchHeader,
-            //     body: '',
-            //     credentials: 'include'
-            // }).then((res) => {
-            //     if(res.status!=200){
-            //         this.$Message.error('请求失败！');
-            //     }else{
-            //         return res.text();
-            //     }
-            // }).then((res) => {
-            //     res = res && res.length > 0 ? JSON.parse(res) : [];
-            //     this.pzData = this.utils.getPz(res)
-            // });
             this.getCxData();
         },
         methods: {
             getList() {
                 this.loading = true;
-                // let params={};
                 let cxName = 'cxName='+this.cx.toString();
                 let dwName='companyId='+this.dw;
                 let startTime='startTime=';
-                // let endTime='&endTime=';
                 startTime=startTime+this.utils.formatMonthStart(this.startTime);
-                // endTime=endTime+this.utils.formatMonthStart(this.endTime);
                 fetch(this.$store.state.fetchPath + "/scm-steel-settle/getcxhtjd", {
                     method: "POST",
                     headers: this.$store.state.fetchHeader,
@@ -345,7 +322,8 @@
                 });
             },
             getCxData(){
-                fetch(this.$store.state.fetchPath + "/scm-steel-settle/getzyjhcxtjcx", {
+                this.cxCx.companyId = this.dw
+                fetch(this.$store.state.fetchPath + "/scm-steel-settle/getCxName", {
                     method: "POST",
                     headers: this.$store.state.fetchHeader,
                     body:this.utils.formatParams(this.cxCx),
@@ -359,19 +337,17 @@
                 }).then((res) => {
                     res = res && res.length > 0 ? JSON.parse(res) : [];
                     this.cxData = this.utils.getCx(res)
-                    let getall = {label:'全部',value:''};
-                    this.cxData.unshift(getall)
                 });
+            },
+            getCx(){
+                this.cxData=[];
+                this.getCxData()
             },
             downLoad(){
                 this.$refs.table.exportCsv({
                     filename: '产线合同进度（产线）明细'
                 });
             }
-            // getCx(){
-            //     this.cxCx.pz = this.zyjhcx.pz
-            //     this.getCxData()
-            // }
         }
     }
 </script>
