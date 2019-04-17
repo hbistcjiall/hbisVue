@@ -154,6 +154,26 @@ const indexchild=[
             isLogin: true
         },
     },
+    {
+        path: '/xsjsqk/pzxsjsqk',
+        name: 'pzxsjsqk',
+        component: resolve => require(['@/components/xsjsqk/xsjsqkpz'], resolve),
+        meta: {
+            title: '销售结算情况（品种）',
+            keepAlive: true,
+            isLogin: true
+        },
+    },
+    {
+        path: '/xsjsqk/gcxsjsqk',
+        name: 'gcxsjsqk',
+        component: resolve => require(['@/components/xsjsqk/xsjsqkgc'], resolve),
+        meta: {
+            title: '销售结算情况（钢厂）',
+            keepAlive: true,
+            isLogin: true
+        },
+    },
 ];
 const childrens=indexchild.concat(pzgjs).concat(xyhxl).concat(gkfx).concat(htzzjd);
 export default {
