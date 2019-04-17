@@ -102,7 +102,6 @@
                     }else{
                         return res.text();
                     }
-
                 }).then((res) => {
                     res = res && res.length > 0 ? JSON.parse(res) : [];
                     this.data = res;
