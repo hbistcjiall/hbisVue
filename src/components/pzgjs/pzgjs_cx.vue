@@ -49,8 +49,9 @@
                 </Col>
             </Row>
             <Row style="margin-bottom: 20px">
-                <Col span="4">
-                    <FormItem label="产品等级：" style="width:180px">
+                <Col span="6">
+                    <FormItem>
+                        <label style="margin-left: -150px;margin-right: 10px">产品等级:</label>
                         <Select v-model="zt" style="width:120px" placeholder="请选择品种" @on-change="changeTitle()">
                             <Option value="0">品种钢</Option>
                             <Option value="1">高端产品</Option>
@@ -379,5 +380,8 @@
         word-break: break-all !important;
         padding-left:0px;
         padding-right:0px;
+    }
+    label {
+        width: 66px !important;
     }
 </style>
