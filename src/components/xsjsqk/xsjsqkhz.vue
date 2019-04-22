@@ -24,7 +24,7 @@
 
 <script>
     export default {
-        name: "xsjsqkgc",
+        name: "xsjsqkhz",
         data() {
             return {
                 loading:true,
