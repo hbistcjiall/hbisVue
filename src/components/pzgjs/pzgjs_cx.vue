@@ -47,10 +47,16 @@
                         </Select>
                     </FormItem>
                 </Col>
-
-
             </Row>
             <Row style="margin-bottom: 20px">
+                <Col span="4">
+                    <FormItem label="产品等级：" style="width:180px">
+                        <Select v-model="zt" style="width:120px" placeholder="请选择品种" @on-change="changeTitle()">
+                            <Option value="0">品种钢</Option>
+                            <Option value="1">高端产品</Option>
+                        </Select>
+                    </FormItem>
+                </Col>
                 <Col span="4">
                     <Button @click="getList()" icon="ios-search" style="margin-right:10px;">查询</Button>
                     <Button @click="downLoad()" icon="ios-cloud-download-outline">导出</Button>
@@ -68,6 +74,7 @@
             return {
                 loading:true,
                 dw:'全部',
+                zt:'0',
                 switchTime:true,
                 year:new Date(),
                 startTime:new Date(),
@@ -313,6 +320,7 @@
                 this.loading = true;
                 let params={};
                 // this.dw?params.dw=this.dw:'';
+                let zt="&zt="+this.zt;
                 let dwStr = '&dw='+this.dw;
                 let cxArr = '&cx=' +this.cx.toString()
                 this.cx?params.cx=this.cx:'';
@@ -322,7 +330,7 @@
                 fetch(this.$store.state.fetchPath + "/scm-steel-settle/getcx", {
                     method: "POST",
                     headers: this.$store.state.fetchHeader,
-                    body: startTime+endTime+dwStr+cxArr,
+                    body: startTime+endTime+dwStr+cxArr+zt,
                     credentials: 'include'
                 }).then((res) => {
                     if(res.status!=200){
@@ -336,6 +344,21 @@
                     this.data = this.utils.mergeRow(res, 'COMPANYNAME');
                     this.loading = false;
                 });
+            },
+            changeTitle(){
+                if(this.zt=="0"){
+                    this.columns[2].children[1].title="品种钢";
+                    this.columns[4].children[1].title="品种钢";
+                    this.columns[5].children[1].title="品种钢";
+                    this.columns[6].children[1].title="品种钢";
+
+                }else{
+                    this.columns[2].children[1].title="高端产品";
+                    this.columns[4].children[1].title="高端产品";
+                    this.columns[5].children[1].title="高端产品";
+                    this.columns[6].children[1].title="高端产品";
+                }
+                this.getList();
             },
             downLoad(){
                 this.$refs.table.exportCsv({

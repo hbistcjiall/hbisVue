@@ -27,13 +27,22 @@
                 </Col>
                 <Col span="6">
                     <FormItem label="品种：" style="width: 120px">
-                        <Select v-model="pz" style="width:120px" placeholder="请选择品种">
+                        <Select v-model="pz" style="width:120px" placeholder="请选择品种" @on-change="changeTitle()">
                             <Option value="">全部</Option>
                             <Option value="冷板">冷板</Option>
                             <Option value="热板">热板</Option>
                             <Option value="棒线">棒线</Option>
                             <Option value="宽厚板">宽厚板</Option>
                             <Option value="型带">型带</Option>
+                            <Option value="高端产品">高端产品</Option>
+                        </Select>
+                    </FormItem>
+                </Col>
+                <Col span="4">
+                    <FormItem label="产品等级：" style="width: 120px">
+                        <Select v-model="zt" style="width:120px" placeholder="请选择产品等级" @on-change="changeTitle()">
+                            <Option value="0">品种钢</Option>
+                            <Option value="1">高端产品</Option>
                         </Select>
                     </FormItem>
                 </Col>
@@ -60,6 +69,7 @@
                 startTime:new Date(),
                 endTime:new Date(),
                 pz:'',
+                zt:'0',
                 columns: [{
                     title: '品种',
                     key: 'NAME',
@@ -266,6 +276,7 @@
                 this.loading = true;
                 let params={
                 };
+                let zt='&zt='+this.zt
                 this.pz?params.pz=this.pz:'';
                 let startTime='startTime=';
                 let endTime='&endTime=';
@@ -273,7 +284,7 @@
                 fetch(this.$store.state.fetchPath + "/scm-steel-settle/getpz", {
                     method: "POST",
                     headers: this.$store.state.fetchHeader,
-                    body: startTime+endTime+'&'+this.utils.formatParams(params),
+                    body: startTime+endTime+'&'+this.utils.formatParams(params)+zt,
                     credentials: 'include'
                 }).then((res) => {
                     if(res.status!=200){
@@ -286,6 +297,20 @@
                     this.data = res;
                     this.loading = false;
                 });
+            },
+            changeTitle(){
+                if(this.zt=='1'){
+                    this.columns[1].children[1].title="高端产品";
+                    this.columns[3].children[1].title="高端产品";
+                    this.columns[4].children[1].title="高端产品";
+                    this.columns[5].children[1].title="高端产品";
+                }else{
+                    this.columns[1].children[1].title="品种钢";
+                    this.columns[3].children[1].title="品种钢";
+                    this.columns[4].children[1].title="品种钢";
+                    this.columns[5].children[1].title="品种钢";
+                }
+                this.getList()
             },
             downLoad(){
                 this.$refs.table.exportCsv({

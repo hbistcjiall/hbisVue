@@ -44,6 +44,14 @@
                         </Select>
                     </FormItem>
                 </Col>
+                <Col span="5">
+                    <FormItem label="产品等级：" style="width:180px">
+                        <Select v-model="zt" style="width:120px" placeholder="请选择品种" @on-change="changeTitle()">
+                            <Option value="0">品种钢</Option>
+                            <Option value="1">高端产品</Option>
+                        </Select>
+                    </FormItem>
+                </Col>
                 <Col span="4">
                     <Button @click="getList()" icon="ios-search" type="primary" style="margin-right:10px;">查询</Button>
                     <Button @click="downLoad()" icon="ios-cloud-download-outline">导出</Button>
@@ -61,6 +69,7 @@
             return {
                 loading:true,
                 switchTime:true,
+                zt:"0",
                 year:new Date(),
                 startTime:new Date(),
                 titleYear:'',
@@ -165,6 +174,8 @@
                 this.loading = true;
                 let params={
                 };
+                let zt='&zt='
+                zt+= this.zt
                 this.zrbm?params.zrbm=this.zrbm:'';
                 let startTime='startTime=';
                 let endTime='&endTime=';
@@ -179,7 +190,7 @@
                 fetch(this.$store.state.fetchPath + "/scm-steel-settle/getzrbm", {
                     method: "POST",
                     headers: this.$store.state.fetchHeader,
-                    body: startTime+endTime+'&'+this.utils.formatParams(params),
+                    body: startTime+endTime+'&'+this.utils.formatParams(params)+zt,
                     credentials: 'include'
                 }).then((res) => {
                     if(res.status!=200){
@@ -192,6 +203,14 @@
                     this.data = res;
                     this.loading = false;
                 });
+            },
+            changeTitle(){
+                if(this.zt=="0"){
+                    this.columns[1].children[1].title="品种钢量";
+                }else{
+                    this.columns[1].children[1].title="高端产品";
+                }
+                this.getList();
             },
             downLoad(){
                 this.$refs.table.exportCsv({
