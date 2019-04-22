@@ -32,31 +32,36 @@
                 endTime:new Date(),
                 columns: [
                     {
-                        title: '序号',
-                        align: "center",
-                        type:'index',
+                        title: '产品大类',
+                        key: 'ZL',
+                        align: 'center',
+                        fixed: 'left',
+                        width:'100',
+                        isMergeRow: true
                     },
                     {
-                        title: '钢厂',
-                        align: "center",
-                        key: 'COMPANYNAME'
+                        title: '产线',
+                        key: 'CXNAME',
+                        width:'100',
+                        align: 'center',
                     },
                     {
                         title: '销售量（吨）',
-                        align: "center",
                         key: 'FKIMG',
+                        width:'100',
+                        align: 'center',
                         render: (h, params) => {
                             params.row[params.column.key] = params.row[params.column.key] == null ? '0.00' : params.row[params.column.key];
                             return h('span',
                                 Math.round(Number(params.row[params.column.key]))
                             )
                         }
-
                     },
                     {
                         title: '售价（元/吨）',
-                        align: "center",
-                        key: 'SJ',
+                        key: '',
+                        width:'100',
+                        align: 'center',
                         render: (h, params) => {
                             params.row[params.column.key] = params.row[params.column.key] == null ? '0.00' : params.row[params.column.key];
                             return h('span',
@@ -65,9 +70,10 @@
                         }
                     },
                     {
-                        title: '销售额（万元）',
-                        align: "center",
+                        title: '售价（元/吨）',
                         key: 'KZWI6',
+                        width:'100',
+                        align: 'center',
                         render: (h, params) => {
                             params.row[params.column.key] = params.row[params.column.key] == null ? '0.00' : params.row[params.column.key];
                             return h('span',
@@ -75,6 +81,259 @@
                             )
                         }
                     },
+                    {
+                        title: '总销售额（万元）',
+                        key: 'ZSJ',
+                        width:'100',
+                        align: 'center',
+                        render: (h, params) => {
+                            params.row[params.column.key] = params.row[params.column.key] == null ? '0.00' : params.row[params.column.key];
+                            return h('span',
+                                Math.round(Number(params.row[params.column.key]))
+                            )
+                        }
+                    },
+                    {
+                        title: '内贸销售量（吨）',
+                        key: 'NMFKIMG',
+                        align: 'center',
+                        render: (h, params) => {
+                            params.row[params.column.key] = params.row[params.column.key] == null ? '0.00' : params.row[params.column.key];
+                            return h('span',
+                                Math.round(Number(params.row[params.column.key]))
+                            )
+                        }
+                    },
+                    {
+                        title: '内贸均价（元/吨）',
+                        key: 'NMSJ',
+                        align: 'center',
+                        render: (h, params) => {
+                            params.row[params.column.key] = params.row[params.column.key] == null ? '0.00' : params.row[params.column.key];
+                            return h('span',
+                                Math.round(Number(params.row[params.column.key]))
+                            )
+                        }
+                    },
+                    {
+                        title: '销售总公司',
+                        key: 'xszgs',
+                        align: 'center',
+                        children: [
+                            {
+                                title: '销售总公司',
+                                key: 'XSZGSFKIMG',
+                                width:'100',
+                                align: 'center',
+                                render: (h, params) => {
+                                    params.row[params.column.key] = params.row[params.column.key] == null ? '0.00' : params.row[params.column.key];
+                                    return h('span',
+                                        Math.round(Number(params.row[params.column.key]))
+                                    )
+                                }
+
+                            },
+                            {
+                                title: '平均售价',
+                                key: 'SXZGSSJ',
+                                align: 'center',
+                                width:'100',
+                                render: (h, params) => {
+                                    params.row[params.column.key] = params.row[params.column.key] == null ? '0.00' : params.row[params.column.key];
+                                    return h('span',
+                                        Math.round(Number(params.row[params.column.key]))
+                                    )
+                                }
+
+                            },
+                            {
+                                title: '其中:专业公司',
+                                key: 'ZYGSFKIG',
+                                align: 'center',
+                                width:'100',
+                                render: (h, params) => {
+                                    params.row[params.column.key] = params.row[params.column.key] == null ? '0.00' : params.row[params.column.key];
+                                    return h('span',
+                                        Math.round(Number(params.row[params.column.key]))
+                                    )
+                                }
+                            },
+                            {
+                                title: '平均售价',
+                                key: 'ZYGSSJ',
+                                align: 'center',
+                                width:'100',
+                                render: (h, params) => {
+                                    params.row[params.column.key] = params.row[params.column.key] == null ? '0.00' : params.row[params.column.key];
+                                    return h('span',
+                                        Math.round(Number(params.row[params.column.key]))
+                                    )
+                                }
+                            },
+                            {
+                                title: '分公司',
+                                key: 'FGSFKIMG',
+                                align: 'center',
+                                width:'100',
+                                render: (h, params) => {
+                                    params.row[params.column.key] = params.row[params.column.key] == null ? '0.00' : params.row[params.column.key];
+                                    return h('span',
+                                        Math.round(Number(params.row[params.column.key]))
+                                    )
+                                }
+                            },
+                            {
+                                title: '平均售价',
+                                key: 'FGSSJ',
+                                align: 'center',
+                                width:'100',
+                                render: (h, params) => {
+                                    params.row[params.column.key] = params.row[params.column.key] == null ? '0.00' : params.row[params.column.key];
+                                    return h('span',
+                                        Math.round(Number(params.row[params.column.key]))
+                                    )
+                                }
+                            }
+                        ]
+                    },
+                    {
+                        title: '子公司',
+                        key: '',
+                        align: 'center',
+                        children: [
+                            {
+                                title: '子公司合计',
+                                key: 'ZGSFKIMG',
+                                width:'100',
+                                align: 'center',
+                                render: (h, params) => {
+                                    params.row[params.column.key] = params.row[params.column.key] == null ? '0.00' : params.row[params.column.key];
+                                    return h('span',
+                                        Math.round(Number(params.row[params.column.key]))
+                                    )
+                                }
+
+                            },
+                            {
+                                title: '平均价格',
+                                key: 'ZGSSJ',
+                                align: 'center',
+                                width:'100',
+                                render: (h, params) => {
+                                    params.row[params.column.key] = params.row[params.column.key] == null ? '0.00' : params.row[params.column.key];
+                                    return h('span',
+                                        Math.round(Number(params.row[params.column.key]))
+                                    )
+                                }
+
+                            },
+                            {
+                                title: '事业部',
+                                key: 'SYBFKIMG',
+                                align: 'center',
+                                width:'100',
+                                render: (h, params) => {
+                                    params.row[params.column.key] = params.row[params.column.key] == null ? '0.00' : params.row[params.column.key];
+                                    return h('span',
+                                        Math.round(Number(params.row[params.column.key]))
+                                    )
+                                }
+                            },
+                            {
+                                title: '平均售价',
+                                key: 'SYBSJ',
+                                align: 'center',
+                                width:'100',
+                                render: (h, params) => {
+                                    params.row[params.column.key] = params.row[params.column.key] == null ? '0.00' : params.row[params.column.key];
+                                    return h('span',
+                                        Math.round(Number(params.row[params.column.key]))
+                                    )
+                                }
+                            },
+                            {
+                                title: '现货',
+                                key: 'XHFKIMG',
+                                align: 'center',
+                                width:'100',
+                                render: (h, params) => {
+                                    params.row[params.column.key] = params.row[params.column.key] == null ? '0.00' : params.row[params.column.key];
+                                    return h('span',
+                                        Math.round(Number(params.row[params.column.key]))
+                                    )
+                                }
+                            },
+                            {
+                                title: '平均售价',
+                                key: 'XHSJ',
+                                align: 'center',
+                                width:'100',
+                                render: (h, params) => {
+                                    params.row[params.column.key] = params.row[params.column.key] == null ? '0.00' : params.row[params.column.key];
+                                    return h('span',
+                                        Math.round(Number(params.row[params.column.key]))
+                                    )
+                                }
+                            }
+                        ]
+                    },
+                    {
+                        title: ' ',
+                        key: '',
+                        align: 'center',
+                        children: [
+                            {
+                                title: '自办公司',
+                                key: 'ZBGSFKIMG',
+                                width:'100',
+                                align: 'center',
+                                render: (h, params) => {
+                                    params.row[params.column.key] = params.row[params.column.key] == null ? '0.00' : params.row[params.column.key];
+                                    return h('span',
+                                        Math.round(Number(params.row[params.column.key]))
+                                    )
+                                }
+
+                            },
+                            {
+                                title: '平均价格',
+                                key: 'ZBGSSJ',
+                                align: 'center',
+                                width:'100',
+                                render: (h, params) => {
+                                    params.row[params.column.key] = params.row[params.column.key] == null ? '0.00' : params.row[params.column.key];
+                                    return h('span',
+                                        Math.round(Number(params.row[params.column.key]))
+                                    )
+                                }
+
+                            },
+                            {
+                                title: '出口',
+                                key: 'CKFKIMG',
+                                align: 'center',
+                                width:'100',
+                                render: (h, params) => {
+                                    params.row[params.column.key] = params.row[params.column.key] == null ? '0.00' : params.row[params.column.key];
+                                    return h('span',
+                                        Math.round(Number(params.row[params.column.key]))
+                                    )
+                                }
+                            },
+                            {
+                                title: '平均售价',
+                                key: 'CKSJ',
+                                align: 'center',
+                                width:'100',
+                                render: (h, params) => {
+                                    params.row[params.column.key] = params.row[params.column.key] == null ? '0.00' : params.row[params.column.key];
+                                    return h('span',
+                                        Math.round(Number(params.row[params.column.key]))
+                                    )
+                                }
+                            }
+                        ]
+                    }
                 ],
                 data: []
             }
@@ -89,12 +348,10 @@
                 startTime+=this.utils.formatMonthStart(this.startTime)
                 let endTime='&endTime=';
                 endTime+=this.utils.formatMonthStart(this.endTime)
-                let zt='&zt='
-                zt+="2"
-                fetch(this.$store.state.fetchPath + "/yxyb/getyxybpz", {
+                fetch(this.$store.state.fetchPath + "/yxyb/getxsjswccx", {
                     method: "POST",
                     headers: this.$store.state.fetchHeader,
-                    body: startTime+endTime+zt,
+                    body: startTime+endTime,
                     credentials: 'include'
                 }).then((res) => {
                     if(res.status!=200){
@@ -104,7 +361,7 @@
                     }
                 }).then((res) => {
                     res = res && res.length > 0 ? JSON.parse(res) : [];
-                    this.data = res;
+                    this.data = this.utils.mergeRow(res, 'ZL');
                     this.loading = false;
                 });
             }
