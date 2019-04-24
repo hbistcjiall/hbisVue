@@ -342,7 +342,44 @@
 
                 }).then((res) => {
                     res = res && res.length > 0 ? JSON.parse(res) : [];
-                    this.data = this.utils.mergeRow(res, 'COMPANYNAME');
+                    this.data = res;
+                    let result1 = 0;
+                    let result2 = 0;
+                    let result3 = 0;
+                    let result4 = 0;
+                    let result5 = 0;
+                    let result6 = 0;
+                    let result7 = 0;
+                    let result8 = 0;
+                    for(var i=0;i<this.data.length;i++){
+                        result1 += this.data[i].FKIMG
+                        result2 += this.data[i].PZGL
+                        result3 += parseFloat(this.data[i].ZYFKIMG)
+                        result4 += this.data[i].ZYPZGL
+                        result5 += this.data[i].FGSFKIMG
+                        result6 += this.data[i].FGSPZGL
+                        result7 += this.data[i].ZGSFKIMG
+                        result8 += this.data[i].ZGSPZGL
+                    }
+                    let obj ={
+                        NAME : "总计",
+                        FKIMG : result1,
+                        PZGL : result2,
+                        ZYFKIMG : result3,
+                        ZYPZGL : result4,
+                        FGSFKIMG : result5,
+                        FGSPZGL : result6,
+                        ZGSFKIMG : result7,
+                        ZGSPZGL : result8,
+                        COMPANYNAME:'',
+                        ZGSBZ:'',
+                        FGSBZ:'',
+                        ZYBZ:'',
+                        HB:'',
+                        BZ:''
+
+                    }
+                    this.data.push(obj)
                     this.loading = false;
                 });
             },

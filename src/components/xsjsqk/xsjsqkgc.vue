@@ -18,7 +18,7 @@
                 </Col>
             </Row>
         </Form>
-        <Table :loading="loading" :columns="columns" :data="data" border height="550" ref="table"></Table>
+        <Table :loading="loading" :columns="columns" :data="data" border ref="table" style="position: relative;width:100%;display: block"></Table>
     </div>
 </template>
 
@@ -76,7 +76,10 @@
                         }
                     },
                 ],
-                data: []
+                data: [],
+                zjFKIMG:'',
+                zjKZWI6:'',
+                zjSJ:''
             }
         },
         mounted() {
@@ -105,6 +108,21 @@
                 }).then((res) => {
                     res = res && res.length > 0 ? JSON.parse(res) : [];
                     this.data = res;
+                    let result1 = 0;
+                    let result2 = 0;
+                    let result3 = 0;
+                    for(var i=0;i<this.data.length;i++){
+                        result1 += parseInt(this.data[i].FKIMG)
+                        result2 += parseInt(this.data[i].KZWI6)
+                        result3 += parseInt(this.data[i].SJ)
+                    }
+                    let obj = {
+                        FKIMG:result1,
+                        KZWI6:result2,
+                        SJ:result3,
+                        COMPANYNAME:"总计"
+                    };
+                    this.data.push(obj);
                     this.loading = false;
                 });
             }
@@ -122,5 +140,18 @@
         word-break: break-all !important;
         padding-left:0px;
         padding-right:0px;
+    }
+    .addTable{
+        position: absolute;
+        bottom:-48px;
+        z-index: 10000000 ;
+        width:100%;
+        height:48px;
+        border-collapse:collapse;
+        border-bottom:1px solid #e8eaec;
+    }
+    .addTable td{
+        width:20%;
+        height:48px;
     }
 </style>
