@@ -317,6 +317,81 @@
                 }).then((res) => {
                     res = res && res.length > 0 ? JSON.parse(res) : [];
                     this.data =  res;
+                    let result1 = 0;
+                    let result2 = 0;
+                    let result3 = 0;
+                    let result4 = 0;
+                    let result5 = 0;
+                    let result6 = 0;
+                    let result7 = 0;
+                    let result9 = 0;
+                    let result10 = 0;
+                    let result11 = 0;
+                    let result13 = 0;
+                    let result14 = 0;
+                    let result15 = 0;
+                    for(var i=0;i<this.data.length;i++){
+                        result1 += this.data[i].HJJHL
+                        result2 += this.data[i].HJHTL
+
+                        result4 += this.data[i].PLANNUMXSZ
+                        result5 += this.data[i].ZYGSHTL
+                        result6 += this.data[i].ZYFGSHTL
+
+                        result9 += this.data[i].PLANNUMZGS
+                        result10 += this.data[i].ZGSHTL
+
+                        result13 += this.data[i].PLANNUMCK
+                        result14 += this.data[i].CKHTL
+                    }
+                    if(result1 == 0 || result1=="" || result1 == null){
+                        result3 = 0;
+                    }else{
+                        result3 = Number(result2/result1)*100
+                    }
+                    if(result4 == 0 || result4=="" || result4 == null){
+                        result7 = 0;
+                    }else{
+                        result7 = Number((result5+result6)/result4)*100
+                    }
+                    if(result9 == 0 || result9=="" || result9 == null){
+                        result11 = 0;
+                    }else{
+                        result11 = Number(result10/result9)*100
+                    }
+                    if(result13 == 0 || result13=="" || result13 == null){
+                        result15 = 0;
+                    }else{
+                        result15 = Number(result14/result13)*100
+                    }
+                    let result8 = (result5+result6)-result4
+                    let result12 = result10-result9
+                    let result16 = result14-result13
+
+                    let obj ={
+                        PZNAME : "合计",
+                        HJJHL : result1,
+                        HJHTL : result2,
+                        SCHEDULEHJ : result3,
+
+                        PLANNUMXSZ : result4,
+                        ZYGSHTL : result5,
+                        ZYFGSHTL : result6,
+                        SCHEDULEXSZ : result7,
+                        JDXSZ:result8,
+
+                        PLANNUMZGS : result9,
+                        ZGSHTL : result10,
+                        SCHEDULEZGS : result11,
+                        JDZGS : result12,
+
+                        PLANNUMCK : result13,
+                        CKHTL : result14,
+                        SCHEDULECK : result15,
+                        JDCK : result16,
+
+                    }
+                    this.data.push(obj)
                     this.loading = false;
                 });
             },

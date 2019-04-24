@@ -71,10 +71,10 @@
                 switchTime:true,
                 zt:"0",
                 year:new Date(),
-                startTime:new Date(),
+                startTime:new Date(new Date().getFullYear(), new Date().getMonth()-1, 1),
                 titleYear:'',
                 titleMonth:'',
-                endTime:new Date(),
+                endTime:new Date(new Date().getFullYear(), new Date().getMonth()-1, 1),
                 zrbm: '',
                 columns:[
                     {
@@ -201,6 +201,30 @@
                 }).then((res) => {
                     res =res && res.length > 0 ? JSON.parse(res) : [];
                     this.data = res;
+                    let result1 = 0;
+                    let result2 = 0;
+                    let result3 = 0;
+
+                    let result9 = 0;
+                    for(var i=0;i<this.data.length;i++){
+                        result1 += this.data[i].FKIMG
+                        result2 += this.data[i].PZGL
+                        result3 += this.data[i].MBL
+                    }
+                    if(result1 == 0 || result1=="" || result1 == null){
+                        result9 = 0;
+                    }else{
+                        result9 = result2/result1
+                    }
+                    let obj ={
+                        FKIMG : result1,
+                        PZGL : result2,
+                        COMPANYNAME:"合计",
+                        BZ:result9,
+                        MBL:result3
+
+                    }
+                    this.data.push(obj)
                     this.loading = false;
                 });
             },

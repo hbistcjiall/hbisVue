@@ -78,8 +78,8 @@
                 zt:'0',
                 switchTime:true,
                 year:new Date(),
-                startTime:new Date(),
-                endTime:new Date(),
+                startTime:new Date(new Date().getFullYear(), new Date().getMonth()-1, 1),
+                endTime:new Date(new Date().getFullYear(), new Date().getMonth()-1, 1),
                 cx:[],
                 columns: [{
                     title: '单位',
@@ -141,18 +141,18 @@
                             }
                         ]
                     },
-                    {
-                        title: '环比',
-                        key: 'HB',
-                        align: 'center',
-                        width:'90',
-                        render: (h, params) => {
-                            params.row[params.column.key]=params.row[params.column.key]==null?'0.00':params.row[params.column.key];
-                            return h('span',
-                                Number(params.row[params.column.key]).toFixed(2)+'%'
-                            )
-                        }
-                    },
+                    // {
+                    //     title: '环比',
+                    //     key: 'HB',
+                    //     align: 'center',
+                    //     width:'90',
+                    //     render: (h, params) => {
+                    //         params.row[params.column.key]=params.row[params.column.key]==null?'0.00':params.row[params.column.key];
+                    //         return h('span',
+                    //             Number(params.row[params.column.key]).toFixed(2)+'%'
+                    //         )
+                    //     }
+                    // },
                     {
                         title: '专业公司',
                         key: 'zygs',
@@ -343,6 +343,7 @@
                 }).then((res) => {
                     res = res && res.length > 0 ? JSON.parse(res) : [];
                     this.data = res;
+                    this.data = this.utils.mergeRow(res, 'COMPANYNAME');
                     let result1 = 0;
                     let result2 = 0;
                     let result3 = 0;
@@ -351,18 +352,43 @@
                     let result6 = 0;
                     let result7 = 0;
                     let result8 = 0;
+
+                    let result9 = 0;
+                    let result10 = 0;
+                    let result11 = 0;
+                    let result12 = 0;
                     for(var i=0;i<this.data.length;i++){
                         result1 += this.data[i].FKIMG
                         result2 += this.data[i].PZGL
-                        result3 += parseFloat(this.data[i].ZYFKIMG)
+                        result3 += this.data[i].ZYFKIMG
                         result4 += this.data[i].ZYPZGL
                         result5 += this.data[i].FGSFKIMG
                         result6 += this.data[i].FGSPZGL
                         result7 += this.data[i].ZGSFKIMG
                         result8 += this.data[i].ZGSPZGL
                     }
+                    if(result1 == 0 || result1=="" || result1 == null){
+                        result9 = 0;
+                    }else{
+                        result9 = result2/result1
+                    }
+                    if(result3 == 0 || result3=="" || result3 == null){
+                        result10 = 0;
+                    }else{
+                        result10 = result4/result3
+                    }
+                    if(result5 == 0 || result5=="" || result5 == null){
+                        result11 = 0;
+                    }else{
+                        result11 = result6/result5
+                    }
+                    if(result7 == 0 || result7=="" || result7 == null){
+                        result12 = 0;
+                    }else{
+                        result12 = result8/result7
+                    }
                     let obj ={
-                        NAME : "总计",
+                        NAME : "合计",
                         FKIMG : result1,
                         PZGL : result2,
                         ZYFKIMG : result3,
@@ -372,11 +398,10 @@
                         ZGSFKIMG : result7,
                         ZGSPZGL : result8,
                         COMPANYNAME:'',
-                        ZGSBZ:'',
-                        FGSBZ:'',
-                        ZYBZ:'',
-                        HB:'',
-                        BZ:''
+                        ZGSBZ:result12,
+                        FGSBZ:result11,
+                        ZYBZ:result10,
+                        BZ:result9
 
                     }
                     this.data.push(obj)
