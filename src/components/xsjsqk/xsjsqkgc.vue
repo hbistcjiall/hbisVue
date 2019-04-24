@@ -14,7 +14,7 @@
                 </Col>
                 <Col span="4">
                     <Button @click="getList()" icon="ios-search" style="margin-right:10px;">查询</Button>
-                    <!--<Button @click="downLoad()" icon="ios-cloud-download-outline">导出</Button>-->
+                    <Button @click="downLoad()" icon="ios-cloud-download-outline">导出</Button>
                 </Col>
             </Row>
         </Form>
@@ -28,8 +28,8 @@
         data() {
             return {
                 loading:true,
-                startTime:new Date(),
-                endTime:new Date(),
+                startTime: new Date(new Date().getFullYear(), new Date().getMonth()-1, 1),
+                endTime: new Date(new Date().getFullYear(), new Date().getMonth()-1, 1),
                 columns: [
                     {
                         title: '序号',
@@ -48,7 +48,7 @@
                         render: (h, params) => {
                             params.row[params.column.key] = params.row[params.column.key] == null ? '0.00' : params.row[params.column.key];
                             return h('span',
-                                Math.round(Number(params.row[params.column.key]))
+                                Number(params.row[params.column.key]).toFixed(2)
                             )
                         }
 
@@ -60,7 +60,7 @@
                         render: (h, params) => {
                             params.row[params.column.key] = params.row[params.column.key] == null ? '0.00' : params.row[params.column.key];
                             return h('span',
-                                Math.round(Number(params.row[params.column.key]))
+                                Number(params.row[params.column.key]).toFixed(2)
                             )
                         }
                     },
@@ -71,7 +71,7 @@
                         render: (h, params) => {
                             params.row[params.column.key] = params.row[params.column.key] == null ? '0.00' : params.row[params.column.key];
                             return h('span',
-                                Math.round(Number(params.row[params.column.key]))
+                                Number(params.row[params.column.key]).toFixed(2)
                             )
                         }
                     },
@@ -86,6 +86,11 @@
             this.getList();
         },
         methods: {
+            downLoad(){
+                this.$refs.table.exportCsv({
+                    filename: '销售结算情况（钢厂）明细'
+                });
+            },
             getList() {
                 this.loading = true;
                 let startTime='startTime=';
@@ -112,15 +117,15 @@
                     let result2 = 0;
                     let result3 = 0;
                     for(var i=0;i<this.data.length;i++){
-                        result1 += parseInt(this.data[i].FKIMG)
-                        result2 += parseInt(this.data[i].KZWI6)
-                        result3 += parseInt(this.data[i].SJ)
+                        result1 += this.data[i].FKIMG
+                        result2 += this.data[i].KZWI6
+                        result3 += this.data[i].SJ
                     }
                     let obj = {
-                        FKIMG:result1,
-                        KZWI6:result2,
-                        SJ:result3,
-                        COMPANYNAME:"总计"
+                        FKIMG:result1.toFixed(2),
+                        KZWI6:result2.toFixed(2),
+                        SJ:result3.toFixed(2),
+                        COMPANYNAME:"合计"
                     };
                     this.data.push(obj);
                     this.loading = false;

@@ -14,7 +14,7 @@
                 </Col>
                 <Col span="4">
                     <Button @click="getList()" icon="ios-search" style="margin-right:10px;">查询</Button>
-                    <!--<Button @click="downLoad()" icon="ios-cloud-download-outline">导出</Button>-->
+                    <Button @click="downLoad()" icon="ios-cloud-download-outline">导出</Button>
                 </Col>
             </Row>
         </Form>
@@ -28,8 +28,8 @@
         data() {
             return {
                 loading:true,
-                startTime:new Date(),
-                endTime:new Date(),
+                startTime:new Date(new Date().getFullYear(), new Date().getMonth()-1, 1),
+                endTime:new Date(new Date().getFullYear(), new Date().getMonth()-1, 1),
                 columns: [
                     {
                         title: '产品大类',
@@ -58,7 +58,7 @@
                                 render: (h, params) => {
                                     params.row[params.column.key] = params.row[params.column.key] == null ? '0.00' : params.row[params.column.key];
                                     return h('span',
-                                        Math.round(Number(params.row[params.column.key]))
+                                        Number(params.row[params.column.key]).toFixed(2)
                                     )
                                 }
 
@@ -71,7 +71,7 @@
                                 render: (h, params) => {
                                     params.row[params.column.key] = params.row[params.column.key] == null ? '0.00' : params.row[params.column.key];
                                     return h('span',
-                                        Math.round(Number(params.row[params.column.key]))
+                                        Number(params.row[params.column.key]).toFixed(2)
                                     )
                                 }
 
@@ -84,7 +84,7 @@
                                 render: (h, params) => {
                                     params.row[params.column.key] = params.row[params.column.key] == null ? '0.00' : params.row[params.column.key];
                                     return h('span',
-                                        Math.round(Number(params.row[params.column.key]))
+                                        Number(params.row[params.column.key]).toFixed(2)
                                     )
                                 }
                             },
@@ -103,20 +103,20 @@
                                 render: (h, params) => {
                                     params.row[params.column.key] = params.row[params.column.key] == null ? '0.00' : params.row[params.column.key];
                                     return h('span',
-                                        Math.round(Number(params.row[params.column.key]))
+                                        Number(params.row[params.column.key]).toFixed(2)
                                     )
                                 }
 
                             },
                             {
-                                title: '平均售价',
+                                title: '平均售价（元/吨）',
                                 key: 'NMSJ',
                                 align: 'center',
                                 width:'100',
                                 render: (h, params) => {
                                     params.row[params.column.key] = params.row[params.column.key] == null ? '0.00' : params.row[params.column.key];
                                     return h('span',
-                                        Math.round(Number(params.row[params.column.key]))
+                                        Number(params.row[params.column.key]).toFixed(2)
                                     )
                                 }
 
@@ -136,7 +136,7 @@
                                 render: (h, params) => {
                                     params.row[params.column.key] = params.row[params.column.key] == null ? '0.00' : params.row[params.column.key];
                                     return h('span',
-                                        Math.round(Number(params.row[params.column.key]))
+                                        Number(params.row[params.column.key]).toFixed(2)
                                     )
                                 }
 
@@ -149,20 +149,20 @@
                                 render: (h, params) => {
                                     params.row[params.column.key] = params.row[params.column.key] == null ? '0.00' : params.row[params.column.key];
                                     return h('span',
-                                        Math.round(Number(params.row[params.column.key]))
+                                        Number(params.row[params.column.key]).toFixed(2)
                                     )
                                 }
 
                             },
                             {
-                                title: '专业公司',
+                                title: '专业公司（吨）',
                                 key: 'ZYFKIMG',
                                 align: 'center',
                                 width:'100',
                                 render: (h, params) => {
                                     params.row[params.column.key] = params.row[params.column.key] == null ? '0.00' : params.row[params.column.key];
                                     return h('span',
-                                        Math.round(Number(params.row[params.column.key]))
+                                        Number(params.row[params.column.key]).toFixed(2)
                                     )
                                 }
 
@@ -175,20 +175,20 @@
                                 render: (h, params) => {
                                     params.row[params.column.key] = params.row[params.column.key] == null ? '0.00' : params.row[params.column.key];
                                     return h('span',
-                                        Math.round(Number(params.row[params.column.key]))
+                                        Number(params.row[params.column.key]).toFixed(2)
                                     )
                                 }
 
                             },
                             {
-                                title: '分公司',
+                                title: '分公司（吨）',
                                 key: 'FGSFKIMG',
                                 align: 'center',
                                 width:'100',
                                 render: (h, params) => {
                                     params.row[params.column.key] = params.row[params.column.key] == null ? '0.00' : params.row[params.column.key];
                                     return h('span',
-                                        Math.round(Number(params.row[params.column.key]))
+                                        Number(params.row[params.column.key]).toFixed(2)
                                     )
                                 }
 
@@ -201,7 +201,7 @@
                                 render: (h, params) => {
                                     params.row[params.column.key] = params.row[params.column.key] == null ? '0.00' : params.row[params.column.key];
                                     return h('span',
-                                        Math.round(Number(params.row[params.column.key]))
+                                        Number(params.row[params.column.key]).toFixed(2)
                                     )
                                 }
 
@@ -222,7 +222,7 @@
                                 render: (h, params) => {
                                     params.row[params.column.key] = params.row[params.column.key] == null ? '0.00' : params.row[params.column.key];
                                     return h('span',
-                                        Math.round(Number(params.row[params.column.key]))
+                                        Number(params.row[params.column.key]).toFixed(2)
                                     )
                                 }
 
@@ -235,20 +235,20 @@
                                 render: (h, params) => {
                                     params.row[params.column.key] = params.row[params.column.key] == null ? '0.00' : params.row[params.column.key];
                                     return h('span',
-                                        Math.round(Number(params.row[params.column.key]))
+                                        Number(params.row[params.column.key]).toFixed(2)
                                     )
                                 }
 
                             },
                             {
-                                title: '事业部',
+                                title: '事业部（吨）',
                                 key: 'SYBFKIMG',
                                 align: 'center',
                                 width:'100',
                                 render: (h, params) => {
                                     params.row[params.column.key] = params.row[params.column.key] == null ? '0.00' : params.row[params.column.key];
                                     return h('span',
-                                        Math.round(Number(params.row[params.column.key]))
+                                        Number(params.row[params.column.key]).toFixed(2)
                                     )
                                 }
 
@@ -261,20 +261,20 @@
                                 render: (h, params) => {
                                     params.row[params.column.key] = params.row[params.column.key] == null ? '0.00' : params.row[params.column.key];
                                     return h('span',
-                                        Math.round(Number(params.row[params.column.key]))
+                                        Number(params.row[params.column.key]).toFixed(2)
                                     )
                                 }
 
                             },
                             {
-                                title: '现货',
+                                title: '现货（吨）',
                                 key: 'XHFKIMG',
                                 align: 'center',
                                 width:'100',
                                 render: (h, params) => {
                                     params.row[params.column.key] = params.row[params.column.key] == null ? '0.00' : params.row[params.column.key];
                                     return h('span',
-                                        Math.round(Number(params.row[params.column.key]))
+                                        Number(params.row[params.column.key]).toFixed(2)
                                     )
                                 }
 
@@ -287,7 +287,7 @@
                                 render: (h, params) => {
                                     params.row[params.column.key] = params.row[params.column.key] == null ? '0.00' : params.row[params.column.key];
                                     return h('span',
-                                        Math.round(Number(params.row[params.column.key]))
+                                        Number(params.row[params.column.key]).toFixed(2)
                                     )
                                 }
 
@@ -308,7 +308,7 @@
                                 render: (h, params) => {
                                     params.row[params.column.key] = params.row[params.column.key] == null ? '0.00' : params.row[params.column.key];
                                     return h('span',
-                                        Math.round(Number(params.row[params.column.key]))
+                                        Number(params.row[params.column.key]).toFixed(2)
                                     )
                                 }
 
@@ -321,7 +321,7 @@
                                 render: (h, params) => {
                                     params.row[params.column.key] = params.row[params.column.key] == null ? '0.00' : params.row[params.column.key];
                                     return h('span',
-                                        Math.round(Number(params.row[params.column.key]))
+                                        Number(params.row[params.column.key]).toFixed(2)
                                     )
                                 }
 
@@ -341,7 +341,7 @@
                                 render: (h, params) => {
                                     params.row[params.column.key] = params.row[params.column.key] == null ? '0.00' : params.row[params.column.key];
                                     return h('span',
-                                        Math.round(Number(params.row[params.column.key]))
+                                        Number(params.row[params.column.key]).toFixed(2)
                                     )
                                 }
 
@@ -354,7 +354,7 @@
                                 render: (h, params) => {
                                     params.row[params.column.key] = params.row[params.column.key] == null ? '0.00' : params.row[params.column.key];
                                     return h('span',
-                                        Math.round(Number(params.row[params.column.key]))
+                                        Number(params.row[params.column.key]).toFixed(2)
                                     )
                                 }
 
@@ -369,6 +369,11 @@
             this.getList();
         },
         methods: {
+            downLoad(){
+                this.$refs.table.exportCsv({
+                    filename: '销售结算情况（产线）明细',
+                });
+            },
             getList() {
                 this.loading = true;
                 let startTime='startTime=';
@@ -388,38 +393,6 @@
                     }
                 }).then((res) => {
                     res = res && res.length > 0 ? JSON.parse(res) : [];
-                    // let reData = []
-                    // reData = res;
-                    // let qkTotal = [
-                    //     {
-                    //         CKFKIMG:0,
-                    //         CKSJ:0,
-                    //         CXNAME:"合计",
-                    //         FGSFKIMG:0,
-                    //         FGSSJ:0,
-                    //         FKIMG:0,
-                    //         KZWI6:0,
-                    //         NMFKIMG:0,
-                    //         NMSJ:0,
-                    //         SYBFKIMG:0,
-                    //         SYBSJ:0,
-                    //         XHFKIMG:0,
-                    //         XHSJ:0,
-                    //         XSZGSFKIMG:0,
-                    //         XSZGSSJ:0,
-                    //         ZBGSFKIMG:0,
-                    //         ZBGSSJ:0,
-                    //         ZGSFKIMG:0,
-                    //         ZGSSJ:0,
-                    //         ZL:"河钢集团",
-                    //         ZSJ:0,
-                    //         ZYFKIMG:0,
-                    //         ZYGSSJ:0,
-                    //         SXZGSSJ:0,
-                    //         ZYGSFKIG:0,
-                    //     }
-                    // ]
-                    // reData.unshift(qkTotal)
                     this.data = this.utils.mergeRow(res, 'ZL');
                     this.loading = false;
                 });
