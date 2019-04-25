@@ -13,6 +13,15 @@
                     </FormItem>
                 </Col>
                 <Col span="4">
+                    <FormItem>
+                        <label>是否借贷：</label>
+                        <Select v-model="model1" style="width:100px">
+                            <Option value="0">是</Option>
+                            <Option value="1">否</Option>
+                        </Select>
+                    </FormItem>
+                </Col>
+                <Col span="4">
                     <Button @click="getList()" icon="ios-search" style="margin-right:10px;">查询</Button>
                     <Button @click="downLoad()" icon="ios-cloud-download-outline">导出</Button>
                 </Col>
@@ -79,7 +88,8 @@
                 data: [],
                 zjFKIMG:'',
                 zjKZWI6:'',
-                zjSJ:''
+                zjSJ:'',
+                model1:'1'
             }
         },
         mounted() {
@@ -99,10 +109,12 @@
                 endTime+=this.utils.formatMonthStart(this.endTime)
                 let zt='&zt='
                 zt+="2"
+                let sfjd="&sfjd="
+                sfjd+=this.model1
                 fetch(this.$store.state.fetchPath + "/yxyb/getyxybpz", {
                     method: "POST",
                     headers: this.$store.state.fetchHeader,
-                    body: startTime+endTime+zt,
+                    body: startTime+endTime+zt+sfjd,
                     credentials: 'include'
                 }).then((res) => {
                     if(res.status!=200){
