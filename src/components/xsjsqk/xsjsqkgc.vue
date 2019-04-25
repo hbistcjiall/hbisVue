@@ -31,11 +31,11 @@
                 startTime: new Date(new Date().getFullYear(), new Date().getMonth()-1, 1),
                 endTime: new Date(new Date().getFullYear(), new Date().getMonth()-1, 1),
                 columns: [
-                    {
-                        title: '序号',
-                        align: "center",
-                        type:'index',
-                    },
+                    // {
+                    //     title: '序号',
+                    //     align: "center",
+                    //     type:'index',
+                    // },
                     {
                         title: '钢厂',
                         align: "center",
