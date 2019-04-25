@@ -2,19 +2,19 @@
     <div>
         <Form :label-width="50">
             <Row>
-                <Col span="6" v-if="!switchTime">
+                <Col span="4" v-if="!switchTime">
                     <FormItem label="年份：">
                         <DatePicker type="year" placeholder="请选择年份" :editable="false" :clearable="false"  v-model="year" style="width:150px"></DatePicker>
                     </FormItem>
                 </Col>
                 <Col span="4"  v-if="switchTime">
                     <FormItem label="月份：">
-                        <DatePicker type="month" placeholder="起始月份" :editable="false" :clearable="false" v-model="startTime" style="width:150px"></DatePicker>
+                        <DatePicker type="month" placeholder="起始月份" :editable="false" :clearable="false" v-model="startTime" style="width:150px;margin-right: 5px"></DatePicker>
                     </FormItem>
                 </Col>
-                <Col span="4" v-if="switchTime">
+                <Col span="3" v-if="switchTime">
                     <FormItem>
-                        <DatePicker type="month" placeholder="终止月份"  :editable="false" :clearable="false" v-model="endTime" style="width:150px"></DatePicker>
+                        <DatePicker type="month" placeholder="终止月份"  :editable="false" :clearable="false" v-model="endTime" style="width:150px;margin-left:-30px"></DatePicker>
                     </FormItem>
                 </Col>
                 <Col span="3">
@@ -51,8 +51,8 @@
             <Row style="margin-bottom: 20px">
                 <Col span="6">
                     <FormItem>
-                        <label style="margin-left: -150px;margin-right: 10px">产品等级:</label>
-                        <Select v-model="zt" style="width:120px" placeholder="请选择品种" @on-change="changeTitle()">
+                        <label style="margin-left: -150px;">产品等级:</label>
+                        <Select v-model="zt" style="width:150px" placeholder="请选择品种" @on-change="changeTitle()">
                             <Option value="0">品种钢</Option>
                             <Option value="1">高端产品</Option>
                         </Select>
@@ -343,7 +343,6 @@
                 }).then((res) => {
                     res = res && res.length > 0 ? JSON.parse(res) : [];
                     this.data = res;
-                    this.data = this.utils.mergeRow(res, 'COMPANYNAME');
                     let result1 = 0;
                     let result2 = 0;
                     let result3 = 0;
@@ -388,6 +387,7 @@
                         result12 = result8/result7
                     }
                     let obj ={
+                        COMPANYNAME:'集团',
                         NAME : "合计",
                         FKIMG : result1,
                         PZGL : result2,
@@ -397,7 +397,6 @@
                         FGSPZGL : result6,
                         ZGSFKIMG : result7,
                         ZGSPZGL : result8,
-                        COMPANYNAME:'',
                         ZGSBZ:result12,
                         FGSBZ:result11,
                         ZYBZ:result10,
@@ -405,6 +404,7 @@
 
                     }
                     this.data.push(obj)
+                    this.data = this.utils.mergeRow(this.data, 'COMPANYNAME');
                     this.loading = false;
                 });
             },
