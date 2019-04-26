@@ -12,7 +12,7 @@
                         <DatePicker type="month" placeholder="终止月份"  :editable="false" :clearable="false" v-model="endTime" style="width:150px"></DatePicker>
                     </FormItem>
                 </Col>
-                <Col span="4">
+                <Col span="6">
                     <FormItem>
                         <label>是否借贷：</label>
                         <Select v-model="model1" style="width:100px">
