@@ -22,6 +22,20 @@
                     </FormItem>
                 </Col>
                 <Col span="4">
+                    <FormItem label="钢厂：">
+                        <Select v-model="gc" placeholder="请选择钢厂">
+                            <Option value="全部">全部</Option>
+                            <Option value="唐钢">唐钢</Option>
+                            <Option value="邯钢">邯钢</Option>
+                            <Option value="宣钢">宣钢</Option>
+                            <Option value="承钢">承钢</Option>
+                            <Option value="舞钢">舞钢</Option>
+                            <Option value="石钢">石钢</Option>
+                            <Option value="衡板">衡板</Option>
+                        </Select>
+                    </FormItem>
+                </Col>
+                <Col span="4">
                     <Button @click="getList()" icon="ios-search" style="margin-right:10px;">查询</Button>
                     <Button @click="downLoad()" icon="ios-cloud-download-outline">导出</Button>
                 </Col>
@@ -36,6 +50,7 @@
         name: "xsjsqkgc",
         data() {
             return {
+                gc:'全部',
                 loading:true,
                 startTime: new Date(new Date().getFullYear(), new Date().getMonth()-1, 1),
                 endTime: new Date(new Date().getFullYear(), new Date().getMonth()-1, 1),
@@ -111,10 +126,12 @@
                 zt+="2"
                 let sfjd="&sfjd="
                 sfjd+=this.model1
+                let gc="&gc="
+                gc+=this.gc
                 fetch(this.$store.state.fetchPath + "/yxyb/getyxybpz", {
                     method: "POST",
                     headers: this.$store.state.fetchHeader,
-                    body: startTime+endTime+zt+sfjd,
+                    body: startTime+endTime+zt+sfjd+gc,
                     credentials: 'include'
                 }).then((res) => {
                     if(res.status!=200){

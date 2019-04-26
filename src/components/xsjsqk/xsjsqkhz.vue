@@ -12,6 +12,13 @@
                         <DatePicker type="month" placeholder="终止月份"  :editable="false" :clearable="false" v-model="endTime" style="width:150px"></DatePicker>
                     </FormItem>
                 </Col>
+                <Col span="6" style="margin-left: 20px">
+                    <FormItem label="产线：">
+                        <Select  v-model="cx" placeholder="请选择产线" filterable multiple style="width: 245px">
+                            <Option v-for="item in cxData" :value="item.value" :key="item.value">{{ item.label }}</Option>
+                        </Select>
+                    </FormItem>
+                </Col>
                 <Col span="4">
                     <Button @click="getList()" icon="ios-search" style="margin-right:10px;">查询</Button>
                     <Button @click="downLoad()" icon="ios-cloud-download-outline">导出</Button>
@@ -27,6 +34,8 @@
         name: "xsjsqkhz",
         data() {
             return {
+                cx:[],
+                cxData:[],
                 loading:true,
                 startTime:new Date(new Date().getFullYear(), new Date().getMonth()-1, 1),
                 endTime:new Date(new Date().getFullYear(), new Date().getMonth()-1, 1),
@@ -367,14 +376,36 @@
         },
         mounted() {
             this.getList();
+            this.getCxData();
         },
         methods: {
+            getCxData(){
+                // this.cxCx.companyId = this.dw
+                let type="type="
+                type+="1"
+                fetch(this.$store.state.fetchPath + "/scm-steel-settle/getCxNamePzg", {
+                    method: "POST",
+                    headers: this.$store.state.fetchHeader,
+                    body: type,
+                    credentials: 'include'
+                }).then((res) => {
+                    if(res.status!=200){
+                        this.$Message.error('请求失败！');
+                    }else{
+                        return res.text();
+                    }
+                }).then((res) => {
+                    res = res && res.length > 0 ? JSON.parse(res) : [];
+                    this.cxData = this.utils.getCx(res)
+                });
+            },
             downLoad(){
                 this.$refs.table.exportCsv({
                     filename: '销售结算情况（产线）明细',
                 });
             },
             getList() {
+                let cxArr = '&cx=' +this.cx.toString()
                 this.loading = true;
                 let startTime='startTime=';
                 startTime+=this.utils.formatMonthStart(this.startTime)
@@ -383,7 +414,7 @@
                 fetch(this.$store.state.fetchPath + "/yxyb/getxsjswccx", {
                     method: "POST",
                     headers: this.$store.state.fetchHeader,
-                    body: startTime+endTime,
+                    body: startTime+endTime+cxArr,
                     credentials: 'include'
                 }).then((res) => {
                     if(res.status!=200){
