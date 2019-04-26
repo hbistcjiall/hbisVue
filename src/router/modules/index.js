@@ -184,6 +184,26 @@ const indexchild=[
             isLogin: true
         },
     },
+    {
+        path: '/jcsjgl/gltjwh',
+        name: 'gltjwhzsgc',
+        component: resolve => require(['@/components/gltjwh/gltjwhzsgc'], resolve),
+        meta: {
+            title: '过滤条件维护',
+            keepAlive: true,
+            isLogin: true
+        },
+    },
+    {
+        path: '/jcsjgl/gltjcx',
+        name: 'gltjwhcx',
+        component: resolve => require(['@/components/gltjwh/gltjwhcx'], resolve),
+        meta: {
+            title: '过滤条件查询',
+            keepAlive: true,
+            isLogin: true
+        },
+    },
 ];
 const childrens=indexchild.concat(pzgjs).concat(xyhxl).concat(gkfx).concat(htzzjd);
 export default {
