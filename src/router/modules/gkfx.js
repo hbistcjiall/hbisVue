@@ -80,4 +80,13 @@ export default [
             isLogin: true
         }
     },
+    {
+        path: '/xsjsqk/cpdjjgfb',
+        name: 'cpdjjgfb',
+        component: resolve => require(['@/components/xsjsqk/cpdjjgfb'], resolve),
+        meta: {
+            title: '产品等级价格分布',
+            isLogin: true
+        }
+    },
 ]
