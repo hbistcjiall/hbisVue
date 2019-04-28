@@ -144,16 +144,23 @@
                     this.data = res;
                     let result1 = 0;
                     let result2 = 0;
-                    let result3 = 0;
+                    let zl = 0;
+                    let sjpj = 0
                     for(var i=0;i<this.data.length;i++){
                         result1 += this.data[i].FKIMG
                         result2 += this.data[i].KZWI6
-                        result3 += this.data[i].SJ
+                        // zl += this.data[i].FKIMG*(this.data[i].KZWI6)
                     }
+                    if(result1==0){
+                        sjpj=0
+                    }else{
+                        sjpj=result2/result1*10000
+                    }
+
                     let obj = {
                         FKIMG:result1.toFixed(2),
                         KZWI6:result2.toFixed(2),
-                        SJ:result3.toFixed(2),
+                        SJ:sjpj.toFixed(2),
                         COMPANYNAME:"合计"
                     };
                     this.data.push(obj);
