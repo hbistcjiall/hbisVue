@@ -22,21 +22,6 @@
                     </FormItem>
                 </Col>
                 <Col span="4">
-                    <FormItem label="品种：" style="width: 120px">
-                        <Select v-model="pz" style="width:120px" placeholder="请选择品种">
-                            <Option value="全部">全部</Option>
-                            <Option value="冷板">冷板</Option>
-                            <Option value="热板">热板</Option>
-                            <Option value="棒线">棒线</Option>
-                            <Option value="宽厚板">宽厚板</Option>
-                            <Option value="型带">型带</Option>
-                            <Option value="特钢">特钢</Option>
-                            <Option value="薄板">薄板</Option>
-                            <!--<Option value="高端产品">高端产品</Option>-->
-                        </Select>
-                    </FormItem>
-                </Col>
-                <Col span="4">
                     <Button @click="getList()" icon="ios-search" style="margin-right:10px;">查询</Button>
                     <Button @click="downLoad()" icon="ios-cloud-download-outline">导出</Button>
                 </Col>
@@ -51,7 +36,6 @@
         name: "xsjsqkpz",
         data() {
             return {
-                pz:'全部',
                 loading:true,
                 startTime:new Date(new Date().getFullYear(), new Date().getMonth()-1, 1),
                 endTime:new Date(new Date().getFullYear(), new Date().getMonth()-1, 1),
@@ -115,8 +99,6 @@
                 });
             },
             getList() {
-                let pz="&pz="
-                pz+=this.pz
                 this.loading = true;
                 let startTime='startTime=';
                 startTime+=this.utils.formatMonthStart(this.startTime)
@@ -129,7 +111,7 @@
                 fetch(this.$store.state.fetchPath + "/yxyb/getyxybpz", {
                     method: "POST",
                     headers: this.$store.state.fetchHeader,
-                    body: startTime+endTime+zt+sfjd+pz,
+                    body: startTime+endTime+zt+sfjd,
                     credentials: 'include'
                 }).then((res) => {
                     if(res.status!=200){
