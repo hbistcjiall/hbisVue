@@ -143,7 +143,7 @@
                                 render: (h, params) => {
                                     params.row[params.column.key]=params.row[params.column.key]==null?'0.00':params.row[params.column.key];
                                     return h('span',
-                                        (Number(params.row[params.column.key])).toFixed(2)+'%'
+                                        ((Number(params.row[params.column.key]))*100).toFixed(2)+'%'
                                     )
                                 }
                             }
@@ -204,26 +204,71 @@
                     let result1 = 0;
                     let result2 = 0;
                     let result3 = 0;
+                    let sghj1 = 0;
+                    let sghj2 = 0;
+                    let sghj3 = 0;
+                    let hbhj1 = 0;
+                    let hbhj2 = 0;
+                    let hbhj3 = 0;
 
+                    let wcbl1 = 0;
+                    let wcbl2 = 0;
+
+                    let result10 = 0;
                     let result9 = 0;
                     for(var i=0;i<this.data.length;i++){
                         result1 += this.data[i].FKIMG
                         result2 += this.data[i].PZGL
-                        result3 += this.data[i].MBL
+                        result3 += Number(this.data[i].MBL)
+                        if(this.data[i].COMPANYNAME == "石钢分公司"){
+                            sghj1 = this.data[i].FKIMG
+                            sghj2 = this.data[i].PZGL
+                            sghj3 = Number(this.data[i].MBL)
+                        }
+                        if(this.data[i].COMPANYNAME == "衡板分公司"){
+                            hbhj1 = this.data[i].FKIMG
+                            hbhj2 = this.data[i].PZGL
+                            hbhj3 = Number(this.data[i].MBL)
+                        }
+                    }
+                    if((result2-sghj2-hbhj2)/2 == 0){
+                        result10 = 0;
+                    }else{
+                        result10 = ((result2-sghj2-hbhj2)/2)/((result1-sghj1-hbhj1)/2);
                     }
                     if(result1 == 0 || result1=="" || result1 == null){
                         result9 = 0;
                     }else{
                         result9 = result2/result1
                     }
+                    if(result3 == 0){
+                        wcbl2 = 0;
+                    }else{
+                        wcbl2 = result1/result3;
+                    }
+                    if((Number(result3-sghj3-hbhj3).toFixed(2))/2 == 0){
+                        wcbl1 = 0;
+                    }else{
+                        wcbl1 = ((result1-sghj1-hbhj1)/2)/((Number(result3-sghj3-hbhj3).toFixed(2))/2)
+                    }
+                    let xshj = {
+                        FKIMG : (result1-sghj1-hbhj1)/2,
+                        PZGL : (result2-sghj2-hbhj2)/2,
+                        COMPANYNAME:"河钢销售合计",
+                        BZ:result10,
+                        MBL:(Number(result3-sghj3-hbhj3).toFixed(2))/2,
+                        WCBL :wcbl1
+                    }
                     let obj ={
                         FKIMG : result1,
                         PZGL : result2,
-                        COMPANYNAME:"合计",
+                        COMPANYNAME:"河钢集团合计",
                         BZ:result9,
-                        MBL:result3
+                        MBL:Number(result3).toFixed(2),
+                        WCBL : wcbl2
 
                     }
+                    this.data.push(xshj)
                     this.data.push(obj)
                     this.loading = false;
                 });
