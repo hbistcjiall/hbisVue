@@ -210,6 +210,57 @@ const getcxb = (data) =>{
     })
     return result;
 }
+const getName=(data)=>{
+    const result = []
+    // 遍历 tree
+    data.forEach((item) => {
+        // 解构赋值
+        let {
+            SEL: value,
+            SEL: label,
+        } = item
+
+        result.push({
+            value,
+            label
+        })
+    })
+    return result;
+}
+const getTABLEName=(data)=>{
+    const result = []
+    // 遍历 tree
+    data.forEach((item) => {
+        // 解构赋值
+        let {
+            SEL: value,
+            SEL: label,
+        } = item
+
+        result.push({
+            value,
+            label
+        })
+    })
+    return result;
+}
+const getColumnss=(data)=>{
+    const result = []
+    // 遍历 tree
+    data.forEach((item) => {
+        // 解构赋值
+        let {
+            SEL: value,
+            SEL: label,
+        } = item
+
+        result.push({
+            value,
+            label
+        })
+    })
+    return result;
+}
 const getXszt = (data) =>{
     const result = []
     // 遍历 tree
@@ -252,5 +303,8 @@ export default {
     getCx,
     getXszt,
     formatdate,
-    getcxb
+    getcxb,
+    getName,
+    getTABLEName,
+    getColumnss
 };
