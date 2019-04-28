@@ -71,4 +71,13 @@ export default [
             isLogin: true
         }
     },
+    {
+        path: '/jcsjgl/gltjcx',
+        name: 'gltjcx',
+        component: resolve => require(['@/components/gltjwh/gltjwhcx'], resolve),
+        meta: {
+            title: '过滤条件查询',
+            isLogin: true
+        }
+    },
 ]

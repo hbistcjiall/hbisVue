@@ -193,6 +193,23 @@ const getCx = (data) =>{
     })
     return result;
 }
+const getcxb = (data) =>{
+    const result = []
+    // 遍历 tree
+    data.forEach((item) => {
+        // 解构赋值
+        let {
+            FNAME: value,
+            FNAME: label,
+        } = item
+
+        result.push({
+            value,
+            label
+        })
+    })
+    return result;
+}
 const getXszt = (data) =>{
     const result = []
     // 遍历 tree
@@ -235,4 +252,5 @@ export default {
     getCx,
     getXszt,
     formatdate,
+    getcxb
 };
