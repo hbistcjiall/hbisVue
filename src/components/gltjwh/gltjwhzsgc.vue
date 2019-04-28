@@ -26,7 +26,7 @@
                 <Col span="8" style="float: right">
                     <Button type="primary" @click="search" style="margin-left:20px" icon="ios-search">查询</Button>
                     <Button type="primary" @click="clearall" style="margin-left:10px">清空</Button>
-                    <Button type="primary" @click="addNew" style="margin-left:10px;">添加</Button>
+                    <!--<Button type="primary" @click="addNew" style="margin-left:10px;">添加</Button>-->
                     <Button type="primary" @click="pldelect" style="margin-left:10px">批量删除</Button>
                 </Col>
             </Row>
@@ -36,14 +36,15 @@
                 <strong>{{ row.name }}</strong>
             </template>
             <template slot-scope="{row}" slot="action">
-                <Button size="small" style="margin-right: 5px" @click="updD(row)">修改</Button>
+                <!--<Button size="small" style="margin-right: 5px" @click="updD(row)">修改</Button>-->
                 <Button size="small" @click="remove(row)" style="background:#ff6969;color:#fff;">删除</Button>
             </template>
         </Table>
-        <Page :total="dataCount" :page-size="pageSize" show-total show-elevator show-sizer class="paging" @on-change="changepage" @on-page-size-change='handlePageSize' style="margin-top:20px;"></Page>
+        <Page :total="dataCount" :page-size="pageSize" show-total show-elevator show-sizer class="paging" @on-change="changepage" @on-page-size-change='handlePageSize' style="margin-top:20px"></Page>
     </div>
 </template>
 <script>
+    // import gltjwhadd from './gltjwhAdd.vue'
     export default {
         name:'gltjwh',
         data () {
@@ -87,14 +88,30 @@
                     {
                         title: '过滤值',
                         align: "center",
-                        key: 'C_VALUE'
+                        width:'150',
+                        key: 'C_VALUE',
+                        render: (h, params) => {
+                            return h('div', [
+                                h('span', {
+                                    style: {
+                                        display: 'inline-block',
+                                        width: '100%',
+                                        overflow: 'hidden',
+                                        textOverflow: 'ellipsis',
+                                        whiteSpace: 'nowrap'
+                                    },
+                                    domProps: {
+                                        title: params.row.C_VALUE
+                                    }
+                                }, params.row.C_VALUE)
+                            ])
+                        }
                     },
                     {
                         title: '备注',
                         align: "center",
-                        key: 'REMARKS'
+                        key: 'REMARKS',
                     },
-
                     {
                         title: '操作',
                         slot: 'action',
@@ -295,10 +312,82 @@
                 });
 
             },
-            addNew(){
-                this.updModal=true
-
-            },
+            // addNew() {
+            //     this.$Modal.confirm({
+            //         scrollable: true,
+            //         okText:"确认",
+            //         width:"80%",
+            //         render: (h) => {
+            //             return h(gltjwhadd, {
+            //                 props: {
+            //                     url: this.$store.state.fetchPath
+            //                 },
+            //                 on: {
+            //                     year: (year) => {
+            //                         this.formValidate.year = year
+            //                     },
+            //                     code: (code) => {
+            //                         this.formValidate.targetname = code
+            //                     },
+            //                     jan: (jan) => {
+            //                         this.formValidate.jan = jan
+            //                     },
+            //                     feb: (feb) => {
+            //                         this.formValidate.feb = feb
+            //                     },
+            //                     mar: (mar) => {
+            //                         this.formValidate.mar = mar
+            //                     },
+            //                     apr: (apr) => {
+            //                         this.formValidate.apr = apr
+            //                     },
+            //                     may: (may) => {
+            //                         this.formValidate.may = may
+            //                     },
+            //                     jun: (jun) => {
+            //                         this.formValidate.jun = jun
+            //                     },
+            //                     jul: (jul) => {
+            //                         this.formValidate.jul = jul
+            //                     },
+            //                     aug: (aug) => {
+            //                         this.formValidate.aug = aug
+            //                     },
+            //                     sep: (sep) => {
+            //                         this.formValidate.sep = sep
+            //                     },
+            //                     oct: (oct) => {
+            //                         this.formValidate.oct = oct
+            //                     },
+            //                     nov: (nov) => {
+            //                         this.formValidate.nov = nov
+            //                     },
+            //                     dec: (dec) => {
+            //                         this.formValidate.dec = dec
+            //                     },
+            //                 }
+            //             })
+            //         },
+            //         onOk: () => {
+            //             fetch(this.$store.state.fetchPath + "/TargetManage/addorupTargetManage", {
+            //                 method: "POST",
+            //                 headers: this.$store.state.fetchHeader,
+            //                 body: this.utils.formatParams(this.formValidate),
+            //                 credentials: 'include'
+            //             })
+            //                 .then((res) => {
+            //                     if (res.status != 200) {
+            //                         this.$Message.error('请求失败！');
+            //                     } else {
+            //                         return res.text();
+            //                     }
+            //                 })
+            //                 .then(() => {
+            //                     this.handleListApproveHistory();
+            //                 })
+            //         }
+            //     })
+            // },
             updD(r){
                 window.console.log(r)
             },
