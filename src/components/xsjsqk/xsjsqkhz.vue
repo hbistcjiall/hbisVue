@@ -437,6 +437,8 @@
                     let xingcai = []
                     let jgj = []
                     let pinzhong = []
+                    let xianchai=[]
+                    let baoban = []
                     for(var i=0;i<res.length;i++){
                         switch (res[i].ZL) {
                             case "热板":
@@ -460,7 +462,7 @@
                             case "圆钢":
                                 yuangang.push(res[i])
                                 break;
-                            case "棒线":
+                            case "线材":
                                 xiancai.push(res[i])
                                 break;
                             case "型材":
@@ -468,6 +470,9 @@
                                 break;
                             case "品种":
                                 pinzhong.push(res[i])
+                                break;
+                            case "薄板":
+                                baoban.push(res[i])
                                 break;
                         }
                     }
@@ -1344,8 +1349,8 @@
                         if(xiancaizbgsfkimg==0){xiancaizbgssj=0}else{xiancaizbgssj = xiancaizbgssjss/xiancaizbgsfkimg}
                         if(xiancaickfkimg==0){xiancaicksj=0}else{xiancaicksj += xiancaicksjss/xiancaickfkimg}
                         let xiancaixj = {
-                            ZL:"棒线",
-                            CXNAME:"棒线小计",
+                            ZL:"线材",
+                            CXNAME:"线材小计",
                             FKIMG:xiancaifkimg.toFixed(2),
                             ZSJ:xiancaizsj.toFixed(2),
                             KZWI6:xiancaikzwi6.toFixed(2),
@@ -1510,7 +1515,7 @@
                         };
                         xingcai.unshift(xingcaixj);
                     }
-                    let arr=jgj.concat(reban).concat(suanxi).concat(lengban).concat(duxin).concat(zhonghouban).concat(luowengang).concat(yuangang).concat(xiancai).concat(xingcai).concat(pinzhong)
+                    let arr=jgj.concat(reban).concat(suanxi).concat(lengban).concat(duxin).concat(zhonghouban).concat(luowengang).concat(yuangang).concat(xiancai).concat(xingcai).concat(pinzhong).concat(baoban)
                     this.data = this.utils.mergeRow(arr,'ZL')
                     this.loading = false;
                 });
