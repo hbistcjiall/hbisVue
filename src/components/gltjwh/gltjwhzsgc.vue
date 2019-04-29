@@ -26,7 +26,7 @@
                 <Col span="8" style="float: right">
                     <Button type="primary" @click="search" style="margin-left:20px" icon="ios-search">查询</Button>
                     <Button type="primary" @click="clearall" style="margin-left:10px">清空</Button>
-                    <!--<Button type="primary" @click="addNew" style="margin-left:10px;">添加</Button>-->
+                    <Button type="primary" @click="addNew" style="margin-left:10px;">添加</Button>
                     <Button type="primary" @click="pldelect" style="margin-left:10px">批量删除</Button>
                 </Col>
             </Row>
@@ -44,7 +44,7 @@
     </div>
 </template>
 <script>
-    // import gltjwhadd from './gltjwhAdd.vue'
+    import gltjwhadd from './gltjwhAdd.vue'
     export default {
         name:'gltjwh',
         data () {
@@ -122,6 +122,14 @@
                 tableData: [],
                 resDatas:[],
                 plDelectData:[],
+                addFormData:{
+                    code:'',
+                    FName:'',
+                    tableName:'',
+                    FColumn:'',
+                    CValue:'',
+                    remark:''
+                },
             }
         },
         created() {
@@ -312,82 +320,65 @@
                 });
 
             },
-            // addNew() {
-            //     this.$Modal.confirm({
-            //         scrollable: true,
-            //         okText:"确认",
-            //         width:"80%",
-            //         render: (h) => {
-            //             return h(gltjwhadd, {
-            //                 props: {
-            //                     url: this.$store.state.fetchPath
-            //                 },
-            //                 on: {
-            //                     year: (year) => {
-            //                         this.formValidate.year = year
-            //                     },
-            //                     code: (code) => {
-            //                         this.formValidate.targetname = code
-            //                     },
-            //                     jan: (jan) => {
-            //                         this.formValidate.jan = jan
-            //                     },
-            //                     feb: (feb) => {
-            //                         this.formValidate.feb = feb
-            //                     },
-            //                     mar: (mar) => {
-            //                         this.formValidate.mar = mar
-            //                     },
-            //                     apr: (apr) => {
-            //                         this.formValidate.apr = apr
-            //                     },
-            //                     may: (may) => {
-            //                         this.formValidate.may = may
-            //                     },
-            //                     jun: (jun) => {
-            //                         this.formValidate.jun = jun
-            //                     },
-            //                     jul: (jul) => {
-            //                         this.formValidate.jul = jul
-            //                     },
-            //                     aug: (aug) => {
-            //                         this.formValidate.aug = aug
-            //                     },
-            //                     sep: (sep) => {
-            //                         this.formValidate.sep = sep
-            //                     },
-            //                     oct: (oct) => {
-            //                         this.formValidate.oct = oct
-            //                     },
-            //                     nov: (nov) => {
-            //                         this.formValidate.nov = nov
-            //                     },
-            //                     dec: (dec) => {
-            //                         this.formValidate.dec = dec
-            //                     },
-            //                 }
-            //             })
-            //         },
-            //         onOk: () => {
-            //             fetch(this.$store.state.fetchPath + "/TargetManage/addorupTargetManage", {
-            //                 method: "POST",
-            //                 headers: this.$store.state.fetchHeader,
-            //                 body: this.utils.formatParams(this.formValidate),
-            //                 credentials: 'include'
-            //             })
-            //                 .then((res) => {
-            //                     if (res.status != 200) {
-            //                         this.$Message.error('请求失败！');
-            //                     } else {
-            //                         return res.text();
-            //                     }
-            //                 })
-            //                 .then(() => {
-            //                     this.handleListApproveHistory();
-            //                 })
-            //         }
-            //     })
-            // },
+            addNew() {
+                this.$Modal.confirm({
+                    scrollable: true,
+                    okText:"确认",
+                    width:"80%",
+                    render: (h) => {
+                        return h(gltjwhadd, {
+                            props: {
+                                url: this.$store.state.fetchPath
+                            },
+                            on: {
+                                ywbm: (ywbm) => {
+                                    this.addFormData.code = ywbm
+                                },
+                                ywmc: (ywmc) => {
+                                    this.addFormData.FName = ywmc
+                                },
+                                tableName: (tableName) => {
+                                    this.addFormData.tableName = tableName
+                                },
+                                glzd: (glzd) => {
+                                    this.addFormData.FColumn  = glzd
+                                },
+                                glz: (glz) => {
+                                    this.addFormData.CValue = glz
+                                },
+                                bz: (bz) => {
+                                    this.addFormData.remark  = bz
+                                },
+                            }
+                        })
+                    },
+                    onOk: () => {
+                        let remark="remark="+this.addFormData.remark
+                        let CValue="CValue="+this.addFormData.CValue
+                        let FColumn="FColumn="+this.addFormData.FColumn
+                        let tableName="tableName="+this.addFormData.tableName
+                        let FName="FName="+this.addFormData.FName
+                        let code="code="+this.addFormData.code
+                        fetch(this.$store.state.fetchPath + "/scm-filter/addFilter", {
+                            method: "POST",
+                            headers: this.$store.state.fetchHeader,
+                            body:remark+'&'+CValue+'&'+FColumn+'&'+tableName+'&'+FName+'&'+code,
+                            credentials: 'include'
+                        })
+                            .then((res) => {
+                                if (res.status != 200) {
+                                    this.$Message.error('请求失败！');
+                                } else {
+                                    return res.text();
+                                }
+                            })
+                            .then(() => {
+                                this.$Message.success('新建成功！');
+                                this.handleListApproveHistory();
+                            })
+                    }
+                })
+            },
             updD(r){
                 window.console.log(r)
             },
