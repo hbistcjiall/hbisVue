@@ -68,7 +68,7 @@
                     </Col>
                 </Row>
                 <div style="width: 100%">
-                    <ul>
+                    <ul class="modalCls">
                         <li>
                             <Table :loading="bzdloading" border stripe :columns="bzdcolumn" :data="bzdTableData" height="300"  ref="table">
                                 <template slot-scope="{ row }" slot="name">
@@ -555,6 +555,48 @@
                 let glzdobj = { }
                 glzdobj.COLUMN_NAME = this.updformValidate.glzd
                 this.glzdTableData.push(glzdobj)
+                this.bzzloading=true
+                let tableName='tableName='+this.updformValidate.tableName
+                let columnName='columnName='+this.updformValidate.glzd
+                let columnValue='columnValue='+''
+                fetch(this.$store.state.fetchPath+"/scm-filter/getColumnValue", {
+                    method: "POST",
+                    headers: {
+                        "Content-Type":"application/x-www-form-urlencoded; charset=UTF-8"
+                    },
+                    body:tableName+'&'+columnName+"&"+columnValue,
+                    credentials:'include'
+                })
+                    .then((res) => {
+                        if(res.status!=200){
+                            this.$Message.error('请求失败！');
+                        }else{
+                            return res.text();
+                        }
+                    }).then((res) => {
+                    res = res&&res.length>0?JSON.parse(res):[]
+                    this.bzzTableData = res
+                    this.bzzloading=false
+                })
+                let filterId ="filterId="+ this.updformValidate.id
+                fetch(this.$store.state.fetchPath+"/scm-filter/selValue", {
+                    method: "POST",
+                    headers: {
+                        "Content-Type":"application/x-www-form-urlencoded; charset=UTF-8"
+                    },
+                    body:filterId,
+                    credentials:'include'
+                })
+                    .then((res) => {
+                        if(res.status!=200){
+                            this.$Message.error('请求失败！');
+                        }else{
+                            return res.text();
+                        }
+                    }).then((res) => {
+                    res = res&&res.length>0?JSON.parse(res):[]
+                    this.glzTableData = res
+                })
             },
             getTableName() {
                 this.glzdTableData=[]
@@ -595,7 +637,6 @@
                 let tableName='tableName='+this.updformValidate.tableName
                 let columnName='columnName='+this.updformValidate.glzd
                 let columnValue='columnValue='+''
-                this.bzzTableData=[]
                 fetch(this.$store.state.fetchPath+"/scm-filter/getColumnValue", {
                     method: "POST",
                     headers: {
@@ -633,7 +674,41 @@
                 window.console.log(r)
             },
             roleok(){
-
+                // this.updformValidate.ywbm = r.CODE
+                // this.updformValidate.ywmc = r.F_NAME
+                // this.updformValidate.tableName = r.TABLE_NAME
+                // this.updformValidate.glzd = r.F_COLUMN
+                // this.updformValidate.glz = r.C_VALUE
+                // this.updformValidate.bz = r.REMARKS
+                // this.updformValidate.id = r.ID
+                let remark="remark="+this.updformValidate.bz
+                let CValue="CValue="+this.updformValidate.glz
+                let FColumn="FColumn="+this.updformValidate.glzd
+                let tableName="tableName="+this.updformValidate.tableName
+                let FName="FName="+this.updformValidate.ywmc
+                let code="code="+this.updformValidate.ywbm
+                let id = "id="+this.updformValidate.id
+                fetch(this.$store.state.fetchPath + "/scm-filter/editFilter", {
+                    method: "POST",
+                    headers: this.$store.state.fetchHeader,
+                    body:remark+'&'+CValue+'&'+FColumn+'&'+tableName+'&'+FName+'&'+code+"&"+id,
+                    credentials: 'include'
+                })
+                    .then((res) => {
+                        if (res.status != 200) {
+                            this.$Message.error('请求失败！');
+                        } else {
+                            return res.text();
+                        }
+                    })
+                    .then(() => {
+                        this.$Message.success('编辑成功！');
+                        this.handleListApproveHistory();
+                        this.bzdTableData=[]
+                        this.glzdTableData=[]
+                        this.bzzTableData =[]
+                        this.glzTableData=[]
+                    })
             },
 
         }
@@ -650,12 +725,12 @@
     FormItem {
         float: left;
     }
-    ul{
+    .modalCls{
         list-style: none;
         width: 100%;
         height: 300px;
     }
-    ul li{
+    .modalCls li{
         width: 24%;
         float: left;
     }
