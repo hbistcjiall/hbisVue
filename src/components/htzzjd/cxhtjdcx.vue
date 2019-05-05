@@ -64,6 +64,8 @@
                         key: 'COMPANYID',
                         align: 'center',
                         width: 100,
+                        fixed: 'left',
+                        isMergeRow: true
                     },
                     {
                         title: '产线',
@@ -393,6 +395,7 @@
 
                     }
                     this.data.push(obj)
+                    this.data = this.utils.mergeRow(this.data,'COMPANYID')
                     this.loading = false;
                 });
             },
