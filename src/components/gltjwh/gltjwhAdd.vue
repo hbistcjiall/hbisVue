@@ -10,7 +10,7 @@
                 </FormItem>
             </Col>
             <Col span="6">
-                <FormItem label="业务名称：" prop="ywmcName" :label-width="120">
+                <FormItem label="业务名称：" prop="ywmc" :label-width="120">
                     <Input v-model="formValidate.ywmc" placeholder="请输入业务名称" @on-change="getYwmc"></Input>
                 </FormItem>
             </Col>
@@ -24,8 +24,28 @@
                 </FormItem>
             </Col>
         </Row>
+        <Row>
+            <ul style="height:50px;" class="chackipnut">
+                <li>
+                    <FormItem label="">
+                        <Input v-model="bzdinput" placeholder="请输入要查询的表字段" @on-change="getbzdChange"></Input>
+                    </FormItem>
+                </li>
+                <li>
+                    <span>&emsp;</span>
+                </li>
+                <li>
+                    <FormItem label="">
+                        <Input v-model="bzzinput" placeholder="请输入要查询的表中值" @on-change="getbzzChange"></Input>
+                    </FormItem>
+                </li>
+                <li>
+                    <span>&emsp;</span>
+                </li>
+            </ul>
+        </Row>
         <div style="width: 100%">
-            <ul>
+            <ul style="height: 300px">
                 <li>
                     <Table :loading="bzdloading" border stripe :columns="bzdcolumn" :data="bzdTableData" height="300"  ref="table">
                         <template slot-scope="{ row }" slot="name">
@@ -78,6 +98,8 @@
         },
         data () {
             return {
+                bzdinput:'',
+                bzzinput:'',
                 columnName:'',
                 columnValue:'',
                 bzdloading:false,
@@ -91,7 +113,7 @@
                     glz:''
                 },
                 ruleValidate: {
-                    ywmcName: [
+                    ywmc: [
                         { required: true, message: '业务名称不为空', trigger: 'blur' }
                     ],
                     tableName:[
@@ -116,6 +138,27 @@
                         title: '过滤字段',
                         align: "center",
                         key: 'COLUMN_NAME'
+                    },
+                    {
+                        title: '描述',
+                        align: "center",
+                        key: 'COMMENTS',
+                        render: (h, params) => {
+                            return h('div', [
+                                h('span', {
+                                    style: {
+                                        display: 'inline-block',
+                                        width: '100%',
+                                        overflow: 'hidden',
+                                        textOverflow: 'ellipsis',
+                                        whiteSpace: 'nowrap'
+                                    },
+                                    domProps: {
+                                        title: params.row.COMMENTS
+                                    }
+                                }, params.row.COMMENTS)
+                            ])
+                        }
                     },
                     {
                         title: '操作',
@@ -187,7 +230,7 @@
                 this.glzTableData=[]
                 this.bzdloading=true
                 let tableName='tableName='+this.formValidate.tableName
-                let columnName='columnName='+this.columnName
+                let columnName='columnName='+this.bzdinput
                 fetch(this.url+"/scm-filter/getColumnName", {
                     method: "POST",
                     headers: {
@@ -208,19 +251,23 @@
                     this.bzdloading=false
                 })
             },
+            getbzdChange(){
+                this.getBzdList()
+            },
             bzdupdD(r){
                 this.glzdTableData=[]
                 this.glzTableData=[]
                 this.bzzTableData=[]
                 let glzdDatasss={}
                 glzdDatasss.COLUMN_NAME = r.COLUMN_NAME
+                glzdDatasss.COMMENTS = r.COMMENTS
                 this.columnName = r.COLUMN_NAME
                 this.formValidate.glzd = this.columnName
                 this.glzdTableData.push(glzdDatasss)
                 this.bzzloading=true
                 let tableName='tableName='+this.formValidate.tableName
                 let columnName='columnName='+this.columnName
-                let columnValue='columnValue='+this.columnValue
+                let columnValue='columnValue='+this.bzzinput
                 this.bzzTableData=[]
                 fetch(this.url+"/scm-filter/getColumnValue", {
                     method: "POST",
@@ -241,6 +288,33 @@
                     this.bzzTableData = res
                     this.bzzloading=false
                     this.$emit('glzd', this.formValidate.glzd)
+                })
+            },
+            getbzzChange(){
+                this.bzzloading=true
+                let tableName='tableName='+this.formValidate.tableName
+                let columnName='columnName='+this.columnName
+                let columnValue='columnValue='+this.bzzinput
+                this.bzzTableData=[]
+                fetch(this.url+"/scm-filter/getColumnValue", {
+                    method: "POST",
+                    headers: {
+                        "Content-Type":"application/x-www-form-urlencoded; charset=UTF-8"
+                    },
+                    body:tableName+'&'+columnName+"&"+columnValue,
+                    credentials:'include'
+                })
+                    .then((res) => {
+                        if(res.status!=200){
+                            this.$Message.error('请求失败！');
+                        }else{
+                            return res.text();
+                        }
+                    }).then((res) => {
+                    res = res&&res.length>0?JSON.parse(res):[]
+                    this.bzzTableData = res
+                    this.bzzloading=false
+                    // this.$emit('glzd', this.formValidate.glzd)
                 })
             },
             glzdupdD(){
@@ -279,7 +353,6 @@
     ul{
         list-style: none;
         width: 100%;
-        height: 300px;
     }
     ul li{
         width: 24%;
