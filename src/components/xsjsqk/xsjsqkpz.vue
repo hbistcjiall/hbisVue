@@ -16,8 +16,8 @@
                     <FormItem>
                         <label>是否借贷：</label>
                         <Select v-model="model1" style="width:100px">
-                            <Option value="0">是</Option>
-                            <Option value="1">否</Option>
+                            <Option value="1">是</Option>
+                            <Option value="0">否</Option>
                         </Select>
                     </FormItem>
                 </Col>
@@ -86,7 +86,7 @@
                     },
                 ],
                 data: [],
-                model1:'1'
+                model1:'0'
             }
         },
         mounted() {
@@ -106,7 +106,7 @@
                 endTime+=this.utils.formatMonthStart(this.endTime)
                 let zt='&zt='
                 zt+="1"
-                let sfjd="&sfjd="
+                let sfjd="&jd="
                 sfjd+=this.model1
                 fetch(this.$store.state.fetchPath + "/yxyb/getyxybpz", {
                     method: "POST",

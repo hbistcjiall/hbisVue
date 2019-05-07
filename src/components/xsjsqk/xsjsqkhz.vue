@@ -12,13 +12,41 @@
                         <DatePicker type="month" placeholder="终止月份"  :editable="false" :clearable="false" v-model="endTime" style="width:150px"></DatePicker>
                     </FormItem>
                 </Col>
-                <Col span="6" style="margin-left: 20px">
+                <Col span="4" style="margin-left: 20px">
                     <FormItem label="产线：">
-                        <Select  v-model="cx" placeholder="请选择产线" filterable multiple style="width: 245px">
+                        <Select  v-model="cx" placeholder="请选择产线" filterable multiple>
                             <Option v-for="item in cxData" :value="item.value" :key="item.value">{{ item.label }}</Option>
                         </Select>
                     </FormItem>
                 </Col>
+                <Col span="4" style="margin-left: 20px">
+                    <FormItem label="品种：">
+                        <Select  v-model="pz" placeholder="请选择品种">
+                            <Option value="全部">全部</Option>
+                            <Option value="热板">热板</Option>
+                            <Option value="酸洗">酸洗</Option>
+                            <Option value="冷板">冷板</Option>
+                            <Option value="镀锌">镀锌</Option>
+                            <Option value="中厚板">中厚板</Option>
+                            <Option value="圆钢">圆钢</Option>
+                            <Option value="线材">线材</Option>
+                            <Option value="螺纹钢">螺纹钢</Option>
+                            <Option value="薄板">薄板</Option>
+                        </Select>
+                    </FormItem>
+                </Col>
+                <Col span="4" style="margin-left: 20px">
+                    <FormItem label="借贷：">
+                        <Select v-model="jd">
+                            <Option value="全部">全部</Option>
+                            <Option value="1">是</Option>
+                            <Option value="0">否</Option>
+                        </Select>
+                    </FormItem>
+                </Col>
+
+            </Row>
+            <Row>
                 <Col span="4">
                     <Button @click="getList()" icon="ios-search" style="margin-right:10px;">查询</Button>
                     <Button @click="downLoad()" icon="ios-cloud-download-outline">导出</Button>
@@ -34,6 +62,8 @@
         name: "xsjsqkhz",
         data() {
             return {
+                jd:'全部',
+                pz:'全部',
                 cx:[],
                 cxData:[],
                 loading:true,
@@ -411,10 +441,12 @@
                 startTime+=this.utils.formatMonthStart(this.startTime)
                 let endTime='&endTime=';
                 endTime+=this.utils.formatMonthStart(this.endTime)
+                let pz = "pz="+this.pz
+                let jd = "jd="+this.jd
                 fetch(this.$store.state.fetchPath + "/yxyb/getxsjswccx", {
                     method: "POST",
                     headers: this.$store.state.fetchHeader,
-                    body: startTime+endTime+cxArr,
+                    body: startTime+endTime+cxArr+"&"+pz+"&"+jd,
                     credentials: 'include'
                 }).then((res) => {
                     if(res.status!=200){

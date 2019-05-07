@@ -16,8 +16,8 @@
                     <FormItem>
                         <label>是否借贷：</label>
                         <Select v-model="model1" style="width:100px">
-                            <Option value="0">是</Option>
-                            <Option value="1">否</Option>
+                            <Option value="1">是</Option>
+                            <Option value="0">否</Option>
                         </Select>
                     </FormItem>
                 </Col>
@@ -104,7 +104,7 @@
                 zjFKIMG:'',
                 zjKZWI6:'',
                 zjSJ:'',
-                model1:'1'
+                model1:'0'
             }
         },
         mounted() {
@@ -124,7 +124,7 @@
                 endTime+=this.utils.formatMonthStart(this.endTime)
                 let zt='&zt='
                 zt+="2"
-                let sfjd="&sfjd="
+                let sfjd="&jd="
                 sfjd+=this.model1
                 let gc="&gc="
                 gc+=this.gc
