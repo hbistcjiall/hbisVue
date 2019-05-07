@@ -12,8 +12,32 @@
                                     style="width:110px"></DatePicker>
                     </FormItem>
                 </Col>
-                <Col span="2" style="margin-left: -50px;float: left">
-                    <Button @click="getListed()" icon="ios-search" style="margin-right:10px;">查询</Button>
+                <Col span="4">
+                    <FormItem label="产品大类：" style="margin-left: -50px">
+                        <Select style="width:100px;margin-left: -50px"  v-model="zl" placeholder="请选择" filterable  >
+                            <Option value="全部">全部</Option>
+                            <Option value="热板">热板</Option>
+                            <Option value="薄板">薄板</Option>
+                            <Option value="冷板">冷板</Option>
+                            <Option value="螺纹钢">螺纹钢</Option>
+                            <Option value="酸洗">酸洗</Option>
+                            <Option value="镀锌">镀锌</Option>
+                            <Option value="线材">线材</Option>
+                            <Option value="型材">型材</Option>
+                            <Option value="圆钢">圆钢</Option>
+                            <Option value="中厚板">中厚板</Option>
+                        </Select>
+                    </FormItem>
+                </Col>
+                <Col span="7">
+                    <FormItem label="产线：" style="margin-left: -50px">
+                        <Select style="width:300px"  v-model="cx" placeholder="请选择产线" filterable multiple>
+                            <Option v-for="item in cxData" :value="item.value" :key="item.value">{{ item.label }}</Option>
+                        </Select>
+                    </FormItem>
+                </Col>
+                <Col span="2" style="margin-left: -100px;float: left">
+                    <Button @click="getListed()" icon="ios-search" style="margin-left:200px;">查询</Button>
                 </Col>
             </Row>
         </Form>
@@ -26,8 +50,14 @@
         name: "cpdjjgfb",
         data() {
             return {
-                startTime: new Date(),
-                endTime: new Date(),
+                cxCx:{
+                    companyId:''
+                },
+                zl:'全部',
+                cx:[],
+                cxData:[],
+                startTime:new Date(new Date().getFullYear(), new Date().getMonth()-1, 1),
+                endTime:new Date(new Date().getFullYear(), new Date().getMonth()-1, 1),
                 loading: true,
                 data: [],
                 columns: [
@@ -298,17 +328,38 @@
             }
         },
         mounted() {
+            this.getCxData();
             this.getListed();
         },
         methods: {
+            getCxData(){
+                this.cxCx.companyId = '全部'
+                fetch(this.$store.state.fetchPath + "/scm-steel-settle/getCxName", {
+                    method: "POST",
+                    headers: this.$store.state.fetchHeader,
+                    body:this.utils.formatParams(this.cxCx),
+                    credentials: 'include'
+                }).then((res) => {
+                    if(res.status!=200){
+                        this.$Message.error('请求失败！');
+                    }else{
+                        return res.text();
+                    }
+                }).then((res) => {
+                    res = res && res.length > 0 ? JSON.parse(res) : [];
+                    this.cxData = this.utils.getCx(res)
+                });
+            },
             getListed() {
                 this.loading = true;
                 let startTime = 'startTime=' + this.utils.formatMonthStart(this.startTime);
                 let endTime = 'endTime=' + this.utils.formatMonthStart(this.endTime);
+                let zl = 'zl='+this.zl;
+                let cx = 'cx='+this.cx.toString();
                 fetch(this.$store.state.fetchPath + "/report-product-class-level/getcxfb", {
                     method: "POST",
                     headers: this.$store.state.fetchHeader,
-                    body: startTime + '&' + endTime,
+                    body: startTime + '&' + endTime + '&' + zl + '&' + cx,
                     credentials: 'include'
                 }).then((res) => {
                     if (res.status != 200) {
@@ -445,42 +496,49 @@
                     let jgj = []
                     let i=0
                     let j=0
+                    // while(j < res[0].length) {
+                    //     if(res[0][j].FKIMG==0)
+                    //     {
+                    //         res[0].splice(j,1);
+                    //         j=j-1;
+                    //     }
+                    //     j++
+                    // }
                     while(j < res[0].length) {
-                        let reseds = res[0]
-                        if (reseds[j].FKIMG == null || '') {
-                            reseds[j].FKIMG = 0.00
-                        } else if (reseds[j].ZSJ == null || '') {
-                            reseds[j].ZSJ = 0.00
-                        } else if (reseds[j].ZYFKIMG == null || '') {
-                            reseds[j].ZYFKIMG = 0.00
-                        } else if (reseds[j].ZYSJ == null || '') {
-                            reseds[j].ZYSJ = 0.00
-                        } else if (reseds[j].ZYXSZB == null || '') {
-                            reseds[j].ZYXSZB = 0.00
-                        } else if (reseds[j].FGSFKIMG == null || '') {
-                            reseds[j].FGSFKIMG = 0.00
-                        } else if (reseds[j].FGSSJ == null || '') {
-                            reseds[j].FGSSJ = 0.00
-                        } else if (reseds[j].FGSXSZB == null || '') {
-                            reseds[j].FGSXSZB = 0.00
-                        } else if (reseds[j].SYBFKIMG == null || '') {
-                            reseds[j].SYBFKIMG = 0.00
-                        } else if (reseds[j].SYBSJ == null || '') {
-                            reseds[j].SYBSJ = 0.00
-                        } else if (reseds[j].SYBXSZB == null || '') {
-                            reseds[j].SYBXSZB = 0.00
-                        } else if (reseds[j].XHFKIMG == null || '') {
-                            reseds[j].XHFKIMG = 0.00
-                        } else if (reseds[j].XHSJ == null || '') {
-                            reseds[j].XHSJ = 0.00
-                        } else if (reseds[j].XHXSZB == null || '') {
-                            reseds[j].XHXSZB = 0.00
-                        } else if (reseds[j].ZBGSFKIMG == null || '') {
-                            reseds[j].ZBGSFKIMG = 0.00
-                        } else if (reseds[j].ZBGSSJ == null || '') {
-                            reseds[j].ZBGSSJ = 0.00
-                        } else if (reseds[j].ZBGSXSZB == null || '') {
-                            reseds[j].ZBGSXSZB = 0.00
+                        if (res[0][j].FKIMG == null || '') {
+                            res[0][j].FKIMG = 0.00
+                        } else if (res[0][j].ZSJ == null || '') {
+                            res[0][j].ZSJ = 0.00
+                        } else if (res[0][j].ZYFKIMG == null || '') {
+                            res[0][j].ZYFKIMG = 0.00
+                        } else if (res[0][j].ZYSJ == null || '') {
+                            res[0][j].ZYSJ = 0.00
+                        } else if (res[0][j].ZYXSZB == null || '') {
+                            res[0][j].ZYXSZB = 0.00
+                        } else if (res[0][j].FGSFKIMG == null || '') {
+                            res[0][j].FGSFKIMG = 0.00
+                        } else if (res[0][j].FGSSJ == null || '') {
+                            res[0][j].FGSSJ = 0.00
+                        } else if (res[0][j].FGSXSZB == null || '') {
+                            res[0][j].FGSXSZB = 0.00
+                        } else if (res[0][j].SYBFKIMG == null || '') {
+                            res[0][j].SYBFKIMG = 0.00
+                        } else if (res[0][j].SYBSJ == null || '') {
+                            res[0][j].SYBSJ = 0.00
+                        } else if (res[0][j].SYBXSZB == null || '') {
+                            res[0][j].SYBXSZB = 0.00
+                        } else if (res[0][j].XHFKIMG == null || '') {
+                            res[0][j].XHFKIMG = 0.00
+                        } else if (res[0][j].XHSJ == null || '') {
+                            res[0][j].XHSJ = 0.00
+                        } else if (res[0][j].XHXSZB == null || '') {
+                            res[0][j].XHXSZB = 0.00
+                        } else if (res[0][j].ZBGSFKIMG == null || '') {
+                            res[0][j].ZBGSFKIMG = 0.00
+                        } else if (res[0][j].ZBGSSJ == null || '') {
+                            res[0][j].ZBGSSJ = 0.00
+                        } else if (res[0][j].ZBGSXSZB == null || '') {
+                            res[0][j].ZBGSXSZB = 0.00
                         }
                         j++
                     }
@@ -853,7 +911,6 @@
                         }
                         i++
                     }
-                    //热板
 
                     //总计
                     if (res[1].length > 0) {
@@ -901,9 +958,9 @@
                             zj_SYBSJ += res[1][zz].SYBFKIMG*res[1][zz].SYBSJ;
                             zj_XHSJ += res[1][zz].XHFKIMG*res[1][zz].XHSJ;
                             zj_ZBGSSJ += res[1][zz].ZBGSFKIMG*res[1][zz].ZBGSSJ;
-                            zj_ZSJ+=res[1][zz].FKIMG*res[1][zz].ZSJ;
                             zz++;
                         }
+                        zj_ZSJ=zj_ZYSJ+zj_FGSSJ+zj_SYBSJ+zj_XHSJ+zj_ZBGSSJ;
                         zj_ZYFKIMG==0?zj_ZYSJ=0.00:zj_ZYSJ=zj_ZYSJ/zj_ZYFKIMG;
                         zj_FGSFKIMG==0?zj_FGSSJ=0.00:zj_FGSSJ=zj_FGSSJ/zj_FGSFKIMG;
                         zj_SYBFKIMG==0?zj_SYBSJ=0.00:zj_SYBSJ=zj_SYBSJ/zj_SYBFKIMG;
@@ -985,9 +1042,9 @@
                             rb_SYBSJ += reban_pucai[aa].SYBFKIMG*reban_pucai[aa].SYBSJ;
                             rb_XHSJ += reban_pucai[aa].XHFKIMG*reban_pucai[aa].XHSJ;
                             rb_ZBGSSJ += reban_pucai[aa].ZBGSFKIMG*reban_pucai[aa].ZBGSSJ;
-                            rb_ZSJ+=reban_pucai[aa].FKIMG*reban_pucai[aa].ZSJ;
                             aa++;
                         }
+                        rb_ZSJ+=rb_ZYSJ+rb_FGSSJ+rb_SYBSJ+rb_XHSJ+rb_ZBGSSJ;
                         rb_ZYFKIMG==0?rb_ZYSJ=0.00:rb_ZYSJ=rb_ZYSJ/rb_ZYFKIMG;
                         rb_FGSFKIMG==0?rb_FGSSJ=0.00:rb_FGSSJ=rb_FGSSJ/rb_FGSFKIMG;
                         rb_SYBFKIMG==0?rb_SYBSJ=0.00:rb_SYBSJ=rb_SYBSJ/rb_SYBFKIMG;
@@ -1067,9 +1124,9 @@
                             rb_SYBSJ += reban_pinzhonggang[aa].SYBFKIMG*reban_pinzhonggang[aa].SYBSJ;
                             rb_XHSJ += reban_pinzhonggang[aa].XHFKIMG*reban_pinzhonggang[aa].XHSJ;
                             rb_ZBGSSJ += reban_pinzhonggang[aa].ZBGSFKIMG*reban_pinzhonggang[aa].ZBGSSJ;
-                            rb_ZSJ+=reban_pinzhonggang[aa].FKIMG*reban_pinzhonggang[aa].ZSJ;
                             aa++;
                         }
+                        rb_ZSJ+=rb_ZYSJ+rb_FGSSJ+rb_SYBSJ+rb_XHSJ+rb_ZBGSSJ;
                         rb_ZYFKIMG==0?rb_ZYSJ=0.00:rb_ZYSJ=rb_ZYSJ/rb_ZYFKIMG;
                         rb_FGSFKIMG==0?rb_FGSSJ=0.00:rb_FGSSJ=rb_FGSSJ/rb_FGSFKIMG;
                         rb_SYBFKIMG==0?rb_SYBSJ=0.00:rb_SYBSJ=rb_SYBSJ/rb_SYBFKIMG;
@@ -1149,9 +1206,9 @@
                             rb_SYBSJ += reban_gaoduan[aa].SYBFKIMG*reban_gaoduan[aa].SYBSJ;
                             rb_XHSJ += reban_gaoduan[aa].XHFKIMG*reban_gaoduan[aa].XHSJ;
                             rb_ZBGSSJ += reban_gaoduan[aa].ZBGSFKIMG*reban_gaoduan[aa].ZBGSSJ;
-                            rb_ZSJ+=reban_gaoduan[aa].FKIMG*reban_gaoduan[aa].ZSJ;
                             aa++;
                         }
+                        rb_ZSJ+=rb_ZYSJ+rb_FGSSJ+rb_SYBSJ+rb_XHSJ+rb_ZBGSSJ;
                         rb_ZYFKIMG==0?rb_ZYSJ=0.00:rb_ZYSJ=rb_ZYSJ/rb_ZYFKIMG;
                         rb_FGSFKIMG==0?rb_FGSSJ=0.00:rb_FGSSJ=rb_FGSSJ/rb_FGSFKIMG;
                         rb_SYBFKIMG==0?rb_SYBSJ=0.00:rb_SYBSJ=rb_SYBSJ/rb_SYBFKIMG;
@@ -1231,9 +1288,9 @@
                             rb_SYBSJ += reban_tese[aa].SYBFKIMG*reban_tese[aa].SYBSJ;
                             rb_XHSJ += reban_tese[aa].XHFKIMG*reban_tese[aa].XHSJ;
                             rb_ZBGSSJ += reban_tese[aa].ZBGSFKIMG*reban_tese[aa].ZBGSSJ;
-                            rb_ZSJ+=reban_tese[aa].FKIMG*reban_tese[aa].ZSJ;
                             aa++;
                         }
+                        rb_ZSJ=rb_ZYSJ+rb_FGSSJ+rb_SYBSJ+rb_XHSJ+rb_ZBGSSJ;
                         rb_ZYFKIMG==0?rb_ZYSJ=0.00:rb_ZYSJ=rb_ZYSJ/rb_ZYFKIMG;
                         rb_FGSFKIMG==0?rb_FGSSJ=0.00:rb_FGSSJ=rb_FGSSJ/rb_FGSFKIMG;
                         rb_SYBFKIMG==0?rb_SYBSJ=0.00:rb_SYBSJ=rb_SYBSJ/rb_SYBFKIMG;
@@ -1313,9 +1370,9 @@
                             rb_SYBSJ += reban_qita[aa].SYBFKIMG*reban_qita[aa].SYBSJ;
                             rb_XHSJ += reban_qita[aa].XHFKIMG*reban_qita[aa].XHSJ;
                             rb_ZBGSSJ += reban_qita[aa].ZBGSFKIMG*reban_qita[aa].ZBGSSJ;
-                            rb_ZSJ+=reban_qita[aa].FKIMG*reban_qita[aa].ZSJ;
                             aa++;
                         }
+                        rb_ZSJ=rb_ZYSJ+rb_FGSSJ+rb_SYBSJ+rb_XHSJ+rb_ZBGSSJ;
                         rb_ZYFKIMG==0?rb_ZYSJ=0.00:rb_ZYSJ=rb_ZYSJ/rb_ZYFKIMG;
                         rb_FGSFKIMG==0?rb_FGSSJ=0.00:rb_FGSSJ=rb_FGSSJ/rb_FGSFKIMG;
                         rb_SYBFKIMG==0?rb_SYBSJ=0.00:rb_SYBSJ=rb_SYBSJ/rb_SYBFKIMG;
@@ -1396,9 +1453,9 @@
                             rb_SYBSJ += reban[aa].SYBFKIMG*reban[aa].SYBSJ;
                             rb_XHSJ += reban[aa].XHFKIMG*reban[aa].XHSJ;
                             rb_ZBGSSJ += reban[aa].ZBGSFKIMG*reban[aa].ZBGSSJ;
-                            rb_ZSJ+=reban[aa].FKIMG*reban[aa].ZSJ;
                             aa++;
                         }
+                        rb_ZSJ=rb_ZYSJ+rb_FGSSJ+rb_SYBSJ+rb_XHSJ+rb_ZBGSSJ;
                         rb_ZYFKIMG==0?rb_ZYSJ=0.00:rb_ZYSJ=rb_ZYSJ/rb_ZYFKIMG;
                         rb_FGSFKIMG==0?rb_FGSSJ=0.00:rb_FGSSJ=rb_FGSSJ/rb_FGSFKIMG;
                         rb_SYBFKIMG==0?rb_SYBSJ=0.00:rb_SYBSJ=rb_SYBSJ/rb_SYBFKIMG;
@@ -1439,6 +1496,7 @@
                             }
                             abc++
                         }
+
                     }
 
                     //薄板 产线
@@ -1491,9 +1549,9 @@
                             rb_SYBSJ += baoban_pucai[aa].SYBFKIMG*baoban_pucai[aa].SYBSJ;
                             rb_XHSJ += baoban_pucai[aa].XHFKIMG*baoban_pucai[aa].XHSJ;
                             rb_ZBGSSJ += baoban_pucai[aa].ZBGSFKIMG*baoban_pucai[aa].ZBGSSJ;
-                            rb_ZSJ+=baoban_pucai[aa].FKIMG*baoban_pucai[aa].ZSJ;
                             aa++;
                         }
+                        rb_ZSJ=rb_ZYSJ+rb_FGSSJ+rb_SYBSJ+rb_XHSJ+rb_ZBGSSJ;
                         rb_ZYFKIMG==0?rb_ZYSJ=0.00:rb_ZYSJ=rb_ZYSJ/rb_ZYFKIMG;
                         rb_FGSFKIMG==0?rb_FGSSJ=0.00:rb_FGSSJ=rb_FGSSJ/rb_FGSFKIMG;
                         rb_SYBFKIMG==0?rb_SYBSJ=0.00:rb_SYBSJ=rb_SYBSJ/rb_SYBFKIMG;
@@ -1573,9 +1631,9 @@
                             rb_SYBSJ += baoban_pinzhonggang[aa].SYBFKIMG*baoban_pinzhonggang[aa].SYBSJ;
                             rb_XHSJ += baoban_pinzhonggang[aa].XHFKIMG*baoban_pinzhonggang[aa].XHSJ;
                             rb_ZBGSSJ += baoban_pinzhonggang[aa].ZBGSFKIMG*baoban_pinzhonggang[aa].ZBGSSJ;
-                            rb_ZSJ+=baoban_pinzhonggang[aa].FKIMG*baoban_pinzhonggang[aa].ZSJ;
                             aa++;
                         }
+                        rb_ZSJ=rb_ZYSJ+rb_FGSSJ+rb_SYBSJ+rb_XHSJ+rb_ZBGSSJ;
                         rb_ZYFKIMG==0?rb_ZYSJ=0.00:rb_ZYSJ=rb_ZYSJ/rb_ZYFKIMG;
                         rb_FGSFKIMG==0?rb_FGSSJ=0.00:rb_FGSSJ=rb_FGSSJ/rb_FGSFKIMG;
                         rb_SYBFKIMG==0?rb_SYBSJ=0.00:rb_SYBSJ=rb_SYBSJ/rb_SYBFKIMG;
@@ -1655,9 +1713,9 @@
                             rb_SYBSJ += baoban_gaoduan[aa].SYBFKIMG*baoban_gaoduan[aa].SYBSJ;
                             rb_XHSJ += baoban_gaoduan[aa].XHFKIMG*baoban_gaoduan[aa].XHSJ;
                             rb_ZBGSSJ += baoban_gaoduan[aa].ZBGSFKIMG*baoban_gaoduan[aa].ZBGSSJ;
-                            rb_ZSJ+=baoban_gaoduan[aa].FKIMG*baoban_gaoduan[aa].ZSJ;
                             aa++;
                         }
+                        rb_ZSJ=rb_ZYSJ+rb_FGSSJ+rb_SYBSJ+rb_XHSJ+rb_ZBGSSJ;
                         rb_ZYFKIMG==0?rb_ZYSJ=0.00:rb_ZYSJ=rb_ZYSJ/rb_ZYFKIMG;
                         rb_FGSFKIMG==0?rb_FGSSJ=0.00:rb_FGSSJ=rb_FGSSJ/rb_FGSFKIMG;
                         rb_SYBFKIMG==0?rb_SYBSJ=0.00:rb_SYBSJ=rb_SYBSJ/rb_SYBFKIMG;
@@ -1737,9 +1795,9 @@
                             rb_SYBSJ += baoban_tese[aa].SYBFKIMG*baoban_tese[aa].SYBSJ;
                             rb_XHSJ += baoban_tese[aa].XHFKIMG*baoban_tese[aa].XHSJ;
                             rb_ZBGSSJ += baoban_tese[aa].ZBGSFKIMG*baoban_tese[aa].ZBGSSJ;
-                            rb_ZSJ+=baoban_tese[aa].FKIMG*baoban_tese[aa].ZSJ;
                             aa++;
                         }
+                        rb_ZSJ=rb_ZYSJ+rb_FGSSJ+rb_SYBSJ+rb_XHSJ+rb_ZBGSSJ;
                         rb_ZYFKIMG==0?rb_ZYSJ=0.00:rb_ZYSJ=rb_ZYSJ/rb_ZYFKIMG;
                         rb_FGSFKIMG==0?rb_FGSSJ=0.00:rb_FGSSJ=rb_FGSSJ/rb_FGSFKIMG;
                         rb_SYBFKIMG==0?rb_SYBSJ=0.00:rb_SYBSJ=rb_SYBSJ/rb_SYBFKIMG;
@@ -1819,9 +1877,9 @@
                             rb_SYBSJ += baoban_qita[aa].SYBFKIMG*baoban_qita[aa].SYBSJ;
                             rb_XHSJ += baoban_qita[aa].XHFKIMG*baoban_qita[aa].XHSJ;
                             rb_ZBGSSJ += baoban_qita[aa].ZBGSFKIMG*baoban_qita[aa].ZBGSSJ;
-                            rb_ZSJ+=baoban_qita[aa].FKIMG*baoban_qita[aa].ZSJ;
                             aa++;
                         }
+                        rb_ZSJ=rb_ZYSJ+rb_FGSSJ+rb_SYBSJ+rb_XHSJ+rb_ZBGSSJ;
                         rb_ZYFKIMG==0?rb_ZYSJ=0.00:rb_ZYSJ=rb_ZYSJ/rb_ZYFKIMG;
                         rb_FGSFKIMG==0?rb_FGSSJ=0.00:rb_FGSSJ=rb_FGSSJ/rb_FGSFKIMG;
                         rb_SYBFKIMG==0?rb_SYBSJ=0.00:rb_SYBSJ=rb_SYBSJ/rb_SYBFKIMG;
@@ -1901,9 +1959,9 @@
                             rb_SYBSJ += baoban[aa].SYBFKIMG*baoban[aa].SYBSJ;
                             rb_XHSJ += baoban[aa].XHFKIMG*baoban[aa].XHSJ;
                             rb_ZBGSSJ += baoban[aa].ZBGSFKIMG*baoban[aa].ZBGSSJ;
-                            rb_ZSJ+=baoban[aa].FKIMG*baoban[aa].ZSJ;
                             aa++;
                         }
+                        rb_ZSJ=rb_ZYSJ+rb_FGSSJ+rb_SYBSJ+rb_XHSJ+rb_ZBGSSJ;
                         rb_ZYFKIMG==0?rb_ZYSJ=0.00:rb_ZYSJ=rb_ZYSJ/rb_ZYFKIMG;
                         rb_FGSFKIMG==0?rb_FGSSJ=0.00:rb_FGSSJ=rb_FGSSJ/rb_FGSFKIMG;
                         rb_SYBFKIMG==0?rb_SYBSJ=0.00:rb_SYBSJ=rb_SYBSJ/rb_SYBFKIMG;
@@ -1997,9 +2055,9 @@
                             rb_SYBSJ += lengban_pucai[aa].SYBFKIMG*lengban_pucai[aa].SYBSJ;
                             rb_XHSJ += lengban_pucai[aa].XHFKIMG*lengban_pucai[aa].XHSJ;
                             rb_ZBGSSJ += lengban_pucai[aa].ZBGSFKIMG*lengban_pucai[aa].ZBGSSJ;
-                            rb_ZSJ+=lengban_pucai[aa].FKIMG*lengban_pucai[aa].ZSJ;
                             aa++;
                         }
+                        rb_ZSJ=rb_ZYSJ+rb_FGSSJ+rb_SYBSJ+rb_XHSJ+rb_ZBGSSJ;
                         rb_ZYFKIMG==0?rb_ZYSJ=0.00:rb_ZYSJ=rb_ZYSJ/rb_ZYFKIMG;
                         rb_FGSFKIMG==0?rb_FGSSJ=0.00:rb_FGSSJ=rb_FGSSJ/rb_FGSFKIMG;
                         rb_SYBFKIMG==0?rb_SYBSJ=0.00:rb_SYBSJ=rb_SYBSJ/rb_SYBFKIMG;
@@ -2079,9 +2137,9 @@
                             rb_SYBSJ += lengban_pinzhonggang[aa].SYBFKIMG*lengban_pinzhonggang[aa].SYBSJ;
                             rb_XHSJ += lengban_pinzhonggang[aa].XHFKIMG*lengban_pinzhonggang[aa].XHSJ;
                             rb_ZBGSSJ += lengban_pinzhonggang[aa].ZBGSFKIMG*lengban_pinzhonggang[aa].ZBGSSJ;
-                            rb_ZSJ+=lengban_pinzhonggang[aa].FKIMG*lengban_pinzhonggang[aa].ZSJ;
                             aa++;
                         }
+                        rb_ZSJ=rb_ZYSJ+rb_FGSSJ+rb_SYBSJ+rb_XHSJ+rb_ZBGSSJ;
                         rb_ZYFKIMG==0?rb_ZYSJ=0.00:rb_ZYSJ=rb_ZYSJ/rb_ZYFKIMG;
                         rb_FGSFKIMG==0?rb_FGSSJ=0.00:rb_FGSSJ=rb_FGSSJ/rb_FGSFKIMG;
                         rb_SYBFKIMG==0?rb_SYBSJ=0.00:rb_SYBSJ=rb_SYBSJ/rb_SYBFKIMG;
@@ -2161,9 +2219,9 @@
                             rb_SYBSJ += lengban_gaoduan[aa].SYBFKIMG*lengban_gaoduan[aa].SYBSJ;
                             rb_XHSJ += lengban_gaoduan[aa].XHFKIMG*lengban_gaoduan[aa].XHSJ;
                             rb_ZBGSSJ += lengban_gaoduan[aa].ZBGSFKIMG*lengban_gaoduan[aa].ZBGSSJ;
-                            rb_ZSJ+=lengban_gaoduan[aa].FKIMG*lengban_gaoduan[aa].ZSJ;
                             aa++;
                         }
+                        rb_ZSJ=rb_ZYSJ+rb_FGSSJ+rb_SYBSJ+rb_XHSJ+rb_ZBGSSJ;
                         rb_ZYFKIMG==0?rb_ZYSJ=0.00:rb_ZYSJ=rb_ZYSJ/rb_ZYFKIMG;
                         rb_FGSFKIMG==0?rb_FGSSJ=0.00:rb_FGSSJ=rb_FGSSJ/rb_FGSFKIMG;
                         rb_SYBFKIMG==0?rb_SYBSJ=0.00:rb_SYBSJ=rb_SYBSJ/rb_SYBFKIMG;
@@ -2243,9 +2301,9 @@
                             rb_SYBSJ += lengban_tese[aa].SYBFKIMG*lengban_tese[aa].SYBSJ;
                             rb_XHSJ += lengban_tese[aa].XHFKIMG*lengban_tese[aa].XHSJ;
                             rb_ZBGSSJ += lengban_tese[aa].ZBGSFKIMG*lengban_tese[aa].ZBGSSJ;
-                            rb_ZSJ+=lengban_tese[aa].FKIMG*lengban_tese[aa].ZSJ;
                             aa++;
                         }
+                        rb_ZSJ=rb_ZYSJ+rb_FGSSJ+rb_SYBSJ+rb_XHSJ+rb_ZBGSSJ;
                         rb_ZYFKIMG==0?rb_ZYSJ=0.00:rb_ZYSJ=rb_ZYSJ/rb_ZYFKIMG;
                         rb_FGSFKIMG==0?rb_FGSSJ=0.00:rb_FGSSJ=rb_FGSSJ/rb_FGSFKIMG;
                         rb_SYBFKIMG==0?rb_SYBSJ=0.00:rb_SYBSJ=rb_SYBSJ/rb_SYBFKIMG;
@@ -2325,9 +2383,9 @@
                             rb_SYBSJ += lengban_qita[aa].SYBFKIMG*lengban_qita[aa].SYBSJ;
                             rb_XHSJ += lengban_qita[aa].XHFKIMG*lengban_qita[aa].XHSJ;
                             rb_ZBGSSJ += lengban_qita[aa].ZBGSFKIMG*lengban_qita[aa].ZBGSSJ;
-                            rb_ZSJ+=lengban_qita[aa].FKIMG*lengban_qita[aa].ZSJ;
                             aa++;
                         }
+                        rb_ZSJ=rb_ZYSJ+rb_FGSSJ+rb_SYBSJ+rb_XHSJ+rb_ZBGSSJ;
                         rb_ZYFKIMG==0?rb_ZYSJ=0.00:rb_ZYSJ=rb_ZYSJ/rb_ZYFKIMG;
                         rb_FGSFKIMG==0?rb_FGSSJ=0.00:rb_FGSSJ=rb_FGSSJ/rb_FGSFKIMG;
                         rb_SYBFKIMG==0?rb_SYBSJ=0.00:rb_SYBSJ=rb_SYBSJ/rb_SYBFKIMG;
@@ -2408,9 +2466,9 @@
                             lb_SYBSJ += lengban[cc].SYBFKIMG*lengban[cc].SYBSJ;
                             lb_XHSJ += lengban[cc].XHFKIMG*lengban[cc].XHSJ;
                             lb_ZBGSSJ += lengban[cc].ZBGSFKIMG*lengban[cc].ZBGSSJ;
-                            lb_ZSJ+=lengban[cc].FKIMG*lengban[cc].ZSJ;
                             cc++;
                         }
+                        lb_ZSJ=lb_ZYSJ+lb_FGSSJ+lb_SYBSJ+lb_XHSJ+lb_ZBGSSJ;
                         lb_ZYFKIMG==0?lb_ZYSJ=0.00:lb_ZYSJ=lb_ZYSJ/lb_ZYFKIMG;
                         lb_FGSFKIMG==0?lb_FGSSJ=0.00:lb_FGSSJ=lb_FGSSJ/lb_FGSFKIMG;
                         lb_SYBFKIMG==0?lb_SYBSJ=0.00:lb_SYBSJ=lb_SYBSJ/lb_SYBFKIMG;
@@ -2503,9 +2561,9 @@
                             rb_SYBSJ += luowengang_pucai[aa].SYBFKIMG*luowengang_pucai[aa].SYBSJ;
                             rb_XHSJ += luowengang_pucai[aa].XHFKIMG*luowengang_pucai[aa].XHSJ;
                             rb_ZBGSSJ += luowengang_pucai[aa].ZBGSFKIMG*luowengang_pucai[aa].ZBGSSJ;
-                            rb_ZSJ+=luowengang_pucai[aa].FKIMG*luowengang_pucai[aa].ZSJ;
                             aa++;
                         }
+                        rb_ZSJ=rb_ZYSJ+rb_FGSSJ+rb_SYBSJ+rb_XHSJ+rb_ZBGSSJ;
                         rb_ZYFKIMG==0?rb_ZYSJ=0.00:rb_ZYSJ=rb_ZYSJ/rb_ZYFKIMG;
                         rb_FGSFKIMG==0?rb_FGSSJ=0.00:rb_FGSSJ=rb_FGSSJ/rb_FGSFKIMG;
                         rb_SYBFKIMG==0?rb_SYBSJ=0.00:rb_SYBSJ=rb_SYBSJ/rb_SYBFKIMG;
@@ -2585,9 +2643,9 @@
                             rb_SYBSJ += luowengang_pinzhonggang[aa].SYBFKIMG*luowengang_pinzhonggang[aa].SYBSJ;
                             rb_XHSJ += luowengang_pinzhonggang[aa].XHFKIMG*luowengang_pinzhonggang[aa].XHSJ;
                             rb_ZBGSSJ += luowengang_pinzhonggang[aa].ZBGSFKIMG*luowengang_pinzhonggang[aa].ZBGSSJ;
-                            rb_ZSJ+=luowengang_pinzhonggang[aa].FKIMG*luowengang_pinzhonggang[aa].ZSJ;
                             aa++;
                         }
+                        rb_ZSJ=rb_ZYSJ+rb_FGSSJ+rb_SYBSJ+rb_XHSJ+rb_ZBGSSJ;
                         rb_ZYFKIMG==0?rb_ZYSJ=0.00:rb_ZYSJ=rb_ZYSJ/rb_ZYFKIMG;
                         rb_FGSFKIMG==0?rb_FGSSJ=0.00:rb_FGSSJ=rb_FGSSJ/rb_FGSFKIMG;
                         rb_SYBFKIMG==0?rb_SYBSJ=0.00:rb_SYBSJ=rb_SYBSJ/rb_SYBFKIMG;
@@ -2667,9 +2725,9 @@
                             rb_SYBSJ += luowengang_gaoduan[aa].SYBFKIMG*luowengang_gaoduan[aa].SYBSJ;
                             rb_XHSJ += luowengang_gaoduan[aa].XHFKIMG*luowengang_gaoduan[aa].XHSJ;
                             rb_ZBGSSJ += luowengang_gaoduan[aa].ZBGSFKIMG*luowengang_gaoduan[aa].ZBGSSJ;
-                            rb_ZSJ+=luowengang_gaoduan[aa].FKIMG*luowengang_gaoduan[aa].ZSJ;
                             aa++;
                         }
+                        rb_ZSJ=rb_ZYSJ+rb_FGSSJ+rb_SYBSJ+rb_XHSJ+rb_ZBGSSJ;
                         rb_ZYFKIMG==0?rb_ZYSJ=0.00:rb_ZYSJ=rb_ZYSJ/rb_ZYFKIMG;
                         rb_FGSFKIMG==0?rb_FGSSJ=0.00:rb_FGSSJ=rb_FGSSJ/rb_FGSFKIMG;
                         rb_SYBFKIMG==0?rb_SYBSJ=0.00:rb_SYBSJ=rb_SYBSJ/rb_SYBFKIMG;
@@ -2749,9 +2807,9 @@
                             rb_SYBSJ += luowengang_tese[aa].SYBFKIMG*luowengang_tese[aa].SYBSJ;
                             rb_XHSJ += luowengang_tese[aa].XHFKIMG*luowengang_tese[aa].XHSJ;
                             rb_ZBGSSJ += luowengang_tese[aa].ZBGSFKIMG*luowengang_tese[aa].ZBGSSJ;
-                            rb_ZSJ+=luowengang_tese[aa].FKIMG*luowengang_tese[aa].ZSJ;
                             aa++;
                         }
+                        rb_ZSJ=rb_ZYSJ+rb_FGSSJ+rb_SYBSJ+rb_XHSJ+rb_ZBGSSJ;
                         rb_ZYFKIMG==0?rb_ZYSJ=0.00:rb_ZYSJ=rb_ZYSJ/rb_ZYFKIMG;
                         rb_FGSFKIMG==0?rb_FGSSJ=0.00:rb_FGSSJ=rb_FGSSJ/rb_FGSFKIMG;
                         rb_SYBFKIMG==0?rb_SYBSJ=0.00:rb_SYBSJ=rb_SYBSJ/rb_SYBFKIMG;
@@ -2831,9 +2889,9 @@
                             rb_SYBSJ += luowengang_qita[aa].SYBFKIMG*luowengang_qita[aa].SYBSJ;
                             rb_XHSJ += luowengang_qita[aa].XHFKIMG*luowengang_qita[aa].XHSJ;
                             rb_ZBGSSJ += luowengang_qita[aa].ZBGSFKIMG*luowengang_qita[aa].ZBGSSJ;
-                            rb_ZSJ+=luowengang_qita[aa].FKIMG*luowengang_qita[aa].ZSJ;
                             aa++;
                         }
+                        rb_ZSJ=rb_ZYSJ+rb_FGSSJ+rb_SYBSJ+rb_XHSJ+rb_ZBGSSJ;
                         rb_ZYFKIMG==0?rb_ZYSJ=0.00:rb_ZYSJ=rb_ZYSJ/rb_ZYFKIMG;
                         rb_FGSFKIMG==0?rb_FGSSJ=0.00:rb_FGSSJ=rb_FGSSJ/rb_FGSFKIMG;
                         rb_SYBFKIMG==0?rb_SYBSJ=0.00:rb_SYBSJ=rb_SYBSJ/rb_SYBFKIMG;
@@ -2913,9 +2971,9 @@
                             khb_SYBSJ += luowengang[ee].SYBFKIMG*luowengang[ee].SYBSJ;
                             khb_XHSJ += luowengang[ee].XHFKIMG*luowengang[ee].XHSJ;
                             khb_ZBGSSJ += luowengang[ee].ZBGSFKIMG*luowengang[ee].ZBGSSJ;
-                            khb_ZSJ+=luowengang[ee].FKIMG*luowengang[ee].ZSJ;
                             ee++;
                         }
+                        khb_ZSJ=khb_ZYSJ+khb_FGSSJ+khb_SYBSJ+khb_XHSJ+khb_ZBGSSJ;
                         khb_ZYFKIMG==0?khb_ZYSJ=0.00:khb_ZYSJ=khb_ZYSJ/khb_ZYFKIMG;
                         khb_FGSFKIMG==0?khb_FGSSJ=0.00:khb_FGSSJ=khb_FGSSJ/khb_FGSFKIMG;
                         khb_SYBFKIMG==0?khb_SYBSJ=0.00:khb_SYBSJ=khb_SYBSJ/khb_SYBFKIMG;
@@ -3008,9 +3066,9 @@
                             rb_SYBSJ += suanxi_pucai[aa].SYBFKIMG*suanxi_pucai[aa].SYBSJ;
                             rb_XHSJ += suanxi_pucai[aa].XHFKIMG*suanxi_pucai[aa].XHSJ;
                             rb_ZBGSSJ += suanxi_pucai[aa].ZBGSFKIMG*suanxi_pucai[aa].ZBGSSJ;
-                            rb_ZSJ+=suanxi_pucai[aa].FKIMG*suanxi_pucai[aa].ZSJ;
                             aa++;
                         }
+                        rb_ZSJ=rb_ZYSJ+rb_FGSSJ+rb_SYBSJ+rb_XHSJ+rb_ZBGSSJ;
                         rb_ZYFKIMG==0?rb_ZYSJ=0.00:rb_ZYSJ=rb_ZYSJ/rb_ZYFKIMG;
                         rb_FGSFKIMG==0?rb_FGSSJ=0.00:rb_FGSSJ=rb_FGSSJ/rb_FGSFKIMG;
                         rb_SYBFKIMG==0?rb_SYBSJ=0.00:rb_SYBSJ=rb_SYBSJ/rb_SYBFKIMG;
@@ -3090,9 +3148,9 @@
                             rb_SYBSJ += suanxi_pinzhonggang[aa].SYBFKIMG*suanxi_pinzhonggang[aa].SYBSJ;
                             rb_XHSJ += suanxi_pinzhonggang[aa].XHFKIMG*suanxi_pinzhonggang[aa].XHSJ;
                             rb_ZBGSSJ += suanxi_pinzhonggang[aa].ZBGSFKIMG*suanxi_pinzhonggang[aa].ZBGSSJ;
-                            rb_ZSJ+=suanxi_pinzhonggang[aa].FKIMG*suanxi_pinzhonggang[aa].ZSJ;
                             aa++;
                         }
+                        rb_ZSJ=rb_ZYSJ+rb_FGSSJ+rb_SYBSJ+rb_XHSJ+rb_ZBGSSJ;
                         rb_ZYFKIMG==0?rb_ZYSJ=0.00:rb_ZYSJ=rb_ZYSJ/rb_ZYFKIMG;
                         rb_FGSFKIMG==0?rb_FGSSJ=0.00:rb_FGSSJ=rb_FGSSJ/rb_FGSFKIMG;
                         rb_SYBFKIMG==0?rb_SYBSJ=0.00:rb_SYBSJ=rb_SYBSJ/rb_SYBFKIMG;
@@ -3173,9 +3231,9 @@
                             rb_SYBSJ += suanxi_gaoduan[aa].SYBFKIMG*suanxi_gaoduan[aa].SYBSJ;
                             rb_XHSJ += suanxi_gaoduan[aa].XHFKIMG*suanxi_gaoduan[aa].XHSJ;
                             rb_ZBGSSJ += suanxi_gaoduan[aa].ZBGSFKIMG*suanxi_gaoduan[aa].ZBGSSJ;
-                            rb_ZSJ+=suanxi_gaoduan[aa].FKIMG*suanxi_gaoduan[aa].ZSJ;
                             aa++;
                         }
+                        rb_ZSJ=rb_ZYSJ+rb_FGSSJ+rb_SYBSJ+rb_XHSJ+rb_ZBGSSJ;
                         rb_ZYFKIMG==0?rb_ZYSJ=0.00:rb_ZYSJ=rb_ZYSJ/rb_ZYFKIMG;
                         rb_FGSFKIMG==0?rb_FGSSJ=0.00:rb_FGSSJ=rb_FGSSJ/rb_FGSFKIMG;
                         rb_SYBFKIMG==0?rb_SYBSJ=0.00:rb_SYBSJ=rb_SYBSJ/rb_SYBFKIMG;
@@ -3255,9 +3313,9 @@
                             rb_SYBSJ += suanxi_tese[aa].SYBFKIMG*suanxi_tese[aa].SYBSJ;
                             rb_XHSJ += suanxi_tese[aa].XHFKIMG*suanxi_tese[aa].XHSJ;
                             rb_ZBGSSJ += suanxi_tese[aa].ZBGSFKIMG*suanxi_tese[aa].ZBGSSJ;
-                            rb_ZSJ+=suanxi_tese[aa].FKIMG*suanxi_tese[aa].ZSJ;
                             aa++;
                         }
+                        rb_ZSJ=rb_ZYSJ+rb_FGSSJ+rb_SYBSJ+rb_XHSJ+rb_ZBGSSJ;
                         rb_ZYFKIMG==0?rb_ZYSJ=0.00:rb_ZYSJ=rb_ZYSJ/rb_ZYFKIMG;
                         rb_FGSFKIMG==0?rb_FGSSJ=0.00:rb_FGSSJ=rb_FGSSJ/rb_FGSFKIMG;
                         rb_SYBFKIMG==0?rb_SYBSJ=0.00:rb_SYBSJ=rb_SYBSJ/rb_SYBFKIMG;
@@ -3337,9 +3395,9 @@
                             rb_SYBSJ += suanxi_qita[aa].SYBFKIMG*suanxi_qita[aa].SYBSJ;
                             rb_XHSJ += suanxi_qita[aa].XHFKIMG*suanxi_qita[aa].XHSJ;
                             rb_ZBGSSJ += suanxi_qita[aa].ZBGSFKIMG*suanxi_qita[aa].ZBGSSJ;
-                            rb_ZSJ+=suanxi_qita[aa].FKIMG*suanxi_qita[aa].ZSJ;
                             aa++;
                         }
+                        rb_ZSJ=rb_ZYSJ+rb_FGSSJ+rb_SYBSJ+rb_XHSJ+rb_ZBGSSJ;
                         rb_ZYFKIMG==0?rb_ZYSJ=0.00:rb_ZYSJ=rb_ZYSJ/rb_ZYFKIMG;
                         rb_FGSFKIMG==0?rb_FGSSJ=0.00:rb_FGSSJ=rb_FGSSJ/rb_FGSFKIMG;
                         rb_SYBFKIMG==0?rb_SYBSJ=0.00:rb_SYBSJ=rb_SYBSJ/rb_SYBFKIMG;
@@ -3419,9 +3477,9 @@
                             khb_SYBSJ += suanxi[ee].SYBFKIMG*suanxi[ee].SYBSJ;
                             khb_XHSJ += suanxi[ee].XHFKIMG*suanxi[ee].XHSJ;
                             khb_ZBGSSJ += suanxi[ee].ZBGSFKIMG*suanxi[ee].ZBGSSJ;
-                            khb_ZSJ+=suanxi[ee].FKIMG*suanxi[ee].ZSJ;
                             ee++;
                         }
+                        khb_ZSJ=khb_ZYSJ+khb_FGSSJ+khb_SYBSJ+khb_XHSJ+khb_ZBGSSJ;
                         khb_ZYFKIMG==0?khb_ZYSJ=0.00:khb_ZYSJ=khb_ZYSJ/khb_ZYFKIMG;
                         khb_FGSFKIMG==0?khb_FGSSJ=0.00:khb_FGSSJ=khb_FGSSJ/khb_FGSFKIMG;
                         khb_SYBFKIMG==0?khb_SYBSJ=0.00:khb_SYBSJ=khb_SYBSJ/khb_SYBFKIMG;
@@ -3514,9 +3572,9 @@
                             rb_SYBSJ += duxin_pucai[aa].SYBFKIMG*duxin_pucai[aa].SYBSJ;
                             rb_XHSJ += duxin_pucai[aa].XHFKIMG*duxin_pucai[aa].XHSJ;
                             rb_ZBGSSJ += duxin_pucai[aa].ZBGSFKIMG*duxin_pucai[aa].ZBGSSJ;
-                            rb_ZSJ+=duxin_pucai[aa].FKIMG*duxin_pucai[aa].ZSJ;
                             aa++;
                         }
+                        rb_ZSJ=rb_ZYSJ+rb_FGSSJ+rb_SYBSJ+rb_XHSJ+rb_ZBGSSJ;
                         rb_ZYFKIMG==0?rb_ZYSJ=0.00:rb_ZYSJ=rb_ZYSJ/rb_ZYFKIMG;
                         rb_FGSFKIMG==0?rb_FGSSJ=0.00:rb_FGSSJ=rb_FGSSJ/rb_FGSFKIMG;
                         rb_SYBFKIMG==0?rb_SYBSJ=0.00:rb_SYBSJ=rb_SYBSJ/rb_SYBFKIMG;
@@ -3596,9 +3654,9 @@
                             rb_SYBSJ += duxin_pinzhonggang[aa].SYBFKIMG*duxin_pinzhonggang[aa].SYBSJ;
                             rb_XHSJ += duxin_pinzhonggang[aa].XHFKIMG*duxin_pinzhonggang[aa].XHSJ;
                             rb_ZBGSSJ += duxin_pinzhonggang[aa].ZBGSFKIMG*duxin_pinzhonggang[aa].ZBGSSJ;
-                            rb_ZSJ+=duxin_pinzhonggang[aa].FKIMG*duxin_pinzhonggang[aa].ZSJ;
                             aa++;
                         }
+                        rb_ZSJ=rb_ZYSJ+rb_FGSSJ+rb_SYBSJ+rb_XHSJ+rb_ZBGSSJ;
                         rb_ZYFKIMG==0?rb_ZYSJ=0.00:rb_ZYSJ=rb_ZYSJ/rb_ZYFKIMG;
                         rb_FGSFKIMG==0?rb_FGSSJ=0.00:rb_FGSSJ=rb_FGSSJ/rb_FGSFKIMG;
                         rb_SYBFKIMG==0?rb_SYBSJ=0.00:rb_SYBSJ=rb_SYBSJ/rb_SYBFKIMG;
@@ -3678,9 +3736,9 @@
                             rb_SYBSJ += duxin_gaoduan[aa].SYBFKIMG*duxin_gaoduan[aa].SYBSJ;
                             rb_XHSJ += duxin_gaoduan[aa].XHFKIMG*duxin_gaoduan[aa].XHSJ;
                             rb_ZBGSSJ += duxin_gaoduan[aa].ZBGSFKIMG*duxin_gaoduan[aa].ZBGSSJ;
-                            rb_ZSJ+=duxin_gaoduan[aa].FKIMG*duxin_gaoduan[aa].ZSJ;
                             aa++;
                         }
+                        rb_ZSJ=rb_ZYSJ+rb_FGSSJ+rb_SYBSJ+rb_XHSJ+rb_ZBGSSJ;
                         rb_ZYFKIMG==0?rb_ZYSJ=0.00:rb_ZYSJ=rb_ZYSJ/rb_ZYFKIMG;
                         rb_FGSFKIMG==0?rb_FGSSJ=0.00:rb_FGSSJ=rb_FGSSJ/rb_FGSFKIMG;
                         rb_SYBFKIMG==0?rb_SYBSJ=0.00:rb_SYBSJ=rb_SYBSJ/rb_SYBFKIMG;
@@ -3760,9 +3818,9 @@
                             rb_SYBSJ += duxin_tese[aa].SYBFKIMG*duxin_tese[aa].SYBSJ;
                             rb_XHSJ += duxin_tese[aa].XHFKIMG*duxin_tese[aa].XHSJ;
                             rb_ZBGSSJ += duxin_tese[aa].ZBGSFKIMG*duxin_tese[aa].ZBGSSJ;
-                            rb_ZSJ+=duxin_tese[aa].FKIMG*duxin_tese[aa].ZSJ;
                             aa++;
                         }
+                        rb_ZSJ=rb_ZYSJ+rb_FGSSJ+rb_SYBSJ+rb_XHSJ+rb_ZBGSSJ;
                         rb_ZYFKIMG==0?rb_ZYSJ=0.00:rb_ZYSJ=rb_ZYSJ/rb_ZYFKIMG;
                         rb_FGSFKIMG==0?rb_FGSSJ=0.00:rb_FGSSJ=rb_FGSSJ/rb_FGSFKIMG;
                         rb_SYBFKIMG==0?rb_SYBSJ=0.00:rb_SYBSJ=rb_SYBSJ/rb_SYBFKIMG;
@@ -3842,9 +3900,9 @@
                             rb_SYBSJ += duxin_qita[aa].SYBFKIMG*duxin_qita[aa].SYBSJ;
                             rb_XHSJ += duxin_qita[aa].XHFKIMG*duxin_qita[aa].XHSJ;
                             rb_ZBGSSJ += duxin_qita[aa].ZBGSFKIMG*duxin_qita[aa].ZBGSSJ;
-                            rb_ZSJ+=duxin_qita[aa].FKIMG*duxin_qita[aa].ZSJ;
                             aa++;
                         }
+                        rb_ZSJ=rb_ZYSJ+rb_FGSSJ+rb_SYBSJ+rb_XHSJ+rb_ZBGSSJ;
                         rb_ZYFKIMG==0?rb_ZYSJ=0.00:rb_ZYSJ=rb_ZYSJ/rb_ZYFKIMG;
                         rb_FGSFKIMG==0?rb_FGSSJ=0.00:rb_FGSSJ=rb_FGSSJ/rb_FGSFKIMG;
                         rb_SYBFKIMG==0?rb_SYBSJ=0.00:rb_SYBSJ=rb_SYBSJ/rb_SYBFKIMG;
@@ -3924,9 +3982,9 @@
                             khb_SYBSJ += duxin[ee].SYBFKIMG*duxin[ee].SYBSJ;
                             khb_XHSJ += duxin[ee].XHFKIMG*duxin[ee].XHSJ;
                             khb_ZBGSSJ += duxin[ee].ZBGSFKIMG*duxin[ee].ZBGSSJ;
-                            khb_ZSJ+=duxin[ee].FKIMG*duxin[ee].ZSJ;
                             ee++;
                         }
+                        khb_ZSJ=khb_ZYSJ+khb_FGSSJ+khb_SYBSJ+khb_XHSJ+khb_ZBGSSJ;
                         khb_ZYFKIMG==0?khb_ZYSJ=0.00:khb_ZYSJ=khb_ZYSJ/khb_ZYFKIMG;
                         khb_FGSFKIMG==0?khb_FGSSJ=0.00:khb_FGSSJ=khb_FGSSJ/khb_FGSFKIMG;
                         khb_SYBFKIMG==0?khb_SYBSJ=0.00:khb_SYBSJ=khb_SYBSJ/khb_SYBFKIMG;
@@ -4019,9 +4077,9 @@
                             rb_SYBSJ += xiancai_pucai[aa].SYBFKIMG*xiancai_pucai[aa].SYBSJ;
                             rb_XHSJ += xiancai_pucai[aa].XHFKIMG*xiancai_pucai[aa].XHSJ;
                             rb_ZBGSSJ += xiancai_pucai[aa].ZBGSFKIMG*xiancai_pucai[aa].ZBGSSJ;
-                            rb_ZSJ+=xiancai_pucai[aa].FKIMG*xiancai_pucai[aa].ZSJ;
                             aa++;
                         }
+                        rb_ZSJ=rb_ZYSJ+rb_FGSSJ+rb_SYBSJ+rb_XHSJ+rb_ZBGSSJ;
                         rb_ZYFKIMG==0?rb_ZYSJ=0.00:rb_ZYSJ=rb_ZYSJ/rb_ZYFKIMG;
                         rb_FGSFKIMG==0?rb_FGSSJ=0.00:rb_FGSSJ=rb_FGSSJ/rb_FGSFKIMG;
                         rb_SYBFKIMG==0?rb_SYBSJ=0.00:rb_SYBSJ=rb_SYBSJ/rb_SYBFKIMG;
@@ -4101,9 +4159,9 @@
                             rb_SYBSJ += xiancai_pinzhonggang[aa].SYBFKIMG*xiancai_pinzhonggang[aa].SYBSJ;
                             rb_XHSJ += xiancai_pinzhonggang[aa].XHFKIMG*xiancai_pinzhonggang[aa].XHSJ;
                             rb_ZBGSSJ += xiancai_pinzhonggang[aa].ZBGSFKIMG*xiancai_pinzhonggang[aa].ZBGSSJ;
-                            rb_ZSJ+=xiancai_pinzhonggang[aa].FKIMG*xiancai_pinzhonggang[aa].ZSJ;
                             aa++;
                         }
+                        rb_ZSJ=rb_ZYSJ+rb_FGSSJ+rb_SYBSJ+rb_XHSJ+rb_ZBGSSJ;
                         rb_ZYFKIMG==0?rb_ZYSJ=0.00:rb_ZYSJ=rb_ZYSJ/rb_ZYFKIMG;
                         rb_FGSFKIMG==0?rb_FGSSJ=0.00:rb_FGSSJ=rb_FGSSJ/rb_FGSFKIMG;
                         rb_SYBFKIMG==0?rb_SYBSJ=0.00:rb_SYBSJ=rb_SYBSJ/rb_SYBFKIMG;
@@ -4183,9 +4241,9 @@
                             rb_SYBSJ += xiancai_gaoduan[aa].SYBFKIMG*xiancai_gaoduan[aa].SYBSJ;
                             rb_XHSJ += xiancai_gaoduan[aa].XHFKIMG*xiancai_gaoduan[aa].XHSJ;
                             rb_ZBGSSJ += xiancai_gaoduan[aa].ZBGSFKIMG*xiancai_gaoduan[aa].ZBGSSJ;
-                            rb_ZSJ+=xiancai_gaoduan[aa].FKIMG*xiancai_gaoduan[aa].ZSJ;
                             aa++;
                         }
+                        rb_ZSJ=rb_ZYSJ+rb_FGSSJ+rb_SYBSJ+rb_XHSJ+rb_ZBGSSJ;
                         rb_ZYFKIMG==0?rb_ZYSJ=0.00:rb_ZYSJ=rb_ZYSJ/rb_ZYFKIMG;
                         rb_FGSFKIMG==0?rb_FGSSJ=0.00:rb_FGSSJ=rb_FGSSJ/rb_FGSFKIMG;
                         rb_SYBFKIMG==0?rb_SYBSJ=0.00:rb_SYBSJ=rb_SYBSJ/rb_SYBFKIMG;
@@ -4265,9 +4323,9 @@
                             rb_SYBSJ += xiancai_tese[aa].SYBFKIMG*xiancai_tese[aa].SYBSJ;
                             rb_XHSJ += xiancai_tese[aa].XHFKIMG*xiancai_tese[aa].XHSJ;
                             rb_ZBGSSJ += xiancai_tese[aa].ZBGSFKIMG*xiancai_tese[aa].ZBGSSJ;
-                            rb_ZSJ+=xiancai_tese[aa].FKIMG*xiancai_tese[aa].ZSJ;
                             aa++;
                         }
+                        rb_ZSJ=rb_ZYSJ+rb_FGSSJ+rb_SYBSJ+rb_XHSJ+rb_ZBGSSJ;
                         rb_ZYFKIMG==0?rb_ZYSJ=0.00:rb_ZYSJ=rb_ZYSJ/rb_ZYFKIMG;
                         rb_FGSFKIMG==0?rb_FGSSJ=0.00:rb_FGSSJ=rb_FGSSJ/rb_FGSFKIMG;
                         rb_SYBFKIMG==0?rb_SYBSJ=0.00:rb_SYBSJ=rb_SYBSJ/rb_SYBFKIMG;
@@ -4347,9 +4405,9 @@
                             rb_SYBSJ += xiancai_qita[aa].SYBFKIMG*xiancai_qita[aa].SYBSJ;
                             rb_XHSJ += xiancai_qita[aa].XHFKIMG*xiancai_qita[aa].XHSJ;
                             rb_ZBGSSJ += xiancai_qita[aa].ZBGSFKIMG*xiancai_qita[aa].ZBGSSJ;
-                            rb_ZSJ+=xiancai_qita[aa].FKIMG*xiancai_qita[aa].ZSJ;
                             aa++;
                         }
+                        rb_ZSJ=rb_ZYSJ+rb_FGSSJ+rb_SYBSJ+rb_XHSJ+rb_ZBGSSJ;
                         rb_ZYFKIMG==0?rb_ZYSJ=0.00:rb_ZYSJ=rb_ZYSJ/rb_ZYFKIMG;
                         rb_FGSFKIMG==0?rb_FGSSJ=0.00:rb_FGSSJ=rb_FGSSJ/rb_FGSFKIMG;
                         rb_SYBFKIMG==0?rb_SYBSJ=0.00:rb_SYBSJ=rb_SYBSJ/rb_SYBFKIMG;
@@ -4429,9 +4487,9 @@
                             bx_SYBSJ += xiancai[hh].SYBFKIMG*xiancai[hh].SYBSJ;
                             bx_XHSJ += xiancai[hh].XHFKIMG*xiancai[hh].XHSJ;
                             bx_ZBGSSJ += xiancai[hh].ZBGSFKIMG*xiancai[hh].ZBGSSJ;
-                            bx_ZSJ+=xiancai[hh].FKIMG*xiancai[hh].ZSJ;
                             hh++;
                         }
+                        bx_ZSJ=bx_ZYSJ+bx_FGSSJ+bx_SYBSJ+bx_XHSJ+bx_ZBGSSJ;
                         bx_ZYFKIMG==0?bx_ZYSJ=0.00:bx_ZYSJ=bx_ZYSJ/bx_ZYFKIMG;
                         bx_FGSFKIMG==0?bx_FGSSJ=0.00:bx_FGSSJ=bx_FGSSJ/bx_FGSFKIMG;
                         bx_SYBFKIMG==0?bx_SYBSJ=0.00:bx_SYBSJ=bx_SYBSJ/bx_SYBFKIMG;
@@ -4524,9 +4582,9 @@
                             rb_SYBSJ += xingcai_pucai[aa].SYBFKIMG*xingcai_pucai[aa].SYBSJ;
                             rb_XHSJ += xingcai_pucai[aa].XHFKIMG*xingcai_pucai[aa].XHSJ;
                             rb_ZBGSSJ += xingcai_pucai[aa].ZBGSFKIMG*xingcai_pucai[aa].ZBGSSJ;
-                            rb_ZSJ+=xingcai_pucai[aa].FKIMG*xingcai_pucai[aa].ZSJ;
                             aa++;
                         }
+                        rb_ZSJ=rb_ZYSJ+rb_FGSSJ+rb_SYBSJ+rb_XHSJ+rb_ZBGSSJ;
                         rb_ZYFKIMG==0?rb_ZYSJ=0.00:rb_ZYSJ=rb_ZYSJ/rb_ZYFKIMG;
                         rb_FGSFKIMG==0?rb_FGSSJ=0.00:rb_FGSSJ=rb_FGSSJ/rb_FGSFKIMG;
                         rb_SYBFKIMG==0?rb_SYBSJ=0.00:rb_SYBSJ=rb_SYBSJ/rb_SYBFKIMG;
@@ -4606,9 +4664,9 @@
                             rb_SYBSJ += xingcai_pinzhonggang[aa].SYBFKIMG*xingcai_pinzhonggang[aa].SYBSJ;
                             rb_XHSJ += xingcai_pinzhonggang[aa].XHFKIMG*xingcai_pinzhonggang[aa].XHSJ;
                             rb_ZBGSSJ += xingcai_pinzhonggang[aa].ZBGSFKIMG*xingcai_pinzhonggang[aa].ZBGSSJ;
-                            rb_ZSJ+=xingcai_pinzhonggang[aa].FKIMG*xingcai_pinzhonggang[aa].ZSJ;
                             aa++;
                         }
+                        rb_ZSJ=rb_ZYSJ+rb_FGSSJ+rb_SYBSJ+rb_XHSJ+rb_ZBGSSJ;
                         rb_ZYFKIMG==0?rb_ZYSJ=0.00:rb_ZYSJ=rb_ZYSJ/rb_ZYFKIMG;
                         rb_FGSFKIMG==0?rb_FGSSJ=0.00:rb_FGSSJ=rb_FGSSJ/rb_FGSFKIMG;
                         rb_SYBFKIMG==0?rb_SYBSJ=0.00:rb_SYBSJ=rb_SYBSJ/rb_SYBFKIMG;
@@ -4688,9 +4746,9 @@
                             rb_SYBSJ += xingcai_gaoduan[aa].SYBFKIMG*xingcai_gaoduan[aa].SYBSJ;
                             rb_XHSJ += xingcai_gaoduan[aa].XHFKIMG*xingcai_gaoduan[aa].XHSJ;
                             rb_ZBGSSJ += xingcai_gaoduan[aa].ZBGSFKIMG*xingcai_gaoduan[aa].ZBGSSJ;
-                            rb_ZSJ+=xingcai_gaoduan[aa].FKIMG*xingcai_gaoduan[aa].ZSJ;
                             aa++;
                         }
+                        rb_ZSJ=rb_ZYSJ+rb_FGSSJ+rb_SYBSJ+rb_XHSJ+rb_ZBGSSJ;
                         rb_ZYFKIMG==0?rb_ZYSJ=0.00:rb_ZYSJ=rb_ZYSJ/rb_ZYFKIMG;
                         rb_FGSFKIMG==0?rb_FGSSJ=0.00:rb_FGSSJ=rb_FGSSJ/rb_FGSFKIMG;
                         rb_SYBFKIMG==0?rb_SYBSJ=0.00:rb_SYBSJ=rb_SYBSJ/rb_SYBFKIMG;
@@ -4770,9 +4828,9 @@
                             rb_SYBSJ += xingcai_tese[aa].SYBFKIMG*xingcai_tese[aa].SYBSJ;
                             rb_XHSJ += xingcai_tese[aa].XHFKIMG*xingcai_tese[aa].XHSJ;
                             rb_ZBGSSJ += xingcai_tese[aa].ZBGSFKIMG*xingcai_tese[aa].ZBGSSJ;
-                            rb_ZSJ+=xingcai_tese[aa].FKIMG*xingcai_tese[aa].ZSJ;
                             aa++;
                         }
+                        rb_ZSJ=rb_ZYSJ+rb_FGSSJ+rb_SYBSJ+rb_XHSJ+rb_ZBGSSJ;
                         rb_ZYFKIMG==0?rb_ZYSJ=0.00:rb_ZYSJ=rb_ZYSJ/rb_ZYFKIMG;
                         rb_FGSFKIMG==0?rb_FGSSJ=0.00:rb_FGSSJ=rb_FGSSJ/rb_FGSFKIMG;
                         rb_SYBFKIMG==0?rb_SYBSJ=0.00:rb_SYBSJ=rb_SYBSJ/rb_SYBFKIMG;
@@ -4852,9 +4910,9 @@
                             rb_SYBSJ += xingcai_qita[aa].SYBFKIMG*xingcai_qita[aa].SYBSJ;
                             rb_XHSJ += xingcai_qita[aa].XHFKIMG*xingcai_qita[aa].XHSJ;
                             rb_ZBGSSJ += xingcai_qita[aa].ZBGSFKIMG*xingcai_qita[aa].ZBGSSJ;
-                            rb_ZSJ+=xingcai_qita[aa].FKIMG*xingcai_qita[aa].ZSJ;
                             aa++;
                         }
+                        rb_ZSJ=rb_ZYSJ+rb_FGSSJ+rb_SYBSJ+rb_XHSJ+rb_ZBGSSJ;
                         rb_ZYFKIMG==0?rb_ZYSJ=0.00:rb_ZYSJ=rb_ZYSJ/rb_ZYFKIMG;
                         rb_FGSFKIMG==0?rb_FGSSJ=0.00:rb_FGSSJ=rb_FGSSJ/rb_FGSFKIMG;
                         rb_SYBFKIMG==0?rb_SYBSJ=0.00:rb_SYBSJ=rb_SYBSJ/rb_SYBFKIMG;
@@ -4934,9 +4992,9 @@
                             xc_SYBSJ += xingcai[ii].SYBFKIMG*xingcai[ii].SYBSJ;
                             xc_XHSJ += xingcai[ii].XHFKIMG*xingcai[ii].XHSJ;
                             xc_ZBGSSJ += xingcai[ii].ZBGSFKIMG*xingcai[ii].ZBGSSJ;
-                            xc_ZSJ+=xingcai[ii].FKIMG*xingcai[ii].ZSJ;
                             ii++;
                         }
+                        xc_ZSJ=xc_ZYSJ+xc_FGSSJ+xc_SYBSJ+xc_XHSJ+xc_ZBGSSJ;
                         xc_ZYFKIMG==0?xc_ZYSJ=0.00:xc_ZYSJ=xc_ZYSJ/xc_ZYFKIMG;
                         xc_FGSFKIMG==0?xc_FGSSJ=0.00:xc_FGSSJ=xc_FGSSJ/xc_FGSFKIMG;
                         xc_SYBFKIMG==0?xc_SYBSJ=0.00:xc_SYBSJ=xc_SYBSJ/xc_SYBFKIMG;
@@ -5029,9 +5087,9 @@
                             rb_SYBSJ += yuangang_pucai[aa].SYBFKIMG*yuangang_pucai[aa].SYBSJ;
                             rb_XHSJ += yuangang_pucai[aa].XHFKIMG*yuangang_pucai[aa].XHSJ;
                             rb_ZBGSSJ += yuangang_pucai[aa].ZBGSFKIMG*yuangang_pucai[aa].ZBGSSJ;
-                            rb_ZSJ+=yuangang_pucai[aa].FKIMG*yuangang_pucai[aa].ZSJ;
                             aa++;
                         }
+                        rb_ZSJ=rb_ZYSJ+rb_FGSSJ+rb_SYBSJ+rb_XHSJ+rb_ZBGSSJ;
                         rb_ZYFKIMG==0?rb_ZYSJ=0.00:rb_ZYSJ=rb_ZYSJ/rb_ZYFKIMG;
                         rb_FGSFKIMG==0?rb_FGSSJ=0.00:rb_FGSSJ=rb_FGSSJ/rb_FGSFKIMG;
                         rb_SYBFKIMG==0?rb_SYBSJ=0.00:rb_SYBSJ=rb_SYBSJ/rb_SYBFKIMG;
@@ -5111,9 +5169,9 @@
                             rb_SYBSJ += yuangang_pinzhonggang[aa].SYBFKIMG*yuangang_pinzhonggang[aa].SYBSJ;
                             rb_XHSJ += yuangang_pinzhonggang[aa].XHFKIMG*yuangang_pinzhonggang[aa].XHSJ;
                             rb_ZBGSSJ += yuangang_pinzhonggang[aa].ZBGSFKIMG*yuangang_pinzhonggang[aa].ZBGSSJ;
-                            rb_ZSJ+=yuangang_pinzhonggang[aa].FKIMG*yuangang_pinzhonggang[aa].ZSJ;
                             aa++;
                         }
+                        rb_ZSJ=rb_ZYSJ+rb_FGSSJ+rb_SYBSJ+rb_XHSJ+rb_ZBGSSJ;
                         rb_ZYFKIMG==0?rb_ZYSJ=0.00:rb_ZYSJ=rb_ZYSJ/rb_ZYFKIMG;
                         rb_FGSFKIMG==0?rb_FGSSJ=0.00:rb_FGSSJ=rb_FGSSJ/rb_FGSFKIMG;
                         rb_SYBFKIMG==0?rb_SYBSJ=0.00:rb_SYBSJ=rb_SYBSJ/rb_SYBFKIMG;
@@ -5193,9 +5251,9 @@
                             rb_SYBSJ += yuangang_gaoduan[aa].SYBFKIMG*yuangang_gaoduan[aa].SYBSJ;
                             rb_XHSJ += yuangang_gaoduan[aa].XHFKIMG*yuangang_gaoduan[aa].XHSJ;
                             rb_ZBGSSJ += yuangang_gaoduan[aa].ZBGSFKIMG*yuangang_gaoduan[aa].ZBGSSJ;
-                            rb_ZSJ+=yuangang_gaoduan[aa].FKIMG*yuangang_gaoduan[aa].ZSJ;
                             aa++;
                         }
+                        rb_ZSJ=rb_ZYSJ+rb_FGSSJ+rb_SYBSJ+rb_XHSJ+rb_ZBGSSJ;
                         rb_ZYFKIMG==0?rb_ZYSJ=0.00:rb_ZYSJ=rb_ZYSJ/rb_ZYFKIMG;
                         rb_FGSFKIMG==0?rb_FGSSJ=0.00:rb_FGSSJ=rb_FGSSJ/rb_FGSFKIMG;
                         rb_SYBFKIMG==0?rb_SYBSJ=0.00:rb_SYBSJ=rb_SYBSJ/rb_SYBFKIMG;
@@ -5275,9 +5333,9 @@
                             rb_SYBSJ += yuangang_tese[aa].SYBFKIMG*yuangang_tese[aa].SYBSJ;
                             rb_XHSJ += yuangang_tese[aa].XHFKIMG*yuangang_tese[aa].XHSJ;
                             rb_ZBGSSJ += yuangang_tese[aa].ZBGSFKIMG*yuangang_tese[aa].ZBGSSJ;
-                            rb_ZSJ+=yuangang_tese[aa].FKIMG*yuangang_tese[aa].ZSJ;
                             aa++;
                         }
+                        rb_ZSJ=rb_ZYSJ+rb_FGSSJ+rb_SYBSJ+rb_XHSJ+rb_ZBGSSJ;
                         rb_ZYFKIMG==0?rb_ZYSJ=0.00:rb_ZYSJ=rb_ZYSJ/rb_ZYFKIMG;
                         rb_FGSFKIMG==0?rb_FGSSJ=0.00:rb_FGSSJ=rb_FGSSJ/rb_FGSFKIMG;
                         rb_SYBFKIMG==0?rb_SYBSJ=0.00:rb_SYBSJ=rb_SYBSJ/rb_SYBFKIMG;
@@ -5357,9 +5415,9 @@
                             rb_SYBSJ += yuangang_qita[aa].SYBFKIMG*yuangang_qita[aa].SYBSJ;
                             rb_XHSJ += yuangang_qita[aa].XHFKIMG*yuangang_qita[aa].XHSJ;
                             rb_ZBGSSJ += yuangang_qita[aa].ZBGSFKIMG*yuangang_qita[aa].ZBGSSJ;
-                            rb_ZSJ+=yuangang_qita[aa].FKIMG*yuangang_qita[aa].ZSJ;
                             aa++;
                         }
+                        rb_ZSJ=rb_ZYSJ+rb_FGSSJ+rb_SYBSJ+rb_XHSJ+rb_ZBGSSJ;
                         rb_ZYFKIMG==0?rb_ZYSJ=0.00:rb_ZYSJ=rb_ZYSJ/rb_ZYFKIMG;
                         rb_FGSFKIMG==0?rb_FGSSJ=0.00:rb_FGSSJ=rb_FGSSJ/rb_FGSFKIMG;
                         rb_SYBFKIMG==0?rb_SYBSJ=0.00:rb_SYBSJ=rb_SYBSJ/rb_SYBFKIMG;
@@ -5439,9 +5497,9 @@
                             xc_SYBSJ += yuangang[ii].SYBFKIMG*yuangang[ii].SYBSJ;
                             xc_XHSJ += yuangang[ii].XHFKIMG*yuangang[ii].XHSJ;
                             xc_ZBGSSJ += yuangang[ii].ZBGSFKIMG*yuangang[ii].ZBGSSJ;
-                            xc_ZSJ+=yuangang[ii].FKIMG*yuangang[ii].ZSJ;
                             ii++;
                         }
+                        xc_ZSJ=xc_ZYSJ+xc_FGSSJ+xc_SYBSJ+xc_XHSJ+xc_ZBGSSJ;
                         xc_ZYFKIMG==0?xc_ZYSJ=0.00:xc_ZYSJ=xc_ZYSJ/xc_ZYFKIMG;
                         xc_FGSFKIMG==0?xc_FGSSJ=0.00:xc_FGSSJ=xc_FGSSJ/xc_FGSFKIMG;
                         xc_SYBFKIMG==0?xc_SYBSJ=0.00:xc_SYBSJ=xc_SYBSJ/xc_SYBFKIMG;
@@ -5534,9 +5592,9 @@
                             rb_SYBSJ += zhonghouban_pucai[aa].SYBFKIMG*zhonghouban_pucai[aa].SYBSJ;
                             rb_XHSJ += zhonghouban_pucai[aa].XHFKIMG*zhonghouban_pucai[aa].XHSJ;
                             rb_ZBGSSJ += zhonghouban_pucai[aa].ZBGSFKIMG*zhonghouban_pucai[aa].ZBGSSJ;
-                            rb_ZSJ+=zhonghouban_pucai[aa].FKIMG*zhonghouban_pucai[aa].ZSJ;
                             aa++;
                         }
+                        rb_ZSJ=rb_ZYSJ+rb_FGSSJ+rb_SYBSJ+rb_XHSJ+rb_ZBGSSJ;
                         rb_ZYFKIMG==0?rb_ZYSJ=0.00:rb_ZYSJ=rb_ZYSJ/rb_ZYFKIMG;
                         rb_FGSFKIMG==0?rb_FGSSJ=0.00:rb_FGSSJ=rb_FGSSJ/rb_FGSFKIMG;
                         rb_SYBFKIMG==0?rb_SYBSJ=0.00:rb_SYBSJ=rb_SYBSJ/rb_SYBFKIMG;
@@ -5616,9 +5674,9 @@
                             rb_SYBSJ += zhonghouban_pinzhonggang[aa].SYBFKIMG*zhonghouban_pinzhonggang[aa].SYBSJ;
                             rb_XHSJ += zhonghouban_pinzhonggang[aa].XHFKIMG*zhonghouban_pinzhonggang[aa].XHSJ;
                             rb_ZBGSSJ += zhonghouban_pinzhonggang[aa].ZBGSFKIMG*zhonghouban_pinzhonggang[aa].ZBGSSJ;
-                            rb_ZSJ+=zhonghouban_pinzhonggang[aa].FKIMG*zhonghouban_pinzhonggang[aa].ZSJ;
                             aa++;
                         }
+                        rb_ZSJ=rb_ZYSJ+rb_FGSSJ+rb_SYBSJ+rb_XHSJ+rb_ZBGSSJ;
                         rb_ZYFKIMG==0?rb_ZYSJ=0.00:rb_ZYSJ=rb_ZYSJ/rb_ZYFKIMG;
                         rb_FGSFKIMG==0?rb_FGSSJ=0.00:rb_FGSSJ=rb_FGSSJ/rb_FGSFKIMG;
                         rb_SYBFKIMG==0?rb_SYBSJ=0.00:rb_SYBSJ=rb_SYBSJ/rb_SYBFKIMG;
@@ -5698,9 +5756,9 @@
                             rb_SYBSJ += zhonghouban_gaoduan[aa].SYBFKIMG*zhonghouban_gaoduan[aa].SYBSJ;
                             rb_XHSJ += zhonghouban_gaoduan[aa].XHFKIMG*zhonghouban_gaoduan[aa].XHSJ;
                             rb_ZBGSSJ += zhonghouban_gaoduan[aa].ZBGSFKIMG*zhonghouban_gaoduan[aa].ZBGSSJ;
-                            rb_ZSJ+=zhonghouban_gaoduan[aa].FKIMG*zhonghouban_gaoduan[aa].ZSJ;
                             aa++;
                         }
+                        rb_ZSJ=rb_ZYSJ+rb_FGSSJ+rb_SYBSJ+rb_XHSJ+rb_ZBGSSJ;
                         rb_ZYFKIMG==0?rb_ZYSJ=0.00:rb_ZYSJ=rb_ZYSJ/rb_ZYFKIMG;
                         rb_FGSFKIMG==0?rb_FGSSJ=0.00:rb_FGSSJ=rb_FGSSJ/rb_FGSFKIMG;
                         rb_SYBFKIMG==0?rb_SYBSJ=0.00:rb_SYBSJ=rb_SYBSJ/rb_SYBFKIMG;
@@ -5780,9 +5838,9 @@
                             rb_SYBSJ += zhonghouban_tese[aa].SYBFKIMG*zhonghouban_tese[aa].SYBSJ;
                             rb_XHSJ += zhonghouban_tese[aa].XHFKIMG*zhonghouban_tese[aa].XHSJ;
                             rb_ZBGSSJ += zhonghouban_tese[aa].ZBGSFKIMG*zhonghouban_tese[aa].ZBGSSJ;
-                            rb_ZSJ+=zhonghouban_tese[aa].FKIMG*zhonghouban_tese[aa].ZSJ;
                             aa++;
                         }
+                        rb_ZSJ=rb_ZYSJ+rb_FGSSJ+rb_SYBSJ+rb_XHSJ+rb_ZBGSSJ;
                         rb_ZYFKIMG==0?rb_ZYSJ=0.00:rb_ZYSJ=rb_ZYSJ/rb_ZYFKIMG;
                         rb_FGSFKIMG==0?rb_FGSSJ=0.00:rb_FGSSJ=rb_FGSSJ/rb_FGSFKIMG;
                         rb_SYBFKIMG==0?rb_SYBSJ=0.00:rb_SYBSJ=rb_SYBSJ/rb_SYBFKIMG;
@@ -5862,9 +5920,9 @@
                             rb_SYBSJ += zhonghouban_qita[aa].SYBFKIMG*zhonghouban_qita[aa].SYBSJ;
                             rb_XHSJ += zhonghouban_qita[aa].XHFKIMG*zhonghouban_qita[aa].XHSJ;
                             rb_ZBGSSJ += zhonghouban_qita[aa].ZBGSFKIMG*zhonghouban_qita[aa].ZBGSSJ;
-                            rb_ZSJ+=zhonghouban_qita[aa].FKIMG*zhonghouban_qita[aa].ZSJ;
                             aa++;
                         }
+                        rb_ZSJ=rb_ZYSJ+rb_FGSSJ+rb_SYBSJ+rb_XHSJ+rb_ZBGSSJ;
                         rb_ZYFKIMG==0?rb_ZYSJ=0.00:rb_ZYSJ=rb_ZYSJ/rb_ZYFKIMG;
                         rb_FGSFKIMG==0?rb_FGSSJ=0.00:rb_FGSSJ=rb_FGSSJ/rb_FGSFKIMG;
                         rb_SYBFKIMG==0?rb_SYBSJ=0.00:rb_SYBSJ=rb_SYBSJ/rb_SYBFKIMG;
@@ -5944,9 +6002,9 @@
                             khb_SYBSJ += zhonghouban[ee].SYBFKIMG*zhonghouban[ee].SYBSJ;
                             khb_XHSJ += zhonghouban[ee].XHFKIMG*zhonghouban[ee].XHSJ;
                             khb_ZBGSSJ += zhonghouban[ee].ZBGSFKIMG*zhonghouban[ee].ZBGSSJ;
-                            khb_ZSJ+=zhonghouban[ee].FKIMG*zhonghouban[ee].ZSJ;
                             ee++;
                         }
+                        khb_ZSJ=khb_ZYSJ+khb_FGSSJ+khb_SYBSJ+khb_XHSJ+khb_ZBGSSJ;
                         khb_ZYFKIMG==0?khb_ZYSJ=0.00:khb_ZYSJ=khb_ZYSJ/khb_ZYFKIMG;
                         khb_FGSFKIMG==0?khb_FGSSJ=0.00:khb_FGSSJ=khb_FGSSJ/khb_FGSFKIMG;
                         khb_SYBFKIMG==0?khb_SYBSJ=0.00:khb_SYBSJ=khb_SYBSJ/khb_SYBFKIMG;
@@ -5988,11 +6046,1631 @@
                     }
 
 
-                    window.console.log('res:'+ JSON.stringify(res));
+                    let arr=jgj.concat(reban).concat(baoban).concat(lengban).concat(luowengang).concat(suanxi).concat(duxin).concat(zhonghouban).concat(xiancai).concat(xingcai).concat(yuangang);
+                    // arr.sort(this.paixu("ZL","CXNAME","PRODUCT_GRADE"));
+                    let ii=0
+                    let jj=0
+                    let k1=0
+                    let k2=0
+                    let k3=0
+                    let k4=0
+                    let k5=0
+                    let k6=0
+                    let k7=0
+                    let k8=0
+                    let k9=0
+                    let k10=0
+                    let k11=0
+                    let k12=0
+                    let k13=0
+                    let k14=0
+                    let k15=0
+                    let k16=0
+                    let k17=0
+                    let k18=0
+                    let k19=0
+                    let k20=0
+                    let k21=0
+                    let k22=0
+                    let k23=0
+                    let k24=0
+                    let k25=0
+                    let k26=0
+                    let k27=0
+                    let k28=0
+                    let k29=0
+                    let k30=0
+                    let k31=0
+                    let k32=0
+                    let k33=0
+                    let k34=0
+                    let k35=0
+                    let k36=0
+                    let k37=0
+                    let k38=0
+                    let k39=0
+                    let k40=0
+                    let k41=0
+                    let k42=0
+                    let k43=0
+                    let k44=0
+                    let k45=0
+                    let k46=0
+                    let k47=0
+                    let k48=0
+                    let k49=0
+                    let k50=0
+                    let k51=0
+                    let k52=0
+                    let k53=0
+                    let k54=0
+                    let k55=0
+                    let k56=0
+                    let k57=0
+                    let k58=0
+                    let k59=0
+                    let k60=0
+                    let k61=0
+                    let k62=0
+                    let k63=0
+                    let k64=0
+                    let k65=0
+                    let k66=0
+                    let k67=0
+                    let k68=0
+                    let k69=0
+                    let k70=0
+                    let k71=0
+                    let k72=0
+                    let k73=0
+                    let k74=0
+                    let k75=0
+                    let k76=0
+                    let k77=0
+                    let k78=0
+                    let k79=0
+                    let k80=0
+                    let k81=0
+                    let k82=0
+                    let k83=0
+                    let k84=0
+                    let k85=0
+                    let k86=0
+                    let k87=0
+                    let k88=0
+                    let k89=0
+                    let k90=0
+                    let k91=0
+                    let k92=0
+                    let k93=0
+                    let k94=0
+                    let k95=0
+                    let k96=0
+                    let k97=0
+                    let k98=0
+                    let k99=0
+                    let k100=0
 
 
-                    let arr=jgj.concat(reban).concat(baoban).concat(lengban).concat(luowengang).concat(suanxi).concat(duxin).concat(zhonghouban).concat(xiancai).concat(xingcai).concat(yuangang).concat(res[0]);
 
+                    while(ii<arr.length)
+                    {
+                        if(arr[ii].ZL=='热板' && arr[ii].CXNAME=='唐钢1580热轧线')
+                        {
+                            if(k1==0)
+                            {
+                                while(jj<res[0].length)
+                                {
+                                    if(res[0][jj].ZL=='热板' && res[0][jj].CXNAME=='唐钢1580热轧线')
+                                    {
+                                        arr.splice(ii,0,res[0][jj])
+                                    }
+                                    jj++
+                                }
+                                ii--
+                                k1++
+                            }
+
+                        }
+                        else if(arr[ii].ZL=='热板' && arr[ii].CXNAME=='唐钢本部热板')
+                        {
+                            if(k2==0)
+                            {
+                                while(jj<res[0].length)
+                                {
+                                    if(res[0][jj].ZL=='热板' && res[0][jj].CXNAME=='唐钢本部热板')
+                                    {
+                                        arr.splice(ii,0,res[0][jj])
+                                    }
+                                    jj++
+                                }
+                                ii--
+                                k2++
+                            }
+                        }
+                        else if(arr[ii].ZL=='热板' && arr[ii].CXNAME=='承钢热板')
+                        {
+                            if(k3==0)
+                            {
+                                while(jj<res[0].length)
+                                {
+                                    if(res[0][jj].ZL=='热板' && res[0][jj].CXNAME=='承钢热板')
+                                    {
+                                        arr.splice(ii,0,res[0][jj])
+                                    }
+                                    jj++
+                                }
+                                ii--
+                                k3++
+                            }
+                        }
+                        else if(arr[ii].ZL=='热板' && arr[ii].CXNAME=='邯钢CSP')
+                        {
+                            if(k4==0)
+                            {
+                                while(jj<res[0].length)
+                                {
+                                    if(res[0][jj].ZL=='热板' && res[0][jj].CXNAME=='邯钢CSP')
+                                    {
+                                        arr.splice(ii,0,res[0][jj])
+                                    }
+                                    jj++
+                                }
+                                ii--
+                                k4++
+                            }
+                        }
+                        else if(arr[ii].ZL=='热板' && arr[ii].CXNAME=='唐钢其他')
+                        {
+                            if(k5==0)
+                            {
+                                while(jj<res[0].length)
+                                {
+                                    if(res[0][jj].ZL=='热板' && res[0][jj].CXNAME=='唐钢其他')
+                                    {
+                                        arr.splice(ii,0,res[0][jj])
+                                    }
+                                    jj++
+                                }
+                                ii--
+                                k5++
+                            }
+                        }
+                        else if(arr[ii].ZL=='热板' && arr[ii].CXNAME=='邯钢其他')
+                        {
+                            if(k6==0)
+                            {
+                                while(jj<res[0].length)
+                                {
+                                    if(res[0][jj].ZL=='热板' && res[0][jj].CXNAME=='邯钢其他')
+                                    {
+                                        arr.splice(ii,0,res[0][jj])
+                                    }
+                                    jj++
+                                }
+                                ii--
+                                k6++
+                            }
+                        }
+                        else if(arr[ii].ZL=='热板' && arr[ii].CXNAME=='宣钢其他')
+                        {
+                            if(k7==0)
+                            {
+                                while(jj<res[0].length)
+                                {
+                                    if(res[0][jj].ZL=='热板' && res[0][jj].CXNAME=='宣钢其他')
+                                    {
+                                        arr.splice(ii,0,res[0][jj])
+                                    }
+                                    jj++
+                                }
+                                ii--
+                                k7++
+                            }
+                        }
+                        else if(arr[ii].ZL=='热板' && arr[ii].CXNAME=='承钢其他')
+                        {
+                            if(k8==0)
+                            {
+                                while(jj<res[0].length)
+                                {
+                                    if(res[0][jj].ZL=='热板' && res[0][jj].CXNAME=='承钢其他')
+                                    {
+                                        arr.splice(ii,0,res[0][jj])
+                                    }
+                                    jj++
+                                }
+                                ii--
+                                k8++
+                            }
+                        }
+                        else if(arr[ii].ZL=='热板' && arr[ii].CXNAME=='舞钢其他')
+                        {
+                            if(k9==0)
+                            {
+                                while(jj<res[0].length)
+                                {
+                                    if(res[0][jj].ZL=='热板' && res[0][jj].CXNAME=='舞钢其他')
+                                    {
+                                        arr.splice(ii,0,res[0][jj])
+                                    }
+                                    jj++
+                                }
+                                ii--
+                                k9++
+                            }
+                        }
+                        else if(arr[ii].ZL=='热板' && arr[ii].CXNAME=='石钢其他')
+                        {
+                            if(k10==0)
+                            {
+                                while(jj<res[0].length)
+                                {
+                                    if(res[0][jj].ZL=='热板' && res[0][jj].CXNAME=='石钢其他')
+                                    {
+                                        arr.splice(ii,0,res[0][jj])
+                                    }
+                                    jj++
+                                }
+                                ii--
+                                k10++
+                            }
+                        }
+                        else if(arr[ii].ZL=='热板' && arr[ii].CXNAME=='衡板其他')
+                        {
+                            if(k11==0)
+                            {
+                                while(jj<res[0].length)
+                                {
+                                    if(res[0][jj].ZL=='热板' && res[0][jj].CXNAME=='衡板其他')
+                                    {
+                                        arr.splice(ii,0,res[0][jj])
+                                    }
+                                    jj++
+                                }
+                                ii--
+                                k11++
+                            }
+                        }
+                        else if(arr[ii].ZL=='薄板' && arr[ii].CXNAME=='衡板薄板')
+                        {
+                            if(k12==0)
+                            {
+                                while(jj<res[0].length)
+                                {
+                                    if(res[0][jj].ZL=='薄板' && res[0][jj].CXNAME=='衡板薄板')
+                                    {
+                                        arr.splice(ii,0,res[0][jj])
+                                    }
+                                    jj++
+                                }
+                                ii--
+                                k12++
+                            }
+                        }
+                        else if(arr[ii].ZL=='薄板' && arr[ii].CXNAME=='唐钢其他')
+                        {
+                            if (k13 == 0)
+                            {
+                                while (jj < res[0].length) {
+                                    if (res[0][jj].ZL == '薄板' && res[0][jj].CXNAME == '唐钢其他')
+                                    {
+                                        arr.splice(ii, 0, res[0][jj])
+                                    }
+                                    jj++
+                                }
+                                ii--
+                                k13++
+                            }
+                        }
+                        else if(arr[ii].ZL=='薄板' && arr[ii].CXNAME=='邯钢其他')
+                        {
+                            if (k14 == 0)
+                            {
+                                while (jj < res[0].length) {
+                                    if (res[0][jj].ZL == '薄板' && res[0][jj].CXNAME == '邯钢其他')
+                                    {
+                                        arr.splice(ii, 0, res[0][jj])
+                                    }
+                                    jj++
+                                }
+                                ii--
+                                k14++
+                            }
+                        }
+                        else if(arr[ii].ZL=='薄板' && arr[ii].CXNAME=='宣钢其他')
+                        {
+                            if (k15 == 0)
+                            {
+                                while (jj < res[0].length) {
+                                    if (res[0][jj].ZL == '薄板' && res[0][jj].CXNAME == '宣钢其他')
+                                    {
+                                        arr.splice(ii, 0, res[0][jj])
+                                    }
+                                    jj++
+                                }
+                                ii--
+                                k15++
+                            }
+                        }
+                        else if(arr[ii].ZL=='薄板' && arr[ii].CXNAME=='承钢其他')
+                        {
+                            if (k16 == 0)
+                            {
+                                while (jj < res[0].length) {
+                                    if (res[0][jj].ZL == '薄板' && res[0][jj].CXNAME == '承钢其他')
+                                    {
+                                        arr.splice(ii, 0, res[0][jj])
+                                    }
+                                    jj++
+                                }
+                                ii--
+                                k16++
+                            }
+                        }
+                        else if(arr[ii].ZL=='薄板' && arr[ii].CXNAME=='舞钢其他')
+                        {
+                            if (k17 == 0)
+                            {
+                                while (jj < res[0].length) {
+                                    if (res[0][jj].ZL == '薄板' && res[0][jj].CXNAME == '舞钢其他')
+                                    {
+                                        arr.splice(ii, 0, res[0][jj])
+                                    }
+                                    jj++
+                                }
+                                ii--
+                                k17++
+                            }
+                        }
+                        else if(arr[ii].ZL=='薄板' && arr[ii].CXNAME=='石钢其他')
+                        {
+                            if (k18 == 0)
+                            {
+                                while (jj < res[0].length) {
+                                    if (res[0][jj].ZL == '薄板' && res[0][jj].CXNAME == '石钢其他')
+                                    {
+                                        arr.splice(ii, 0, res[0][jj])
+                                    }
+                                    jj++
+                                }
+                                ii--
+                                k18++
+                            }
+                        }
+                        else if(arr[ii].ZL=='薄板' && arr[ii].CXNAME=='衡板其他')
+                        {
+                            if (k19 == 0)
+                            {
+                                while (jj < res[0].length) {
+                                    if (res[0][jj].ZL == '薄板' && res[0][jj].CXNAME == '衡板其他')
+                                    {
+                                        arr.splice(ii, 0, res[0][jj])
+                                    }
+                                    jj++
+                                }
+                                ii--
+                                k19++
+                            }
+                        }
+                        else if(arr[ii].ZL=='冷板' && arr[ii].CXNAME=='唐钢一冷冷轧')
+                        {
+                            if (k20 == 0)
+                            {
+                                while (jj < res[0].length) {
+                                    if (res[0][jj].ZL == '冷板' && res[0][jj].CXNAME == '唐钢一冷冷轧')
+                                    {
+                                        arr.splice(ii, 0, res[0][jj])
+                                    }
+                                    jj++
+                                }
+                                ii--
+                                k20++
+                            }
+                        }
+                        else if(arr[ii].ZL=='冷板' && arr[ii].CXNAME=='唐钢二冷冷轧')
+                        {
+                            if (k21 == 0)
+                            {
+                                while (jj < res[0].length) {
+                                    if (res[0][jj].ZL == '冷板' && res[0][jj].CXNAME == '唐钢二冷冷轧')
+                                    {
+                                        arr.splice(ii, 0, res[0][jj])
+                                    }
+                                    jj++
+                                }
+                                ii--
+                                k21++
+                            }
+                        }
+                        else if(arr[ii].ZL=='冷板' && arr[ii].CXNAME=='邯钢东区冷轧')
+                        {
+                            if (k22 == 0)
+                            {
+                                while (jj < res[0].length) {
+                                    if (res[0][jj].ZL == '冷板' && res[0][jj].CXNAME == '邯钢东区冷轧')
+                                    {
+                                        arr.splice(ii, 0, res[0][jj])
+                                    }
+                                    jj++
+                                }
+                                ii--
+                                k22++
+                            }
+                        }
+                        else if(arr[ii].ZL=='冷板' && arr[ii].CXNAME=='唐钢其他')
+                        {
+                            if (k23 == 0)
+                            {
+                                while (jj < res[0].length) {
+                                    if (res[0][jj].ZL == '冷板' && res[0][jj].CXNAME == '唐钢其他')
+                                    {
+                                        arr.splice(ii, 0, res[0][jj])
+                                    }
+                                    jj++
+                                }
+                                ii--
+                                k23++
+                            }
+                        }
+                        else if(arr[ii].ZL=='冷板' && arr[ii].CXNAME=='邯钢其他')
+                        {
+                            if (k24 == 0)
+                            {
+                                while (jj < res[0].length) {
+                                    if (res[0][jj].ZL == '冷板' && res[0][jj].CXNAME == '邯钢其他')
+                                    {
+                                        arr.splice(ii, 0, res[0][jj])
+                                    }
+                                    jj++
+                                }
+                                ii--
+                                k24++
+                            }
+                        }
+                        else if(arr[ii].ZL=='冷板' && arr[ii].CXNAME=='宣钢其他')
+                        {
+                            if (k25 == 0)
+                            {
+                                while (jj < res[0].length) {
+                                    if (res[0][jj].ZL == '冷板' && res[0][jj].CXNAME == '宣钢其他')
+                                    {
+                                        arr.splice(ii, 0, res[0][jj])
+                                    }
+                                    jj++
+                                }
+                                ii--
+                                k25++
+                            }
+                        }
+                        else if(arr[ii].ZL=='冷板' && arr[ii].CXNAME=='承钢其他')
+                        {
+                            if (k26 == 0)
+                            {
+                                while (jj < res[0].length) {
+                                    if (res[0][jj].ZL == '冷板' && res[0][jj].CXNAME == '承钢其他')
+                                    {
+                                        arr.splice(ii, 0, res[0][jj])
+                                    }
+                                    jj++
+                                }
+                                ii--
+                                k26++
+                            }
+                        }
+                        else if(arr[ii].ZL=='冷板' && arr[ii].CXNAME=='舞钢其他')
+                        {
+                            if (k27 == 0)
+                            {
+                                while (jj < res[0].length) {
+                                    if (res[0][jj].ZL == '冷板' && res[0][jj].CXNAME == '舞钢其他')
+                                    {
+                                        arr.splice(ii, 0, res[0][jj])
+                                    }
+                                    jj++
+                                }
+                                ii--
+                                k27++
+                            }
+                        }
+                        else if(arr[ii].ZL=='冷板' && arr[ii].CXNAME=='石钢其他')
+                        {
+                            if (k28 == 0)
+                            {
+                                while (jj < res[0].length) {
+                                    if (res[0][jj].ZL == '冷板' && res[0][jj].CXNAME == '石钢其他')
+                                    {
+                                        arr.splice(ii, 0, res[0][jj])
+                                    }
+                                    jj++
+                                }
+                                ii--
+                                k28++
+                            }
+                        }
+                        else if(arr[ii].ZL=='冷板' && arr[ii].CXNAME=='衡板其他')
+                        {
+                            if (k29 == 0)
+                            {
+                                while (jj < res[0].length) {
+                                    if (res[0][jj].ZL == '冷板' && res[0][jj].CXNAME == '衡板其他')
+                                    {
+                                        arr.splice(ii, 0, res[0][jj])
+                                    }
+                                    jj++
+                                }
+                                ii--
+                                k29++
+                            }
+                        }
+                        else if(arr[ii].ZL=='螺纹钢' && arr[ii].CXNAME=='唐钢螺纹')
+                        {
+                            if (k30 == 0)
+                            {
+                                while (jj < res[0].length) {
+                                    if (res[0][jj].ZL == '螺纹钢' && res[0][jj].CXNAME == '唐钢螺纹')
+                                    {
+                                        arr.splice(ii, 0, res[0][jj])
+                                    }
+                                    jj++
+                                }
+                                ii--
+                                k30++
+                            }
+                        }
+                        else if(arr[ii].ZL=='螺纹钢' && arr[ii].CXNAME=='宣钢螺纹')
+                        {
+                            if (k31 == 0)
+                            {
+                                while (jj < res[0].length) {
+                                    if (res[0][jj].ZL == '螺纹钢' && res[0][jj].CXNAME == '宣钢螺纹')
+                                    {
+                                        arr.splice(ii, 0, res[0][jj])
+                                    }
+                                    jj++
+                                }
+                                ii--
+                                k31++
+                            }
+                        }
+                        else if(arr[ii].ZL=='螺纹钢' && arr[ii].CXNAME=='承钢螺纹')
+                        {
+                            if (k32 == 0)
+                            {
+                                while (jj < res[0].length) {
+                                    if (res[0][jj].ZL == '螺纹钢' && res[0][jj].CXNAME == '承钢螺纹')
+                                    {
+                                        arr.splice(ii, 0, res[0][jj])
+                                    }
+                                    jj++
+                                }
+                                ii--
+                                k32++
+                            }
+                        }
+                        else if(arr[ii].ZL=='螺纹钢' && arr[ii].CXNAME=='邯钢螺纹')
+                        {
+                            if (k33 == 0)
+                            {
+                                while (jj < res[0].length) {
+                                    if (res[0][jj].ZL == '螺纹钢' && res[0][jj].CXNAME == '邯钢螺纹')
+                                    {
+                                        arr.splice(ii, 0, res[0][jj])
+                                    }
+                                    jj++
+                                }
+                                ii--
+                                k33++
+                            }
+                        }
+                        else if(arr[ii].ZL=='螺纹钢' && arr[ii].CXNAME=='唐钢其他')
+                        {
+                            if (k34 == 0)
+                            {
+                                while (jj < res[0].length) {
+                                    if (res[0][jj].ZL == '螺纹钢' && res[0][jj].CXNAME == '唐钢其他')
+                                    {
+                                        arr.splice(ii, 0, res[0][jj])
+                                    }
+                                    jj++
+                                }
+                                ii--
+                                k34++
+                            }
+                        }
+                        else if(arr[ii].ZL=='螺纹钢' && arr[ii].CXNAME=='邯钢其他')
+                        {
+                            if (k35 == 0)
+                            {
+                                while (jj < res[0].length) {
+                                    if (res[0][jj].ZL == '螺纹钢' && res[0][jj].CXNAME == '邯钢其他')
+                                    {
+                                        arr.splice(ii, 0, res[0][jj])
+                                    }
+                                    jj++
+                                }
+                                ii--
+                                k35++
+                            }
+                        }
+                        else if(arr[ii].ZL=='螺纹钢' && arr[ii].CXNAME=='宣钢其他')
+                        {
+                            if (k36 == 0)
+                            {
+                                while (jj < res[0].length) {
+                                    if (res[0][jj].ZL == '螺纹钢' && res[0][jj].CXNAME == '宣钢其他')
+                                    {
+                                        arr.splice(ii, 0, res[0][jj])
+                                    }
+                                    jj++
+                                }
+                                ii--
+                                k36++
+                            }
+                        }
+                        else if(arr[ii].ZL=='螺纹钢' && arr[ii].CXNAME=='承钢其他')
+                        {
+                            if (k37 == 0)
+                            {
+                                while (jj < res[0].length) {
+                                    if (res[0][jj].ZL == '螺纹钢' && res[0][jj].CXNAME == '承钢其他')
+                                    {
+                                        arr.splice(ii, 0, res[0][jj])
+                                    }
+                                    jj++
+                                }
+                                ii--
+                                k37++
+                            }
+                        }
+                        else if(arr[ii].ZL=='螺纹钢' && arr[ii].CXNAME=='舞钢其他')
+                        {
+                            if (k100 == 0)
+                            {
+                                while (jj < res[0].length) {
+                                    if (res[0][jj].ZL == '螺纹钢' && res[0][jj].CXNAME == '舞钢其他')
+                                    {
+                                        arr.splice(ii, 0, res[0][jj])
+                                    }
+                                    jj++
+                                }
+                                ii--
+                                k100++
+                            }
+                        }
+                        else if(arr[ii].ZL=='螺纹钢' && arr[ii].CXNAME=='石钢其他')
+                        {
+                            if (k38 == 0)
+                            {
+                                while (jj < res[0].length) {
+                                    if (res[0][jj].ZL == '螺纹钢' && res[0][jj].CXNAME == '石钢其他')
+                                    {
+                                        arr.splice(ii, 0, res[0][jj])
+                                    }
+                                    jj++
+                                }
+                                ii--
+                                k38++
+                            }
+                        }
+                        else if(arr[ii].ZL=='螺纹钢' && arr[ii].CXNAME=='衡板其他')
+                        {
+                            if (k39 == 0)
+                            {
+                                while (jj < res[0].length) {
+                                    if (res[0][jj].ZL == '螺纹钢' && res[0][jj].CXNAME == '衡板其他')
+                                    {
+                                        arr.splice(ii, 0, res[0][jj])
+                                    }
+                                    jj++
+                                }
+                                ii--
+                                k39++
+                            }
+                        }
+                        else if(arr[ii].ZL=='酸洗' && arr[ii].CXNAME=='唐钢酸洗')
+                        {
+                            if (k40 == 0)
+                            {
+                                while (jj < res[0].length) {
+                                    if (res[0][jj].ZL == '酸洗' && res[0][jj].CXNAME == '唐钢酸洗')
+                                    {
+                                        arr.splice(ii, 0, res[0][jj])
+                                    }
+                                    jj++
+                                }
+                                ii--
+                                k40++
+                            }
+                        }
+                        else if(arr[ii].ZL=='酸洗' && arr[ii].CXNAME=='邯钢酸洗')
+                        {
+                            if (k41 == 0)
+                            {
+                                while (jj < res[0].length) {
+                                    if (res[0][jj].ZL == '酸洗' && res[0][jj].CXNAME == '邯钢酸洗')
+                                    {
+                                        arr.splice(ii, 0, res[0][jj])
+                                    }
+                                    jj++
+                                }
+                                ii--
+                                k41++
+                            }
+                        }
+                        else if(arr[ii].ZL=='酸洗' && arr[ii].CXNAME=='唐钢其他')
+                        {
+                            if (k42 == 0)
+                            {
+                                while (jj < res[0].length) {
+                                    if (res[0][jj].ZL == '酸洗' && res[0][jj].CXNAME == '唐钢其他')
+                                    {
+                                        arr.splice(ii, 0, res[0][jj])
+                                    }
+                                    jj++
+                                }
+                                ii--
+                                k42++
+                            }
+                        }
+                        else if(arr[ii].ZL=='酸洗' && arr[ii].CXNAME=='邯钢其他')
+                        {
+                            if (k43 == 0)
+                            {
+                                while (jj < res[0].length) {
+                                    if (res[0][jj].ZL == '酸洗' && res[0][jj].CXNAME == '邯钢其他')
+                                    {
+                                        arr.splice(ii, 0, res[0][jj])
+                                    }
+                                    jj++
+                                }
+                                ii--
+                                k43++
+                            }
+                        }
+                        else if(arr[ii].ZL=='酸洗' && arr[ii].CXNAME=='宣钢其他')
+                        {
+                            if (k44 == 0)
+                            {
+                                while (jj < res[0].length) {
+                                    if (res[0][jj].ZL == '酸洗' && res[0][jj].CXNAME == '宣钢其他')
+                                    {
+                                        arr.splice(ii, 0, res[0][jj])
+                                    }
+                                    jj++
+                                }
+                                ii--
+                                k44++
+                            }
+                        }
+                        else if(arr[ii].ZL=='酸洗' && arr[ii].CXNAME=='承钢其他')
+                        {
+                            if (k45 == 0)
+                            {
+                                while (jj < res[0].length) {
+                                    if (res[0][jj].ZL == '酸洗' && res[0][jj].CXNAME == '承钢其他')
+                                    {
+                                        arr.splice(ii, 0, res[0][jj])
+                                    }
+                                    jj++
+                                }
+                                ii--
+                                k45++
+                            }
+                        }
+                        else if(arr[ii].ZL=='酸洗' && arr[ii].CXNAME=='舞钢其他')
+                        {
+                            if (k46 == 0)
+                            {
+                                while (jj < res[0].length) {
+                                    if (res[0][jj].ZL == '酸洗' && res[0][jj].CXNAME == '舞钢其他')
+                                    {
+                                        arr.splice(ii, 0, res[0][jj])
+                                    }
+                                    jj++
+                                }
+                                ii--
+                                k46++
+                            }
+                        }
+                        else if(arr[ii].ZL=='酸洗' && arr[ii].CXNAME=='石钢其他')
+                        {
+                            if (k47 == 0)
+                            {
+                                while (jj < res[0].length) {
+                                    if (res[0][jj].ZL == '酸洗' && res[0][jj].CXNAME == '石钢其他')
+                                    {
+                                        arr.splice(ii, 0, res[0][jj])
+                                    }
+                                    jj++
+                                }
+                                ii--
+                                k47++
+                            }
+                        }
+                        else if(arr[ii].ZL=='酸洗' && arr[ii].CXNAME=='衡板其他')
+                        {
+                            if (k48 == 0)
+                            {
+                                while (jj < res[0].length) {
+                                    if (res[0][jj].ZL == '酸洗' && res[0][jj].CXNAME == '衡板其他')
+                                    {
+                                        arr.splice(ii, 0, res[0][jj])
+                                    }
+                                    jj++
+                                }
+                                ii--
+                                k48++
+                            }
+                        }
+                        else if(arr[ii].ZL=='镀锌' && arr[ii].CXNAME=='唐钢二冷镀锌')
+                        {
+                            if (k49 == 0)
+                            {
+                                while (jj < res[0].length) {
+                                    if (res[0][jj].ZL == '镀锌' && res[0][jj].CXNAME == '唐钢二冷镀锌')
+                                    {
+                                        arr.splice(ii, 0, res[0][jj])
+                                    }
+                                    jj++
+                                }
+                                ii--
+                                k49++
+                            }
+                        }
+                        else if(arr[ii].ZL=='镀锌' && arr[ii].CXNAME=='唐钢一冷镀锌')
+                        {
+                            if (k50 == 0)
+                            {
+                                while (jj < res[0].length) {
+                                    if (res[0][jj].ZL == '镀锌' && res[0][jj].CXNAME == '唐钢一冷镀锌')
+                                    {
+                                        arr.splice(ii, 0, res[0][jj])
+                                    }
+                                    jj++
+                                }
+                                ii--
+                                k50++
+                            }
+                        }
+                        else if(arr[ii].ZL=='镀锌' && arr[ii].CXNAME=='邯钢东区镀锌')
+                        {
+                            if (k51 == 0)
+                            {
+                                while (jj < res[0].length) {
+                                    if (res[0][jj].ZL == '镀锌' && res[0][jj].CXNAME == '邯钢东区镀锌')
+                                    {
+                                        arr.splice(ii, 0, res[0][jj])
+                                    }
+                                    jj++
+                                }
+                                ii--
+                                k51++
+                            }
+                        }
+                        else if(arr[ii].ZL=='镀锌' && arr[ii].CXNAME=='唐钢其他')
+                        {
+                            if (k52 == 0)
+                            {
+                                while (jj < res[0].length) {
+                                    if (res[0][jj].ZL == '镀锌' && res[0][jj].CXNAME == '唐钢其他')
+                                    {
+                                        arr.splice(ii, 0, res[0][jj])
+                                    }
+                                    jj++
+                                }
+                                ii--
+                                k52++
+                            }
+                        }
+                        else if(arr[ii].ZL=='镀锌' && arr[ii].CXNAME=='邯钢其他')
+                        {
+                            if (k53 == 0)
+                            {
+                                while (jj < res[0].length) {
+                                    if (res[0][jj].ZL == '镀锌' && res[0][jj].CXNAME == '邯钢其他')
+                                    {
+                                        arr.splice(ii, 0, res[0][jj])
+                                    }
+                                    jj++
+                                }
+                                ii--
+                                k53++
+                            }
+                        }
+                        else if(arr[ii].ZL=='镀锌' && arr[ii].CXNAME=='宣钢其他')
+                        {
+                            if (k54 == 0)
+                            {
+                                while (jj < res[0].length) {
+                                    if (res[0][jj].ZL == '镀锌' && res[0][jj].CXNAME == '宣钢其他')
+                                    {
+                                        arr.splice(ii, 0, res[0][jj])
+                                    }
+                                    jj++
+                                }
+                                ii--
+                                k54++
+                            }
+                        }
+                        else if(arr[ii].ZL=='镀锌' && arr[ii].CXNAME=='承钢其他')
+                        {
+                            if (k55 == 0)
+                            {
+                                while (jj < res[0].length) {
+                                    if (res[0][jj].ZL == '镀锌' && res[0][jj].CXNAME == '承钢其他')
+                                    {
+                                        arr.splice(ii, 0, res[0][jj])
+                                    }
+                                    jj++
+                                }
+                                ii--
+                                k55++
+                            }
+                        }
+                        else if(arr[ii].ZL=='镀锌' && arr[ii].CXNAME=='舞钢其他')
+                        {
+                            if (k56 == 0)
+                            {
+                                while (jj < res[0].length) {
+                                    if (res[0][jj].ZL == '镀锌' && res[0][jj].CXNAME == '舞钢其他')
+                                    {
+                                        arr.splice(ii, 0, res[0][jj])
+                                    }
+                                    jj++
+                                }
+                                ii--
+                                k56++
+                            }
+                        }
+                        else if(arr[ii].ZL=='镀锌' && arr[ii].CXNAME=='石钢其他')
+                        {
+                            if (k57 == 0)
+                            {
+                                while (jj < res[0].length) {
+                                    if (res[0][jj].ZL == '镀锌' && res[0][jj].CXNAME == '石钢其他')
+                                    {
+                                        arr.splice(ii, 0, res[0][jj])
+                                    }
+                                    jj++
+                                }
+                                ii--
+                                k57++
+                            }
+                        }
+                        else if(arr[ii].ZL=='镀锌' && arr[ii].CXNAME=='衡板其他')
+                        {
+                            if (k58 == 0)
+                            {
+                                while (jj < res[0].length) {
+                                    if (res[0][jj].ZL == '镀锌' && res[0][jj].CXNAME == '衡板其他')
+                                    {
+                                        arr.splice(ii, 0, res[0][jj])
+                                    }
+                                    jj++
+                                }
+                                ii--
+                                k58++
+                            }
+                        }
+                        else if(arr[ii].ZL=='线材' && arr[ii].CXNAME=='宣钢线材')
+                        {
+                            if (k59 == 0)
+                            {
+                                while (jj < res[0].length) {
+                                    if (res[0][jj].ZL == '线材' && res[0][jj].CXNAME == '宣钢线材')
+                                    {
+                                        arr.splice(ii, 0, res[0][jj])
+                                    }
+                                    jj++
+                                }
+                                ii--
+                                k59++
+                            }
+                        }
+                        else if(arr[ii].ZL=='线材' && arr[ii].CXNAME=='承钢线材')
+                        {
+                            if (k60 == 0)
+                            {
+                                while (jj < res[0].length) {
+                                    if (res[0][jj].ZL == '线材' && res[0][jj].CXNAME == '承钢线材')
+                                    {
+                                        arr.splice(ii, 0, res[0][jj])
+                                    }
+                                    jj++
+                                }
+                                ii--
+                                k60++
+                            }
+                        }
+                        else if(arr[ii].ZL=='线材' && arr[ii].CXNAME=='邯钢线材')
+                        {
+                            if (k61 == 0)
+                            {
+                                while (jj < res[0].length) {
+                                    if (res[0][jj].ZL == '线材' && res[0][jj].CXNAME == '邯钢线材')
+                                    {
+                                        arr.splice(ii, 0, res[0][jj])
+                                    }
+                                    jj++
+                                }
+                                ii--
+                                k61++
+                            }
+                        }
+                        else if(arr[ii].ZL=='线材' && arr[ii].CXNAME=='唐钢其他')
+                        {
+                            if (k62 == 0)
+                            {
+                                while (jj < res[0].length) {
+                                    if (res[0][jj].ZL == '线材' && res[0][jj].CXNAME == '唐钢其他')
+                                    {
+                                        arr.splice(ii, 0, res[0][jj])
+                                    }
+                                    jj++
+                                }
+                                ii--
+                                k62++
+                            }
+                        }
+                        else if(arr[ii].ZL=='线材' && arr[ii].CXNAME=='邯钢其他')
+                        {
+                            if (k63 == 0)
+                            {
+                                while (jj < res[0].length) {
+                                    if (res[0][jj].ZL == '线材' && res[0][jj].CXNAME == '邯钢其他')
+                                    {
+                                        arr.splice(ii, 0, res[0][jj])
+                                    }
+                                    jj++
+                                }
+                                ii--
+                                k63++
+                            }
+                        }
+                        else if(arr[ii].ZL=='线材' && arr[ii].CXNAME=='宣钢其他')
+                        {
+                            if (k64 == 0)
+                            {
+                                while (jj < res[0].length) {
+                                    if (res[0][jj].ZL == '线材' && res[0][jj].CXNAME == '宣钢其他')
+                                    {
+                                        arr.splice(ii, 0, res[0][jj])
+                                    }
+                                    jj++
+                                }
+                                ii--
+                                k64++
+                            }
+                        }
+                        else if(arr[ii].ZL=='线材' && arr[ii].CXNAME=='承钢其他')
+                        {
+                            if (k65 == 0)
+                            {
+                                while (jj < res[0].length) {
+                                    if (res[0][jj].ZL == '线材' && res[0][jj].CXNAME == '承钢其他')
+                                    {
+                                        arr.splice(ii, 0, res[0][jj])
+                                    }
+                                    jj++
+                                }
+                                ii--
+                                k65++
+                            }
+                        }
+                        else if(arr[ii].ZL=='线材' && arr[ii].CXNAME=='舞钢其他')
+                        {
+                            if (k66 == 0)
+                            {
+                                while (jj < res[0].length) {
+                                    if (res[0][jj].ZL == '线材' && res[0][jj].CXNAME == '舞钢其他')
+                                    {
+                                        arr.splice(ii, 0, res[0][jj])
+                                    }
+                                    jj++
+                                }
+                                ii--
+                                k66++
+                            }
+                        }
+                        else if(arr[ii].ZL=='线材' && arr[ii].CXNAME=='石钢其他')
+                        {
+                            if (k67 == 0)
+                            {
+                                while (jj < res[0].length) {
+                                    if (res[0][jj].ZL == '线材' && res[0][jj].CXNAME == '石钢其他')
+                                    {
+                                        arr.splice(ii, 0, res[0][jj])
+                                    }
+                                    jj++
+                                }
+                                ii--
+                                k67++
+                            }
+                        }
+                        else if(arr[ii].ZL=='线材' && arr[ii].CXNAME=='衡板其他')
+                        {
+                            if (k68 == 0)
+                            {
+                                while (jj < res[0].length) {
+                                    if (res[0][jj].ZL == '线材' && res[0][jj].CXNAME == '衡板其他')
+                                    {
+                                        arr.splice(ii, 0, res[0][jj])
+                                    }
+                                    jj++
+                                }
+                                ii--
+                                k68++
+                            }
+                        }
+                        else if(arr[ii].ZL=='型材' && arr[ii].CXNAME=='唐钢中型')
+                        {
+                            if (k69 == 0)
+                            {
+                                while (jj < res[0].length) {
+                                    if (res[0][jj].ZL == '型材' && res[0][jj].CXNAME == '唐钢中型')
+                                    {
+                                        arr.splice(ii, 0, res[0][jj])
+                                    }
+                                    jj++
+                                }
+                                ii--
+                                k69++
+                            }
+                        }
+                        else if(arr[ii].ZL=='型材' && arr[ii].CXNAME=='唐钢大型')
+                        {
+                            if (k70 == 0)
+                            {
+                                while (jj < res[0].length) {
+                                    if (res[0][jj].ZL == '型材' && res[0][jj].CXNAME == '唐钢大型')
+                                    {
+                                        arr.splice(ii, 0, res[0][jj])
+                                    }
+                                    jj++
+                                }
+                                ii--
+                                k70++
+                            }
+                        }
+                        else if(arr[ii].ZL=='型材' && arr[ii].CXNAME=='宣钢型材')
+                        {
+                            if (k71 == 0)
+                            {
+                                while (jj < res[0].length) {
+                                    if (res[0][jj].ZL == '型材' && res[0][jj].CXNAME == '宣钢型材')
+                                    {
+                                        arr.splice(ii, 0, res[0][jj])
+                                    }
+                                    jj++
+                                }
+                                ii--
+                                k71++
+                            }
+                        }
+                        else if(arr[ii].ZL=='型材' && arr[ii].CXNAME=='邯钢型材')
+                        {
+                            if (k72 == 0)
+                            {
+                                while (jj < res[0].length) {
+                                    if (res[0][jj].ZL == '型材' && res[0][jj].CXNAME == '邯钢型材')
+                                    {
+                                        arr.splice(ii, 0, res[0][jj])
+                                    }
+                                    jj++
+                                }
+                                ii--
+                                k72++
+                            }
+                        }
+                        else if(arr[ii].ZL=='型材' && arr[ii].CXNAME=='唐钢其他')
+                        {
+                            if (k73 == 0)
+                            {
+                                while (jj < res[0].length) {
+                                    if (res[0][jj].ZL == '型材' && res[0][jj].CXNAME == '唐钢其他')
+                                    {
+                                        arr.splice(ii, 0, res[0][jj])
+                                    }
+                                    jj++
+                                }
+                                ii--
+                                k73++
+                            }
+                        }
+                        else if(arr[ii].ZL=='型材' && arr[ii].CXNAME=='邯钢其他')
+                        {
+                            if (k74 == 0)
+                            {
+                                while (jj < res[0].length) {
+                                    if (res[0][jj].ZL == '型材' && res[0][jj].CXNAME == '邯钢其他')
+                                    {
+                                        arr.splice(ii, 0, res[0][jj])
+                                    }
+                                    jj++
+                                }
+                                ii--
+                                k74++
+                            }
+                        }
+                        else if(arr[ii].ZL=='型材' && arr[ii].CXNAME=='宣钢其他')
+                        {
+                            if (k75 == 0)
+                            {
+                                while (jj < res[0].length) {
+                                    if (res[0][jj].ZL == '型材' && res[0][jj].CXNAME == '宣钢其他')
+                                    {
+                                        arr.splice(ii, 0, res[0][jj])
+                                    }
+                                    jj++
+                                }
+                                ii--
+                                k75++
+                            }
+                        }
+                        else if(arr[ii].ZL=='型材' && arr[ii].CXNAME=='承钢其他')
+                        {
+                            if (k76 == 0)
+                            {
+                                while (jj < res[0].length) {
+                                    if (res[0][jj].ZL == '型材' && res[0][jj].CXNAME == '承钢其他')
+                                    {
+                                        arr.splice(ii, 0, res[0][jj])
+                                    }
+                                    jj++
+                                }
+                                ii--
+                                k76++
+                            }
+                        }
+                        else if(arr[ii].ZL=='型材' && arr[ii].CXNAME=='舞钢其他')
+                        {
+                            if (k77 == 0)
+                            {
+                                while (jj < res[0].length) {
+                                    if (res[0][jj].ZL == '型材' && res[0][jj].CXNAME == '舞钢其他')
+                                    {
+                                        arr.splice(ii, 0, res[0][jj])
+                                    }
+                                    jj++
+                                }
+                                ii--
+                                k77++
+                            }
+                        }
+                        else if(arr[ii].ZL=='型材' && arr[ii].CXNAME=='石钢其他')
+                        {
+                            if (k78 == 0)
+                            {
+                                while (jj < res[0].length) {
+                                    if (res[0][jj].ZL == '型材' && res[0][jj].CXNAME == '石钢其他')
+                                    {
+                                        arr.splice(ii, 0, res[0][jj])
+                                    }
+                                    jj++
+                                }
+                                ii--
+                                k78++
+                            }
+                        }
+                        else if(arr[ii].ZL=='型材' && arr[ii].CXNAME=='衡板其他')
+                        {
+                            if (k79 == 0)
+                            {
+                                while (jj < res[0].length) {
+                                    if (res[0][jj].ZL == '型材' && res[0][jj].CXNAME == '衡板其他')
+                                    {
+                                        arr.splice(ii, 0, res[0][jj])
+                                    }
+                                    jj++
+                                }
+                                ii--
+                                k79++
+                            }
+                        }
+                        else if(arr[ii].ZL=='圆钢' && arr[ii].CXNAME=='宣钢圆钢')
+                        {
+                            if (k80 == 0)
+                            {
+                                while (jj < res[0].length) {
+                                    if (res[0][jj].ZL == '圆钢' && res[0][jj].CXNAME == '宣钢圆钢')
+                                    {
+                                        arr.splice(ii, 0, res[0][jj])
+                                    }
+                                    jj++
+                                }
+                                ii--
+                                k80++
+                            }
+                        }
+                        else if(arr[ii].ZL=='圆钢' && arr[ii].CXNAME=='石钢圆钢')
+                        {
+                            if (k81 == 0)
+                            {
+                                while (jj < res[0].length) {
+                                    if (res[0][jj].ZL == '圆钢' && res[0][jj].CXNAME == '石钢圆钢')
+                                    {
+                                        arr.splice(ii, 0, res[0][jj])
+                                    }
+                                    jj++
+                                }
+                                ii--
+                                k81++
+                            }
+                        }
+                        else if(arr[ii].ZL=='圆钢' && arr[ii].CXNAME=='邯钢圆钢')
+                        {
+                            if (k82 == 0)
+                            {
+                                while (jj < res[0].length) {
+                                    if (res[0][jj].ZL == '圆钢' && res[0][jj].CXNAME == '邯钢圆钢')
+                                    {
+                                        arr.splice(ii, 0, res[0][jj])
+                                    }
+                                    jj++
+                                }
+                                ii--
+                                k82++
+                            }
+                        }
+                        else if(arr[ii].ZL=='圆钢' && arr[ii].CXNAME=='唐钢其他')
+                        {
+                            if (k83 == 0)
+                            {
+                                while (jj < res[0].length) {
+                                    if (res[0][jj].ZL == '圆钢' && res[0][jj].CXNAME == '唐钢其他')
+                                    {
+                                        arr.splice(ii, 0, res[0][jj])
+                                    }
+                                    jj++
+                                }
+                                ii--
+                                k83++
+                            }
+                        }
+                        else if(arr[ii].ZL=='圆钢' && arr[ii].CXNAME=='邯钢其他')
+                        {
+                            if (k84 == 0)
+                            {
+                                while (jj < res[0].length) {
+                                    if (res[0][jj].ZL == '圆钢' && res[0][jj].CXNAME == '邯钢其他')
+                                    {
+                                        arr.splice(ii, 0, res[0][jj])
+                                    }
+                                    jj++
+                                }
+                                ii--
+                                k84++
+                            }
+                        }
+                        else if(arr[ii].ZL=='圆钢' && arr[ii].CXNAME=='宣钢其他')
+                        {
+                            if (k85 == 0)
+                            {
+                                while (jj < res[0].length) {
+                                    if (res[0][jj].ZL == '圆钢' && res[0][jj].CXNAME == '宣钢其他')
+                                    {
+                                        arr.splice(ii, 0, res[0][jj])
+                                    }
+                                    jj++
+                                }
+                                ii--
+                                k85++
+                            }
+                        }
+                        else if(arr[ii].ZL=='圆钢' && arr[ii].CXNAME=='承钢其他')
+                        {
+                            if (k86 == 0)
+                            {
+                                while (jj < res[0].length) {
+                                    if (res[0][jj].ZL == '圆钢' && res[0][jj].CXNAME == '承钢其他')
+                                    {
+                                        arr.splice(ii, 0, res[0][jj])
+                                    }
+                                    jj++
+                                }
+                                ii--
+                                k86++
+                            }
+                        }
+                        else if(arr[ii].ZL=='圆钢' && arr[ii].CXNAME=='舞钢其他')
+                        {
+                            if (k87 == 0)
+                            {
+                                while (jj < res[0].length) {
+                                    if (res[0][jj].ZL == '圆钢' && res[0][jj].CXNAME == '舞钢其他')
+                                    {
+                                        arr.splice(ii, 0, res[0][jj])
+                                    }
+                                    jj++
+                                }
+                                ii--
+                                k87++
+                            }
+                        }
+                        else if(arr[ii].ZL=='圆钢' && arr[ii].CXNAME=='石钢其他')
+                        {
+                            if (k88 == 0)
+                            {
+                                while (jj < res[0].length) {
+                                    if (res[0][jj].ZL == '圆钢' && res[0][jj].CXNAME == '石钢其他')
+                                    {
+                                        arr.splice(ii, 0, res[0][jj])
+                                    }
+                                    jj++
+                                }
+                                ii--
+                                k88++
+                            }
+                        }
+                        else if(arr[ii].ZL=='圆钢' && arr[ii].CXNAME=='衡板其他')
+                        {
+                            if (k89 == 0)
+                            {
+                                while (jj < res[0].length) {
+                                    if (res[0][jj].ZL == '圆钢' && res[0][jj].CXNAME == '衡板其他')
+                                    {
+                                        arr.splice(ii, 0, res[0][jj])
+                                    }
+                                    jj++
+                                }
+                                ii--
+                                k89++
+                            }
+                        }
+                        else if(arr[ii].ZL=='中厚板' && arr[ii].CXNAME=='唐钢中厚板')
+                        {
+                            if (k90 == 0)
+                            {
+                                while (jj < res[0].length) {
+                                    if (res[0][jj].ZL == '中厚板' && res[0][jj].CXNAME == '唐钢中厚板')
+                                    {
+                                        arr.splice(ii, 0, res[0][jj])
+                                    }
+                                    jj++
+                                }
+                                ii--
+                                k90++
+                            }
+                        }
+                        else if(arr[ii].ZL=='中厚板' && arr[ii].CXNAME=='舞钢中厚板')
+                        {
+                            if (k91 == 0)
+                            {
+                                while (jj < res[0].length) {
+                                    if (res[0][jj].ZL == '中厚板' && res[0][jj].CXNAME == '舞钢中厚板')
+                                    {
+                                        arr.splice(ii, 0, res[0][jj])
+                                    }
+                                    jj++
+                                }
+                                ii--
+                                k91++
+                            }
+                        }
+                        else if(arr[ii].ZL=='中厚板' && arr[ii].CXNAME=='邯钢中板')
+                        {
+                            if (k92 == 0)
+                            {
+                                while (jj < res[0].length) {
+                                    if (res[0][jj].ZL == '中厚板' && res[0][jj].CXNAME == '邯钢中板')
+                                    {
+                                        arr.splice(ii, 0, res[0][jj])
+                                    }
+                                    jj++
+                                }
+                                ii--
+                                k92++
+                            }
+                        }
+                        else if(arr[ii].ZL=='中厚板' && arr[ii].CXNAME=='唐钢其他')
+                        {
+                            if (k93 == 0)
+                            {
+                                while (jj < res[0].length) {
+                                    if (res[0][jj].ZL == '中厚板' && res[0][jj].CXNAME == '唐钢其他')
+                                    {
+                                        arr.splice(ii, 0, res[0][jj])
+                                    }
+                                    jj++
+                                }
+                                ii--
+                                k93++
+                            }
+                        }
+                        else if(arr[ii].ZL=='中厚板' && arr[ii].CXNAME=='邯钢其他')
+                        {
+                            if (k94 == 0)
+                            {
+                                while (jj < res[0].length) {
+                                    if (res[0][jj].ZL == '中厚板' && res[0][jj].CXNAME == '邯钢其他')
+                                    {
+                                        arr.splice(ii, 0, res[0][jj])
+                                    }
+                                    jj++
+                                }
+                                ii--
+                                k94++
+                            }
+                        }
+                        else if(arr[ii].ZL=='中厚板' && arr[ii].CXNAME=='宣钢其他')
+                        {
+                            if (k95 == 0)
+                            {
+                                while (jj < res[0].length) {
+                                    if (res[0][jj].ZL == '中厚板' && res[0][jj].CXNAME == '宣钢其他')
+                                    {
+                                        arr.splice(ii, 0, res[0][jj])
+                                    }
+                                    jj++
+                                }
+                                ii--
+                                k95++
+                            }
+                        }
+                        else if(arr[ii].ZL=='中厚板' && arr[ii].CXNAME=='承钢其他')
+                        {
+                            if (k96 == 0)
+                            {
+                                while (jj < res[0].length) {
+                                    if (res[0][jj].ZL == '中厚板' && res[0][jj].CXNAME == '承钢其他')
+                                    {
+                                        arr.splice(ii, 0, res[0][jj])
+                                    }
+                                    jj++
+                                }
+                                ii--
+                                k96++
+                            }
+                        }
+                        else if(arr[ii].ZL=='中厚板' && arr[ii].CXNAME=='舞钢其他')
+                        {
+                            if (k97 == 0)
+                            {
+                                while (jj < res[0].length) {
+                                    if (res[0][jj].ZL == '中厚板' && res[0][jj].CXNAME == '舞钢其他')
+                                    {
+                                        arr.splice(ii, 0, res[0][jj])
+                                    }
+                                    jj++
+                                }
+                                ii--
+                                k97++
+                            }
+                        }
+                        else if(arr[ii].ZL=='中厚板' && arr[ii].CXNAME=='石钢其他')
+                        {
+                            if (k98 == 0)
+                            {
+                                while (jj < res[0].length) {
+                                    if (res[0][jj].ZL == '中厚板' && res[0][jj].CXNAME == '石钢其他')
+                                    {
+                                        arr.splice(ii, 0, res[0][jj])
+                                    }
+                                    jj++
+                                }
+                                ii--
+                                k98++
+                            }
+                        }
+                        else if(arr[ii].ZL=='中厚板' && arr[ii].CXNAME=='衡板其他')
+                        {
+                            if (k99 == 0)
+                            {
+                                while (jj < res[0].length) {
+                                    if (res[0][jj].ZL == '中厚板' && res[0][jj].CXNAME == '衡板其他')
+                                    {
+                                        arr.splice(ii, 0, res[0][jj])
+                                    }
+                                    jj++
+                                }
+                                ii--
+                                k99++
+                            }
+                        }
+                        ii++
+                        jj=0
+                    }
                     this.data = this.utils.mergeRow(arr, 'CXNAME','ZL',);
                     this.loading = false;
                 });
