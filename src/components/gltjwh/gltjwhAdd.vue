@@ -62,7 +62,7 @@
                             <strong>{{ row.name }}</strong>
                         </template>
                         <template slot-scope="{row}" slot="action">
-                            <Button size="small" style="margin-right: 5px" @click="glzdupdD(row)">移除</Button>
+                            <Button size="small" style="margin-right: 5px" @click="glzdupdD()">移除</Button>
                         </template>
                     </Table>
                 </li>
@@ -71,12 +71,12 @@
                 </li>
                 <li>
                     <Table border stripe :columns="glzcolumn" :data="glzTableData" height="300"  ref="table">
-                        <template slot-scope="{ row }" slot="name">
-                            <strong>{{ row.name }}</strong>
-                        </template>
-                        <template slot-scope="{row}" slot="action">
-                            <Button size="small" style="margin-right: 5px" @click="glzupdD(r)">移除</Button>
-                        </template>
+<!--                        <template slot-scope="{ row }" slot="name">-->
+<!--                            <strong>{{ row.name }}</strong>-->
+<!--                        </template>-->
+<!--                        <template slot-scope="{row}" slot="action">-->
+<!--                            <Button size="small" style="margin-right: 5px" @click="glzupdD()">移除</Button>-->
+<!--                        </template>-->
                     </Table>
                 </li>
             </ul>
@@ -181,6 +181,11 @@
                 bzzTableData:[],
                 glzcolumn:[
                     {
+                        type:'index',
+                        title: '编号',
+                        align: "center"
+                    },
+                    {
                         title: '过滤值',
                         align: "center",
                         key: 'COLUMNVALUE'
@@ -189,6 +194,20 @@
                         title: '操作',
                         slot: 'action',
                         align: 'center',
+                        render: (h, params) => {
+                            return h('div', [
+                                h('Button', {
+                                    props: {
+                                        size: 'small'
+                                    },
+                                    on: {
+                                        click: () => {
+                                            this.glzupdD(params.index)
+                                        }
+                                    }
+                                }, '删除')
+                            ]);
+                        }
                     }
                 ],
                 glzTableData:[]
@@ -331,8 +350,8 @@
                 this.formValidate.glz= bzzarr.toString()
                 this.$emit('glz', this.formValidate.glz)
             },
-            glzupdD(){
-                // this.glzTableData=[]
+            glzupdD(index){
+                this.glzTableData.splice(index, 1)
             },
             getYwmc:function() {
                 this.$emit('ywmc', this.formValidate.ywmc)

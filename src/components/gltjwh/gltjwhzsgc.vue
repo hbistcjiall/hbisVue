@@ -53,7 +53,7 @@
                         </FormItem>
                     </Col>
                     <Col span="6">
-                        <FormItem label="业务名称：" prop="ywmcName" :label-width="120">
+                        <FormItem label="业务名称：" prop="ywmc" :label-width="120">
                             <Input v-model="updformValidate.ywmc" placeholder="请输入业务名称"></Input>
                         </FormItem>
                     </Col>
@@ -67,8 +67,28 @@
                         </FormItem>
                     </Col>
                 </Row>
+                <Row>
+                    <ul style="height:50px;" class="chackipnut">
+                        <li>
+                            <FormItem label="">
+                                <Input v-model="bzdinput" placeholder="请输入要查询的表字段" @on-change="getbzdChange"></Input>
+                            </FormItem>
+                        </li>
+                        <li>
+                            <span>&emsp;</span>
+                        </li>
+                        <li>
+                            <FormItem label="">
+                                <Input v-model="bzzinput" placeholder="请输入要查询的表中值" @on-change="getbzzChange"></Input>
+                            </FormItem>
+                        </li>
+                        <li>
+                            <span>&emsp;</span>
+                        </li>
+                    </ul>
+                </Row>
                 <div style="width: 100%">
-                    <ul class="modalCls">
+                    <ul>
                         <li>
                             <Table :loading="bzdloading" border stripe :columns="bzdcolumn" :data="bzdTableData" height="300"  ref="table">
                                 <template slot-scope="{ row }" slot="name">
@@ -94,12 +114,12 @@
                         </li>
                         <li>
                             <Table border stripe :columns="glzcolumn" :data="glzTableData" height="300"  ref="table">
-                                <template slot-scope="{ row }" slot="name">
-                                    <strong>{{ row.name }}</strong>
-                                </template>
-                                <template slot-scope="{row}" slot="action">
-                                    <Button size="small" style="margin-right: 5px" @click="glzupdD(r)">移除</Button>
-                                </template>
+<!--                                <template slot-scope="{ row }" slot="name">-->
+<!--                                    <strong>{{ row.name }}</strong>-->
+<!--                                </template>-->
+<!--                                <template slot-scope="{row}" slot="action">-->
+<!--                                    <Button size="small" style="margin-right: 5px" @click="glzupdD(r)">移除</Button>-->
+<!--                                </template>-->
                             </Table>
                         </li>
                     </ul>
@@ -121,6 +141,8 @@
         name:'gltjwh',
         data () {
             return {
+                bzdinput:'',
+                bzzinput:'',
                 bzzloading:false,
                 bzdloading:false,
                 updModals:false,
@@ -231,7 +253,7 @@
                     id:''
                 },
                 updruleValidate: {
-                    ywmcName: [
+                    ywmc: [
                         { required: true, message: '业务名称不为空', trigger: 'blur' }
                     ],
                     tableName:[
@@ -278,6 +300,11 @@
                 bzzTableData:[],
                 glzcolumn:[
                     {
+                        type:'index',
+                        title: '编号',
+                        align: "center"
+                    },
+                    {
                         title: '过滤值',
                         align: "center",
                         key: 'COLUMNVALUE'
@@ -286,6 +313,20 @@
                         title: '操作',
                         slot: 'action',
                         align: 'center',
+                        render: (h, params) => {
+                            return h('div', [
+                                h('Button', {
+                                    props: {
+                                        size: 'small'
+                                    },
+                                    on: {
+                                        click: () => {
+                                            this.glzupdD(params.index)
+                                        }
+                                    }
+                                }, '删除')
+                            ]);
+                        }
                     }
                 ],
                 glzTableData:[]
@@ -558,7 +599,7 @@
                 this.bzzloading=true
                 let tableName='tableName='+this.updformValidate.tableName
                 let columnName='columnName='+this.updformValidate.glzd
-                let columnValue='columnValue='+''
+                let columnValue='columnValue='+this.bzzinput
                 fetch(this.$store.state.fetchPath+"/scm-filter/getColumnValue", {
                     method: "POST",
                     headers: {
@@ -603,7 +644,7 @@
                 this.glzTableData=[]
                 this.bzdloading=true
                 let tableName='tableName='+this.updformValidate.tableName
-                let columnName='columnName='+''
+                let columnName='columnName='+this.bzdinput
                 fetch(this.$store.state.fetchPath+"/scm-filter/getColumnName", {
                     method: "POST",
                     headers: {
@@ -623,6 +664,9 @@
                     this.bzdTableData = res
                     this.bzdloading=false
                 })
+            },
+            getbzdChange(){
+                this.getTableName()
             },
             bzdupdD(r){
                 this.glzdTableData=[]
@@ -662,6 +706,32 @@
                 this.bzzTableData =[]
                 this.glzTableData=[]
             },
+            getbzzChange(){
+                this.bzzloading=true
+                let tableName='tableName='+this.updformValidate.tableName
+                let columnName='columnName='+this.updformValidate.glzd
+                let columnValue='columnValue='+this.bzzinput
+                this.bzzTableData=[]
+                fetch(this.$store.state.fetchPath+"/scm-filter/getColumnValue", {
+                    method: "POST",
+                    headers: {
+                        "Content-Type":"application/x-www-form-urlencoded; charset=UTF-8"
+                    },
+                    body:tableName+'&'+columnName+"&"+columnValue,
+                    credentials:'include'
+                })
+                    .then((res) => {
+                        if(res.status!=200){
+                            this.$Message.error('请求失败！');
+                        }else{
+                            return res.text();
+                        }
+                    }).then((res) => {
+                    res = res&&res.length>0?JSON.parse(res):[]
+                    this.bzzTableData = res
+                    this.bzzloading=false
+                })
+            },
             getGlz(){
                 this.glzTableData=this.$refs.szztable.getSelection();
                 let bzzarr=[]
@@ -670,17 +740,10 @@
                 }
                 this.updformValidate.glz= bzzarr.toString()
             },
-            glzupdD(r){
-                window.console.log(r)
+            glzupdD(index){
+                this.glzTableData.splice(index, 1)
             },
             roleok(){
-                // this.updformValidate.ywbm = r.CODE
-                // this.updformValidate.ywmc = r.F_NAME
-                // this.updformValidate.tableName = r.TABLE_NAME
-                // this.updformValidate.glzd = r.F_COLUMN
-                // this.updformValidate.glz = r.C_VALUE
-                // this.updformValidate.bz = r.REMARKS
-                // this.updformValidate.id = r.ID
                 let remark="remark="+this.updformValidate.bz
                 let CValue="CValue="+this.updformValidate.glz
                 let FColumn="FColumn="+this.updformValidate.glzd
@@ -725,12 +788,12 @@
     FormItem {
         float: left;
     }
-    .modalCls{
+    ul{
         list-style: none;
         width: 100%;
         height: 300px;
     }
-    .modalCls li{
+    ul li{
         width: 24%;
         float: left;
     }
