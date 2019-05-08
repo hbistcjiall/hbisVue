@@ -432,13 +432,13 @@
                 });
             },
             downMx(){
-                let zt="&zt="+this.zt;
+                // let zt="&zt="+this.zt;
                 let dwStr = '&dw='+this.dw;
                 let cxArr = '&cx=' +this.cx.toString()
                 let startTime='startTime=';
                 let endTime='&endTime=';
                 this.switchTime?(startTime=startTime+this.utils.formatMonthStart(this.startTime),endTime=endTime+this.utils.formatMonthStart(this.endTime)):(startTime=startTime+ this.utils.formatYearStart(this.year),endTime=endTime+this.utils.formatYearEnd(this.year));
-                this.downloadUrl=this.$store.state.fetchPath + "/export/exportPzgCx?"+startTime+endTime+zt+dwStr+cxArr;
+                this.downloadUrl=this.$store.state.fetchPath + "/export/exportPzgCx?"+startTime+endTime+dwStr+cxArr;
             },
         }
     }
