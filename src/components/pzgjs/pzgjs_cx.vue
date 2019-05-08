@@ -58,9 +58,10 @@
                         </Select>
                     </FormItem>
                 </Col>
-                <Col span="4">
+                <Col span="6">
                     <Button @click="getList()" icon="ios-search" style="margin-right:10px;">查询</Button>
                     <Button @click="downLoad()" icon="ios-cloud-download-outline">导出</Button>
+                    <a :href="downloadUrl"><Button type="primary" style="margin-left:10px">明细导出</Button></a>
                 </Col>
             </Row>
         </Form>
@@ -73,6 +74,7 @@
         name: "pzgjs_cx",
         data() {
             return {
+                downloadUrl:'',
                 loading:true,
                 dw:'全部',
                 zt:'0',
@@ -406,6 +408,7 @@
                     this.data.push(obj)
                     this.data = this.utils.mergeRow(this.data, 'COMPANYNAME');
                     this.loading = false;
+                    this.downMx()
                 });
             },
             changeTitle(){
@@ -427,7 +430,16 @@
                 this.$refs.table.exportCsv({
                     filename: '结算完成（产线）明细'
                 });
-            }
+            },
+            downMx(){
+                let zt="&zt="+this.zt;
+                let dwStr = '&dw='+this.dw;
+                let cxArr = '&cx=' +this.cx.toString()
+                let startTime='startTime=';
+                let endTime='&endTime=';
+                this.switchTime?(startTime=startTime+this.utils.formatMonthStart(this.startTime),endTime=endTime+this.utils.formatMonthStart(this.endTime)):(startTime=startTime+ this.utils.formatYearStart(this.year),endTime=endTime+this.utils.formatYearEnd(this.year));
+                this.downloadUrl=this.$store.state.fetchPath + "/export/exportPzgCx?"+startTime+endTime+zt+dwStr+cxArr;
+            },
         }
     }
 </script>
