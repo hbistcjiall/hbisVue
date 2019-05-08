@@ -1,6 +1,6 @@
 <template>
     <div>
-        <Form :label-width="80">
+        <Form :label-width="80" >
         <Row>
             <Col span="4">
                 <FormItem label="产品类别:">
@@ -36,7 +36,7 @@
                     </Select>
                 </FormItem>
             </Col>
-            <Col span="8" style="float: right">
+            <Col span="7" style="float: right">
                 <Button type="primary" @click="search" style="margin-left:20px" icon="ios-search">查询</Button>
                 <Button type="primary" @click="clearall" style="margin-left:10px">清空</Button>
                 <Button type="primary" @click="pldelect" style="margin-left:10px">批量删除</Button>
@@ -44,7 +44,7 @@
             </Col>
         </Row>
         </Form>
-        <Table :loading="loading" border stripe :columns="columns12" :data="fecthdata6"  style="margin-top: 20px" ref="table"  >
+        <Table :loading="loading" border stripe :columns="columns12" :data="fecthdata6"  style="margin-top: 20px" ref="table" @on-select="panduanduoxuan" @on-select-all="panduanduoxuan" >
             <template slot-scope="{ row }" slot="name">
                 <strong>{{ row.name }}</strong>
             </template>
@@ -53,7 +53,7 @@
                 <Button size="small" @click="remove(row)" style="background:#ff6969;color:#fff;">删除</Button>
             </template>
         </Table>
-        <Page :total="dataCount" :page-size="pageSize" show-total show-elevator show-sizer class="paging" @on-change="changepage" @on-page-size-change='handlePageSize' style="margin-top:20px;"></Page>
+        <Page :total="dataCount" :page-size="pageSize" show-total show-elevator show-sizer class="paging" @on-change="changepage" @on-page-size-change='handlePageSize' style="margin-top:20px;padding-bottom: 120px"></Page>
         <Modal v-model="updModal" title="协议户编辑" :closable='false' @on-ok="updok">
             <Form :model="updformValidate" :rules="updruleValidate" :label-width="90">
                 <FormItem label="协议年份" prop="Yearofagreement">
@@ -101,6 +101,7 @@
         name:'xyhmxlb',
         data () {
             return {
+                duoxuan:false,
                 loading:true,
                 updModal:false,
                 downloadUrl:'',
@@ -239,6 +240,9 @@
             this.handleListApproveHistory();
         },
         methods: {
+            panduanduoxuan(){
+                this.duoxuan=true;
+                },
             handleListApproveHistory() {
                 this.year?this.xyhmxlbData.protocolYear=new Date(this.year).getFullYear():'';
                 this.begin?this.xyhmxlbData.beginTime=this.utils.format(this.begin):'';
@@ -379,32 +383,40 @@
                     })
             },
             pldelect(){
-                this.$Modal.confirm({
-                    title: '提示',
-                    content: '确认删除吗？',
-                    onOk: () => {
-                        let a=this.$refs.table.getSelection();
-                        for(let i=0;i<a.length;i++){
-                            this.plDelectData.push(a[i].PROTOCOLACCOUNTID);
+                if(this.duoxuan==false)
+                {
+                    alert('请选择要删除的数据')
+                }
+                else
+                {
+                    this.$Modal.confirm({
+                        title: '提示',
+                        content: '确认删除吗？',
+                        onOk: () => {
+                            let a=this.$refs.table.getSelection();
+                            for(let i=0;i<a.length;i++){
+                                this.plDelectData.push(a[i].PROTOCOLACCOUNTID);
+                            }
+                            fetch(this.$store.state.fetchPath + "/protocolAccountDetails/deleteList", {
+                                method: "POST",
+                                headers: this.$store.state.fetchHeader,
+                                body: "idList="+this.plDelectData,
+                                credentials:'include'
+                            })
+                                .then((res) => {
+                                    if(res.status!=200){
+                                        this.$Message.error('请求失败！');
+                                    }else{
+                                        return res.text();
+                                    }
+                                })
+                                .then(() => {
+                                    this.handleListApproveHistory();
+                                })
                         }
-                        fetch(this.$store.state.fetchPath + "/protocolAccountDetails/deleteList", {
-                            method: "POST",
-                            headers: this.$store.state.fetchHeader,
-                            body: "idList="+this.plDelectData,
-                            credentials:'include'
-                        })
-                            .then((res) => {
-                                if(res.status!=200){
-                                    this.$Message.error('请求失败！');
-                                }else{
-                                    return res.text();
-                                }
-                            })
-                            .then(() => {
-                                this.handleListApproveHistory();
-                            })
-                    }
-                });
+                    });
+                }
+
             }
         }
     }
