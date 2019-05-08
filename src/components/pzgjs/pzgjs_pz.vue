@@ -355,7 +355,7 @@
                         BZ:result9
 
                     }
-                    this.data.push(obj)
+                    this.data.unshift(obj)
                     this.loading = false;
                 });
             },
