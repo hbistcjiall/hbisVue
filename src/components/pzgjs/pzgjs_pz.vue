@@ -121,18 +121,18 @@
                             }
                         ]
                     },
-                    {
-                        title: '环比',
-                        key: 'HB',
-                        align: 'center',
-                        width: 90,
-                        render: (h, params) => {
-                            params.row[params.column.key]=params.row[params.column.key]==null?'0.00':params.row[params.column.key];
-                            return h('span',
-                                Number(params.row[params.column.key]).toFixed(2)+"%"
-                            )
-                        }
-                    },
+                    // {
+                    //     title: '环比',
+                    //     key: 'HB',
+                    //     align: 'center',
+                    //     width: 90,
+                    //     render: (h, params) => {
+                    //         params.row[params.column.key]=params.row[params.column.key]==null?'0.00':params.row[params.column.key];
+                    //         return h('span',
+                    //             Number(params.row[params.column.key]).toFixed(2)+"%"
+                    //         )
+                    //     }
+                    // },
                     {
                         title: '专业公司',
                         key: 'zygs',
