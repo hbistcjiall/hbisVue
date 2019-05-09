@@ -38,7 +38,6 @@
                 <Col span="4" style="margin-left: 20px">
                     <FormItem label="借贷：">
                         <Select v-model="jd">
-                            <Option value="全部">全部</Option>
                             <Option value="1">是</Option>
                             <Option value="0">否</Option>
                         </Select>
@@ -62,7 +61,7 @@
         name: "xsjsqkhz",
         data() {
             return {
-                jd:'全部',
+                jd:'0',
                 pz:'全部',
                 cx:[],
                 cxData:[],
