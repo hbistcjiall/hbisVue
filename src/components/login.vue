@@ -21,7 +21,7 @@
         <div class="LoginCss">
             <Form ref="formInline" :model="formInline" :rules="ruleInline" inline class="form">
                 <p style="font-size:23px;color: #5e9cdb;font-weight: 700;padding-top: 37px">河钢销售营销数据中心</p>
-                <p style="color: #B3B3B3;padding-bottom: 30px;font-size:17px">Hbis Sales Marketing Data Center</p>
+                <p style="color: #B3B3B3;padding-bottom: 30px;font-size:17px">HBIS SALES MARKETING DATA CENTER</p>
                 <FormItem prop="username" class="formitem">
                     <Input type="text" v-model="formInline.username" placeholder="用户">
                         <Icon type="ios-person-outline" slot="prepend" style="font-size: 20px;color: #8ABEF2;font-weight: 800"></Icon>
