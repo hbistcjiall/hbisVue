@@ -42,7 +42,13 @@
                 <Button type="primary" @click="pldelect" style="margin-left:10px">批量删除</Button>
                 <a :href="downloadUrl"><Button type="primary" style="margin-left:10px">导出</Button></a>
             </Col>
+
         </Row>
+            <Row>
+                <Col span="2">
+                    <a :href="downloadMb"><Button type="primary" style="margin-left:10px">下载模版</Button></a>
+                </Col>
+            </Row>
         </Form>
         <Table :loading="loading" border stripe :columns="columns12" :data="fecthdata6"  style="margin-top: 20px" ref="table" @on-select="panduanduoxuan" @on-select-all="panduanduoxuan" >
             <template slot-scope="{ row }" slot="name">
@@ -101,6 +107,7 @@
         name:'xyhmxlb',
         data () {
             return {
+                downloadMb:'',
                 duoxuan:false,
                 loading:true,
                 updModal:false,
@@ -274,6 +281,7 @@
                         this.fecthdata6 = this.resDatas.slice(0,this.pageSize);
                     }
                     this.downLoad();
+                    this.downloadMbban();
                     this.loading = false;
                 })
             },
@@ -324,6 +332,9 @@
                 this.downloadData.varieties = this.xyhmxlbData.varieties;
                 this.downloadData.steelMills = this.xyhmxlbData.steelMills;
                 this.downloadUrl=this.$store.state.fetchPath + "/protocolAccountDetails/exportlist?"+this.utils.formatParams(this.downloadData);
+            },
+            downloadMbban(){
+                this.downloadMb=this.$store.state.fetchPath + "/export/exportAgreement";
             },
             remove (r) {
                 this.$Modal.confirm({
