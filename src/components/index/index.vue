@@ -24,7 +24,7 @@
         float: left;
         margin-left: -30px;
         position: relative;
-        background-image: url("../../assets/indexImg/inLog2.png");
+        background-image: url("../../assets/indexImg/inLog3.png");
         background-size: 100% 100%;
     }
 
