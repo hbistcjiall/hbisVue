@@ -2,29 +2,35 @@
     <div>
         <Form :label-width="100">
             <Row>
-                <Col span="4">
-                    <FormItem label="年份：" style="margin-left:-30px;">
-                        <DatePicker type="year" placeholder="年份" :editable="false" :clearable="false" v-model="zyjhcx.nf" style="width:150px"></DatePicker>
+                <Col span="4" >
+                    <FormItem label="日期：" style="width:120px;">
+                        <DatePicker type="month" placeholder="请选择" :editable="false" :clearable="false"
+                                    v-model="startTime" style="width:120px;"></DatePicker>
                     </FormItem>
                 </Col>
-                <Col span="4">
-                    <FormItem label="月份：">
-                        <Select style="width:120px"  v-model="zyjhcx.yf" placeholder="请选择月份">
-                            <Option value="1">1月</Option>
-                            <Option value="2">2月</Option>
-                            <Option value="3">3月</Option>
-                            <Option value="4">4月</Option>
-                            <Option value="5">5月</Option>
-                            <Option value="6">6月</Option>
-                            <Option value="7">7月</Option>
-                            <Option value="8">8月</Option>
-                            <Option value="9">9月</Option>
-                            <Option value="10">10月</Option>
-                            <Option value="11">11月</Option>
-                            <Option value="12">12月</Option>
-                        </Select>
-                    </FormItem>
-                </Col>
+                <!--<Col span="4">-->
+                    <!--<FormItem label="年份：" style="margin-left:-30px;">-->
+                        <!--<DatePicker type="year" placeholder="年份" :editable="false" :clearable="false" v-model="zyjhcx.nf" style="width:150px"></DatePicker>-->
+                    <!--</FormItem>-->
+                <!--</Col>-->
+                <!--<Col span="4">-->
+                    <!--<FormItem label="月份：">-->
+                        <!--<Select style="width:120px"  v-model="zyjhcx.yf" placeholder="请选择月份">-->
+                            <!--<Option value="1">1月</Option>-->
+                            <!--<Option value="2">2月</Option>-->
+                            <!--<Option value="3">3月</Option>-->
+                            <!--<Option value="4">4月</Option>-->
+                            <!--<Option value="5">5月</Option>-->
+                            <!--<Option value="6">6月</Option>-->
+                            <!--<Option value="7">7月</Option>-->
+                            <!--<Option value="8">8月</Option>-->
+                            <!--<Option value="9">9月</Option>-->
+                            <!--<Option value="10">10月</Option>-->
+                            <!--<Option value="11">11月</Option>-->
+                            <!--<Option value="12">12月</Option>-->
+                        <!--</Select>-->
+                    <!--</FormItem>-->
+                <!--</Col>-->
                 <Col span="4">
                     <FormItem label="品种：">
                         <Select v-model="zyjhcx.pz" placeholder="请选择品种" @on-change="getCx">
@@ -34,6 +40,13 @@
                             <Option value="宽厚板">宽厚板</Option>
                             <Option value="棒线">棒线</Option>
                             <Option value="型带">型带</Option>
+                        </Select>
+                    </FormItem>
+                </Col>
+                <Col span="6">
+                    <FormItem label="产线：" style="margin-left: -42px">
+                        <Select  v-model="cx" style="width:235px" placeholder="请选择产线" filterable multiple>
+                            <Option v-for="item in cxData" :value="item.value" :key="item.value">{{ item.label }}</Option>
                         </Select>
                     </FormItem>
                 </Col>
@@ -48,23 +61,16 @@
                         </Select>
                     </FormItem>
                 </Col>
-                <Col span="6">
-                    <FormItem label="产线：">
-                        <Select  v-model="cx" style="width:235px" placeholder="请选择产线" filterable multiple>
-                            <Option v-for="item in cxData" :value="item.value" :key="item.value">{{ item.label }}</Option>
-                        </Select>
-                    </FormItem>
-                </Col>
-            </Row>
-            <Row style="margin-bottom: 10px">
                 <Col span="4">
                     <Button @click="getList()" icon="ios-search" style="margin-right:10px;">查询</Button>
                     <Button @click="downLoad()" icon="ios-cloud-download-outline">导出</Button>
                 </Col>
                 <Col span="2" style="line-height: 30px;margin-top: 10px;float: right">
-                    <p>单位：吨</p>
                 </Col>
             </Row>
+            <!--<Row style="margin-bottom: 10px">-->
+
+            <!--</Row>-->
         </Form>
         <Table :loading="loading" :columns="columns" :data="data" border height="600" ref="table"></Table>
     </div>
@@ -78,10 +84,11 @@
                 loading:true,
                 zyjhcx:{
                     pz:'全部',
-                    nf:'2019',
-                    yf:'4',
+                    // nf:2019,
+                    //yf:4
                     xszt:''
                 },
+                startTime:new Date(),
                 cx:[],
                 pzData:[],
                 cxData:[],
@@ -111,9 +118,14 @@
                         key: 'FL_NAME'
                     },
                     {
-                        title: '计划量',
+                        title: '计划量(吨)',
                         align: "center",
-                        key: 'JHL'
+                        key: 'JHL',
+                        render: (h, params) => {
+                            return h('span',
+                                params.row[params.column.key]=params.row[params.column.key]==''?'0.00':params.row[params.column.key]
+                            )
+                        }
                     }
                 ],
                 data: []
@@ -127,15 +139,17 @@
             getList() {
                 this.loading = true;
                 let cx = 'cx='+this.cx.toString();
-                if(this.zyjhcx.nf!=''){
-                    this.zyjhcx.nf=new Date(this.zyjhcx.nf).getFullYear().toString()
-                }else{
-                    this.zyjhcx.nf=''
-                }
+                let startTime = 'startTime=';
+                startTime = startTime + (this.utils.formatMonthStart(this.startTime)).substring(0, 7);
+            // if(this.zyjhcx.nf!=''){
+                //     this.zyjhcx.nf=new Date(this.zyjhcx.nf).getFullYear().toString()
+                // }else{
+                //     this.zyjhcx.nf=''
+                // }
                 fetch(this.$store.state.fetchPath + "/scm-steel-settle/getzyjh", {
                     method: "POST",
                     headers: this.$store.state.fetchHeader,
-                    body: this.utils.formatParams(this.zyjhcx)+'&'+cx,
+                    body: this.utils.formatParams(this.zyjhcx)+'&'+cx+'&'+startTime,
                     credentials: 'include'
                 }).then((res) => {
                     if(res.status!=200){
