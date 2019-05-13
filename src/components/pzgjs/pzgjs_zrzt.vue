@@ -78,7 +78,7 @@
                 zrbm: '',
                 columns:[
                     {
-                        title: '责任部门',
+                        title: '责任单位',
                         key: 'COMPANYNAME',
                         align: 'center',
                     },
