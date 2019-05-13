@@ -6,10 +6,10 @@
                     <FormItem label="日期：">
                         <DatePicker type="month" placeholder="开始时间" :editable="false" :clearable="false"
                                     v-model="startTime"
-                                    style="width:110px;margin-left: -80px"></DatePicker>
+                                    style="width:110px;margin-left: -75px"></DatePicker>
                         <DatePicker type="month" placeholder="结束时间" :editable="false" :clearable="false"
                                     v-model="endTime"
-                                    style="width:110px"></DatePicker>
+                                    style="width:110px;margin-left: 10px;"></DatePicker>
                     </FormItem>
                 </Col>
                 <Col span="4">
@@ -114,7 +114,7 @@
                         key: '',
                         children: [
                             {
-                                title: '销量',
+                                title: '销量(吨)',
                                 align: "center",
                                 width: '80',
                                 key: 'ZYFKIMG',
@@ -126,7 +126,7 @@
                                 }
                             },
                             {
-                                title: '均价',
+                                title: '均价(元/吨)',
                                 align: "center",
                                 width: '80',
                                 key: 'ZYSJ',
@@ -158,7 +158,7 @@
                         key: '',
                         children: [
                             {
-                                title: '销量',
+                                title: '销量(吨)',
                                 align: "center",
                                 width: '80',
                                 key: 'FGSFKIMG',
@@ -170,7 +170,7 @@
                                 }
                             },
                             {
-                                title: '均价',
+                                title: '均价(元/吨)',
                                 align: "center",
                                 width: '80',
                                 key: 'FGSSJ',
@@ -201,7 +201,7 @@
                         key: '',
                         children: [
                             {
-                                title: '销量',
+                                title: '销量(吨)',
                                 align: "center",
                                 width: '80',
                                 key: 'SYBFKIMG',
@@ -213,7 +213,7 @@
                                 }
                             },
                             {
-                                title: '均价',
+                                title: '均价(元/吨)',
                                 align: "center",
                                 width: '80',
                                 key: 'SYBSJ',
@@ -244,7 +244,7 @@
                         key: '',
                         children: [
                             {
-                                title: '销量',
+                                title: '销量(吨)',
                                 align: "center",
                                 width: '80',
                                 key: 'XHFKIMG',
@@ -256,7 +256,7 @@
                                 }
                             },
                             {
-                                title: '均价',
+                                title: '均价(元/吨)',
                                 align: "center",
                                 width: '80',
                                 key: 'XHSJ',
@@ -287,7 +287,7 @@
                         key: '',
                         children: [
                             {
-                                title: '销量',
+                                title: '销量(吨)',
                                 align: "center",
                                 width: '80',
                                 key: 'ZBGSFKIMG',
@@ -299,7 +299,7 @@
                                 }
                             },
                             {
-                                title: '均价',
+                                title: '均价(元/吨)',
                                 align: "center",
                                 width: '80',
                                 key: 'ZBGSSJ',
