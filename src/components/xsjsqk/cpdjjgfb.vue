@@ -623,293 +623,293 @@
                         switch (resed[i].ZL) {
                             case "热板":
                                 reban.push(resed[i])
-                                if(reban.length>0)
-                                {
-                                    let j=0;
-                                    while(j<reban.length) {
-                                        switch (reban[j].PRODUCT_GRADE) {
-                                            case '普材':
-                                                reban_pucai.push(reban[j]);
-                                                break;
-                                            case '品种钢':
-                                                reban_pinzhonggang.push(reban[j]);
-                                                break;
-                                            case '高端产品':
-                                                reban_gaoduan.push(reban[j]);
-                                                break;
-                                            case '特色战略产品':
-                                                reban_tese.push(reban[j]);
-                                                break;
-                                            case '其他':
-                                                reban_qita.push(reban[j]);
-                                                break;
-                                        }
-                                        j++
-                                    }
-
-                                }
                                 break;
                             case '薄板':
                                 baoban.push(resed[i]);
-                                if(baoban.length>0)
-                                {
-                                    let j=0;
-                                    while(j<baoban.length) {
-                                        switch (baoban[j].PRODUCT_GRADE) {
-                                            case '普材':
-                                                baoban_pucai.push(baoban[j]);
-                                                break;
-                                            case '品种钢':
-                                                baoban_pinzhonggang.push(baoban[j]);
-                                                break;
-                                            case '高端产品':
-                                                baoban_gaoduan.push(baoban[j]);
-                                                break;
-                                            case '特色战略产品':
-                                                baoban_tese.push(baoban[j]);
-                                                break;
-                                            case '其他':
-                                                baoban_qita.push(baoban[j]);
-                                                break;
-                                        }
-                                        j++
-                                    }
-                                }
-
                                 break;
                             case "冷板":
                                 lengban.push(resed[i])
-                                if(lengban.length>0)
-                                {
-                                    let j=0;
-                                    while(j<lengban.length) {
-                                        switch (lengban[j].PRODUCT_GRADE) {
-                                            case '普材':
-                                                lengban_pucai.push(lengban[j]);
-                                                break;
-                                            case '品种钢':
-                                                lengban_pinzhonggang.push(lengban[j]);
-                                                break;
-                                            case '高端产品':
-                                                lengban_gaoduan.push(lengban[j]);
-                                                break;
-                                            case '特色战略产品':
-                                                lengban_tese.push(lengban[j]);
-                                                break;
-                                            case '其他':
-                                                lengban_qita.push(lengban[j]);
-                                                break;
-                                        }
-                                        j++
-                                    }
-
-                                }
-
                                 break;
                             case '螺纹钢':
                                 luowengang.push(resed[i])
-                                if(luowengang.length>0)
-                                {
-                                    let j=0;
-                                    while(j<luowengang.length) {
-                                        switch (luowengang[j].PRODUCT_GRADE) {
-                                            case '普材':
-                                                luowengang_pucai.push(luowengang[j]);
-                                                break;
-                                            case '品种钢':
-                                                luowengang_pinzhonggang.push(luowengang[j]);
-                                                break;
-                                            case '高端产品':
-                                                luowengang_gaoduan.push(luowengang[j]);
-                                                break;
-                                            case '特色战略产品':
-                                                luowengang_tese.push(luowengang[j]);
-                                                break;
-                                            case '其他':
-                                                luowengang_qita.push(luowengang[j]);
-                                                break;
-                                        }
-                                        j++
-                                    }
-
-                                }
-
                                 break;
                             case '酸洗':
                                 suanxi.push(resed[i])
-                                if(suanxi.length>0)
-                                {
-                                    let j=0;
-                                    while(j<suanxi.length) {
-                                        switch (suanxi[j].PRODUCT_GRADE) {
-                                            case '普材':
-                                                suanxi_pucai.push(suanxi[j]);
-                                                break;
-                                            case '品种钢':
-                                                suanxi_pinzhonggang.push(suanxi[j]);
-                                                break;
-                                            case '高端产品':
-                                                suanxi_gaoduan.push(suanxi[j]);
-                                                break;
-                                            case '特色战略产品':
-                                                suanxi_tese.push(suanxi[j]);
-                                                break;
-                                            case '其他':
-                                                suanxi_qita.push(suanxi[j]);
-                                                break;
-                                        }
-                                        j++
-                                    }
-
-                                }
-
                                 break;
                             case '镀锌':
                                 duxin.push(resed[i])
-                                if(duxin.length>0)
-                                {
-                                    let j=0;
-                                    while(j<duxin.length) {
-                                        switch (duxin[j].PRODUCT_GRADE) {
-                                            case '普材':
-                                                duxin_pucai.push(duxin[j]);
-                                                break;
-                                            case '品种钢':
-                                                duxin_pinzhonggang.push(duxin[j]);
-                                                break;
-                                            case '高端产品':
-                                                duxin_gaoduan.push(duxin[j]);
-                                                break;
-                                            case '特色战略产品':
-                                                duxin_tese.push(duxin[j]);
-                                                break;
-                                            case '其他':
-                                                duxin_qita.push(duxin[j]);
-                                                break;
-                                        }
-                                        j++
-                                    }
-
-                                }
-
                                 break;
                             case "线材":
                                 xiancai.push(res[1][i])
-                                if(xiancai.length>0)
-                                {
-                                    let j=0;
-                                    while(j<xiancai.length) {
-                                        switch (xiancai[j].PRODUCT_GRADE) {
-                                            case '普材':
-                                                xiancai_pucai.push(xiancai[j]);
-                                                break;
-                                            case '品种钢':
-                                                xiancai_pinzhonggang.push(xiancai[j]);
-                                                break;
-                                            case '高端产品':
-                                                xiancai_gaoduan.push(xiancai[j]);
-                                                break;
-                                            case '特色战略产品':
-                                                xiancai_tese.push(xiancai[j]);
-                                                break;
-                                            case '其他':
-                                                xiancai_qita.push(xiancai[j]);
-                                                break;
-                                        }
-                                        j++
-                                    }
-
-                                }
-
                                 break;
                             case "型材":
                                 xingcai.push(res[1][i])
-                                if(xingcai.length>0)
-                                {
-                                    let j=0;
-                                    while(j<xingcai.length) {
-                                        switch (xingcai[j].PRODUCT_GRADE) {
-                                            case '普材':
-                                                xingcai_pucai.push(xingcai[j]);
-                                                break;
-                                            case '品种钢':
-                                                xingcai_pinzhonggang.push(xingcai[j]);
-                                                break;
-                                            case '高端产品':
-                                                xingcai_gaoduan.push(xingcai[j]);
-                                                break;
-                                            case '特色战略产品':
-                                                xingcai_tese.push(xingcai[j]);
-                                                break;
-                                            case '其他':
-                                                xingcai_qita.push(xingcai[j]);
-                                                break;
-                                        }
-                                        j++
-                                    }
-
-                                }
-
                                 break;
                             case "圆钢":
                                 yuangang.push(res[1][i])
-                                if(yuangang.length>0)
-                                {
-                                    let j=0;
-                                    while(j<yuangang.length) {
-                                        switch (yuangang[j].PRODUCT_GRADE) {
-                                            case '普材':
-                                                yuangang_pucai.push(yuangang[j]);
-                                                break;
-                                            case '品种钢':
-                                                yuangang_pinzhonggang.push(yuangang[j]);
-                                                break;
-                                            case '高端产品':
-                                                yuangang_gaoduan.push(yuangang[j]);
-                                                break;
-                                            case '特色战略产品':
-                                                yuangang_tese.push(yuangang[j]);
-                                                break;
-                                            case '其他':
-                                                yuangang_qita.push(yuangang[j]);
-                                                break;
-                                        }
-                                        j++
-                                    }
-
-                                }
-
                                 break;
                             case "中厚板":
                                 zhonghouban.push(res[1][i])
-                                if(zhonghouban.length>0)
-                                {
-                                    let j=0;
-                                    while(j<zhonghouban.length) {
-                                        switch (zhonghouban[j].PRODUCT_GRADE) {
-                                            case '普材':
-                                                zhonghouban_pucai.push(zhonghouban[j]);
-                                                break;
-                                            case '品种钢':
-                                                zhonghouban_pinzhonggang.push(zhonghouban[j]);
-                                                break;
-                                            case '高端产品':
-                                                zhonghouban_gaoduan.push(zhonghouban[j]);
-                                                break;
-                                            case '特色战略产品':
-                                                zhonghouban_tese.push(zhonghouban[j]);
-                                                break;
-                                            case '其他':
-                                                zhonghouban_qita.push(zhonghouban[j]);
-                                                break;
-                                        }
-                                        j++
-                                    }
-
-                                }
                                 break;
                         }
                         i++
+                    }
+
+                    if(reban.length>0)
+                    {
+                        let j=0;
+                        while(j<reban.length) {
+                            switch (reban[j].PRODUCT_GRADE) {
+                                case '普材':
+                                    reban_pucai.push(reban[j]);
+                                    break;
+                                case '品种钢':
+                                    reban_pinzhonggang.push(reban[j]);
+                                    break;
+                                case '高端产品':
+                                    reban_gaoduan.push(reban[j]);
+                                    break;
+                                case '特色战略产品':
+                                    reban_tese.push(reban[j]);
+                                    break;
+                                case '其他':
+                                    reban_qita.push(reban[j]);
+                                    break;
+                            }
+                            j++
+                        }
+                    }
+
+                    if(baoban.length>0)
+                    {
+                        let j=0;
+                        while(j<baoban.length) {
+                            switch (baoban[j].PRODUCT_GRADE) {
+                                case '普材':
+                                    baoban_pucai.push(baoban[j]);
+                                    break;
+                                case '品种钢':
+                                    baoban_pinzhonggang.push(baoban[j]);
+                                    break;
+                                case '高端产品':
+                                    baoban_gaoduan.push(baoban[j]);
+                                    break;
+                                case '特色战略产品':
+                                    baoban_tese.push(baoban[j]);
+                                    break;
+                                case '其他':
+                                    baoban_qita.push(baoban[j]);
+                                    break;
+                            }
+                            j++
+                        }
+                    }
+
+                    if(lengban.length>0)
+                    {
+                        let j=0;
+                        while(j<lengban.length) {
+                            switch (lengban[j].PRODUCT_GRADE) {
+                                case '普材':
+                                    lengban_pucai.push(lengban[j]);
+                                    break;
+                                case '品种钢':
+                                    lengban_pinzhonggang.push(lengban[j]);
+                                    break;
+                                case '高端产品':
+                                    lengban_gaoduan.push(lengban[j]);
+                                    break;
+                                case '特色战略产品':
+                                    lengban_tese.push(lengban[j]);
+                                    break;
+                                case '其他':
+                                    lengban_qita.push(lengban[j]);
+                                    break;
+                            }
+                            j++
+                        }
+                    }
+
+                    if(luowengang.length>0)
+                    {
+                        let j=0;
+                        while(j<luowengang.length) {
+                            switch (luowengang[j].PRODUCT_GRADE) {
+                                case '普材':
+                                    luowengang_pucai.push(luowengang[j]);
+                                    break;
+                                case '品种钢':
+                                    luowengang_pinzhonggang.push(luowengang[j]);
+                                    break;
+                                case '高端产品':
+                                    luowengang_gaoduan.push(luowengang[j]);
+                                    break;
+                                case '特色战略产品':
+                                    luowengang_tese.push(luowengang[j]);
+                                    break;
+                                case '其他':
+                                    luowengang_qita.push(luowengang[j]);
+                                    break;
+                            }
+                            j++
+                        }
+
+                    }
+
+                    if(suanxi.length>0)
+                    {
+                        let j=0;
+                        while(j<suanxi.length) {
+                            switch (suanxi[j].PRODUCT_GRADE) {
+                                case '普材':
+                                    suanxi_pucai.push(suanxi[j]);
+                                    break;
+                                case '品种钢':
+                                    suanxi_pinzhonggang.push(suanxi[j]);
+                                    break;
+                                case '高端产品':
+                                    suanxi_gaoduan.push(suanxi[j]);
+                                    break;
+                                case '特色战略产品':
+                                    suanxi_tese.push(suanxi[j]);
+                                    break;
+                                case '其他':
+                                    suanxi_qita.push(suanxi[j]);
+                                    break;
+                            }
+                            j++
+                        }
+
+                    }
+
+                    if(duxin.length>0)
+                    {
+                        let j=0;
+                        while(j<duxin.length) {
+                            switch (duxin[j].PRODUCT_GRADE) {
+                                case '普材':
+                                    duxin_pucai.push(duxin[j]);
+                                    break;
+                                case '品种钢':
+                                    duxin_pinzhonggang.push(duxin[j]);
+                                    break;
+                                case '高端产品':
+                                    duxin_gaoduan.push(duxin[j]);
+                                    break;
+                                case '特色战略产品':
+                                    duxin_tese.push(duxin[j]);
+                                    break;
+                                case '其他':
+                                    duxin_qita.push(duxin[j]);
+                                    break;
+                            }
+                            j++
+                        }
+
+                    }
+
+                    if(xiancai.length>0)
+                    {
+                        let j=0;
+                        while(j<xiancai.length) {
+                            switch (xiancai[j].PRODUCT_GRADE) {
+                                case '普材':
+                                    xiancai_pucai.push(xiancai[j]);
+                                    break;
+                                case '品种钢':
+                                    xiancai_pinzhonggang.push(xiancai[j]);
+                                    break;
+                                case '高端产品':
+                                    xiancai_gaoduan.push(xiancai[j]);
+                                    break;
+                                case '特色战略产品':
+                                    xiancai_tese.push(xiancai[j]);
+                                    break;
+                                case '其他':
+                                    xiancai_qita.push(xiancai[j]);
+                                    break;
+                            }
+                            j++
+                        }
+
+                    }
+
+                    if(xingcai.length>0)
+                    {
+                        let j=0;
+                        while(j<xingcai.length) {
+                            switch (xingcai[j].PRODUCT_GRADE) {
+                                case '普材':
+                                    xingcai_pucai.push(xingcai[j]);
+                                    break;
+                                case '品种钢':
+                                    xingcai_pinzhonggang.push(xingcai[j]);
+                                    break;
+                                case '高端产品':
+                                    xingcai_gaoduan.push(xingcai[j]);
+                                    break;
+                                case '特色战略产品':
+                                    xingcai_tese.push(xingcai[j]);
+                                    break;
+                                case '其他':
+                                    xingcai_qita.push(xingcai[j]);
+                                    break;
+                            }
+                            j++
+                        }
+
+                    }
+
+                    if(yuangang.length>0)
+                    {
+                        let j=0;
+                        while(j<yuangang.length) {
+                            switch (yuangang[j].PRODUCT_GRADE) {
+                                case '普材':
+                                    yuangang_pucai.push(yuangang[j]);
+                                    break;
+                                case '品种钢':
+                                    yuangang_pinzhonggang.push(yuangang[j]);
+                                    break;
+                                case '高端产品':
+                                    yuangang_gaoduan.push(yuangang[j]);
+                                    break;
+                                case '特色战略产品':
+                                    yuangang_tese.push(yuangang[j]);
+                                    break;
+                                case '其他':
+                                    yuangang_qita.push(yuangang[j]);
+                                    break;
+                            }
+                            j++
+                        }
+
+                    }
+
+                    if(zhonghouban.length>0)
+                    {
+                        let j=0;
+                        while(j<zhonghouban.length) {
+                            switch (zhonghouban[j].PRODUCT_GRADE) {
+                                case '普材':
+                                    zhonghouban_pucai.push(zhonghouban[j]);
+                                    break;
+                                case '品种钢':
+                                    zhonghouban_pinzhonggang.push(zhonghouban[j]);
+                                    break;
+                                case '高端产品':
+                                    zhonghouban_gaoduan.push(zhonghouban[j]);
+                                    break;
+                                case '特色战略产品':
+                                    zhonghouban_tese.push(zhonghouban[j]);
+                                    break;
+                                case '其他':
+                                    zhonghouban_qita.push(zhonghouban[j]);
+                                    break;
+                            }
+                            j++
+                        }
+
                     }
 
                     //总计
@@ -3180,7 +3180,6 @@
                             ZBGSXSZB:rb_ZBGSXSZB,
                         }
                         suanxi_pinzhonggang_k=suanxi_pinzhonggangxj;
-                        window.console.log('酸洗：'+ JSON.stringify(suanxi_pinzhonggang_k))
                     }
 
                     //酸洗高端产品
