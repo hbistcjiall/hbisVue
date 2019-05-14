@@ -348,69 +348,290 @@
 
                 }).then((res) => {
                     res = res && res.length > 0 ? JSON.parse(res) : [];
-                    this.data = res;
-                    let result1 = 0;
-                    let result2 = 0;
-                    let result3 = 0;
-                    let result4 = 0;
-                    let result5 = 0;
-                    let result6 = 0;
-                    let result7 = 0;
-                    let result8 = 0;
+                    let zjarr = res;
+                    let tg = []
+                    let hg = []
+                    let xg = []
+                    let cg = []
+                    let wg = []
+                    let sg = []
+                    let hb = []
+                    let zg = []
+                    if(zjarr.length>0){
+                        let result1 = 0;
+                        let result2 = 0;
+                        let result3 = 0;
+                        let result4 = 0;
+                        let result5 = 0;
+                        let result6 = 0;
+                        let result7 = 0;
+                        let result8 = 0;
 
-                    let result9 = 0;
-                    let result10 = 0;
-                    let result11 = 0;
-                    let result12 = 0;
-                    for(var i=0;i<this.data.length;i++){
-                        result1 += this.data[i].FKIMG
-                        result2 += this.data[i].PZGL
-                        result3 += this.data[i].ZYFKIMG
-                        result4 += this.data[i].ZYPZGL
-                        result5 += this.data[i].FGSFKIMG
-                        result6 += this.data[i].FGSPZGL
-                        result7 += this.data[i].ZGSFKIMG
-                        result8 += this.data[i].ZGSPZGL
-                    }
-                    if(result1 == 0 || result1=="" || result1 == null){
-                        result9 = 0;
-                    }else{
-                        result9 = result2/result1
-                    }
-                    if(result3 == 0 || result3=="" || result3 == null){
-                        result10 = 0;
-                    }else{
-                        result10 = result4/result3
-                    }
-                    if(result5 == 0 || result5=="" || result5 == null){
-                        result11 = 0;
-                    }else{
-                        result11 = result6/result5
-                    }
-                    if(result7 == 0 || result7=="" || result7 == null){
-                        result12 = 0;
-                    }else{
-                        result12 = result8/result7
-                    }
-                    let obj ={
-                        COMPANYNAME:'集团',
-                        NAME : "合计",
-                        FKIMG : result1,
-                        PZGL : result2,
-                        ZYFKIMG : result3,
-                        ZYPZGL : result4,
-                        FGSFKIMG : result5,
-                        FGSPZGL : result6,
-                        ZGSFKIMG : result7,
-                        ZGSPZGL : result8,
-                        ZGSBZ:result12,
-                        FGSBZ:result11,
-                        ZYBZ:result10,
-                        BZ:result9
+                        let result9 = 0;
+                        let result10 = 0;
+                        let result11 = 0;
+                        let result12 = 0;
+                        for(var i = 0;i<zjarr.length;i++){
+                            result1 += zjarr[i].FKIMG
+                            result2 += zjarr[i].PZGL
+                            result3 += zjarr[i].ZYFKIMG
+                            result4 += zjarr[i].ZYPZGL
+                            result5 += zjarr[i].FGSFKIMG
+                            result6 += zjarr[i].FGSPZGL
+                            result7 += zjarr[i].ZGSFKIMG
+                            result8 += zjarr[i].ZGSPZGL
+                        }
+                        if(result1 == 0 || result1=="" || result1 == null){
+                            result9 = 0;
+                        }else{
+                            result9 = result2/result1
+                        }
+                        if(result3 == 0 || result3=="" || result3 == null){
+                            result10 = 0;
+                        }else{
+                            result10 = result4/result3
+                        }
+                        if(result5 == 0 || result5=="" || result5 == null){
+                            result11 = 0;
+                        }else{
+                            result11 = result6/result5
+                        }
+                        if(result7 == 0 || result7=="" || result7 == null){
+                            result12 = 0;
+                        }else{
+                            result12 = result8/result7
+                        }
+                        let obj ={
+                            COMPANYNAME:'集团',
+                            NAME : "合计",
+                            FKIMG : result1,
+                            PZGL : result2,
+                            ZYFKIMG : result3,
+                            ZYPZGL : result4,
+                            FGSFKIMG : result5,
+                            FGSPZGL : result6,
+                            ZGSFKIMG : result7,
+                            ZGSPZGL : result8,
+                            ZGSBZ:result12,
+                            FGSBZ:result11,
+                            ZYBZ:result10,
+                            BZ:result9
 
+                        }
+                        zg.push(obj)
                     }
-                    this.data.push(obj)
-                    this.data = this.utils.mergeRow(this.data, 'COMPANYNAME');
+                    for(var i=0;i<res.length;i++){
+
+                        switch (res[i].COMPANYNAME) {
+                            case "唐钢":
+                                tg.push(res[i]);
+                                break;
+                            case "邯钢":
+                                hg.push(res[i]);
+                                break;
+                            case "宣钢":
+                                xg.push(res[i]);
+                                break;
+                            case "承钢":
+                                cg.push(res[i]);
+                                break;
+                            case "舞钢":
+                                wg.push(res[i]);
+                                break;
+                            case "石钢":
+                                sg.push(res[i]);
+                                break;
+                            case "衡板":
+                                hb.push(res[i]);
+                                break;
+                        }
+                    }
+                    if(tg.length>0){
+                        let tgFKIMG = 0.00
+                        let tgPZGL = 0.00
+                        let tgBZ = 0.00
+                        let tgZYFKIMG = 0.00
+                        let tgZYPZGL = 0.00
+                        let tgZYBZ = 0.00
+                        let tgFGSFKIMG = 0.00
+                        let tgFGSPZGL = 0.00
+                        let tgFGSBZ = 0.00
+                        let tgZGSFKIMG = 0.00
+                        let tgZGSPZGL = 0.00
+                        let tgZGSBZ = 0.00
+                        for(var i =0 ;i<tg.length;i++){
+                            tgFKIMG+=tg[i].FKIMG
+                            tgPZGL+=tg[i].PZGL
+                            tgZYFKIMG+=tg[i].ZYFKIMG
+                            tgZYPZGL+=tg[i].ZYPZGL
+                            tgFGSFKIMG+=tg[i].FGSFKIMG
+                            tgFGSPZGL+=tg[i].FGSPZGL
+                            tgZGSFKIMG+=tg[i].ZGSFKIMG
+                            tgZGSPZGL+=tg[i].ZGSPZGL
+                        }
+                        if(tgFKIMG>0){tgBZ = (tgPZGL/tgFKIMG).toFixed(2)}else{tgBZ = 0.00}
+                        if(tgZYFKIMG>0){tgZYBZ = (tgZYPZGL/tgZYFKIMG).toFixed(2)}else{tgZYBZ = 0.00}
+                        if(tgFGSFKIMG>0){tgFGSBZ = (tgFGSPZGL/tgFGSFKIMG).toFixed(2)}else{tgFGSBZ = 0.00}
+                        if(tgZGSFKIMG>0){tgZGSBZ = (tgZGSPZGL/tgZGSFKIMG).toFixed(2)}else{tgZGSBZ = 0.00}
+                        let tgxj = {
+                            COMPANYNAME:'唐钢',
+                            NAME : "唐钢小计",
+                            FKIMG : tgFKIMG.toFixed(2),
+                            PZGL : tgPZGL.toFixed(2),
+                            BZ:tgBZ,
+                            ZYFKIMG : tgZYFKIMG.toFixed(2),
+                            ZYPZGL : tgZYPZGL.toFixed(2),
+                            ZYBZ:tgZYBZ,
+                            FGSFKIMG : tgFGSFKIMG.toFixed(2),
+                            FGSPZGL : tgFGSPZGL.toFixed(2),
+                            FGSBZ:tgFGSBZ,
+                            ZGSFKIMG : tgZGSFKIMG.toFixed(2),
+                            ZGSPZGL : tgZGSPZGL.toFixed(2),
+                            ZGSBZ:tgZGSBZ,
+
+                        }
+                        tg.unshift(tgxj)
+                    }
+                    if(hg.length>0){
+                        let hgFKIMG = 0.00
+                        let hgPZGL = 0.00
+                        let hgBZ = 0.00
+                        let hgZYFKIMG = 0.00
+                        let hgZYPZGL = 0.00
+                        let hgZYBZ = 0.00
+                        let hgFGSFKIMG = 0.00
+                        let hgFGSPZGL = 0.00
+                        let hgFGSBZ = 0.00
+                        let hgZGSFKIMG = 0.00
+                        let hgZGSPZGL = 0.00
+                        let hgZGSBZ = 0.00
+                        for(var i =0 ;i<hg.length;i++){
+                            hgFKIMG+=hg[i].FKIMG
+                            hgPZGL+=hg[i].PZGL
+                            hgZYFKIMG+=hg[i].ZYFKIMG
+                            hgZYPZGL+=hg[i].ZYPZGL
+                            hgFGSFKIMG+=hg[i].FGSFKIMG
+                            hgFGSPZGL+=hg[i].FGSPZGL
+                            hgZGSFKIMG+=hg[i].ZGSFKIMG
+                            hgZGSPZGL+=hg[i].ZGSPZGL
+                        }
+                        if(hgFKIMG>0){hgBZ = (hgPZGL/hgFKIMG).toFixed(2)}else{hgBZ = 0.00}
+                        if(hgZYFKIMG>0){hgZYBZ = (hgZYPZGL/hgZYFKIMG).toFixed(2)}else{hgZYBZ = 0.00}
+                        if(hgFGSFKIMG>0){hgFGSBZ = (hgFGSPZGL/hgFGSFKIMG).toFixed(2)}else{hgFGSBZ = 0.00}
+                        if(hgZGSFKIMG>0){hgZGSBZ = (hgZGSPZGL/hgZGSFKIMG).toFixed(2)}else{hgZGSBZ = 0.00}
+                        let hgxj = {
+                            COMPANYNAME:'邯钢',
+                            NAME : "邯钢小计",
+                            FKIMG : hgFKIMG.toFixed(2),
+                            PZGL : hgPZGL.toFixed(2),
+                            BZ:hgBZ,
+                            ZYFKIMG : hgZYFKIMG.toFixed(2),
+                            ZYPZGL : hgZYPZGL.toFixed(2),
+                            ZYBZ:hgZYBZ,
+                            FGSFKIMG : hgFGSFKIMG.toFixed(2),
+                            FGSPZGL : hgFGSPZGL.toFixed(2),
+                            FGSBZ:hgFGSBZ,
+                            ZGSFKIMG : hgZGSFKIMG.toFixed(2),
+                            ZGSPZGL : hgZGSPZGL.toFixed(2),
+                            ZGSBZ:hgZGSBZ,
+
+                        }
+                        hg.unshift(hgxj)
+                    }
+                    if(xg.length>0){
+                        let xgFKIMG = 0.00
+                        let xgPZGL = 0.00
+                        let xgBZ = 0.00
+                        let xgZYFKIMG = 0.00
+                        let xgZYPZGL = 0.00
+                        let xgZYBZ = 0.00
+                        let xgFGSFKIMG = 0.00
+                        let xgFGSPZGL = 0.00
+                        let xgFGSBZ = 0.00
+                        let xgZGSFKIMG = 0.00
+                        let xgZGSPZGL = 0.00
+                        let xgZGSBZ = 0.00
+                        for(var i =0 ;i<xg.length;i++){
+                            xgFKIMG+=xg[i].FKIMG
+                            xgPZGL+=xg[i].PZGL
+                            xgZYFKIMG+=xg[i].ZYFKIMG
+                            xgZYPZGL+=xg[i].ZYPZGL
+                            xgFGSFKIMG+=xg[i].FGSFKIMG
+                            xgFGSPZGL+=xg[i].FGSPZGL
+                            xgZGSFKIMG+=xg[i].ZGSFKIMG
+                            xgZGSPZGL+=xg[i].ZGSPZGL
+                        }
+                        if(xgFKIMG>0){xgBZ = (xgPZGL/xgFKIMG).toFixed(2)}else{xgBZ = 0.00}
+                        if(xgZYFKIMG>0){xgZYBZ = (xgZYPZGL/xgZYFKIMG).toFixed(2)}else{xgZYBZ = 0.00}
+                        if(xgFGSFKIMG>0){xgFGSBZ = (xgFGSPZGL/xgFGSFKIMG).toFixed(2)}else{xgFGSBZ = 0.00}
+                        if(xgZGSFKIMG>0){xgZGSBZ = (xgZGSPZGL/xgZGSFKIMG).toFixed(2)}else{xgZGSBZ = 0.00}
+                        let xgxj = {
+                            COMPANYNAME:'宣钢',
+                            NAME : "宣钢小计",
+                            FKIMG : xgFKIMG.toFixed(2),
+                            PZGL : xgPZGL.toFixed(2),
+                            BZ:xgBZ,
+                            ZYFKIMG : xgZYFKIMG.toFixed(2),
+                            ZYPZGL : xgZYPZGL.toFixed(2),
+                            ZYBZ:xgZYBZ,
+                            FGSFKIMG : xgFGSFKIMG.toFixed(2),
+                            FGSPZGL : xgFGSPZGL.toFixed(2),
+                            FGSBZ:xgFGSBZ,
+                            ZGSFKIMG : xgZGSFKIMG.toFixed(2),
+                            ZGSPZGL : xgZGSPZGL.toFixed(2),
+                            ZGSBZ:xgZGSBZ,
+
+                        }
+                        xg.unshift(xgxj)
+                    }
+                    if(cg.length>0){
+                        let cgFKIMG = 0.00
+                        let cgPZGL = 0.00
+                        let cgBZ = 0.00
+                        let cgZYFKIMG = 0.00
+                        let cgZYPZGL = 0.00
+                        let cgZYBZ = 0.00
+                        let cgFGSFKIMG = 0.00
+                        let cgFGSPZGL = 0.00
+                        let cgFGSBZ = 0.00
+                        let cgZGSFKIMG = 0.00
+                        let cgZGSPZGL = 0.00
+                        let cgZGSBZ = 0.00
+                        for(var i =0 ;i<cg.length;i++){
+                            cgFKIMG+=cg[i].FKIMG
+                            cgPZGL+=cg[i].PZGL
+                            cgZYFKIMG+=cg[i].ZYFKIMG
+                            cgZYPZGL+=cg[i].ZYPZGL
+                            cgFGSFKIMG+=cg[i].FGSFKIMG
+                            cgFGSPZGL+=cg[i].FGSPZGL
+                            cgZGSFKIMG+=cg[i].ZGSFKIMG
+                            cgZGSPZGL+=cg[i].ZGSPZGL
+                        }
+                        if(cgFKIMG>0){cgBZ = (cgPZGL/cgFKIMG).toFixed(2)}else{cgBZ = 0.00}
+                        if(cgZYFKIMG>0){cgZYBZ = (cgZYPZGL/cgZYFKIMG).toFixed(2)}else{cgZYBZ = 0.00}
+                        if(cgFGSFKIMG>0){cgFGSBZ = (cgFGSPZGL/cgFGSFKIMG).toFixed(2)}else{cgFGSBZ = 0.00}
+                        if(cgZGSFKIMG>0){cgZGSBZ = (cgZGSPZGL/cgZGSFKIMG).toFixed(2)}else{cgZGSBZ = 0.00}
+                        let cgxj = {
+                            COMPANYNAME:'承钢',
+                            NAME : "承钢小计",
+                            FKIMG : cgFKIMG.toFixed(2),
+                            PZGL : cgPZGL.toFixed(2),
+                            BZ:cgBZ,
+                            ZYFKIMG : cgZYFKIMG.toFixed(2),
+                            ZYPZGL : cgZYPZGL.toFixed(2),
+                            ZYBZ:cgZYBZ,
+                            FGSFKIMG : cgFGSFKIMG.toFixed(2),
+                            FGSPZGL : cgFGSPZGL.toFixed(2),
+                            FGSBZ:cgFGSBZ,
+                            ZGSFKIMG : cgZGSFKIMG.toFixed(2),
+                            ZGSPZGL : cgZGSPZGL.toFixed(2),
+                            ZGSBZ:cgZGSBZ,
+
+                        }
+                        cg.unshift(cgxj)
+                    }
+                    let listArr=zg.concat(tg).concat(hg).concat(xg).concat(cg).concat(wg).concat(sg).concat(hb)
+                    this.data = this.utils.mergeRow(listArr, 'COMPANYNAME');
                     this.loading = false;
                     this.mxstats = false
                 });
