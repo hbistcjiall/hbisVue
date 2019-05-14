@@ -61,7 +61,7 @@
                 <Col span="6">
                     <Button @click="getList()" icon="ios-search" style="margin-right:10px;">查询</Button>
                     <Button @click="downLoad()" icon="ios-cloud-download-outline">导出</Button>
-                    <a :href="downloadUrl"><Button type="primary" style="margin-left:10px">明细导出</Button></a>
+                    <a :href="downloadUrl"><Button type="primary" :loading="mxstats" style="margin-left:10px">明细导出</Button></a>
                 </Col>
             </Row>
         </Form>
@@ -74,6 +74,7 @@
         name: "pzgjs_cx",
         data() {
             return {
+                mxstats:true,
                 downloadUrl:'',
                 loading:true,
                 dw:'全部',
@@ -290,8 +291,10 @@
             }
         },
         mounted() {
+            this.mxstats = true
             this.getList();
             this.getCxData();
+            this.downMx()
         },
         methods: {
             getCxData(){
@@ -320,6 +323,7 @@
                 this.switchTime?(this.startTime=date,this.endTime=this.utils.formatMonthEnd()):this.year=date;
             },
             getList() {
+                this.mxstats = true
                 this.loading = true;
                 let params={};
                 // this.dw?params.dw=this.dw:'';
@@ -408,7 +412,7 @@
                     this.data.push(obj)
                     this.data = this.utils.mergeRow(this.data, 'COMPANYNAME');
                     this.loading = false;
-                    this.downMx()
+                    this.mxstats = false
                 });
             },
             changeTitle(){
