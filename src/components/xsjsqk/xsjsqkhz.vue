@@ -48,7 +48,9 @@
             <Row>
                 <Col span="4">
                     <Button @click="getList()" icon="ios-search" style="margin-right:10px;">查询</Button>
-                    <Button @click="downLoad()" icon="ios-cloud-download-outline">导出</Button>
+<!--                    <Button @click="downLoad()" icon="ios-cloud-download-outline">导出</Button>-->
+                    <a :href="downloadUrl"><Button type="primary" :loading="mxstats" style="margin-left:10px" icon="ios-cloud-download-outline" @click="download()">导出</Button></a>
+
                 </Col>
             </Row>
         </Form>
@@ -61,6 +63,8 @@
         name: "xsjsqkhz",
         data() {
             return {
+                downloadUrl:'',
+                mxstats:false,
                 jd:'0',
                 pz:'全部',
                 cx:[],
@@ -406,6 +410,7 @@
         mounted() {
             this.getList();
             this.getCxData();
+            this.mxstats = true
         },
         methods: {
             getCxData(){
@@ -428,13 +433,22 @@
                     this.cxData = this.utils.getCx(res)
                 });
             },
-            downLoad(){
-                this.$refs.table.exportCsv({
-                    filename: '销售结算情况（产线）明细',
-                });
+            download(){
+                this.downMx();
+            },
+            downMx(){
+                let cxArr = '&cx=' +this.cx.toString()
+                let startTime='startTime=';
+                startTime+=this.utils.formatMonthStart(this.startTime)
+                let endTime='&endTime=';
+                endTime+=this.utils.formatMonthStart(this.endTime)
+                let pz = "pz="+this.pz
+                let jd = "jd="+this.jd
+                this.downloadUrl=this.$store.state.fetchPath + "/export/exportXSJS?"+startTime+endTime+cxArr+"&"+jd+"&"+pz;
             },
             getList() {
                 let cxArr = '&cx=' +this.cx.toString()
+                this.mxstats = true
                 this.loading = true;
                 let startTime='startTime=';
                 startTime+=this.utils.formatMonthStart(this.startTime)
@@ -1549,6 +1563,7 @@
                     let arr=jgj.concat(reban).concat(suanxi).concat(lengban).concat(duxin).concat(zhonghouban).concat(luowengang).concat(yuangang).concat(xiancai).concat(xingcai).concat(pinzhong).concat(baoban)
                     this.data = this.utils.mergeRow(arr,'ZL')
                     this.loading = false;
+                    this.mxstats = false
                 });
             }
         }
