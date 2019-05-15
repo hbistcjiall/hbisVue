@@ -29,15 +29,16 @@
                         </Select>
                     </FormItem>
                 </Col>
-                <Col span="7">
+                <Col span="6">
                     <FormItem label="产线：" style="margin-left: -50px">
-                        <Select style="width:300px"  v-model="cx" placeholder="请选择产线" filterable multiple>
+                        <Select style="width:235px"  v-model="cx" placeholder="请选择产线" filterable multiple>
                             <Option v-for="item in cxData" :value="item.value" :key="item.value">{{ item.label }}</Option>
                         </Select>
                     </FormItem>
                 </Col>
-                <Col span="2" style="margin-left: -100px;float: left">
-                    <Button @click="getListed()" icon="ios-search" style="margin-left:200px;">查询</Button>
+                <Col span="4" style="margin-left: 0px;">
+                    <Button @click="getListed()" icon="ios-search">查询</Button>
+                    <a :href="downloadUrl"><Button type="primary" :loading="mxstats" style="margin-left:10px" icon="ios-cloud-download-outline" @click="download()">导出</Button></a>
                 </Col>
             </Row>
         </Form>
@@ -50,6 +51,8 @@
         name: "cpdjjgfb",
         data() {
             return {
+                downloadUrl:'',
+                mxstats:false,
                 cxCx:{
                     companyId:''
                 },
@@ -330,6 +333,7 @@
         mounted() {
             this.getCxData();
             this.getListed();
+            this.mxstats = true
         },
         methods: {
             getCxData(){
@@ -352,6 +356,7 @@
             },
             getListed() {
                 this.loading = true;
+                this.mxstats = true
                 let startTime = 'startTime=' + this.utils.formatMonthStart(this.startTime);
                 let endTime = 'endTime=' + this.utils.formatMonthStart(this.endTime);
                 let zl = 'zl='+this.zl;
@@ -7672,8 +7677,22 @@
                     }
                     this.data = this.utils.mergeRow(arr, 'CXNAME','ZL',);
                     this.loading = false;
+                    this.mxstats = false;
                 });
             },
+            download(){
+                this.downMx()
+            },
+            downMx(){
+
+                let zlStr = '&zl='+this.zl;
+                let cxArr = '&cx=' +this.cx.toString()
+                let startTime='startTime=';
+                let endTime='&endTime=';
+                startTime = startTime+this.utils.formatMonthStart(this.startTime)
+                endTime = endTime+this.utils.formatMonthStart(this.endTime)
+                this.downloadUrl=this.$store.state.fetchPath + "/export/exportReport?"+startTime+endTime+zlStr+cxArr;
+            }
         },
     }
 </script>
