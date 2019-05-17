@@ -12,9 +12,8 @@
                         <Option value="1932">舞钢</Option>
                     </Select>
                 </FormItem>
-                <Button @click="search" style="margin-left:20px" icon="ios-search">查询</Button>
-                <Button @click="updModal=true" style="margin-left: 20px" icon="ios-add">新增</Button>
-
+                <Button @click="updModal=true" style="float: right" icon="ios-add">新增</Button>
+                <Button @click="search" style="float: right;margin-right: 10px" icon="ios-search">查询</Button>
             </Form>
         </div>
         <Table :loading="loading" border stripe :columns="columns12" :data="fecthdata6" style="margin-top: 20px;float: left;width: 100%;"

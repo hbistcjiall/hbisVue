@@ -12,8 +12,8 @@
                         <DatePicker type="month" placeholder="终止月份"  :editable="false" :clearable="false" v-model="endTime" style="width:150px"></DatePicker>
                     </FormItem>
                 </Col>
-                <Col span="6">
-                    <FormItem>
+                <Col span="6" style="margin-left: -30px">
+                    <FormItem >
                         <label>是否借贷：</label>
                         <Select v-model="model1" style="width:100px">
                             <Option value="1">是</Option>
@@ -21,7 +21,7 @@
                         </Select>
                     </FormItem>
                 </Col>
-                <Col span="4">
+                <Col span="4" style="margin-left: 270px">
                     <Button @click="getList()" icon="ios-search" style="margin-right:10px;">查询</Button>
                     <Button @click="downLoad()" icon="ios-cloud-download-outline">导出</Button>
                 </Col>

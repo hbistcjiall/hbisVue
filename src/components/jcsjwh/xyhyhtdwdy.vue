@@ -8,8 +8,8 @@
                 <FormItem label="合同单位:" style="float: left">
                     <Input style="width:100px" v-model="xyhyhtdata.contractUnit" placeholder="请输入合同单位"></Input>
                 </FormItem>
-                <Button @click="search" style="margin-left:20px" icon="ios-search">查询</Button>
-                <Button @click="updModal=true" style="margin-left: 20px" icon="ios-add">新增</Button>
+                <Button @click="updModal=true" style="float: right" icon="ios-add">新增</Button>
+                <Button @click="search" style="float: right;margin-right: 10px" icon="ios-search">查询</Button>
             </Form>
         </div>
         <Table :loading="loading" border stripe :columns="columns12" :data="fecthdata6" style="margin-top: 20px;float: left;width: 100%;"

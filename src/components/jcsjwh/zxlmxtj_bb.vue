@@ -36,7 +36,7 @@
             </CheckboxGroup>
 
         </div>
-        <div style="both:clear;margin-left: -900px">
+        <div style="both:clear;margin-left: 900px">
             <Button @click="search()" icon="ios-search" type="primary" style="margin-right:20px;">查询</Button>
             <a :href="downloadUrl">
                 <Button type="primary" style="margin-left:10px">导出</Button>

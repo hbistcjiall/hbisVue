@@ -18,13 +18,13 @@
                 </Col>
                 <Col span="7">
                     <FormItem label="产线：">
-                        <Select style="width:300px"  v-model="cx" placeholder="请选择产线" filterable multiple>
+                        <Select style="width:235px"  v-model="cx" placeholder="请选择产线" filterable multiple>
                             <Option v-for="item in cxData" :value="item.value" :key="item.value">{{ item.label }}</Option>
                         </Select>
                     </FormItem>
                 </Col>
                 <Col span="4">
-                    <FormItem label="月份：" style="margin-left:70px">
+                    <FormItem label="月份：" style="margin-left:0px">
                         <DatePicker type="month" placeholder="起始月份" :editable="false" :clearable="false" v-model="startTime" style="width:130px"></DatePicker>
                     </FormItem>
                 </Col>

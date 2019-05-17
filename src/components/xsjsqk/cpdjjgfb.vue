@@ -36,7 +36,7 @@
                         </Select>
                     </FormItem>
                 </Col>
-                <Col span="4" style="margin-left: 0px;">
+                <Col span="4" style="margin-left: 50px;">
                     <Button @click="getListed()" icon="ios-search">查询</Button>
                     <a :href="downloadUrl"><Button type="primary" :loading="mxstats" style="margin-left:10px" icon="ios-cloud-download-outline" @click="download()">导出</Button></a>
                 </Col>

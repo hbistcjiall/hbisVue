@@ -2,12 +2,12 @@
     <div>
         <Form :label-width="100">
             <Row>
-                <Col span="6" v-if="!switchTime">
+                <Col span="6" v-if="!switchTime" style="margin-left: -50px">
                     <FormItem label="年份：">
                         <DatePicker type="year"  placeholder="请选择年份" :editable="false" :clearable="false"  v-model="year" style="width:150px"></DatePicker>
                     </FormItem>
                 </Col>
-                <Col span="4"  v-if="switchTime">
+                <Col span="4"  v-if="switchTime" style="margin-left: -50px">
                     <FormItem label="月份：">
                         <DatePicker type="month" placeholder="起始月份" :editable="false" :clearable="false"  v-model="startTime" style="width:150px"></DatePicker>
                     </FormItem>
@@ -25,7 +25,7 @@
                         </i-switch>
                     </FormItem>
                 </Col>
-                <Col span="6">
+                <Col span="6" style="margin-left: -20px">
                     <FormItem label="品种：" style="width: 120px">
                         <Select v-model="pz" style="width:120px" placeholder="请选择品种" @on-change="changeTitle()">
                             <Option value="">全部</Option>
@@ -38,7 +38,7 @@
                         </Select>
                     </FormItem>
                 </Col>
-                <Col span="4">
+                <Col span="4" style="margin-left: -50px">
                     <FormItem label="产品等级：" style="width: 120px">
                         <Select v-model="zt" style="width:120px" placeholder="请选择产品等级" @on-change="changeTitle()">
                             <Option value="0">品种钢</Option>
@@ -46,7 +46,7 @@
                         </Select>
                     </FormItem>
                 </Col>
-                <Col span="4">
+                <Col span="4" style="margin-left: 50px">
                     <Button @click="getList()" icon="ios-search" style="margin-right:10px;">查询</Button>
                     <Button @click="downLoad()" icon="ios-cloud-download-outline">导出</Button>
                 </Col>

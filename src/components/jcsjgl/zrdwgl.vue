@@ -1,5 +1,6 @@
 <template>
     <div>
+        <label>责任单位：</label>
         <Input placeholder="责任单位名称" style="width: 300px" v-model="dictData.companyname"/>
         <Button @click="search" style="margin-left:20px;margin-right:10px;" icon="ios-search">查询</Button>
         <Button @click="addNew" style="magin-left:20px;" icon ="ios-add">新增</Button>

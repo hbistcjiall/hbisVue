@@ -13,7 +13,7 @@
                     </FormItem>
                 </Col>
                 <Col span="6">
-                    <FormItem>
+                    <FormItem style="margin-left: -70px">
                         <label>是否借贷：</label>
                         <Select v-model="model1" style="width:100px">
                             <Option value="1">是</Option>
@@ -21,8 +21,8 @@
                         </Select>
                     </FormItem>
                 </Col>
-                <Col span="4">
-                    <FormItem label="钢厂：">
+                <Col span="3">
+                    <FormItem label="钢厂：" style="margin-left: -30px">
                         <Select v-model="gc" placeholder="请选择钢厂">
                             <Option value="全部">全部</Option>
                             <Option value="唐钢">唐钢</Option>
@@ -35,7 +35,7 @@
                         </Select>
                     </FormItem>
                 </Col>
-                <Col span="4">
+                <Col span="4" style="margin-left: 100px">
                     <Button @click="getList()" icon="ios-search" style="margin-right:10px;">查询</Button>
                     <Button @click="downLoad()" icon="ios-cloud-download-outline">导出</Button>
                 </Col>

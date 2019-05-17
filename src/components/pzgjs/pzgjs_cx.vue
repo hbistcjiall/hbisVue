@@ -51,14 +51,14 @@
             <Row style="margin-bottom: 20px">
                 <Col span="6">
                     <FormItem>
-                        <label style="margin-left: -150px;">产品等级:</label>
-                        <Select v-model="zt" style="width:150px" placeholder="请选择品种" @on-change="changeTitle()">
+                        <label style="margin-left: -115px;">产品等级:</label>
+                        <Select v-model="zt" style="width:150px;margin-left: 10px" placeholder="请选择品种" @on-change="changeTitle()">
                             <Option value="0">品种钢</Option>
                             <Option value="1">高端产品</Option>
                         </Select>
                     </FormItem>
                 </Col>
-                <Col span="6">
+                <Col span="6" style="float: right">
                     <Button @click="getList()" icon="ios-search" style="margin-right:10px;">查询</Button>
                     <Button @click="downLoad()" icon="ios-cloud-download-outline">导出</Button>
                     <a :href="downloadUrl"><Button type="primary" :loading="mxstats" style="margin-left:10px">明细导出</Button></a>
