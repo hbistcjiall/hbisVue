@@ -58,6 +58,11 @@
         name: 'zxlmxtj_bb',
         data() {
             return {
+                xsztylhztdyData: {
+                    companyId: '',
+                    page: '0',
+                    limit: '10',
+                },
                 loading: true,
                 downloadUrl: '',
                 indeterminate: true,
