@@ -89,7 +89,7 @@
                         children:[
                             {
 
-                                title: '总量',
+                                title: '总量（吨）',
                                 key: 'FKIMG',
                                 align: 'center',
                                 render: (h, params) => {
@@ -101,7 +101,7 @@
                             },
                             {
 
-                                title: '品种钢量',
+                                title: '品种钢量（吨）',
                                 key: 'PZGL',
                                 align: 'center',
                                 render: (h, params) => {
@@ -125,7 +125,7 @@
                             },
                             {
 
-                                title: '目标量',
+                                title: '目标量（吨）',
                                 key: 'MBL',
                                 align: 'center',
                                 render: (h, params) => {

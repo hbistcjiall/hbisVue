@@ -96,7 +96,7 @@
                         title: '产线',
                         key: 'NAME',
                         align: 'center',
-                        width:'100',
+                        width:'200',
                     },
                     {
                         title: '内贸总量',
@@ -104,9 +104,9 @@
                         align: 'center',
                         children: [
                             {
-                                title: '总量',
+                                title: '总量（吨）',
                                 key: 'FKIMG',
-                                width:'100',
+                                width:'150',
                                 align: 'center',
                                 render: (h, params) => {
                                     params.row[params.column.key]=params.row[params.column.key]==null?'0.00':params.row[params.column.key];
@@ -117,10 +117,10 @@
 
                             },
                             {
-                                title: '品种钢',
+                                title: '品种钢（吨）',
                                 key: 'PZGL',
                                 align: 'center',
-                                width:'100',
+                                width:'150',
                                 render: (h, params) => {
                                     params.row[params.column.key]=params.row[params.column.key]==null?'0.00':params.row[params.column.key];
                                     return h('span',
@@ -133,7 +133,7 @@
                                 title: '比重',
                                 key: 'BZ',
                                 align: 'center',
-                                width:'90',
+                                width:'150',
                                 render: (h, params) => {
                                     params.row[params.column.key]=params.row[params.column.key]==null?'0.00':params.row[params.column.key];
                                     return h('span',
@@ -161,9 +161,9 @@
                         key: 'zygs',
                         align: 'center',
                         children: [{
-                            title: '总量',
+                            title: '总量（吨）',
                             key: 'ZYFKIMG',
-                            width:'100',
+                            width:'150',
                             align: 'center',
                             render: (h, params) => {
                                 params.row[params.column.key]=params.row[params.column.key]==null?'0.00':params.row[params.column.key];
@@ -173,10 +173,10 @@
                             }
                         },
                             {
-                                title: '品种钢',
+                                title: '品种钢（吨）',
                                 key: 'ZYPZGL',
                                 align: 'center',
-                                width:'100',
+                                width:'150',
                                 render: (h, params) => {
                                     params.row[params.column.key]=params.row[params.column.key]==null?'0.00':params.row[params.column.key];
                                     return h('span',
@@ -188,7 +188,7 @@
                                 title: '比重',
                                 key: 'ZYBZ',
                                 align: 'center',
-                                width:'90',
+                                width:'150',
                                 render: (h, params) => {
                                     params.row[params.column.key]=params.row[params.column.key]==null?'0.00':params.row[params.column.key];
                                     return h('span',
@@ -203,10 +203,10 @@
                         key: 'fgs',
                         align: 'center',
                         children: [{
-                            title: '总量',
+                            title: '总量（吨）',
                             key: 'FGSFKIMG',
                             align: 'center',
-                            width:'100',
+                            width:'150',
                             render: (h, params) => {
                                 params.row[params.column.key]=params.row[params.column.key]==null?'0.00':params.row[params.column.key];
                                 return h('span',
@@ -215,10 +215,10 @@
                             }
                         },
                             {
-                                title: '品种钢',
+                                title: '品种钢（吨）',
                                 key: 'FGSPZGL',
                                 align: 'center',
-                                width:'100',
+                                width:'150',
                                 render: (h, params) => {
                                     params.row[params.column.key]=params.row[params.column.key]==null?'0.00':params.row[params.column.key];
                                     return h('span',
@@ -230,7 +230,7 @@
                                 title: '比重',
                                 key: 'FGSBZ',
                                 align: 'center',
-                                width:'90',
+                                width:'150',
                                 render: (h, params) => {
                                     params.row[params.column.key]=params.row[params.column.key]==null?'0.00':params.row[params.column.key];
                                     return h('span',
@@ -245,10 +245,10 @@
                         key: 'zgs',
                         align: 'center',
                         children: [{
-                            title: '总量',
+                            title: '总量（吨）',
                             key: 'ZGSFKIMG',
                             align: 'center',
-                            width:'100',
+                            width:'150',
                             render: (h, params) => {
                                 params.row[params.column.key]=params.row[params.column.key]==null?'0.00':params.row[params.column.key];
                                 return h('span',
@@ -257,10 +257,10 @@
                             }
                         },
                             {
-                                title: '品种钢',
+                                title: '品种钢（吨）',
                                 key: 'ZGSPZGL',
                                 align: 'center',
-                                width:'100',
+                                width:'150',
                                 render: (h, params) => {
                                     params.row[params.column.key]=params.row[params.column.key]==null?'0.00':params.row[params.column.key];
                                     return h('span',
@@ -272,7 +272,7 @@
                                 title: '比重',
                                 key: 'ZGSBZ',
                                 align: 'center',
-                                width:'90',
+                                width:'150',
                                 render: (h, params) => {
                                     params.row[params.column.key]=params.row[params.column.key]==null?'0.00':params.row[params.column.key];
                                     return h('span',
