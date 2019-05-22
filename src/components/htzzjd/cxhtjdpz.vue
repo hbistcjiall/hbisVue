@@ -61,10 +61,10 @@
                         width: 100,
                         children: [
                             {
-                                title: '计划量',
+                                title: '计划量（吨）',
                                 key: 'HJJHL',
                                 align: 'center',
-                                width: 100,
+                                width: 150,
                                 render: (h, params) => {
                                     params.row[params.column.key]=params.row[params.column.key]==null?'0.00':params.row[params.column.key];
                                     return h('span',
@@ -73,10 +73,10 @@
                                 }
                             },
                             {
-                                title: '合同量',
+                                title: '合同量（吨）',
                                 key: 'HJHTL',
                                 align: 'center',
-                                width: 100,
+                                width: 150,
                                 render: (h, params) => {
                                     params.row[params.column.key]=params.row[params.column.key]==null?'0.00':params.row[params.column.key];
                                     return h('span',
@@ -88,7 +88,7 @@
                                 title: '完成比例',
                                 key: 'SCHEDULEHJ',
                                 align: 'center',
-                                width: 100,
+                                width: 150,
                                 render: (h, params) => {
                                     params.row[params.column.key]=params.row[params.column.key]==null?'0.00':params.row[params.column.key];
                                     return h('span',
@@ -103,10 +103,10 @@
                         key: 'zygs',
                         align: 'center',
                         children: [{
-                            title: '计划量',
+                            title: '计划量（吨）',
                             key: 'PLANNUMXSZ',
                             align: 'center',
-                            width: 100,
+                            width: 150,
                             render: (h, params) => {
                                 params.row[params.column.key]=params.row[params.column.key]==null?'0.00':params.row[params.column.key];
                                 return h('span',
@@ -115,10 +115,10 @@
                             }
                         },
                             {
-                                title: '专业公司',
+                                title: '专业公司（吨）',
                                 key: 'ZYGSHTL',
                                 align: 'center',
-                                width: 100,
+                                width: 150,
                                 render: (h, params) => {
                                     params.row[params.column.key]=params.row[params.column.key]==null?'0.00':params.row[params.column.key];
                                     return h('span',
@@ -127,10 +127,10 @@
                                 }
                             },
                             {
-                                title: '分公司',
+                                title: '分公司（吨）',
                                 key: 'ZYFGSHTL',
                                 align: 'center',
-                                width: 100,
+                                width: 150,
                                 render: (h, params) => {
                                     params.row[params.column.key]=params.row[params.column.key]==null?'0.00':params.row[params.column.key];
                                     return h('span',
@@ -142,7 +142,7 @@
                                 title: '完成比例',
                                 key: 'SCHEDULEXSZ',
                                 align: 'center',
-                                width: 100,
+                                width: 150,
                                 render: (h, params) => {
                                     params.row[params.column.key]=params.row[params.column.key]==null?'0.00':params.row[params.column.key];
                                     return h('span',
@@ -151,10 +151,10 @@
                                 }
                             },
                             {
-                                title: '进度',
+                                title: '进度（吨）',
                                 key: 'JDXSZ',
                                 align: 'center',
-                                width: 100,
+                                width: 150,
                                 render: (h, params) => {
                                     params.row[params.column.key]=params.row[params.column.key]==null?'0.00':params.row[params.column.key];
                                     return h('span',
@@ -169,10 +169,10 @@
                         key: 'fgs',
                         align: 'center',
                         children: [{
-                            title: '计划量',
+                            title: '计划量（吨）',
                             key: 'PLANNUMZGS',
                             align: 'center',
-                            width: 100,
+                            width: 150,
                             render: (h, params) => {
                                 params.row[params.column.key]=params.row[params.column.key]==null?'0.00':params.row[params.column.key];
                                 return h('span',
@@ -181,10 +181,10 @@
                             }
                         },
                             {
-                                title: '合同量',
+                                title: '合同量（吨）',
                                 key: 'ZGSHTL',
                                 align: 'center',
-                                width: 100,
+                                width: 150,
                                 render: (h, params) => {
                                     params.row[params.column.key]=params.row[params.column.key]==null?'0.00':params.row[params.column.key];
                                     return h('span',
@@ -196,7 +196,7 @@
                                 title: '完成比例',
                                 key: 'SCHEDULEZGS',
                                 align: 'center',
-                                width: 100,
+                                width: 150,
                                 render: (h, params) => {
                                     params.row[params.column.key]=params.row[params.column.key]==null?'0.00':params.row[params.column.key];
                                     return h('span',
@@ -205,10 +205,10 @@
                                 }
                             },
                             {
-                                title: '进度',
+                                title: '进度（吨）',
                                 key: 'JDZGS',
                                 align: 'center',
-                                width: 100,
+                                width: 150,
                                 render: (h, params) => {
                                     params.row[params.column.key]=params.row[params.column.key]==null?'0.00':params.row[params.column.key];
                                     return h('span',
@@ -226,7 +226,7 @@
                             title: '计划量',
                             key: 'PLANNUMCK',
                             align: 'center',
-                            width: 100,
+                            width: 150,
                             render: (h, params) => {
                                 params.row[params.column.key]=params.row[params.column.key]==null?'0.00':params.row[params.column.key];
                                 return h('span',
@@ -235,10 +235,10 @@
                             }
                         },
                             {
-                                title: '合同量',
+                                title: '合同量（吨）',
                                 key: 'CKHTL',
                                 align: 'center',
-                                width: 100,
+                                width: 150,
                                 render: (h, params) => {
                                     params.row[params.column.key]=params.row[params.column.key]==null?'0.00':params.row[params.column.key];
                                     return h('span',
@@ -250,7 +250,7 @@
                                 title: '完成比例',
                                 key: 'SCHEDULECK',
                                 align: 'center',
-                                width: 100,
+                                width: 150,
                                 render: (h, params) => {
                                     params.row[params.column.key]=params.row[params.column.key]==null?'0.00':params.row[params.column.key];
                                     return h('span',
@@ -259,10 +259,10 @@
                                 }
                             },
                             {
-                                title: '进度',
+                                title: '进度（吨）',
                                 key: 'JDCK',
                                 align: 'center',
-                                width: 100,
+                                width: 150,
                                 render: (h, params) => {
                                     params.row[params.column.key]=params.row[params.column.key]==null?'0.00':params.row[params.column.key];
                                     return h('span',
