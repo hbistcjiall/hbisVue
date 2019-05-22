@@ -84,7 +84,7 @@
                     {
                         title: '产线',
                         key: 'CXNAME',
-                        width:'100',
+                        width:'200',
                         align: 'center',
                     },
                     {
@@ -95,7 +95,7 @@
                             {
                                 title: '销售量（吨）',
                                 key: 'FKIMG',
-                                width:'100',
+                                width:150,
                                 align: 'center',
                                 render: (h, params) => {
                                     params.row[params.column.key] = params.row[params.column.key] == null ? '0.00' : params.row[params.column.key];
@@ -109,7 +109,7 @@
                                 title: '平均售价（元/吨）',
                                 key: 'ZSJ',
                                 align: 'center',
-                                width:'100',
+                                width:150,
                                 render: (h, params) => {
                                     params.row[params.column.key] = params.row[params.column.key] == null ? '0.00' : params.row[params.column.key];
                                     return h('span',
@@ -122,7 +122,7 @@
                                 title: '销售额（万元）',
                                 key: 'KZWI6',
                                 align: 'center',
-                                width:'100',
+                                width:150,
                                 render: (h, params) => {
                                     params.row[params.column.key] = params.row[params.column.key] == null ? '0.00' : params.row[params.column.key];
                                     return h('span',
@@ -140,7 +140,7 @@
                             {
                                 title: '销售量(吨)',
                                 key: 'NMFKIMG',
-                                width:'100',
+                                width:150,
                                 align: 'center',
                                 render: (h, params) => {
                                     params.row[params.column.key] = params.row[params.column.key] == null ? '0.00' : params.row[params.column.key];
@@ -154,7 +154,7 @@
                                 title: '平均售价（元/吨）',
                                 key: 'NMSJ',
                                 align: 'center',
-                                width:'100',
+                                width:150,
                                 render: (h, params) => {
                                     params.row[params.column.key] = params.row[params.column.key] == null ? '0.00' : params.row[params.column.key];
                                     return h('span',
@@ -173,7 +173,7 @@
                             {
                                 title: '销售量(吨)',
                                 key: 'XSZGSFKIMG',
-                                width:'100',
+                                width:150,
                                 align: 'center',
                                 render: (h, params) => {
                                     params.row[params.column.key] = params.row[params.column.key] == null ? '0.00' : params.row[params.column.key];
@@ -187,7 +187,7 @@
                                 title: '平均售价（元/吨）',
                                 key: 'XSZGSSJ',
                                 align: 'center',
-                                width:'100',
+                                width:150,
                                 render: (h, params) => {
                                     params.row[params.column.key] = params.row[params.column.key] == null ? '0.00' : params.row[params.column.key];
                                     return h('span',
@@ -200,7 +200,7 @@
                                 title: '专业公司（吨）',
                                 key: 'ZYFKIMG',
                                 align: 'center',
-                                width:'100',
+                                width:150,
                                 render: (h, params) => {
                                     params.row[params.column.key] = params.row[params.column.key] == null ? '0.00' : params.row[params.column.key];
                                     return h('span',
@@ -213,7 +213,7 @@
                                 title: '平均售价（元/吨）',
                                 key: 'ZYSJ',
                                 align: 'center',
-                                width:'100',
+                                width:150,
                                 render: (h, params) => {
                                     params.row[params.column.key] = params.row[params.column.key] == null ? '0.00' : params.row[params.column.key];
                                     return h('span',
@@ -226,7 +226,7 @@
                                 title: '分公司（吨）',
                                 key: 'FGSFKIMG',
                                 align: 'center',
-                                width:'100',
+                                width:150,
                                 render: (h, params) => {
                                     params.row[params.column.key] = params.row[params.column.key] == null ? '0.00' : params.row[params.column.key];
                                     return h('span',
@@ -239,7 +239,7 @@
                                 title: '平均售价（元/吨）',
                                 key: 'FGSSJ',
                                 align: 'center',
-                                width:'100',
+                                width:150,
                                 render: (h, params) => {
                                     params.row[params.column.key] = params.row[params.column.key] == null ? '0.00' : params.row[params.column.key];
                                     return h('span',
@@ -259,7 +259,7 @@
                             {
                                 title: '销售量(吨)',
                                 key: 'ZGSFKIMG',
-                                width:'100',
+                                width:150,
                                 align: 'center',
                                 render: (h, params) => {
                                     params.row[params.column.key] = params.row[params.column.key] == null ? '0.00' : params.row[params.column.key];
@@ -273,7 +273,7 @@
                                 title: '平均售价（元/吨）',
                                 key: 'ZGSSJ',
                                 align: 'center',
-                                width:'100',
+                                width:150,
                                 render: (h, params) => {
                                     params.row[params.column.key] = params.row[params.column.key] == null ? '0.00' : params.row[params.column.key];
                                     return h('span',
@@ -286,7 +286,7 @@
                                 title: '事业部（吨）',
                                 key: 'SYBFKIMG',
                                 align: 'center',
-                                width:'100',
+                                width:150,
                                 render: (h, params) => {
                                     params.row[params.column.key] = params.row[params.column.key] == null ? '0.00' : params.row[params.column.key];
                                     return h('span',
@@ -299,7 +299,7 @@
                                 title: '平均售价（元/吨）',
                                 key: 'SYBSJ',
                                 align: 'center',
-                                width:'100',
+                                width:150,
                                 render: (h, params) => {
                                     params.row[params.column.key] = params.row[params.column.key] == null ? '0.00' : params.row[params.column.key];
                                     return h('span',
@@ -312,7 +312,7 @@
                                 title: '现货（吨）',
                                 key: 'XHFKIMG',
                                 align: 'center',
-                                width:'100',
+                                width:150,
                                 render: (h, params) => {
                                     params.row[params.column.key] = params.row[params.column.key] == null ? '0.00' : params.row[params.column.key];
                                     return h('span',
@@ -325,7 +325,7 @@
                                 title: '平均售价（元/吨）',
                                 key: 'XHSJ',
                                 align: 'center',
-                                width:'100',
+                                width:150,
                                 render: (h, params) => {
                                     params.row[params.column.key] = params.row[params.column.key] == null ? '0.00' : params.row[params.column.key];
                                     return h('span',
@@ -345,7 +345,7 @@
                             {
                                 title: '销售量(吨)',
                                 key: 'ZBGSFKIMG',
-                                width:'100',
+                                width:150,
                                 align: 'center',
                                 render: (h, params) => {
                                     params.row[params.column.key] = params.row[params.column.key] == null ? '0.00' : params.row[params.column.key];
@@ -359,7 +359,7 @@
                                 title: '平均售价（元/吨）',
                                 key: 'ZBGSSJ',
                                 align: 'center',
-                                width:'100',
+                                width:150,
                                 render: (h, params) => {
                                     params.row[params.column.key] = params.row[params.column.key] == null ? '0.00' : params.row[params.column.key];
                                     return h('span',
@@ -378,7 +378,7 @@
                             {
                                 title: '销售量(吨)',
                                 key: 'CKFKIMG',
-                                width:'100',
+                                width:150,
                                 align: 'center',
                                 render: (h, params) => {
                                     params.row[params.column.key] = params.row[params.column.key] == null ? '0.00' : params.row[params.column.key];
@@ -392,7 +392,7 @@
                                 title: '平均售价（元/吨）',
                                 key: 'CKSJ',
                                 align: 'center',
-                                width:'100',
+                                width:150,
                                 render: (h, params) => {
                                     params.row[params.column.key] = params.row[params.column.key] == null ? '0.00' : params.row[params.column.key];
                                     return h('span',

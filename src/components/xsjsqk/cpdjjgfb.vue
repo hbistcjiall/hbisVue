@@ -75,7 +75,7 @@
                         title: '产线',
                         align: "center",
                         isMergeRow: true,
-                        width: '100',
+                        width: '150',
                         key: 'CXNAME'
                     },
                     {
@@ -85,10 +85,9 @@
                         key: 'PRODUCT_GRADE'
                     },
                     {
-                        title: '销售量\n' +
-                            '（吨）',
+                        title: '销售量（吨）',
                         align: "center",
-                        width: '100',
+                        width: '150',
                         key: 'FKIMG',
                         render: (h, params) => {
                             params.row[params.column.key] = params.row[params.column.key] == null ? '0.00' : params.row[params.column.key];
@@ -98,10 +97,9 @@
                         }
                     },
                     {
-                        title: '税前售价\n' +
-                            '（元/吨）',
+                        title: '税前售价（元/吨）',
                         align: "center",
-                        width: '100',
+                        width: '150',
                         key: 'ZSJ',
                         render: (h, params) => {
                             params.row[params.column.key] = params.row[params.column.key] == null ? '0.00' : params.row[params.column.key];
@@ -119,7 +117,7 @@
                             {
                                 title: '销量(吨)',
                                 align: "center",
-                                width: '80',
+                                width: '150',
                                 key: 'ZYFKIMG',
                                 render: (h, params) => {
                                     params.row[params.column.key] = params.row[params.column.key] == null ? '0.00' : params.row[params.column.key];
@@ -131,7 +129,7 @@
                             {
                                 title: '均价(元/吨)',
                                 align: "center",
-                                width: '80',
+                                width: '150',
                                 key: 'ZYSJ',
                                 render: (h, params) => {
                                     params.row[params.column.key] = params.row[params.column.key] == null ? '0.00' : params.row[params.column.key];
@@ -143,7 +141,7 @@
                             {
                                 title: '销售占比',
                                 align: "center",
-                                width: '80',
+                                width: '150',
                                 key: 'ZYXSZB',
                                 render: (h, params) => {
                                     params.row[params.column.key] = params.row[params.column.key] == null ? '0.00' : params.row[params.column.key];
@@ -163,7 +161,7 @@
                             {
                                 title: '销量(吨)',
                                 align: "center",
-                                width: '80',
+                                width: '150',
                                 key: 'FGSFKIMG',
                                 render: (h, params) => {
                                     params.row[params.column.key] = params.row[params.column.key] == null ? '0.00' : params.row[params.column.key];
@@ -175,7 +173,7 @@
                             {
                                 title: '均价(元/吨)',
                                 align: "center",
-                                width: '80',
+                                width: '150',
                                 key: 'FGSSJ',
                                 render: (h, params) => {
                                     params.row[params.column.key] = params.row[params.column.key] == null ? '0.00' : params.row[params.column.key];
@@ -187,7 +185,7 @@
                             {
                                 title: '销售占比',
                                 align: "center",
-                                width: '80',
+                                width: '150',
                                 key: 'FGSXSZB',
                                 render: (h, params) => {
                                     params.row[params.column.key] = params.row[params.column.key] == null ? '0.00' : params.row[params.column.key];
@@ -206,7 +204,7 @@
                             {
                                 title: '销量(吨)',
                                 align: "center",
-                                width: '80',
+                                width: '150',
                                 key: 'SYBFKIMG',
                                 render: (h, params) => {
                                     params.row[params.column.key] = params.row[params.column.key] == null ? '0.00' : params.row[params.column.key];
@@ -218,7 +216,7 @@
                             {
                                 title: '均价(元/吨)',
                                 align: "center",
-                                width: '80',
+                                width: '150',
                                 key: 'SYBSJ',
                                 render: (h, params) => {
                                     params.row[params.column.key] = params.row[params.column.key] == null ? '0.00' : params.row[params.column.key];
@@ -230,7 +228,7 @@
                             {
                                 title: '销售占比',
                                 align: "center",
-                                width: '80',
+                                width: '150',
                                 key: 'SYBXSZB',
                                 render: (h, params) => {
                                     params.row[params.column.key] = params.row[params.column.key] == null ? '0.00' : params.row[params.column.key];
@@ -249,7 +247,7 @@
                             {
                                 title: '销量(吨)',
                                 align: "center",
-                                width: '80',
+                                width: '150',
                                 key: 'XHFKIMG',
                                 render: (h, params) => {
                                     params.row[params.column.key] = params.row[params.column.key] == null ? '0.00' : params.row[params.column.key];
@@ -261,7 +259,7 @@
                             {
                                 title: '均价(元/吨)',
                                 align: "center",
-                                width: '80',
+                                width: '150',
                                 key: 'XHSJ',
                                 render: (h, params) => {
                                     params.row[params.column.key] = params.row[params.column.key] == null ? '0.00' : params.row[params.column.key];
@@ -273,7 +271,7 @@
                             {
                                 title: '销售占比',
                                 align: "center",
-                                width: '80',
+                                width: '150',
                                 key: 'XHXSZB',
                                 render: (h, params) => {
                                     params.row[params.column.key] = params.row[params.column.key] == null ? '0.00' : params.row[params.column.key];
@@ -292,7 +290,7 @@
                             {
                                 title: '销量(吨)',
                                 align: "center",
-                                width: '80',
+                                width: '150',
                                 key: 'ZBGSFKIMG',
                                 render: (h, params) => {
                                     params.row[params.column.key] = params.row[params.column.key] == null ? '0.00' : params.row[params.column.key];
@@ -304,7 +302,7 @@
                             {
                                 title: '均价(元/吨)',
                                 align: "center",
-                                width: '80',
+                                width: '150',
                                 key: 'ZBGSSJ',
                                 render: (h, params) => {
                                     params.row[params.column.key] = params.row[params.column.key] == null ? '0.00' : params.row[params.column.key];
@@ -316,7 +314,7 @@
                             {
                                 title: '销售占比',
                                 align: "center",
-                                width: '80',
+                                width: '150',
                                 key: 'ZBGSXSZB',
                                 render: (h, params) => {
                                     params.row[params.column.key] = params.row[params.column.key] == null ? '0.00' : params.row[params.column.key];
