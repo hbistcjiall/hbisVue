@@ -139,7 +139,7 @@
                         title: '序号',
                         align: "center",
                         type:'index',
-                        width:60
+                        width:70
                     },
                     {
                         title: '上传时间',
@@ -150,6 +150,7 @@
                     {
                         title: '协议年份',
                         align: "center",
+                        width:90,
                         key: 'PROTOCOLYEAR'
                     },
                     {
@@ -166,17 +167,20 @@
                     },
                     {
                         title: '主销售区域',
+                        width:100,
                         align: "center",
                         key: 'MAINSALESREGIONAL'
                     },
                     {
                         title: '辅助销售区域一',
+                        width:130,
                         align: "center",
                         key: 'AIDEDSALESREGIONALONE'
                     },
                     {
                         title: '辅助销售区域二',
                         align: "center",
+                        width:130,
                         key: 'AIDEDSALESREGIONALTWO'
                     },
                     {
@@ -188,6 +192,7 @@
                     {
                         title: '年协议量(吨)',
                         align: "center",
+                        width:110,
                         key: 'ANNUALAGREEMENTVOLUME',
                         render: (h, params) => {
                             params.row[params.column.key] = params.row[params.column.key] == null ? '0.00' : params.row[params.column.key];

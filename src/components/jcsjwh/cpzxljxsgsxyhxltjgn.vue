@@ -68,6 +68,7 @@
                     },
                     {
                         title: '产品类别',
+                        width:90,
                         align: "center",
                         key: 'VARIETIES'
                     },
@@ -85,6 +86,7 @@
                     {
                         title: '协议户数',
                         align: "center",
+                        width:90,
                         key: 'PROTOCOLACCOUNTNUM',
                         render: (h, params) => {
                             params.row[params.column.key]=params.row[params.column.key]==null?'0.00':params.row[params.column.key];
@@ -95,6 +97,7 @@
                     },
                     {
                         title: '年协议量',
+                        width:90,
                         align: "center",
                         key: 'PROTOCOLSALESYEAR',
                         render: (h, params) => {
@@ -122,6 +125,7 @@
                             {
                                 title: '占年协议量比',
                                 align: "center",
+                                width:110,
                                 key: 'TOTALPROTOCOLSALESOFYEAR',
                                 render: (h, params) => {
                                     params.row[params.column.key]=params.row[params.column.key]==null?'0.00':params.row[params.column.key];
@@ -133,6 +137,7 @@
                             {
                                 title: '占产品总销量',
                                 align: "center",
+                                width:110,
                                 key: 'TOTALPROTOCOLSALESOFPRODUCT',
                                 render: (h, params) => {
                                     params.row[params.column.key]=params.row[params.column.key]==null?'0.00':params.row[params.column.key];
@@ -160,6 +165,7 @@
                             {
                                 title: '占协议总销量比',
                                 align: "center",
+                                width:130,
                                 key: 'ZIBANPROTOCOLSALESOFTOTAL',
                                 render: (h, params) => {
                                     params.row[params.column.key]=params.row[params.column.key]==null?'0.00':params.row[params.column.key];
@@ -188,6 +194,7 @@
                             {
                                 title: '占协议总销量比',
                                 align: "center",
+                                width:130,
                                 key: 'XIEYIPROTOCOLSALESOFTOTAL',
                                 render: (h, params) => {
                                     params.row[params.column.key]=params.row[params.column.key]==null?'0.00':params.row[params.column.key];
