@@ -90,36 +90,43 @@
                     {
                         title: '序号',
                         align: "center",
+                        width:70,
                         type: 'index',
                     },
                     {
                         title: '统计月份',
                         align: "center",
+                        width:200,
                         key: 'STATISTICSTIME'
                     },
                     {
                         title: '用户名称（全称）',
                         align: "center",
+                        width:200,
                         key: 'ACCOUNTNAME'
                     },
                     {
                         title: '供货方式',
                         align: "center",
+                        width:100,
                         key: 'SUPPLYMODE'
                     },
                     {
                         title: '品种钢',
                         align: "center",
+                        width:150,
                         key: 'VARIETIES'
                     },
                     {
                         title: '主销售区域',
                         align: "center",
+                        width:100,
                         key: 'MAINSALESREGIONAL'
                     },
                     {
                         title: '辅助销售区域一',
                         align: "center",
+                        width:150,
                         key: 'AIDEDSALESREGIONALONE',
                         render: (h, params) => {
                             params.row[params.column.key] = params.row[params.column.key] == null ? '0.00' : params.row[params.column.key];
@@ -131,6 +138,7 @@
                     {
                         title: '辅助销售区域二',
                         align: "center",
+                        width:150,
                         key: 'AIDEDSALESREGIONALTWO',
                         render: (h, params) => {
                             params.row[params.column.key] = params.row[params.column.key] == null ? '0.00' : params.row[params.column.key];
@@ -142,11 +150,13 @@
                     {
                         title: '钢厂',
                         align: "center",
+                        width:100,
                         key: 'STEELMILLS'
                     },
                     {
                         title: '年协议量（吨）',
                         align: "center",
+                        width:150,
                         key: 'ANNUALAGREEMENTVOLUME',
                         render: (h, params) => {
                             params.row[params.column.key] = params.row[params.column.key] == null ? '0.00' : params.row[params.column.key];
@@ -158,6 +168,7 @@
                     {
                         title: '当期协议销量（吨）',
                         align: "center",
+                        width:150,
                         key: 'ORDERMOUNT',
                         render: (h, params) => {
                             params.row[params.column.key] = params.row[params.column.key] == null ? '0.00' : params.row[params.column.key];
@@ -169,6 +180,7 @@
                     {
                         title: '当期执行集团协议加值销量（吨）',
                         align: "center",
+                        width:220,
                         key: 'PROTOCOLORDERMOUNT',
                         render: (h, params) => {
                             params.row[params.column.key] = params.row[params.column.key] == null ? '0.00' : params.row[params.column.key];
