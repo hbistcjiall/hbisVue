@@ -46,11 +46,15 @@
                         </Select>
                     </FormItem>
                 </Col>
-                <Col span="4" style="margin-left: 50px">
+
+
+            </Row>
+            <Row>
+                <Col span="6" style="float: right;margin-bottom: 20px">
                     <Button @click="getList()" icon="ios-search" style="margin-right:10px;">查询</Button>
                     <Button @click="downLoad()" icon="ios-cloud-download-outline">导出</Button>
+                    <a :href="downloadUrl"><Button type="primary" :loading="mxstats" style="margin-left:10px" @click="dw()">明细导出</Button></a>
                 </Col>
-
             </Row>
 
         </Form>
@@ -63,6 +67,8 @@
         name: "pzgjs_pz",
         data() {
             return {
+                downloadUrl:'',
+                mxstats:true,
                 loading:true,
                 switchTime:true,
                 year:new Date(),
@@ -273,6 +279,7 @@
                 this.switchTime?(this.startTime=date,this.endTime=this.utils.formatMonthEnd()):this.year=date;
             },
             getList() {
+                this.mxstats = true;
                 this.loading = true;
                 let params={
                 };
@@ -357,6 +364,7 @@
                     }
                     this.data.unshift(obj)
                     this.loading = false;
+                    this.mxstats = false;
                 });
             },
             changeTitle(){
@@ -372,6 +380,17 @@
                     this.columns[5].children[1].title="品种钢";
                 }
                 this.getList()
+            },
+            dw(){
+                this.downMx();
+            },
+            downMx(){
+                let startTime='startTime=';
+                startTime+=this.utils.formatMonthStart(this.startTime)
+                let endTime='&endTime=';
+                endTime+=this.utils.formatMonthStart(this.endTime)
+                let pz = "&pz="+this.pz
+                this.downloadUrl=this.$store.state.fetchPath + "/export/exportPzgPz?"+startTime+endTime+pz;
             },
             downLoad(){
                 this.$refs.table.exportCsv({
