@@ -61,12 +61,12 @@
                         </Select>
                     </FormItem>
                 </Col>
-                <Col span="4">
+                <Col span="4" style="float: right">
                     <Button @click="getList()" icon="ios-search" style="margin-right:10px;">查询</Button>
                     <Button @click="downLoad()" icon="ios-cloud-download-outline">导出</Button>
                 </Col>
-                <Col span="2" style="line-height: 30px;margin-top: 10px;float: right">
-                </Col>
+                <!--<Col span="2" style="line-height: 30px;margin-top: 10px;float: right">-->
+                <!--</Col>-->
             </Row>
             <!--<Row style="margin-bottom: 10px">-->
 
