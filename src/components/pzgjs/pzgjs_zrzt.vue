@@ -17,7 +17,7 @@
                         <DatePicker type="month" placeholder="终止月份" :editable="false" :clearable="false" v-model="endTime" style="width:150px"></DatePicker>
                     </FormItem>
                 </Col>
-                <Col span="3">
+                <Col span="1" style="margin-left: -20px">
                     <FormItem>
                         <i-switch v-model="switchTime" @on-change="changeSwitch">
                             <span slot="open">年</span>
@@ -25,7 +25,7 @@
                         </i-switch>
                     </FormItem>
                 </Col>
-                <Col span="5">
+                <Col span="4" style="margin-left: 80px">
                     <FormItem label="责任单位：" style="width:180px">
                         <Select v-model="zrbm" style="width:120px" placeholder="请选择责任单位">
                             <Option value="">全部</Option>
@@ -44,7 +44,7 @@
                         </Select>
                     </FormItem>
                 </Col>
-                <Col span="5">
+                <Col span="5" style="margin-left: 20px">
                     <FormItem label="产品等级：" style="width:180px">
                         <Select v-model="zt" style="width:120px" placeholder="请选择品种" @on-change="changeTitle()">
                             <Option value="0">品种钢</Option>

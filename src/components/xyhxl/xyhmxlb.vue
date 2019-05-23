@@ -45,7 +45,7 @@
 
         </Row>
             <Row>
-                <Col span="2">
+                <Col span="2" style="float: right">
                     <a :href="downloadMb"><Button type="primary" style="margin-left:10px">下载模版</Button></a>
                 </Col>
             </Row>
