@@ -38,6 +38,7 @@
                 <Col span="4" style="float: right">
                     <Button @click="getList()" icon="ios-search" style="margin-right:10px;">查询</Button>
                     <Button @click="downLoad()" icon="ios-cloud-download-outline">导出</Button>
+                    <a :href="downloadUrl"><Button type="primary" :loading="mxstats" style="margin-left:10px" @click="dw()">明细导出</Button></a>
                 </Col>
             </Row>
         </Form>
@@ -50,6 +51,8 @@
         name: "xsjsqkgc",
         data() {
             return {
+                mxstats:true,
+                downloadUrl:'',
                 gc:'全部',
                 loading:true,
                 startTime: new Date(new Date().getFullYear(), new Date().getMonth()-1, 1),
@@ -111,12 +114,25 @@
             this.getList();
         },
         methods: {
+            dw(){
+                this.downMx();
+            },
+            downMx(){
+                let startTime='startTime=';
+                startTime+=this.utils.formatMonthStart(this.startTime)
+                let endTime='&endTime=';
+                endTime+=this.utils.formatMonthStart(this.endTime)
+                let companyName= "&companyName="+this.gc
+                let jd = "&jd="+this.model1
+                this.downloadUrl=this.$store.state.fetchPath + "/export/exportXSJSGc?"+startTime+endTime+companyName+jd;
+            },
             downLoad(){
                 this.$refs.table.exportCsv({
                     filename: '销售结算情况（钢厂）明细'
                 });
             },
             getList() {
+                this.mxstats = true;
                 this.loading = true;
                 let startTime='startTime=';
                 startTime+=this.utils.formatMonthStart(this.startTime)
@@ -165,6 +181,7 @@
                     };
                     this.data.push(obj);
                     this.loading = false;
+                    this.mxstats = false;
                 });
             }
         }
