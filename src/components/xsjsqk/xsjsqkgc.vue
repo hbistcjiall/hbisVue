@@ -2,13 +2,13 @@
     <div>
         <Form :label-width="50">
             <Row>
-                <Col span="4">
+                <Col span="8">
                     <FormItem label="月份：">
-                        <DatePicker type="month" placeholder="起始月份" :editable="false" :clearable="false" v-model="startTime" style="width:150px"></DatePicker>
-                    </FormItem>
-                </Col>
-                <Col span="4">
-                    <FormItem>
+                        <DatePicker type="month" placeholder="起始月份" :editable="false" :clearable="false" v-model="startTime" style="width:150px;margin-right: 5px"></DatePicker>
+                    <!--</FormItem>-->
+                <!--</Col>-->
+                <!--<Col span="4">-->
+                    <!--<FormItem>-->
                         <DatePicker type="month" placeholder="终止月份"  :editable="false" :clearable="false" v-model="endTime" style="width:150px"></DatePicker>
                     </FormItem>
                 </Col>
