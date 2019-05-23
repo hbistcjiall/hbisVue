@@ -36,9 +36,13 @@
                         </Select>
                     </FormItem>
                 </Col>
-                <Col span="4" style="margin-left: 50px;">
+
+            </Row>
+            <Row>
+                <Col span="6" style="float: right;margin-bottom: 20px">
                     <Button @click="getListed()" icon="ios-search">查询</Button>
                     <a :href="downloadUrl"><Button type="primary" :loading="mxstats" style="margin-left:10px" icon="ios-cloud-download-outline" @click="download()">导出</Button></a>
+                    <a :href="downloadUrlMx"><Button type="primary" :loading="mxstatsMx" style="margin-left:10px" @click="downloadMx()">明细导出</Button></a>
                 </Col>
             </Row>
         </Form>
@@ -53,6 +57,8 @@
             return {
                 downloadUrl:'',
                 mxstats:false,
+                downloadUrlMx:'',
+                mxstatsMx:true,
                 cxCx:{
                     companyId:''
                 },
@@ -332,6 +338,7 @@
             this.getCxData();
             this.getListed();
             this.mxstats = true
+            this.mxstatsMx = true
         },
         methods: {
             getCxData(){
@@ -355,6 +362,7 @@
             getListed() {
                 this.loading = true;
                 this.mxstats = true
+                this.mxstatsMx = true
                 let startTime = 'startTime=' + this.utils.formatMonthStart(this.startTime);
                 let endTime = 'endTime=' + this.utils.formatMonthStart(this.endTime);
                 let zl = 'zl='+this.zl;
@@ -7676,13 +7684,13 @@
                     this.data = this.utils.mergeRow(arr, 'CXNAME','ZL',);
                     this.loading = false;
                     this.mxstats = false;
+                    this.mxstatsMx = false;
                 });
             },
             download(){
                 this.downMx()
             },
             downMx(){
-
                 let zlStr = '&zl='+this.zl;
                 let cxArr = '&cx=' +this.cx.toString()
                 let startTime='startTime=';
@@ -7690,6 +7698,18 @@
                 startTime = startTime+this.utils.formatMonthStart(this.startTime)
                 endTime = endTime+this.utils.formatMonthStart(this.endTime)
                 this.downloadUrl=this.$store.state.fetchPath + "/export/exportReport?"+startTime+endTime+zlStr+cxArr;
+            },
+            downloadMx(){
+                this.MxdownMx()
+            },
+            MxdownMx(){
+                let zlStr = '&zl='+this.zl;
+                let cxArr = '&cx=' +this.cx.toString()
+                let startTime='startTime=';
+                let endTime='&endTime=';
+                startTime = startTime+this.utils.formatMonthStart(this.startTime)
+                endTime = endTime+this.utils.formatMonthStart(this.endTime)
+                this.downloadUrlMx=this.$store.state.fetchPath + "/export/exportJGFB?"+startTime+endTime+zlStr+cxArr;
             }
         },
     }
