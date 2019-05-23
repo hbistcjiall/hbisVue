@@ -43,12 +43,9 @@
                         </Select>
                     </FormItem>
                 </Col>
-
-            </Row>
-            <Row>
-                <Col span="4" style="float: right">
+                <Col span="4" style="float: right;margin-bottom: 20px">
                     <Button @click="getList()" icon="ios-search" style="margin-right:10px;">查询</Button>
-<!--                    <Button @click="downLoad()" icon="ios-cloud-download-outline">导出</Button>-->
+                    <!--                    <Button @click="downLoad()" icon="ios-cloud-download-outline">导出</Button>-->
                     <a :href="downloadUrl"><Button type="primary" :loading="mxstats" style="margin-left:10px" icon="ios-cloud-download-outline" @click="download()">导出</Button></a>
 
                 </Col>
