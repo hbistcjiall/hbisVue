@@ -21,7 +21,7 @@
                         </Select>
                     </FormItem>
                 </Col>
-                <Col span="6">
+                <Col span="6" style="float: right">
                     <Button @click="getList()" icon="ios-search" style="margin-right:10px;">查询</Button>
                     <Button @click="downLoad()" icon="ios-cloud-download-outline">导出</Button>
                     <a :href="downloadUrl"><Button type="primary" :loading="mxstats" style="margin-left:10px" @click="dw()">明细导出</Button></a>

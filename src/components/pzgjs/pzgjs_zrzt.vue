@@ -7,17 +7,17 @@
                         <DatePicker type="year" placeholder="请选择年份" :editable="false" :clearable="false" v-model="year" style="width:150px"></DatePicker>
                     </FormItem>
                 </Col>
-                <Col span="4"  v-if="switchTime">
+                <Col span="9" style="margin-left: -50px" v-if="switchTime">
                     <FormItem label="月份：">
-                        <DatePicker type="month" placeholder="起始月份" :editable="false" :clearable="false" v-model="startTime" style="width:150px"></DatePicker>
-                    </FormItem>
-                </Col>
-                <Col span="4" v-if="switchTime">
-                    <FormItem>
+                        <DatePicker type="month" placeholder="起始月份" :editable="false" :clearable="false" v-model="startTime" style="width:150px;margin-right: 5px"></DatePicker>
+                    <!--</FormItem>-->
+                <!--</Col>-->
+                <!--<Col span="4" v-if="switchTime">-->
+                    <!--<FormItem>-->
                         <DatePicker type="month" placeholder="终止月份" :editable="false" :clearable="false" v-model="endTime" style="width:150px"></DatePicker>
                     </FormItem>
                 </Col>
-                <Col span="1" style="margin-left: -20px">
+                <Col span="1" style="margin-left: -50px">
                     <FormItem>
                         <i-switch v-model="switchTime" @on-change="changeSwitch">
                             <span slot="open">年</span>

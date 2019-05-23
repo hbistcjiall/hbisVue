@@ -9,7 +9,7 @@
                 </Col>
                 <Col span="9"  v-if="switchTime" style="margin-left: -50px">
                     <FormItem label="月份：">
-                        <DatePicker type="month" placeholder="起始月份" :editable="false" :clearable="false"  v-model="startTime" style="width:150px"></DatePicker>
+                        <DatePicker type="month" placeholder="起始月份" :editable="false" :clearable="false"  v-model="startTime" style="width:150px;margin-right: 5px"></DatePicker>
                         <DatePicker type="month" placeholder="终止月份" :editable="false" :clearable="false"  v-model="endTime" style="width:150px"></DatePicker>
                     </FormItem>
                 </Col>
