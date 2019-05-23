@@ -3,37 +3,40 @@
         <div class="divStyle">
             <Form :label-width="80">
 
-                        <FormItem label="钢厂:" style="float: left">
-                            <Select style="width: 100px" v-model="ddlxyjglxdyData.companyId">
-                                <Option value="">全部</Option>
-                                <Option value="9580">唐钢</Option>
-                                <Option value="9727">邯钢</Option>
-                                <Option value="9193">宣钢</Option>
-                                <Option value="9196">承钢</Option>
-                                <Option value="1932">舞钢</Option>
-                            </Select>
-                        </FormItem>
-                        <FormItem label="品种钢:" style="float: left">
-                            <Select style="width: 100px" v-model="ddlxyjglxdyData.varieties">
-                                <Option value="">全部</Option>
-                                <Option value="热板">热板</Option>
-                                <Option value="冷板">冷板</Option>
-                                <Option value="中厚板">中厚板</Option>
-                                <Option value="棒线">棒线</Option>
-                                <Option value="型带">型带</Option>
-                            </Select>
-                        </FormItem>
-                        <FormItem label="订单类型:" style="float: left">
-                            <Input style="width: 100px" v-model="ddlxyjglxdyData.orderType" placeholder="请输入订单类型"></Input>
-                        </FormItem>
-                        <FormItem label="价格类型:" style="float: left">
-                            <Input style="width: 100px" v-model="ddlxyjglxdyData.priceType" placeholder="请输入价格类型"></Input>
-                        </FormItem>
-                        <Button @click="search" style="margin-left:20px" icon="ios-search">查询</Button>
-                        <Button @click="updModal=true" style="margin-left: 20px" icon="ios-add">新增</Button>
+                <FormItem label="钢厂:" style="float: left">
+                    <Select style="width: 100px" v-model="ddlxyjglxdyData.companyId">
+                        <Option value="">全部</Option>
+                        <Option value="9580">唐钢</Option>
+                        <Option value="9727">邯钢</Option>
+                        <Option value="9193">宣钢</Option>
+                        <Option value="9196">承钢</Option>
+                        <Option value="1932">舞钢</Option>
+                    </Select>
+                </FormItem>
+                <FormItem label="品种钢:" style="float: left">
+                    <Select style="width: 100px" v-model="ddlxyjglxdyData.varieties">
+                        <Option value="">全部</Option>
+                        <Option value="热板">热板</Option>
+                        <Option value="冷板">冷板</Option>
+                        <Option value="中厚板">中厚板</Option>
+                        <Option value="棒线">棒线</Option>
+                        <Option value="型带">型带</Option>
+                    </Select>
+                </FormItem>
+                <FormItem label="订单类型:" style="float: left">
+                    <Input style="width: 100px" v-model="ddlxyjglxdyData.orderType" placeholder="请输入订单类型"></Input>
+                </FormItem>
+                <FormItem label="价格类型:" style="float: left">
+                    <Input style="width: 100px" v-model="ddlxyjglxdyData.priceType" placeholder="请输入价格类型"></Input>
+                </FormItem>
+                <div style="float: right">
+                    <Button @click="search" style="margin-left:20px" icon="ios-search">查询</Button>
+                    <Button @click="updModal=true" style="margin-left: 20px" icon="ios-add">新增</Button>
+                </div>
             </Form>
         </div>
-        <Table :loading="loading" border stripe :columns="columns12" :data="fecthdata6" style="margin-top: 20px;float: left;width: 100%;"
+        <Table :loading="loading" border stripe :columns="columns12" :data="fecthdata6"
+               style="margin-top: 20px;float: left;width: 100%;"
                ref="table">
             <template slot-scope="{row}" slot="action">
                 <Button size="small" style="margin-right: 5px" @click="updD(row)">修改</Button>
@@ -326,6 +329,7 @@
         background: #f2f4f7;
         color: #546c8c;
     }
+
     .divStyle {
         width: 100%;
         height: 60px;

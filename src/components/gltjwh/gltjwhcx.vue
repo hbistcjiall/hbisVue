@@ -42,12 +42,12 @@
                         </Select>
                     </FormItem>
                 </Col>
-                <Col span="2" style="margin-left: -50px;float: left">
+                <Col span="2" style="margin-left: -50px;float: right">
                     <Button @click="getList()" icon="ios-search" style="margin-right:10px;">查询</Button>
                 </Col>
             </Row>
         </Form>
-        <Table :loading="loading" :columns="columns" :data="data" border height="550" ref="table"></Table>
+        <Table :loading="loading" :columns="columns" :data="data" border height="700" ref="table"></Table>
         <Page :total="dataCount" :page-size="pageSize" show-total show-elevator show-sizer class="paging" @on-change="changepage" @on-page-size-change='handlePageSize' style="margin-top:20px;"></Page>
     </div>
 </template>

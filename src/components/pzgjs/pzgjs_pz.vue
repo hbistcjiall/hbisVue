@@ -13,7 +13,7 @@
                         <DatePicker type="month" placeholder="终止月份" :editable="false" :clearable="false"  v-model="endTime" style="width:150px"></DatePicker>
                     </FormItem>
                 </Col>
-                <Col span="1">
+                <Col span="1" style="margin-left: -100px">
                     <FormItem>
                         <i-switch v-model="switchTime" @on-change="changeSwitch">
                             <span slot="open">年</span>
@@ -21,7 +21,7 @@
                         </i-switch>
                     </FormItem>
                 </Col>
-                <Col span="4" style="margin-left: -20px">
+                <Col span="4" style="margin-left: 10px">
                     <FormItem label="品种：" style="width: 120px">
                         <Select v-model="pz" style="width:120px" placeholder="请选择品种" @on-change="changeTitle()">
                             <Option value="">全部</Option>
@@ -34,7 +34,7 @@
                         </Select>
                     </FormItem>
                 </Col>
-                <Col span="4" style="margin-left: -50px">
+                <Col span="4" style="margin-left: 20px">
                     <FormItem label="产品等级：" style="width: 120px">
                         <Select v-model="zt" style="width:120px" placeholder="请选择产品等级" @on-change="changeTitle()">
                             <Option value="0">品种钢</Option>
@@ -42,7 +42,7 @@
                         </Select>
                     </FormItem>
                 </Col>
-                <Col span="4" style="float: right;margin-bottom: 20px">
+                <Col span="6" style="float: right;margin-bottom: 20px">
                     <Button @click="getList()" icon="ios-search" style="margin-right:10px;">查询</Button>
                     <Button @click="downLoad()" icon="ios-cloud-download-outline">导出</Button>
                     <a :href="downloadUrl"><Button type="primary" :loading="mxstats" style="margin-left:10px" @click="dw()">明细导出</Button></a>
