@@ -21,9 +21,10 @@
                         </Select>
                     </FormItem>
                 </Col>
-                <Col span="4" style="margin-left: 270px">
+                <Col span="6">
                     <Button @click="getList()" icon="ios-search" style="margin-right:10px;">查询</Button>
                     <Button @click="downLoad()" icon="ios-cloud-download-outline">导出</Button>
+                    <a :href="downloadUrl"><Button type="primary" :loading="mxstats" style="margin-left:10px" @click="dw()">明细导出</Button></a>
                 </Col>
             </Row>
         </Form>
@@ -36,6 +37,8 @@
         name: "xsjsqkpz",
         data() {
             return {
+                mxstats:true,
+                downloadUrl:'',
                 loading:true,
                 startTime:new Date(new Date().getFullYear(), new Date().getMonth()-1, 1),
                 endTime:new Date(new Date().getFullYear(), new Date().getMonth()-1, 1),
@@ -93,12 +96,25 @@
             this.getList();
         },
         methods: {
+            dw(){
+                this.Mxdown()
+            },
+            Mxdown(){
+                let startTime='startTime=';
+                startTime+=this.utils.formatMonthStart(this.startTime)
+                let endTime='&endTime=';
+                endTime+=this.utils.formatMonthStart(this.endTime)
+                // let companyName= "&companyName="+this.gc
+                let jd = "&jd="+this.model1
+                this.downloadUrl=this.$store.state.fetchPath + "/export/exportXSJSPz?"+startTime+endTime+jd;
+            },
             downLoad(){
                 this.$refs.table.exportCsv({
                     filename: '销售结算情况（品种）明细'
                 });
             },
             getList() {
+                this.mxstats = true;
                 this.loading = true;
                 let startTime='startTime=';
                 startTime+=this.utils.formatMonthStart(this.startTime)
@@ -123,6 +139,7 @@
                     res = res && res.length > 0 ? JSON.parse(res) : [];
                     this.data = res;
                     this.loading = false;
+                    this.mxstats = false
                 });
             }
         }

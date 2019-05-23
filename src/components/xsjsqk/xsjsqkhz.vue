@@ -43,11 +43,11 @@
                         </Select>
                     </FormItem>
                 </Col>
-                <Col span="4" style="float: right;margin-bottom: 20px">
+                <Col span="6" style="float: right;margin-bottom: 20px">
                     <Button @click="getList()" icon="ios-search" style="margin-right:10px;">查询</Button>
                     <!--                    <Button @click="downLoad()" icon="ios-cloud-download-outline">导出</Button>-->
                     <a :href="downloadUrl"><Button type="primary" :loading="mxstats" style="margin-left:10px" icon="ios-cloud-download-outline" @click="download()">导出</Button></a>
-
+                    <a :href="downloadUrlMx"><Button type="primary" :loading="mxstatsMx" style="margin-left:10px" icon="ios-cloud-download-outline" @click="downloadMx()">明细导出</Button></a>
                 </Col>
             </Row>
         </Form>
@@ -60,7 +60,9 @@
         name: "xsjsqkhz",
         data() {
             return {
+                downloadUrlMx:'',
                 downloadUrl:'',
+                mxstatsMx:true,
                 mxstats:false,
                 jd:'0',
                 pz:'全部',
@@ -433,6 +435,19 @@
             download(){
                 this.downMx();
             },
+            downloadMx(){
+                this.MxdownMx();
+            },
+            MxdownMx(){
+                let cxArr = '&cx=' +this.cx.toString()
+                let startTime='startTime=';
+                startTime+=this.utils.formatMonthStart(this.startTime)
+                let endTime='&endTime=';
+                endTime+=this.utils.formatMonthStart(this.endTime)
+                let pz = "pz="+this.pz
+                let jd = "jd="+this.jd
+                this.downloadUrlMx=this.$store.state.fetchPath + "/export/exportXSJSCx?"+startTime+endTime+cxArr+"&"+jd+"&"+pz;
+            },
             downMx(){
                 let cxArr = '&cx=' +this.cx.toString()
                 let startTime='startTime=';
@@ -445,6 +460,7 @@
             },
             getList() {
                 let cxArr = '&cx=' +this.cx.toString()
+                this.mxstatsMx=true
                 this.mxstats = true
                 this.loading = true;
                 let startTime='startTime=';
@@ -1560,7 +1576,9 @@
                     let arr=jgj.concat(reban).concat(suanxi).concat(lengban).concat(duxin).concat(zhonghouban).concat(luowengang).concat(yuangang).concat(xiancai).concat(xingcai).concat(pinzhong).concat(baoban)
                     this.data = this.utils.mergeRow(arr,'ZL')
                     this.loading = false;
-                    this.mxstats = false
+                    this.mxstats = false;
+                    this.mxstatsMx= false
+
                 });
             }
         }
