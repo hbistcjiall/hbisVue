@@ -21,7 +21,7 @@
                     </DatePicker>
                 </FormItem>
                 <a :href="downloadUrl">
-                    <Button type="primary" style="float: right">导出</Button>
+                    <Button type="primary" icon="ios-cloud-download-outline" style="float: right">导出</Button>
                 </a>
                 <Button @click="search" style="float: right;margin-right: 20px" icon="ios-search">查询</Button>
 

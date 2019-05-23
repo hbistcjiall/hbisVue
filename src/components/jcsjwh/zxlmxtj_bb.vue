@@ -36,13 +36,13 @@
             </CheckboxGroup>
 
         </div>
-        <div style="both:clear;margin-left: 900px">
+        <div style="float: right;margin-right: 30px;margin-bottom: 20px">
             <Button @click="search()" icon="ios-search" type="primary" style="margin-right:20px;">查询</Button>
             <a :href="downloadUrl">
-                <Button type="primary" style="margin-left:10px">导出</Button>
+                <Button type="primary" icon="ios-cloud-download-outline" style="margin-left:10px">导出</Button>
             </a>
         </div>
-        <Table border stripe :columns="columns12" :data="resDatas" style="margin-top: 20px" ref="table"
+        <Table border stripe :columns="columns12" :data="resDatas" style="clear: both;margin-top: 20px" ref="table"
                :loading="loading">
             <template slot-scope="{ row }" slot="name">
                 <strong>{{ row.name }}</strong>

@@ -9,7 +9,7 @@
                                     style="width:120px"></DatePicker>
                     </FormItem>
                 </Col>
-                <Col span="4" style="margin-left: 90px">
+                <Col span="4" style="margin-left: 90px;float: right">
                     <Button @click="getList()" icon="ios-search" type="primary" style="margin-right:10px;">查询</Button>
                     <Button @click="downLoad()" icon="ios-cloud-download-outline" type="primary">导出</Button>
                 </Col>

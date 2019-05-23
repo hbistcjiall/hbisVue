@@ -17,7 +17,7 @@
                         <DatePicker type="month" placeholder="终止月份"  :editable="false" :clearable="false" v-model="endTime" style="width:150px;margin-left:-30px"></DatePicker>
                     </FormItem>
                 </Col>
-                <Col span="3">
+                <Col span="1">
                     <FormItem>
                         <i-switch v-model="switchTime" @on-change="changeSwitch">
                             <span slot="open">年</span>
@@ -27,8 +27,8 @@
                 </Col>
 
                 <Col span="4">
-                    <FormItem label="单位：">
-                        <Select v-model="dw" placeholder="请选择单位" @on-change="getCx">
+                    <FormItem label="单位：" style="margin-left: 50px">
+                        <Select style="width: 120px" v-model="dw" placeholder="请选择单位" @on-change="getCx">
                             <Option value="全部">全部</Option>
                             <Option value="9580">河钢唐钢</Option>
                             <Option value="9727">河钢邯钢</Option>
@@ -40,24 +40,25 @@
                         </Select>
                     </FormItem>
                 </Col>
-                <Col span="6" style="margin-left: 20px">
+                <Col span="6" style="margin-left: 40px">
                     <FormItem label="产线：">
                         <Select  v-model="cx" placeholder="请选择产线" filterable multiple style="width: 235px">
                             <Option v-for="item in cxData" :value="item.value" :key="item.value">{{ item.label }}</Option>
                         </Select>
                     </FormItem>
                 </Col>
-            </Row>
-            <Row style="margin-bottom: 20px">
-                <Col span="6">
+                <Col span="4">
                     <FormItem>
-                        <label style="margin-left: -115px;">产品等级:</label>
-                        <Select v-model="zt" style="width:150px;margin-left: 10px" placeholder="请选择品种" @on-change="changeTitle()">
+                        <label style="margin-left: -45px;">产品等级:</label>
+                        <Select v-model="zt" style="width:120px;margin-left: 10px" placeholder="请选择品种" @on-change="changeTitle()">
                             <Option value="0">品种钢</Option>
                             <Option value="1">高端产品</Option>
                         </Select>
                     </FormItem>
                 </Col>
+            </Row>
+            <Row style="margin-bottom: 20px">
+
                 <Col span="6" style="float: right">
                     <Button @click="getList()" icon="ios-search" style="margin-right:10px;">查询</Button>
                     <Button @click="downLoad()" icon="ios-cloud-download-outline">导出</Button>

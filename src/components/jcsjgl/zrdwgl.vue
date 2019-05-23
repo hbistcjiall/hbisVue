@@ -2,10 +2,13 @@
     <div>
         <label>责任单位：</label>
         <Input placeholder="责任单位名称" style="width: 300px" v-model="dictData.companyname"/>
-        <Button @click="search" style="margin-left:20px;margin-right:10px;" icon="ios-search">查询</Button>
-        <Button @click="addNew" style="magin-left:20px;" icon ="ios-add">新增</Button>
+        <div style="float: right">
+            <Button @click="search" style="margin-left:20px;margin-right:10px;" icon="ios-search">查询</Button>
+            <Button @click="addNew" style="magin-left:20px;" icon="ios-add">新增</Button>
+        </div>
         <!--<Button @click="downLoad()" icon="ios-cloud-download-outline" type="primary">导出</Button>-->
-        <Table :loading="loading" border stripe :columns="columns12" :data="fecthdata6" style="margin-top: 20px" ref="table">
+        <Table :loading="loading" border stripe :columns="columns12" :data="fecthdata6" style="margin-top: 20px"
+               ref="table">
             <template slot-scope="{ row }" slot="name">
                 <strong>{{ row.name }}</strong>
             </template>
@@ -14,7 +17,8 @@
                 <Button size="small" @click="remove(row)" style="background:#ff6969;color:#fff;">删除</Button>
             </template>
         </Table>
-        <Page :total="dataCount" @on-page-size-change='handlePageSize' :page-size="pageSize" show-total show-elevator show-sizer class="paging" @on-change="changepage" style="margin-top:20px;"></Page>
+        <Page :total="dataCount" @on-page-size-change='handlePageSize' :page-size="pageSize" show-total show-elevator
+              show-sizer class="paging" @on-change="changepage" style="margin-top:20px;"></Page>
         <Modal v-model="updModal" title="责任单位管理" :closable='false' @on-ok="updok">
             <Form :model="updformValidate" :rules="updruleValidate" :label-width="90">
                 <FormItem label="编码" prop="code">
@@ -30,22 +34,23 @@
 </template>
 <script>
     import addZrdwgl from './addZrdwgl.vue'
+
     export default {
-        name:'zrdwgl',
-        data () {
+        name: 'zrdwgl',
+        data() {
             return {
-                loading:true,
-                updModal:false,
+                loading: true,
+                updModal: false,
                 dictData: {
                     companyname: '',
                     page: '0',
                     limit: '10',
                 },
-                delData:{
-                    id:'',
+                delData: {
+                    id: '',
                 },
                 formValidate: {
-                    companyname:'',
+                    companyname: '',
                 },
                 dataCount: 0,
                 pageSize: 10,
@@ -74,21 +79,21 @@
                     },
                 ],
                 fecthdata6: [],
-                resDatas:[],
+                resDatas: [],
                 updformValidate: {
-                    id:'',
-                    companyname:'',
-                    code:'',
+                    id: '',
+                    companyname: '',
+                    code: '',
                 },
                 updruleValidate: {
                     name: [
-                        { required: true, message: '名称', trigger: 'blur' }
+                        {required: true, message: '名称', trigger: 'blur'}
                     ],
-                    code:[
-                        { required: true, message: '编码', trigger: 'blur' }
+                    code: [
+                        {required: true, message: '编码', trigger: 'blur'}
                     ]
                 },
-                uproledata:[],
+                uproledata: [],
             }
         },
         created() {
@@ -96,55 +101,53 @@
         },
         methods: {
             handleListApproveHistory() {
-                this.loading =true
+                this.loading = true
                 fetch(this.$store.state.fetchPath + "/acctabilityunit/selaccountmanager", {
                     method: "POST",
                     headers: this.$store.state.fetchHeader,
                     body: this.utils.formatParams(this.dictData),
-                    credentials:'include'
+                    credentials: 'include'
                 })
                     .then((res) => {
-                        if(res.status!=200){
+                        if (res.status != 200) {
                             this.$Message.error('请求失败！');
-                        }else{
+                        } else {
                             return res.text();
                         }
                     }).then((res) => {
-                    res = res&&res.length>0?JSON.parse(res):[]
-                    this.resDatas =  res.data;
-                    this.dataCount =  parseInt(res.count);
+                    res = res && res.length > 0 ? JSON.parse(res) : []
+                    this.resDatas = res.data;
+                    this.dataCount = parseInt(res.count);
                     this.pageSize = parseInt(res.pageSize);
-                    if(this.dataCount < this.pageSize){
+                    if (this.dataCount < this.pageSize) {
                         this.fecthdata6 = this.resDatas;
-                    }else{
-                        this.fecthdata6 = this.resDatas.slice(0,this.pageSize);
+                    } else {
+                        this.fecthdata6 = this.resDatas.slice(0, this.pageSize);
                     }
                     this.loading = false;
                 })
             },
             changepage(index) {
-                this.dictData.page=index;
+                this.dictData.page = index;
                 this.handleListApproveHistory();
             },
-            handlePageSize(index){
+            handlePageSize(index) {
                 this.dictData.limit = index;
                 this.search();
             },
-            search(){
+            search() {
                 this.handleListApproveHistory();
             },
-            addNew () {
+            addNew() {
                 this.$Modal.confirm({
-                    scrollable:true,
-                    okText:'新增',
+                    scrollable: true,
+                    okText: '新增',
                     render: (h) => {
                         return h(addZrdwgl, {
-                            props: {
-
-                            },
+                            props: {},
                             on: {
                                 companyname: (name) => {
-                                    this.formValidate.companyname=name
+                                    this.formValidate.companyname = name
                                 },
                             }
                         })
@@ -154,12 +157,12 @@
                             method: "POST",
                             headers: this.$store.state.fetchHeader,
                             body: this.utils.formatParams(this.formValidate),
-                            credentials:'include'
+                            credentials: 'include'
                         })
                             .then((res) => {
-                                if(res.status!=200){
+                                if (res.status != 200) {
                                     this.$Message.error('请求失败！');
-                                }else{
+                                } else {
                                     return res.text();
                                 }
                             })
@@ -169,22 +172,22 @@
                     }
                 })
             },
-            remove (r) {
+            remove(r) {
                 this.$Modal.confirm({
                     title: '提示',
                     content: '确认删除吗？',
                     onOk: () => {
-                        this.delData.id=r.ID;
+                        this.delData.id = r.ID;
                         fetch(this.$store.state.fetchPath + "/acctabilityunit/delmanager", {
                             method: "POST",
                             headers: this.$store.state.fetchHeader,
                             body: this.utils.formatParams(this.delData),
-                            credentials:'include'
+                            credentials: 'include'
                         })
                             .then((res) => {
-                                if(res.status!=200){
+                                if (res.status != 200) {
                                     this.$Message.error('请求失败！');
-                                }else{
+                                } else {
                                     return res.text();
                                 }
                             })
@@ -194,24 +197,24 @@
                     }
                 });
             },
-            updD(r){
+            updD(r) {
                 this.updModal = true;
                 this.updformValidate.id = r.ID;
                 this.updformValidate.companyname = r.NAME;
                 this.updformValidate.code = r.CODE;
             },
-            updok(){
+            updok() {
                 this.updformValidate.dictTypeId = this.updformValidate.id
                 fetch(this.$store.state.fetchPath + "/acctabilityunit/addorupdatemanager", {
                     method: "POST",
                     headers: this.$store.state.fetchHeader,
                     body: this.utils.formatParams(this.updformValidate),
-                    credentials:'include'
+                    credentials: 'include'
                 })
                     .then((res) => {
-                        if(res.status!=200){
+                        if (res.status != 200) {
                             this.$Message.error('请求失败！');
-                        }else{
+                        } else {
                             return res.text();
                         }
                     })
@@ -227,19 +230,22 @@
     }
 </script>
 <style scoped>
-    .paging{
-        float:right;
-        margin-top:10px;
+    .paging {
+        float: right;
+        margin-top: 10px;
     }
-    .userbtn{
-        margin-right:10px;
+
+    .userbtn {
+        margin-right: 10px;
     }
-    button{
+
+    button {
         background: #3497db;
-        color:#fff;
+        color: #fff;
     }
-    table button{
-         background: #f2f4f7;
-         color:#546c8c;
-     }
+
+    table button {
+        background: #f2f4f7;
+        color: #546c8c;
+    }
 </style>

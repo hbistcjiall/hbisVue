@@ -7,9 +7,10 @@
                 {{item.label }}
             </Option>
         </Select>
-
-        <Button @click="search" style="magin-left:20px;margin-right:10px;" icon="ios-search">查询</Button>
-        <Button @click="addNew" style="magin-left:20px;" icon="ios-add">新增</Button>
+        <div style="float: right">
+            <Button @click="search" style="magin-left:20px;margin-right:10px;" icon="ios-search">查询</Button>
+            <Button @click="addNew" style="magin-left:20px;" icon="ios-add">新增</Button>
+        </div>
         <!--<Button type="primary" @click="downLoad" style="magin-left:20px" icon="ios-cloud-download-outline">导出</Button>-->
         <Table :loading="loading" border stripe :columns="columns12" :data="fecthdata6" style="margin-top: 20px">
             <template slot-scope="{ row }" slot="name">
@@ -25,8 +26,9 @@
               @on-change="changepage" @on-page-size-change='handlePageSize' style="margin-top:20px;"></Page>
         <Modal v-model="updModal" title="目标明细管理修改" :closable='false' @on-ok="updok">
             <Form :model="updformValidate" :label-width="80">
-                <FormItem label="年份：" style="width:150px" >
-                    <DatePicker type="year" format="yyyy" placeholder="请选择年份" @on-change="serTime" v-model="updformValidate.year"
+                <FormItem label="年份：" style="width:150px">
+                    <DatePicker type="year" format="yyyy" placeholder="请选择年份" @on-change="serTime"
+                                v-model="updformValidate.year"
                                 style="width:120px"></DatePicker>
                 </FormItem>
                 <FormItem label="一月：" style="width:150px" prop="jan" class="floatClass">
@@ -77,7 +79,7 @@
         name: 'mbmxgl',
         data() {
             return {
-                loading:true,
+                loading: true,
                 test: "9683",
                 updformValidate: {
                     id: '',
@@ -142,73 +144,73 @@
                         title: '一月',
                         align: "center",
                         key: 'JANUARY',
-                        width:120
+                        width: 120
                     },
                     {
                         title: '二月',
                         align: "center",
                         key: 'FEBRUARY',
-                        width:120
+                        width: 120
                     },
                     {
                         title: '三月',
                         align: "center",
                         key: 'MARCH',
-                        width:120
+                        width: 120
                     },
                     {
                         title: '四月',
                         align: "center",
                         key: 'APRIL',
-                        width:120
+                        width: 120
                     },
                     {
                         title: '五月',
                         align: "center",
                         key: 'MAY',
-                        width:120
+                        width: 120
                     },
                     {
                         title: '六月',
                         align: "center",
                         key: 'JUNE',
-                        width:120
+                        width: 120
                     },
                     {
                         title: '七月',
                         align: "center",
                         key: 'JULY',
-                        width:120
+                        width: 120
                     },
                     {
                         title: '八月',
                         align: "center",
                         key: 'AUGUST',
-                        width:120
+                        width: 120
                     },
                     {
                         title: '九月',
                         align: "center",
                         key: 'SEPTEMBER',
-                        width:120
+                        width: 120
                     },
                     {
                         title: '十月',
                         align: "center",
                         key: 'OCTOBER',
-                        width:120
+                        width: 120
                     },
                     {
                         title: '十一月',
                         align: "center",
                         key: 'NOVEMBER',
-                        width:120
+                        width: 120
                     },
                     {
                         title: '十二月',
                         align: "center",
                         key: 'DECEMBER',
-                        width:120
+                        width: 120
                     },
                     {
                         title: '操作',
@@ -286,7 +288,7 @@
                 this.dictData.page = index;
                 this.handleListApproveHistory();
             },
-            handlePageSize(index){
+            handlePageSize(index) {
                 this.dictData.limit = index;
                 this.search();
             },
@@ -371,7 +373,7 @@
             updD(r) {
                 this.updModal = true;
                 this.updformValidate.year = r.YEAR;
-                this.updformValidate.id=r.ID;
+                this.updformValidate.id = r.ID;
                 this.updformValidate.jan = r.JANUARY;
                 this.updformValidate.feb = r.FEBRUARY;
                 this.updformValidate.mar = r.MARCH;
@@ -403,8 +405,8 @@
                         this.handleListApproveHistory();
                     })
             },
-            serTime(year){
-                this.updformValidate.year=year;
+            serTime(year) {
+                this.updformValidate.year = year;
             },
             remove(r) {
                 this.$Modal.confirm({

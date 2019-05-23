@@ -18,7 +18,7 @@
                     </FormItem>
                 </Col>
                 <Col span="1">&nbsp;</Col>
-                <Col span="4" style="margin-left: 80px">
+                <Col span="4" style="margin-left: 80px;float: right">
                     <Button @click="getList()" icon="ios-search" style="margin-right:10px;">查询</Button>
                     <Button @click="downLoad()" icon="ios-cloud-download-outline" type="primary">导出</Button>
                 </Col>
