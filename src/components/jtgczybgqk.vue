@@ -17,13 +17,13 @@
                 <Col span="4">
                     <FormItem label="品种：" style="">
                         <Select style="" v-model="pz" placeholder="请选择" filterable>
-<!--                            <Option value="全部">全部</Option>-->
-<!--                            <Option value="热板">热板</Option>-->
-<!--                            <Option value="冷板">冷板</Option>-->
-<!--                            <Option value="宽厚板">宽厚板</Option>-->
-<!--                            <Option value="型带">型带</Option>-->
-<!--                            <Option value="棒线">棒线</Option>-->
-                            <Option v-for="item in pzData" :value="item.value" :key="item.value">{{ item.label }}</Option>
+                            <Option value="全部">全部</Option>
+                            <Option value="热板">热板</Option>
+                            <Option value="冷板">冷板</Option>
+                            <Option value="宽厚板">宽厚板</Option>
+                            <Option value="型带">型带</Option>
+                            <Option value="棒线">棒线</Option>
+<!--                            <Option v-for="item in pzData" :value="item.value" :key="item.value">{{ item.label }}</Option>-->
                         </Select>
                     </FormItem>
                 </Col>
@@ -62,8 +62,8 @@
             return{
                 loading:false,
                 name:'全部',
-                pz:'',
-                pzData:[],
+                pz:'全部',
+                // pzData:[],
                 htdw:'',
                 startTime:new Date(),
                 endTime:new Date(),
@@ -135,7 +135,7 @@
             }
         },
         mounted(){
-            this.getPzData();
+            // this.getPzData();
         },
         methods:{
             getList(){
@@ -162,30 +162,30 @@
                     this.loading = false;
                 });
             },
-            getPzData(){
-                fetch(this.$store.state.fetchPath + "/report-product-class-level/jtgczybgqkpz", {
-                    method: "POST",
-                    headers: this.$store.state.fetchHeader,
-                    body: this.utils.formatParams(this.pzPz),
-                    credentials: 'include'
-                }).then((res) => {
-                    if(res.status!=200){
-                        this.$Message.error('请求失败！');
-                    }else{
-                        return res.text();
-                    }
-                }).then((res) => {
-                    res = res && res.length > 0 ? JSON.parse(res) : [];
-                    this.pzData = this.utils.getCx(res);
-                    // let getall = {label:'全部',value:''};
-                    // this.pzData.unshift(getall)
-                });
-            },
-            getPz(){
-                this.pzData = [];
-                this.pzPz.name = this.name
-                this.getPzData()
-            },
+            // getPzData(){
+            //     fetch(this.$store.state.fetchPath + "/report-product-class-level/jtgczybgqkpz", {
+            //         method: "POST",
+            //         headers: this.$store.state.fetchHeader,
+            //         body: this.utils.formatParams(this.pzPz),
+            //         credentials: 'include'
+            //     }).then((res) => {
+            //         if(res.status!=200){
+            //             this.$Message.error('请求失败！');
+            //         }else{
+            //             return res.text();
+            //         }
+            //     }).then((res) => {
+            //         res = res && res.length > 0 ? JSON.parse(res) : [];
+            //         this.pzData = this.utils.getCx(res);
+            //         // let getall = {label:'全部',value:''};
+            //         // this.pzData.unshift(getall)
+            //     });
+            // },
+            // getPz(){
+            //     this.pzData = [];
+            //     this.pzPz.name = this.name
+            //     this.getPzData()
+            // },
             downLoad(){
                 this.$refs.table.exportCsv({
                     filename: '集团钢材布港情况'
