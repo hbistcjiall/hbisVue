@@ -4,7 +4,7 @@
             <Row>
                 <Col span="4">
                     <FormItem label="子公司名称：" style="">
-                        <Select style="width:100px;" v-model="name" placeholder="请选择"  @on-change="getPz">
+                        <Select style="width:100px;" v-model="name" placeholder="请选择">
                             <Option value="全部">全部</Option>
                             <Option value="9580">唐钢</Option>
                             <Option value="9727">邯钢</Option>
