@@ -204,6 +204,16 @@ const indexchild=[
             isLogin: true
         },
     },
+    {
+        path: '/jtgczybgqk',
+        name: 'jtgczybgqk',
+        component: resolve => require(['@/components/jtgczybgqk'], resolve),
+        meta: {
+            title: '集团钢材资源布港情况',
+            keepAlive: true,
+            isLogin: true
+        },
+    },
 ];
 const childrens=indexchild.concat(pzgjs).concat(xyhxl).concat(gkfx).concat(htzzjd);
 export default {
