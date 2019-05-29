@@ -1,15 +1,15 @@
 <template>
     <div>
-        <Form :label-width="100">
+        <Form :label-width="60">
             <Row>
-                <Col span="6" v-if="!switchTime">
+                <Col span="3" v-if="!switchTime">
                     <FormItem label="年份：">
                         <DatePicker type="year" placeholder="请选择年份" :editable="false" :clearable="false" v-model="year" style="width:150px"></DatePicker>
                     </FormItem>
                 </Col>
-                <Col span="9" style="margin-left: -50px" v-if="switchTime">
+                <Col span="6"  v-if="switchTime">
                     <FormItem label="月份：">
-                        <DatePicker type="month" placeholder="起始月份" :editable="false" :clearable="false" v-model="startTime" style="width:150px;margin-right: 5px"></DatePicker>
+                        <DatePicker type="month" placeholder="起始月份" :editable="false" :clearable="false" v-model="startTime" style="width:150px;margin-right: 5px;margin-left: -50px"></DatePicker>
                     <!--</FormItem>-->
                 <!--</Col>-->
                 <!--<Col span="4" v-if="switchTime">-->
@@ -17,7 +17,7 @@
                         <DatePicker type="month" placeholder="终止月份" :editable="false" :clearable="false" v-model="endTime" style="width:150px"></DatePicker>
                     </FormItem>
                 </Col>
-                <Col span="1" style="margin-left: -50px">
+                <Col span="1" style="">
                     <FormItem>
                         <i-switch v-model="switchTime" @on-change="changeSwitch">
                             <span slot="open">年</span>
@@ -26,7 +26,7 @@
                     </FormItem>
                 </Col>
                 <Col span="4" style="margin-left: 80px">
-                    <FormItem label="责任单位：" style="width:180px">
+                    <label>责任单位:</label>
                         <Select v-model="zrbm" style="width:120px" placeholder="请选择责任单位">
                             <Option value="">全部</Option>
                             <Option value="热板公司">热板公司</Option>
@@ -42,15 +42,14 @@
                             <Option value="石钢分公司">石钢分公司</Option>
                             <Option value="衡板分公司">衡板分公司</Option>
                         </Select>
-                    </FormItem>
+
                 </Col>
-                <Col span="5" style="margin-left: 20px">
-                    <FormItem label="产品等级：" style="width:180px">
+                <Col span="4" style="margin-left: 20px">
+                    <label>产品等级:</label>
                         <Select v-model="zt" style="width:120px" placeholder="请选择品种" @on-change="changeTitle()">
                             <Option value="0">品种钢</Option>
                             <Option value="1">高端产品</Option>
                         </Select>
-                    </FormItem>
                 </Col>
                 <Col span="4" style="float: right">
                     <Button @click="getList()" icon="ios-search" type="primary" style="margin-right:10px;">查询</Button>

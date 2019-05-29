@@ -1,20 +1,17 @@
 <template>
     <div>
-        <Form :label-width="50">
+        <Form :label-width="60">
             <Row>
                 <Col span="4" v-if="!switchTime">
                     <FormItem label="年份：">
                         <DatePicker type="year" placeholder="请选择年份" :editable="false" :clearable="false"  v-model="year" style="width:150px"></DatePicker>
                     </FormItem>
                 </Col>
-                <Col span="4"  v-if="switchTime">
+                <Col span="6"  v-if="switchTime">
                     <FormItem label="月份：">
-                        <DatePicker type="month" placeholder="起始月份" :editable="false" :clearable="false" v-model="startTime" style="width:150px;margin-right: 5px"></DatePicker>
-                    </FormItem>
-                </Col>
-                <Col span="3" v-if="switchTime">
-                    <FormItem>
-                        <DatePicker type="month" placeholder="终止月份"  :editable="false" :clearable="false" v-model="endTime" style="width:150px;margin-left:-30px"></DatePicker>
+                        <DatePicker type="month" placeholder="起始月份" :editable="false" :clearable="false" v-model="startTime" style="width:150px;margin-right: 5px;margin-left: -50px"></DatePicker>
+
+                        <DatePicker type="month" placeholder="终止月份"  :editable="false" :clearable="false" v-model="endTime" style="width:150px;"></DatePicker>
                     </FormItem>
                 </Col>
                 <Col span="1">
@@ -26,7 +23,7 @@
                     </FormItem>
                 </Col>
 
-                <Col span="4">
+                <Col span="3">
                     <FormItem label="单位：" style="margin-left: 50px">
                         <Select style="width: 120px" v-model="dw" placeholder="请选择单位" @on-change="getCx">
                             <Option value="全部">全部</Option>
@@ -40,7 +37,7 @@
                         </Select>
                     </FormItem>
                 </Col>
-                <Col span="6" style="margin-left: 40px">
+                <Col span="4" style="margin-left: 40px">
                     <FormItem label="产线：">
                         <Select  v-model="cx" placeholder="请选择产线" filterable multiple style="width: 235px">
                             <Option v-for="item in cxData" :value="item.value" :key="item.value">{{ item.label }}</Option>
@@ -56,15 +53,12 @@
                         </Select>
                     </FormItem>
                 </Col>
-            </Row>
-            <Row style="margin-bottom: 20px">
-
-                <Col span="6" style="float: right">
+                <Col span="5" style="float: right">
                     <Button @click="getList()" icon="ios-search" style="margin-right:10px;">查询</Button>
                     <Button @click="downLoad()" icon="ios-cloud-download-outline">导出</Button>
                     <a :href="downloadUrl"><Button type="primary" :loading="mxstats" style="margin-left:10px">明细导出</Button></a>
                 </Col>
-            </Row>
+            </Row>s
         </Form>
         <Table :loading="loading" :columns="columns" :data="data" border height="700" ref="table"></Table>
     </div>

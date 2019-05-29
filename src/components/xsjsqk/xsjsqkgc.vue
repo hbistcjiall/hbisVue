@@ -1,10 +1,10 @@
 <template>
     <div>
-        <Form :label-width="50">
+        <Form :label-width="60">
             <Row>
-                <Col span="8">
+                <Col span="6">
                     <FormItem label="月份：">
-                        <DatePicker type="month" placeholder="起始月份" :editable="false" :clearable="false" v-model="startTime" style="width:150px;margin-right: 5px"></DatePicker>
+                        <DatePicker type="month" placeholder="起始月份" :editable="false" :clearable="false" v-model="startTime" style="width:150px;margin-right: 5px;margin-left: -50px"></DatePicker>
                     <!--</FormItem>-->
                 <!--</Col>-->
                 <!--<Col span="4">-->

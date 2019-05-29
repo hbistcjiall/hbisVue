@@ -1,19 +1,19 @@
 <template>
     <div>
-        <Form :label-width="100">
+        <Form :label-width="60">
             <Row>
-                <Col span="6" v-if="!switchTime" style="margin-left: -50px">
+                <Col span="3" v-if="!switchTime" >
                     <FormItem label="年份：">
                         <DatePicker type="year"  placeholder="请选择年份" :editable="false" :clearable="false"  v-model="year" style="width:150px"></DatePicker>
                     </FormItem>
                 </Col>
-                <Col span="9"  v-if="switchTime" style="margin-left: -50px">
+                <Col span="6"  v-if="switchTime" >
                     <FormItem label="月份：">
-                        <DatePicker type="month" placeholder="起始月份" :editable="false" :clearable="false"  v-model="startTime" style="width:150px;margin-right: 5px"></DatePicker>
+                        <DatePicker type="month" placeholder="起始月份" :editable="false" :clearable="false"  v-model="startTime" style="width:150px;margin-right: 5px;margin-left: -50px"></DatePicker>
                         <DatePicker type="month" placeholder="终止月份" :editable="false" :clearable="false"  v-model="endTime" style="width:150px"></DatePicker>
                     </FormItem>
                 </Col>
-                <Col span="1" style="margin-left: -100px">
+                <Col span="1" >
                     <FormItem>
                         <i-switch v-model="switchTime" @on-change="changeSwitch">
                             <span slot="open">年</span>
@@ -21,7 +21,7 @@
                         </i-switch>
                     </FormItem>
                 </Col>
-                <Col span="4" style="margin-left: 10px">
+                <Col span="3" style="margin-left: 100px">
                     <FormItem label="品种：" style="width: 120px">
                         <Select v-model="pz" style="width:120px" placeholder="请选择品种" @on-change="changeTitle()">
                             <Option value="">全部</Option>
@@ -35,12 +35,11 @@
                     </FormItem>
                 </Col>
                 <Col span="4" style="margin-left: 20px">
-                    <FormItem label="产品等级：" style="width: 120px">
+                   <label>产品等级：</label>
                         <Select v-model="zt" style="width:120px" placeholder="请选择产品等级" @on-change="changeTitle()">
                             <Option value="0">品种钢</Option>
                             <Option value="1">高端产品</Option>
                         </Select>
-                    </FormItem>
                 </Col>
                 <Col span="6" style="float: right;margin-bottom: 20px">
                     <Button @click="getList()" icon="ios-search" style="margin-right:10px;">查询</Button>
