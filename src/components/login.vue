@@ -85,6 +85,7 @@
                             if(res.msg){
                                 this.$Message.error(res.msg);
                             }else{
+                                localStorage.setItem('quanxian', res.id);
                                 this.$store.commit('userStatus', true);
                                 localStorage.removeItem('Menulist');
                                 localStorage.setItem('Menulist', JSON.stringify(res.menus));

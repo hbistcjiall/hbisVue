@@ -1,6 +1,6 @@
 <template>
     <div id="demo">
-        <homepage></homepage>
+        <homepage v-if="show"></homepage>
     </div>
 </template>
 
@@ -10,6 +10,20 @@
         name: "indexpage",
         components: {
             homepage
+        },
+        data(){
+            return{
+                show:true,
+            }
+        },
+        created() {
+            if(localStorage.getItem('quanxian')!=1)
+            {
+                this.show=false;
+            }
+            else{
+                this.show=true;
+            }
         }
     }
 </script>
