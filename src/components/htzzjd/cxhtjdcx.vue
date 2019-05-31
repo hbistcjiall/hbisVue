@@ -2,7 +2,7 @@
     <div>
         <Form :label-width="70">
             <Row>
-                <Col span="4">
+                <Col span="3">
                     <FormItem label="单位：">
                         <Select style="width:100px"  v-model="dw" placeholder="请选择单位" filterable @on-change="getCx()" >
                             <Option value="全部">全部</Option>
@@ -16,14 +16,14 @@
                         </Select>
                     </FormItem>
                 </Col>
-                <Col span="7">
+                <Col span="5">
                     <FormItem label="产线：">
                         <Select style="width:235px"  v-model="cx" placeholder="请选择产线" filterable multiple>
                             <Option v-for="item in cxData" :value="item.value" :key="item.value">{{ item.label }}</Option>
                         </Select>
                     </FormItem>
                 </Col>
-                <Col span="4">
+                <Col span="3">
                     <FormItem label="月份：" style="margin-left:0px">
                         <DatePicker type="month" placeholder="起始月份" :editable="false" :clearable="false" v-model="startTime" style="width:130px"></DatePicker>
                     </FormItem>

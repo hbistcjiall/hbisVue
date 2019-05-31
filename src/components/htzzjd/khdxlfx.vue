@@ -9,7 +9,7 @@
                         </Select>
                     </FormItem>
                 </Col>
-                <Col span="4" v-if="switchTime" style="margin-left: -20px">
+                <Col span="3" v-if="switchTime" style="margin-left: -20px">
                     <FormItem label="交货截至日期：" style="width:120px;">
                         <DatePicker type="month" placeholder="起始月份" :editable="false" :clearable="false"
                                     v-model="startTime"
@@ -30,9 +30,10 @@
                         <!--<DatePicker type="date"  placeholder="Select date" style="width: 150px" v-model="startTime"></DatePicker>-->
                     </FormItem>
                 </Col>
-                <Col span="4">
-                    <FormItem label="发货量汇总方式：" style="width:120px;margin-left: 30px">
-                        <Select style="width:120px;margin-left: -10px" v-model="hz">
+                <Col span="6" style="margin-left: -100px" >
+                    <FormItem>
+                        <label style="width: 120px;float: left">发货量汇总方式：</label>
+                        <Select style="width:120px;" v-model="hz">
                             <Option value="1">去0统计</Option>
                             <Option value="0">不去0统计</Option>
                         </Select>

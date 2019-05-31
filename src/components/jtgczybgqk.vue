@@ -2,8 +2,9 @@
     <div>
         <Form :label-width="100">
             <Row>
-                <Col span="4">
-                    <FormItem label="子公司名称：" style="">
+                <Col span="5" style="margin-left: -100px">
+                    <FormItem  style="">
+                        <label>子公司名称：</label>
                         <Select style="width:100px;" v-model="name" placeholder="请选择">
                             <Option value="全部">全部</Option>
                             <Option value="9580">唐钢</Option>
@@ -32,7 +33,7 @@
                         <Input v-model="htdw" placeholder="请输入合作单位"/>
                     </FormItem>
                 </Col>
-                <Col span="8" >
+                <Col span="7" >
                     <FormItem label="发货日期：">
                         <DatePicker type="date" placeholder="记录时间" :editable="false" :clearable="false"
                                     v-model="startTime"

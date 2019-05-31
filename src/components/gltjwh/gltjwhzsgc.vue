@@ -2,14 +2,14 @@
     <div>
         <Form :label-width="80">
             <Row>
-                <Col span="6">
+                <Col span="5">
                     <FormItem label="业务类型:">
                         <Select  v-model="name" style="width:235px" placeholder="请选择产线" filterable>
                             <Option v-for="item in nameData" :value="item.value" :key="item.value">{{ item.label }}</Option>
                         </Select>
                     </FormItem>
                 </Col>
-                <Col span="6" style="margin-left: 20px">
+                <Col span="5" style="margin-left: 20px">
                     <FormItem label="过滤表:">
                         <Select  v-model="tableName" style="width:235px" placeholder="请选择产线" filterable @on-change="getCCCC()">
                             <Option v-for="item in tableNameData" :value="item.value" :key="item.value">{{ item.label }}</Option>

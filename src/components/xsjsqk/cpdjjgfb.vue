@@ -6,13 +6,13 @@
                     <FormItem label="日期：">
                         <DatePicker type="month" placeholder="开始时间" :editable="false" :clearable="false"
                                     v-model="startTime"
-                                    style="width:110px;margin-left: -75px"></DatePicker>
+                                    style="width:110px;margin-left: -50px"></DatePicker>
                         <DatePicker type="month" placeholder="结束时间" :editable="false" :clearable="false"
                                     v-model="endTime"
                                     style="width:110px;margin-left: 10px;"></DatePicker>
                     </FormItem>
                 </Col>
-                <Col span="3">
+                <Col span="4">
                     <FormItem  style="margin-left: -50px">
                         <label>产品大类：</label>
                         <Select style="width:100px; "  v-model="zl" placeholder="请选择" filterable  >

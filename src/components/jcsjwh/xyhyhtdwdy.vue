@@ -1,12 +1,13 @@
 <template>
     <div>
         <div class="divStyle">
-            <Form :label-width="80">
-                <FormItem label="协议户名称:" style="float: left">
-                    <Input style="width:100px" v-model="xyhyhtdata.accontName" placeholder="请输入协议户名称"></Input>
+            <Form :label-width="80" style="margin-left: -80px">
+                <FormItem style="float: left">
+                    <label>协议户名称:</label>
+                    <Input style="width:120px" v-model="xyhyhtdata.accontName" placeholder="请输入协议户名称"></Input>
                 </FormItem>
                 <FormItem label="合同单位:" style="float: left">
-                    <Input style="width:100px" v-model="xyhyhtdata.contractUnit" placeholder="请输入合同单位"></Input>
+                    <Input style="width:120px" v-model="xyhyhtdata.contractUnit" placeholder="请输入合同单位"></Input>
                 </FormItem>
                 <Button @click="updModal=true" style="float: right" icon="ios-add">新增</Button>
                 <Button @click="search" style="float: right;margin-right: 10px" icon="ios-search">查询</Button>

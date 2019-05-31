@@ -36,7 +36,7 @@
             </CheckboxGroup>
 
         </div>
-        <div style="float: right;margin-right: 30px;margin-bottom: 20px">
+        <div style="float: right;margin-bottom: 20px">
             <Button @click="search()" icon="ios-search" type="primary" style="margin-right:20px;">查询</Button>
             <a :href="downloadUrl">
                 <Button type="primary" icon="ios-cloud-download-outline" style="margin-left:10px">导出</Button>
@@ -304,7 +304,7 @@
     }
 
     .divStyle {
-        width: 100%;
+        width: 85%;
         height: 60px;
         margin: 0 auto;
         /*margin-bottom: 20px;*/

@@ -12,7 +12,7 @@
     <div>
         <form target="myIframe" action="http://18.4.17.200:8081/protocolAccountDetails/importexcel" method="post"
               enctype="multipart/form-data"  >
-            <span style="font-size: 16px">选择文件:</span><input type="file"  name="file" style="border: 1px solid #0075C3;width: 300px" >
+            <span style="font-size: 16px"   >选择文件:</span><input type="file"  name="file" style="border: 1px solid #0075C3;width: 300px" >
             <input type="submit" value="提交" @click="sub" style="background-color: #2D8CF0;color: #fff;width: 50px;border: 0px;height: 26px;margin-left: 5px">
         </form>
         <iframe name="myIframe" style="display:none" ></iframe>

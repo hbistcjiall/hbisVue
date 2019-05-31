@@ -20,11 +20,12 @@
                                 style="width:120px;">
                     </DatePicker>
                 </FormItem>
+                <div style="float: right">
                 <a :href="downloadUrl">
                     <Button type="primary" icon="ios-cloud-download-outline" style="float: right">导出</Button>
                 </a>
                 <Button @click="search" style="float: right;margin-right: 20px" icon="ios-search">查询</Button>
-
+                </div>
             </Form>
         </div>
         <Table :loading="loading" border stripe :columns="columns12" :data="fecthdata6"
