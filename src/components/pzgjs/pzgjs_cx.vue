@@ -58,7 +58,7 @@
                     <Button @click="downLoad()" icon="ios-cloud-download-outline">导出</Button>
                     <a :href="downloadUrl"><Button type="primary" :loading="mxstats" style="margin-left:10px">明细导出</Button></a>
                 </Col>
-            </Row>s
+            </Row>
         </Form>
         <Table :loading="loading" :columns="columns" :data="data" border height="700" ref="table"></Table>
     </div>
