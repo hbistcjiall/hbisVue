@@ -9,7 +9,8 @@
                 <!--</Col>-->
                 <!--<Col span="4">-->
                     <!--<FormItem>-->
-                        <DatePicker type="month" placeholder="终止月份"  :editable="false" :clearable="false" v-model="endTime" style="width:120px"></DatePicker>
+                        <DatePicker type="month" placeholder="终止月份"  :editable="false" :clearable="false" v-model="endTime" style="width:120px;margin-left:20px
+"></DatePicker>
                     </FormItem>
                 </Col>
                 <Col span="4">
@@ -125,6 +126,11 @@
                 let companyName= "&companyName="+this.gc
                 let jd = "&jd="+this.model1
                 this.downloadUrl=this.$store.state.fetchPath + "/export/exportXSJSGc?"+startTime+endTime+companyName+jd;
+                const msg = this.$Message.loading({
+                    content: '正在导出数据，请稍后',
+                    duration: 0
+                });
+                setTimeout(msg, 20000);
             },
             downLoad(){
                 this.$refs.table.exportCsv({

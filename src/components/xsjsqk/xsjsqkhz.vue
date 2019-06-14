@@ -9,7 +9,7 @@
                 <!--</Col>-->
                 <!--<Col span="4">-->
                     <!--<FormItem>-->
-                        <DatePicker type="month" placeholder="终止月份"  :editable="false" :clearable="false" v-model="endTime" style="width:120px"></DatePicker>
+                        <DatePicker type="month" placeholder="终止月份"  :editable="false" :clearable="false" v-model="endTime" style="width:120px;margin-left:20px"></DatePicker>
                     </FormItem>
                 </Col>
                 <Col span="4" style="margin-left: 20px">
@@ -447,6 +447,11 @@
                 let pz = "pz="+this.pz
                 let jd = "jd="+this.jd
                 this.downloadUrlMx=this.$store.state.fetchPath + "/export/exportXSJSCx?"+startTime+endTime+cxArr+"&"+jd+"&"+pz;
+                const msg = this.$Message.loading({
+                    content: '正在导出数据，请稍后',
+                    duration: 0
+                });
+                setTimeout(msg, 20000);
             },
             downMx(){
                 let cxArr = '&cx=' +this.cx.toString()
@@ -457,6 +462,11 @@
                 let pz = "pz="+this.pz
                 let jd = "jd="+this.jd
                 this.downloadUrl=this.$store.state.fetchPath + "/export/exportXSJS?"+startTime+endTime+cxArr+"&"+jd+"&"+pz;
+                const msg = this.$Message.loading({
+                    content: '正在导出数据，请稍后',
+                    duration: 0
+                });
+                setTimeout(msg, 20000);
             },
             getList() {
                 let cxArr = '&cx=' +this.cx.toString()
