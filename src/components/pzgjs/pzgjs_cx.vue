@@ -2,19 +2,19 @@
     <div>
         <Form :label-width="60">
             <Row>
-                <Col span="4" v-if="!switchTime">
+                <Col style="width: 200px;float: left;margin-left: 20px" v-if="!switchTime">
                     <FormItem label="年份：">
                         <DatePicker type="year" placeholder="请选择年份" :editable="false" :clearable="false"  v-model="year" style="width:150px"></DatePicker>
                     </FormItem>
                 </Col>
-                <Col span="6"  v-if="switchTime">
+                <Col style="width: 320px;float: left;"  v-if="switchTime">
                     <FormItem label="月份：">
-                        <DatePicker type="month" placeholder="起始月份" :editable="false" :clearable="false" v-model="startTime" style="width:150px;margin-right: 5px;margin-left: -50px"></DatePicker>
+                        <DatePicker type="month" placeholder="起始月份" :editable="false" :clearable="false" v-model="startTime" style="width:120px;margin-left: -20px"></DatePicker>
 
-                        <DatePicker type="month" placeholder="终止月份"  :editable="false" :clearable="false" v-model="endTime" style="width:150px;"></DatePicker>
+                        <DatePicker type="month" placeholder="终止月份"  :editable="false" :clearable="false" v-model="endTime" style="width:120px;margin-left: 20px"></DatePicker>
                     </FormItem>
                 </Col>
-                <Col span="1">
+                <Col style="width: 100px;float: left;margin-left: -20px">
                     <FormItem>
                         <i-switch v-model="switchTime" @on-change="changeSwitch">
                             <span slot="open">年</span>
@@ -23,9 +23,9 @@
                     </FormItem>
                 </Col>
 
-                <Col span="3">
-                    <FormItem label="单位：" style="margin-left: 50px">
-                        <Select style="width: 120px" v-model="dw" placeholder="请选择单位" @on-change="getCx">
+                <Col style="width: 200px;float: left;margin-left: 20px">
+                    <FormItem label="单位：" >
+                        <Select style="" v-model="dw" placeholder="请选择单位" @on-change="getCx">
                             <Option value="全部">全部</Option>
                             <Option value="9580">河钢唐钢</Option>
                             <Option value="9727">河钢邯钢</Option>
@@ -37,25 +37,27 @@
                         </Select>
                     </FormItem>
                 </Col>
-                <Col span="4" style="margin-left: 40px">
+                <Col style="margin-left: 20px;width: 300px;float: left">
                     <FormItem label="产线：">
-                        <Select  v-model="cx" placeholder="请选择产线" filterable multiple style="width: 235px">
+                        <Select  v-model="cx" placeholder="请选择产线" filterable multiple>
                             <Option v-for="item in cxData" :value="item.value" :key="item.value">{{ item.label }}</Option>
                         </Select>
                     </FormItem>
                 </Col>
-                <Col span="4">
-                    <FormItem>
-                        <label style="margin-left: -45px;">产品等级:</label>
-                        <Select v-model="zt" style="width:120px;margin-left: 10px" placeholder="请选择品种" @on-change="changeTitle()">
+                <Col style="width: 240px;float: left;">
+                    <FormItem label="产品等级:" :label-width="100">
+                        <Select v-model="zt" placeholder="请选择品种" @on-change="changeTitle()">
                             <Option value="0">品种钢</Option>
                             <Option value="1">高端产品</Option>
                         </Select>
                     </FormItem>
                 </Col>
-                <Col span="5" style="float: right">
-                    <Button @click="getList()" icon="ios-search" style="margin-right:10px;">查询</Button>
-                    <Button @click="downLoad()" icon="ios-cloud-download-outline">导出</Button>
+
+            </Row>
+            <Row>
+                <Col style="float: right;width: 300px;margin-bottom: 20px">
+                    <Button @click="getList()" icon="ios-search">查询</Button>
+                    <Button @click="downLoad()" icon="ios-cloud-download-outline" style="margin-left:10px" :loading="dwstats">导出</Button>
                     <a :href="downloadUrl"><Button type="primary" :loading="mxstats" style="margin-left:10px">明细导出</Button></a>
                 </Col>
             </Row>
@@ -69,6 +71,7 @@
         name: "pzgjs_cx",
         data() {
             return {
+                dwstats:true,
                 mxstats:true,
                 downloadUrl:'',
                 loading:true,
@@ -318,7 +321,8 @@
                 this.switchTime?(this.startTime=date,this.endTime=this.utils.formatMonthEnd()):this.year=date;
             },
             getList() {
-                this.mxstats = true
+                this.dwstats = true;
+                this.mxstats = true;
                 this.loading = true;
                 let params={};
                 // this.dw?params.dw=this.dw:'';
@@ -628,7 +632,8 @@
                     let listArr=zg.concat(tg).concat(hg).concat(xg).concat(cg).concat(wg).concat(sg).concat(hb)
                     this.data = this.utils.mergeRow(listArr, 'COMPANYNAME');
                     this.loading = false;
-                    this.mxstats = false
+                    this.mxstats = false;
+                    this.dwstats = false
                 });
             },
             changeTitle(){
