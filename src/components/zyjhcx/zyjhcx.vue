@@ -68,7 +68,7 @@
             <Row>
                 <Col style="width: 200px;float: right;margin-bottom: 20px">
                     <Button @click="getList()" icon="ios-search" style="margin-right:10px;">查询</Button>
-                    <Button @click="downLoad()" icon="ios-cloud-download-outline">导出</Button>
+                    <Button @click="downLoad()" :loading="dwstats" icon="ios-cloud-download-outline">导出</Button>
                 </Col>
             </Row>
         </Form>
@@ -81,6 +81,7 @@
         name: "pzgjs_cx",
         data() {
             return {
+                dwstats:true,
                 loading:true,
                 zyjhcx:{
                     pz:'全部',
@@ -137,6 +138,7 @@
         },
         methods: {
             getList() {
+                this.dwstats = true;
                 this.loading = true;
                 let cx = 'cx='+this.cx.toString();
                 let startTime = 'startTime=';
@@ -180,6 +182,7 @@
                     };
                     this.data.sort(compare('RQ', compare('CX', compare('XSZT',compare('PZ')))))
                     this.loading = false;
+                    this.dwstats = false;
                 });
             },
             getCxData(){
