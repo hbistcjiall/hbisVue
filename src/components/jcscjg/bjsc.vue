@@ -18,9 +18,9 @@
                     </FormItem>
                 </Col>
                 <Col span="1">&nbsp;</Col>
-                <Col span="4" style="margin-left: 80px;float: right">
+                <Col style="width: 200px;margin-left: 80px;float: right">
                     <Button @click="getList()" icon="ios-search" style="margin-right:10px;">查询</Button>
-                    <Button @click="downLoad()" icon="ios-cloud-download-outline" type="primary">导出</Button>
+                    <Button @click="downLoad()" icon="ios-cloud-download-outline" type="primary" :loading="dwstats">导出</Button>
                 </Col>
             </Row>
         </Form>
@@ -33,6 +33,7 @@
         name: "bjsc",
         data() {
             return {
+                dwstats:true,
                 loading: true,
                 switchTime: true,
                 startTime: new Date(),
@@ -560,6 +561,7 @@
         },
         methods: {
             getList() {
+                this.dwstats = true;
                 this.loading = true;
                 let params = {};
                 this.cx ? params.company = this.cx : '';
@@ -611,6 +613,7 @@
 
                     this.data = this.utils.mergeRow(newArray, 'orderDay');
                     this.loading = false;
+                    this.dwstats = false
                 });
             },
             downLoad() {
