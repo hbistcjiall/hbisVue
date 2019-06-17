@@ -58,7 +58,7 @@
                 <Col style="float: right;width: 300px;margin-bottom: 20px">
                     <Button @click="getList()" icon="ios-search">查询</Button>
                     <Button @click="downLoad()" icon="ios-cloud-download-outline" style="margin-left:10px" :loading="dwstats">导出</Button>
-                    <a :href="downloadUrl"><Button type="primary" :loading="mxstats" style="margin-left:10px">明细导出</Button></a>
+                    <a :href="downloadUrl"><Button type="primary" :loading="mxstats" style="margin-left:10px" @click="downMx()">明细导出</Button></a>
                 </Col>
             </Row>
         </Form>
@@ -292,7 +292,6 @@
             this.mxstats = true
             this.getList();
             this.getCxData();
-            this.downMx()
         },
         methods: {
             getCxData(){
