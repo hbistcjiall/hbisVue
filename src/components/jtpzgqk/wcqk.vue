@@ -2,16 +2,15 @@
     <div>
         <Form :label-width="100">
             <Row>
-                <Col span="4" v-if="switchTime">
-                    <FormItem label="月份：" style="width:120px">
+                <Col style="width: 120px;float: left"v-if="switchTime">
+                    <FormItem label="月份：">
                         <DatePicker type="month" placeholder="起始月份" :editable="false" :clearable="false"
-                                    v-model="startTime"
-                                    style="width:120px"></DatePicker>
+                                    v-model="startTime" style="width: 120px;"></DatePicker>
                     </FormItem>
                 </Col>
-                <Col span="4" style="margin-left: 90px;float: right">
+                <Col style="width: 200px;float: right">
                     <Button @click="getList()" icon="ios-search" type="primary" style="margin-right:10px;">查询</Button>
-                    <Button @click="downLoad()" icon="ios-cloud-download-outline" type="primary">导出</Button>
+                    <Button @click="downLoad()" icon="ios-cloud-download-outline" type="primary" :loading="dwstats">导出</Button>
                 </Col>
             </Row>
         </Form>
@@ -24,6 +23,7 @@
         name: "wcqk",
         data() {
             return {
+                dwstats:true,
                 loading:true,
                 switchTime: true,
                 startTime: new Date(),
@@ -69,6 +69,7 @@
         },
         methods: {
             getList() {
+                this.dwstats = true;
                 this.loading = true;
                 let startTime = 'queryDate=';
                 this.switchTime ? (startTime = startTime + (this.utils.formatMonthStart(this.startTime)).substring(0, 7)) : (startTime = startTime + (this.utils.formatYearStart(this.year)).substring(0, 7));
@@ -93,6 +94,7 @@
                     }
                     this.data = newdata;
                     this.loading = false;
+                    this.dwstats = false;
                 });
             },
             downLoad(){
@@ -105,5 +107,8 @@
 </script>
 
 <style scoped>
-
+    button{
+        background: #3497db;
+        color:#fff;
+    }
 </style>
