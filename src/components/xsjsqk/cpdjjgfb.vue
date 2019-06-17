@@ -2,20 +2,19 @@
     <div>
         <Form :label-width="60">
             <Row>
-                <Col span="5">
+                <Col style="width: 320px;float: left">
                     <FormItem label="日期：">
                         <DatePicker type="month" placeholder="开始时间" :editable="false" :clearable="false"
                                     v-model="startTime"
-                                    style="width:110px;margin-left: -50px"></DatePicker>
+                                    style="width:120px;margin-left: -10px"></DatePicker>
                         <DatePicker type="month" placeholder="结束时间" :editable="false" :clearable="false"
                                     v-model="endTime"
-                                    style="width:110px;margin-left: 10px;"></DatePicker>
+                                    style="width:120px;margin-left: 10px;"></DatePicker>
                     </FormItem>
                 </Col>
-                <Col span="4">
-                    <FormItem  style="margin-left: -50px">
-                        <label>产品大类：</label>
-                        <Select style="width:100px; "  v-model="zl" placeholder="请选择" filterable  >
+                <Col style="width: 240px;float: left;">
+                    <FormItem label="产品大类:" :label-width="100">
+                        <Select v-model="zl" placeholder="请选择" filterable  >
                             <Option value="全部">全部</Option>
                             <Option value="热板">热板</Option>
                             <Option value="薄板">薄板</Option>
@@ -30,14 +29,14 @@
                         </Select>
                     </FormItem>
                 </Col>
-                <Col span="4">
-                    <FormItem label="产线:" style="margin-left: 100px" >
-                        <Select style="width:235px"  v-model="cx" placeholder="请选择产线" filterable multiple>
+                <Col style="width: 320px;margin-left: 20px;float: left">
+                    <FormItem label="产线:">
+                        <Select v-model="cx" placeholder="请选择产线" filterable multiple>
                             <Option v-for="item in cxData" :value="item.value" :key="item.value">{{ item.label }}</Option>
                         </Select>
                     </FormItem>
                 </Col>
-                <Col span="6" style="float: right;margin-bottom: 20px">
+                <Col style="float: right;margin-bottom: 20px;width: 320px;">
                     <Button @click="getListed()" icon="ios-search">查询</Button>
                     <a :href="downloadUrl"><Button type="primary" :loading="mxstats" style="margin-left:10px" icon="ios-cloud-download-outline" @click="download()">导出</Button></a>
                     <a :href="downloadUrlMx"><Button type="primary" :loading="mxstatsMx" style="margin-left:10px" @click="downloadMx()">明细导出</Button></a>
