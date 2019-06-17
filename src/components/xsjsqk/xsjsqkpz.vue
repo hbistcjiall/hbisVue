@@ -2,7 +2,7 @@
     <div>
         <Form :label-width="60">
             <Row>
-                <Col span="6">
+                <Col style="width: 320px;float: left;">
                     <FormItem label="月份：">
                         <DatePicker type="month" placeholder="起始月份" :editable="false" :clearable="false" v-model="startTime" style="width:120px;margin-left:-20px"></DatePicker>
                     <!--</FormItem>-->
@@ -12,7 +12,7 @@
                         <DatePicker type="month" placeholder="终止月份"  :editable="false" :clearable="false" v-model="endTime" style="width:120px;margin-left:20px"></DatePicker>
                     </FormItem>
                 </Col>
-                <Col span="6" style="margin-left: -30px">
+                <Col style="width: 270px;float: left">
                     <FormItem >
                         <label>是否借贷：</label>
                         <Select v-model="model1" style="width:100px">
@@ -21,9 +21,9 @@
                         </Select>
                     </FormItem>
                 </Col>
-                <Col span="8" style="float: right">
+                <Col style="width: 320px;float: right">
                     <Button @click="getList()" icon="ios-search" style="margin-right:10px;">查询</Button>
-                    <Button @click="downLoad()" icon="ios-cloud-download-outline">导出</Button>
+                    <Button @click="downLoad()" :loading="dwstats" icon="ios-cloud-download-outline">导出</Button>
                     <a :href="downloadUrl"><Button type="primary" :loading="mxstats" style="margin-left:10px" @click="dw()">明细导出</Button></a>
                 </Col>
             </Row>
@@ -37,6 +37,7 @@
         name: "xsjsqkpz",
         data() {
             return {
+                dwstats:true,
                 mxstats:true,
                 downloadUrl:'',
                 loading:true,
@@ -119,6 +120,7 @@
                 });
             },
             getList() {
+                this.dwstats = true;
                 this.mxstats = true;
                 this.loading = true;
                 let startTime='startTime=';
@@ -144,7 +146,8 @@
                     res = res && res.length > 0 ? JSON.parse(res) : [];
                     this.data = res;
                     this.loading = false;
-                    this.mxstats = false
+                    this.mxstats = false;
+                    this.dwstats = false;
                 });
             }
         }

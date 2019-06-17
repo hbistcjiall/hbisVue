@@ -2,7 +2,7 @@
     <div>
         <Form :label-width="60">
             <Row>
-                <Col span="6">
+                <Col style="width: 320px;float: left;">
                     <FormItem label="月份：">
                         <DatePicker type="month" placeholder="起始月份" :editable="false" :clearable="false" v-model="startTime" style="width:120px;margin-left:-20px"></DatePicker>
                     <!--</FormItem>-->
@@ -13,7 +13,7 @@
 "></DatePicker>
                     </FormItem>
                 </Col>
-                <Col span="4">
+                <Col style="width: 270px;float: left;">
                     <FormItem style="margin-left: -40px">
                         <label>是否借贷：</label>
                         <Select v-model="model1" style="width:100px">
@@ -22,8 +22,8 @@
                         </Select>
                     </FormItem>
                 </Col>
-                <Col span="3">
-                    <FormItem label="钢厂：" style="margin-left: 0px">
+                <Col style="width: 270px;float: left;">
+                    <FormItem label="钢厂：">
                         <Select v-model="gc" placeholder="请选择钢厂">
                             <Option value="全部">全部</Option>
                             <Option value="唐钢">唐钢</Option>
@@ -36,9 +36,9 @@
                         </Select>
                     </FormItem>
                 </Col>
-                <Col span="6" style="float: right">
+                <Col style="width: 300px;float: right;">
                     <Button @click="getList()" icon="ios-search" style="margin-right:10px;">查询</Button>
-                    <Button @click="downLoad()" icon="ios-cloud-download-outline">导出</Button>
+                    <Button @click="downLoad()" :loading="dwstats" icon="ios-cloud-download-outline">导出</Button>
                     <a :href="downloadUrl"><Button type="primary" :loading="mxstats" style="margin-left:10px" @click="dw()">明细导出</Button></a>
                 </Col>
             </Row>
@@ -52,6 +52,7 @@
         name: "xsjsqkgc",
         data() {
             return {
+                dwstats:true,
                 mxstats:true,
                 downloadUrl:'',
                 gc:'全部',
@@ -138,6 +139,7 @@
                 });
             },
             getList() {
+                this.dwstats = true;
                 this.mxstats = true;
                 this.loading = true;
                 let startTime='startTime=';
@@ -187,6 +189,7 @@
                     };
                     this.data.push(obj);
                     this.loading = false;
+                    this.dwstats = false;
                     this.mxstats = false;
                 });
             }
