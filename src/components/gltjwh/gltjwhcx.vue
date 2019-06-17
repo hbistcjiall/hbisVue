@@ -42,7 +42,7 @@
                         </Select>
                     </FormItem>
                 </Col>
-                <Col style="width: 100px;float: right">
+                <Col style="width: 100px;float: right;margin-bottom: 20px">
                     <Button @click="getList()" icon="ios-search">查询</Button>
                 </Col>
             </Row>

@@ -52,7 +52,7 @@
                         </Select>
                     </FormItem>
                 </Col>
-                <Col style="width: 200px;float: right;">
+                <Col style="width: 200px;float: right;margin-bottom: 20px">
                     <Button @click="getList()" icon="ios-search" type="primary" style="margin-right:10px;">查询</Button>
                     <Button @click="downLoad()" icon="ios-cloud-download-outline" :loading="dwstats">导出</Button>
                 </Col>
