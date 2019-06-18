@@ -25,12 +25,18 @@
                     <FormItem label="品种：">
                         <Select v-model="pz" placeholder="请选择品种" @on-change="changeTitle()">
                             <Option value="">全部</Option>
-                            <Option value="冷板">冷板</Option>
                             <Option value="热板">热板</Option>
-                            <Option value="棒线">棒线</Option>
+                            <Option value="冷板">冷板</Option>
                             <Option value="宽厚板">宽厚板</Option>
-                            <Option value="型带">型带</Option>
-                            <Option value="高端产品">高端产品</Option>
+                            <Option value="特钢">特钢</Option>
+                            <Option value="薄板">薄板</Option>
+                            <Option value="圆钢">圆钢</Option>
+                            <Option value="螺纹钢">螺纹钢</Option>
+                            <Option value="型材">型材</Option>
+                            <Option value="镀锌">镀锌</Option>
+                            <Option value="酸洗">酸洗</Option>
+                            <Option value="线材">线材</Option>
+                            <Option value="中厚板">中厚板</Option>
                         </Select>
                     </FormItem>
                 </Col>
