@@ -58,7 +58,8 @@
                 <Col style="float: right;width: 300px;margin-bottom: 20px">
                     <Button @click="getList()" icon="ios-search">查询</Button>
                     <Button @click="downLoad()" icon="ios-cloud-download-outline" style="margin-left:10px" :loading="dwstats">导出</Button>
-                    <a :href="downloadUrl"><Button type="primary" :loading="mxstats" style="margin-left:10px" @click="downMx()">明细导出</Button></a>
+<!--                    <a :href="downloadUrl"><Button type="primary" :loading="mxstats" style="margin-left:10px" @click="downMx()">明细导出</Button></a>-->
+                    <Button type="primary" :loading="mxstats" style="margin-left:10px" @click="downMx()">明细导出</Button>
                 </Col>
             </Row>
         </Form>
@@ -656,13 +657,39 @@
                 });
             },
             downMx(){
-                // let zt="&zt="+this.zt;
+                const msg = this.$Message.loading({
+                    content: '正在导出数据，请稍后',
+                    duration: 0
+                });
+                this.mxstats = true;
                 let dwStr = '&dw='+this.dw;
                 let cxArr = '&cx=' +this.cx.toString()
                 let startTime='startTime=';
                 let endTime='&endTime=';
                 this.switchTime?(startTime=startTime+this.utils.formatMonthStart(this.startTime),endTime=endTime+this.utils.formatMonthStart(this.endTime)):(startTime=startTime+ this.utils.formatYearStart(this.year),endTime=endTime+this.utils.formatYearEnd(this.year));
-                this.downloadUrl=this.$store.state.fetchPath + "/export/exportPzgCx?"+startTime+endTime+dwStr+cxArr;
+                fetch(this.$store.state.fetchPath + "/export/exportPzgCx?"+startTime+endTime+dwStr+cxArr, {
+                    method: "GET",
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    credentials: 'include'
+                }).then(response => response.blob())
+                    .then(blob => {
+                        setTimeout(msg,1000);
+                        let url = window.URL.createObjectURL(blob);
+                        let a = document.createElement('a');
+                        a.href = url;
+                        a.download = "结算完成（产线）明细.xlsx";
+                        a.click();
+                        this.mxstats = false
+                    });
+                // let zt="&zt="+this.zt;
+                // let dwStr = '&dw='+this.dw;
+                // let cxArr = '&cx=' +this.cx.toString()
+                // let startTime='startTime=';
+                // let endTime='&endTime=';
+                // this.switchTime?(startTime=startTime+this.utils.formatMonthStart(this.startTime),endTime=endTime+this.utils.formatMonthStart(this.endTime)):(startTime=startTime+ this.utils.formatYearStart(this.year),endTime=endTime+this.utils.formatYearEnd(this.year));
+                // this.downloadUrl=this.$store.state.fetchPath + "/export/exportPzgCx?"+startTime+endTime+dwStr+cxArr;
             },
         }
     }

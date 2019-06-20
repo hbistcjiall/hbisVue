@@ -53,7 +53,9 @@
                 <Col style="float: right;width: 300px;margin-bottom: 20px">
                     <Button @click="getList()" icon="ios-search" style="margin-right:10px;">查询</Button>
                     <Button @click="downLoad()" icon="ios-cloud-download-outline" :loading="dwstats">导出</Button>
-                    <a :href="downloadUrl"><Button type="primary" :loading="mxstats" style="margin-left:10px" @click="dw()">明细导出</Button></a>
+<!--                    <a :href="downloadUrl"><Button type="primary" :loading="mxstats" style="margin-left:10px" @click="dw()">明细导出</Button></a>-->
+                    <Button type="primary" :loading="mxstats" style="margin-left:10px" @click="dw()">明细导出</Button>
+
                 </Col>
             </Row>
 
@@ -385,19 +387,45 @@
                 this.getList()
             },
             dw(){
-                this.downMx();
-            },
-            downMx(){
+                // this.downMx();
+                const msg = this.$Message.loading({
+                    content: '正在导出数据，请稍后',
+                    duration: 0
+                });
+                this.mxstats = true;
                 let startTime='startTime=';
                 startTime+=this.utils.formatMonthStart(this.startTime)
                 let endTime='&endTime=';
                 endTime+=this.utils.formatMonthStart(this.endTime)
                 let pz = "&pz="+this.pz
-                this.downloadUrl=this.$store.state.fetchPath + "/export/exportPzgPz?"+startTime+endTime+pz;
+                fetch(this.$store.state.fetchPath + "/export/exportPzgPz?"+startTime+endTime+pz, {
+                    method: "GET",
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    credentials: 'include'
+                }).then(response => response.blob())
+                    .then(blob => {
+                        setTimeout(msg,1000);
+                        let url = window.URL.createObjectURL(blob);
+                        let a = document.createElement('a');
+                        a.href = url;
+                        a.download = "结算完成（品种）明细.xlsx";
+                        a.click();
+                        this.mxstats = false
+                    });
             },
+            // downMx(){
+            //     let startTime='startTime=';
+            //     startTime+=this.utils.formatMonthStart(this.startTime)
+            //     let endTime='&endTime=';
+            //     endTime+=this.utils.formatMonthStart(this.endTime)
+            //     let pz = "&pz="+this.pz
+            //     this.downloadUrl=this.$store.state.fetchPath + "/export/exportPzgPz?"+startTime+endTime+pz;
+            // },
             downLoad(){
                 this.$refs.table.exportCsv({
-                    filename: '结算完成（品种）明细'
+                    filename: '结算完成（品种）'
                 });
             }
         }
