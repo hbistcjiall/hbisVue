@@ -46,8 +46,10 @@
                 <Col style="width: 320px;float: right;margin-bottom: 20px">
                     <Button @click="getList()" icon="ios-search" style="margin-right:10px;">查询</Button>
                     <!--                    <Button @click="downLoad()" icon="ios-cloud-download-outline">导出</Button>-->
-                    <a :href="downloadUrl"><Button type="primary" :loading="mxstats" style="margin-left:10px" icon="ios-cloud-download-outline" @click="download()">导出</Button></a>
-                    <a :href="downloadUrlMx"><Button type="primary" :loading="mxstatsMx" style="margin-left:10px" icon="ios-cloud-download-outline" @click="downloadMx()">明细导出</Button></a>
+<!--                    <a :href="downloadUrl"><Button type="primary" :loading="mxstats" style="margin-left:10px" icon="ios-cloud-download-outline" @click="download()">导出</Button></a>-->
+<!--                    <a :href="downloadUrlMx"><Button type="primary" :loading="mxstatsMx" style="margin-left:10px" icon="ios-cloud-download-outline" @click="downloadMx()">明细导出</Button></a>-->
+                    <Button type="primary" :loading="mxstats" style="margin-left:10px" icon="ios-cloud-download-outline" @click="download()">导出</Button>
+                    <Button type="primary" :loading="mxstatsMx" style="margin-left:10px" icon="ios-cloud-download-outline" @click="downloadMx()">明细导出</Button>
                 </Col>
             </Row>
         </Form>
