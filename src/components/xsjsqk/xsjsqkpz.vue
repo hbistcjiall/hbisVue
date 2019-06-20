@@ -26,10 +26,10 @@
                     <Button @click="downLoad()" :loading="dwstats" icon="ios-cloud-download-outline">导出</Button>
 <!--                    <a :href="downloadUrl"><Button type="primary" :loading="mxstats" style="margin-left:10px" @click="dw()">明细导出</Button></a>-->
                 </Col>
-                <Button type="primary" style="margin-left:10px" icon="ios-cloud-download-outline" @click="dw()">明细导出</Button>
+                <Button type="primary" style="margin-left:10px" icon="ios-cloud-download-outline" :loading="mxstats" @click="dw()">明细导出</Button>
             </Row>
         </Form>
-        <Table :loading="loading" :loading="mxstats" :columns="columns" :data="data" border height="550" ref="table"></Table>
+        <Table :loading="loading" :columns="columns" :data="data" border height="550" ref="table"></Table>
     </div>
 </template>
 
