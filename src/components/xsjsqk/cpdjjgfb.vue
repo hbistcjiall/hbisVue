@@ -38,8 +38,11 @@
                 </Col>
                 <Col style="float: right;margin-bottom: 20px;width: 320px;">
                     <Button @click="getListed()" icon="ios-search">查询</Button>
-                    <a :href="downloadUrl"><Button type="primary" :loading="mxstats" style="margin-left:10px" icon="ios-cloud-download-outline" @click="download()">导出</Button></a>
-                    <a :href="downloadUrlMx"><Button type="primary" :loading="mxstatsMx" style="margin-left:10px" @click="downloadMx()">明细导出</Button></a>
+<!--                    <a :href="downloadUrl"><Button type="primary" :loading="mxstats" style="margin-left:10px" icon="ios-cloud-download-outline" @click="download()">导出</Button></a>-->
+<!--                    <a :href="downloadUrlMx"><Button type="primary" :loading="mxstatsMx" style="margin-left:10px" @click="downloadMx()">明细导出</Button></a>-->
+                    <Button type="primary" :loading="mxstats" style="margin-left:10px" icon="ios-cloud-download-outline" @click="download()">导出</Button>
+                    <Button type="primary" :loading="mxstatsMx" style="margin-left:10px" @click="downloadMx()">明细导出</Button>
+
                 </Col>
             </Row>
         </Form>
@@ -7685,29 +7688,83 @@
                 });
             },
             download(){
-                this.downMx()
-            },
-            downMx(){
+                // this.downMx()
+                const msg = this.$Message.loading({
+                    content: '正在导出数据，请稍后',
+                    duration: 0
+                });
+                this.mxstats = true;
                 let zlStr = '&zl='+this.zl;
                 let cxArr = '&cx=' +this.cx.toString()
                 let startTime='startTime=';
                 let endTime='&endTime=';
                 startTime = startTime+this.utils.formatMonthStart(this.startTime)
                 endTime = endTime+this.utils.formatMonthStart(this.endTime)
-                this.downloadUrl=this.$store.state.fetchPath + "/export/exportReport?"+startTime+endTime+zlStr+cxArr;
+                fetch(this.$store.state.fetchPath + "/export/exportReport?"+startTime+endTime+zlStr+cxArr, {
+                    method: "GET",
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    credentials: 'include'
+                }).then(response => response.blob())
+                    .then(blob => {
+                        setTimeout(msg,1000);
+                        let url = window.URL.createObjectURL(blob);
+                        let a = document.createElement('a');
+                        a.href = url;
+                        a.download = "产品等级价格分布.xlsx";
+                        a.click();
+                        this.mxstats = false
+                    });
             },
+            // downMx(){
+            //     let zlStr = '&zl='+this.zl;
+            //     let cxArr = '&cx=' +this.cx.toString()
+            //     let startTime='startTime=';
+            //     let endTime='&endTime=';
+            //     startTime = startTime+this.utils.formatMonthStart(this.startTime)
+            //     endTime = endTime+this.utils.formatMonthStart(this.endTime)
+            //     this.downloadUrl=this.$store.state.fetchPath + "/export/exportReport?"+startTime+endTime+zlStr+cxArr;
+            // },
             downloadMx(){
-                this.MxdownMx()
-            },
-            MxdownMx(){
+                // this.MxdownMx()
+                const msg = this.$Message.loading({
+                    content: '正在导出数据，请稍后',
+                    duration: 0
+                });
+                this.mxstatsMx = true;
                 let zlStr = '&zl='+this.zl;
                 let cxArr = '&cx=' +this.cx.toString()
                 let startTime='startTime=';
                 let endTime='&endTime=';
                 startTime = startTime+this.utils.formatMonthStart(this.startTime)
                 endTime = endTime+this.utils.formatMonthStart(this.endTime)
-                this.downloadUrlMx=this.$store.state.fetchPath + "/export/exportJGFB?"+startTime+endTime+zlStr+cxArr;
-            }
+                fetch(this.$store.state.fetchPath + "/export/exportJGFB?"+startTime+endTime+zlStr+cxArr, {
+                    method: "GET",
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    credentials: 'include'
+                }).then(response => response.blob())
+                    .then(blob => {
+                        setTimeout(msg,1000);
+                        let url = window.URL.createObjectURL(blob);
+                        let a = document.createElement('a');
+                        a.href = url;
+                        a.download = "产品等级价格分布明细.xlsx";
+                        a.click();
+                        this.mxstatsMx = false
+                    });
+            },
+            // MxdownMx(){
+            //     let zlStr = '&zl='+this.zl;
+            //     let cxArr = '&cx=' +this.cx.toString()
+            //     let startTime='startTime=';
+            //     let endTime='&endTime=';
+            //     startTime = startTime+this.utils.formatMonthStart(this.startTime)
+            //     endTime = endTime+this.utils.formatMonthStart(this.endTime)
+            //     this.downloadUrlMx=this.$store.state.fetchPath + "/export/exportJGFB?"+startTime+endTime+zlStr+cxArr;
+            // }
         },
     }
 </script>
