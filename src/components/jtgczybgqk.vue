@@ -33,7 +33,7 @@
                     </FormItem>
                 </Col>
                 <Col style="width: 360px;float: left">
-                    <FormItem label="发货日期：" label-width="100">
+                    <FormItem label="发货日期：" :label-width="100">
                         <DatePicker type="date" placeholder="记录时间" :editable="false" :clearable="false"
                                     v-model="startTime"
                                     style="width:120px;margin-left: -20px"></DatePicker>
