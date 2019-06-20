@@ -24,11 +24,12 @@
                 <Col style="width: 320px;float: right">
                     <Button @click="getList()" icon="ios-search" style="margin-right:10px;">查询</Button>
                     <Button @click="downLoad()" :loading="dwstats" icon="ios-cloud-download-outline">导出</Button>
-                    <a :href="downloadUrl"><Button type="primary" :loading="mxstats" style="margin-left:10px" @click="dw()">明细导出</Button></a>
+<!--                    <a :href="downloadUrl"><Button type="primary" :loading="mxstats" style="margin-left:10px" @click="dw()">明细导出</Button></a>-->
                 </Col>
+                <Button type="primary" style="margin-left:10px" icon="ios-cloud-download-outline" @click="dw()">明细导出</Button>
             </Row>
         </Form>
-        <Table :loading="loading" :columns="columns" :data="data" border height="550" ref="table"></Table>
+        <Table :loading="loading" :loading="mxstats" :columns="columns" :data="data" border height="550" ref="table"></Table>
     </div>
 </template>
 
@@ -98,22 +99,50 @@
         },
         methods: {
             dw(){
-                this.Mxdown()
-            },
-            Mxdown(){
-                let startTime='startTime=';
-                startTime+=this.utils.formatMonthStart(this.startTime)
-                let endTime='&endTime=';
-                endTime+=this.utils.formatMonthStart(this.endTime)
-                // let companyName= "&companyName="+this.gc
-                let jd = "&jd="+this.model1
-                this.downloadUrl=this.$store.state.fetchPath + "/export/exportXSJSPz?"+startTime+endTime+jd;
+                // this.Mxdown()
                 const msg = this.$Message.loading({
                     content: '正在导出数据，请稍后',
                     duration: 0
                 });
-                setTimeout(msg, 20000);
+                this.mxstats = true
+                let startTime='startTime=';
+                startTime+=this.utils.formatMonthStart(this.startTime)
+                let endTime='&endTime=';
+                endTime+=this.utils.formatMonthStart(this.endTime)
+                let pz= "&pz=冷板"
+                let jd = "&jd="+this.model1
+                fetch(this.$store.state.fetchPath + "/export/exportXSJSPz?"+startTime+endTime+jd+pz, {
+                    method: "GET",
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    credentials: 'include'
+                }).then(response => response.blob())
+                    .then(blob => {
+                        setTimeout(msg,1000);
+                        let url = window.URL.createObjectURL(blob);
+                        let a = document.createElement('a');
+                        a.href = url;
+                        a.download = "销售结算情况（品种）.xlsx";
+                        a.click();
+                        this.mxstats = false
+                    });
             },
+
+            // Mxdown(){
+            //     let startTime='startTime=';
+            //     startTime+=this.utils.formatMonthStart(this.startTime)
+            //     let endTime='&endTime=';
+            //     endTime+=this.utils.formatMonthStart(this.endTime)
+            //     // let companyName= "&companyName="+this.gc
+            //     let jd = "&jd="+this.model1
+            //     this.downloadUrl=this.$store.state.fetchPath + "/export/exportXSJSPz?"+startTime+endTime+jd;
+            //     const msg = this.$Message.loading({
+            //         content: '正在导出数据，请稍后',
+            //         duration: 0
+            //     });
+            //     setTimeout(msg, 20000);
+            // },
             downLoad(){
                 this.$refs.table.exportCsv({
                     filename: '销售结算情况（品种）明细'

@@ -63,7 +63,7 @@
                 downloadUrlMx:'',
                 downloadUrl:'',
                 mxstatsMx:true,
-                mxstats:false,
+                mxstats:true,
                 jd:'0',
                 pz:'全部',
                 cx:[],
@@ -409,7 +409,6 @@
         mounted() {
             this.getList();
             this.getCxData();
-            this.mxstats = true
         },
         methods: {
             getCxData(){
@@ -433,12 +432,43 @@
                 });
             },
             download(){
-                this.downMx();
+                // this.downMx();
+                const msg = this.$Message.loading({
+                    content: '正在导出数据，请稍后',
+                    duration: 0
+                });
+                this.mxstats  = true
+                let cxArr = '&cx=' +this.cx.toString()
+                let startTime='startTime=';
+                startTime+=this.utils.formatMonthStart(this.startTime)
+                let endTime='&endTime=';
+                endTime+=this.utils.formatMonthStart(this.endTime)
+                let pz = "pz="+this.pz
+                let jd = "jd="+this.jd
+                fetch(this.$store.state.fetchPath + "/export/exportXSJS?"+startTime+endTime+cxArr+"&"+jd+"&"+pz, {
+                    method: "GET",
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    credentials: 'include'
+                }).then(response => response.blob())
+                    .then(blob => {
+                        setTimeout(msg,1000);
+                        let url = window.URL.createObjectURL(blob);
+                        let a = document.createElement('a');
+                        a.href = url;
+                        a.download = "销售结算情况（产线）.xlsx";
+                        a.click();
+                        this.mxstats = false
+                    });
             },
             downloadMx(){
-                this.MxdownMx();
-            },
-            MxdownMx(){
+                // this.MxdownMx();
+                const msg = this.$Message.loading({
+                    content: '正在导出数据，请稍后',
+                    duration: 0
+                });
+                this.mxstatsMx = true
                 let cxArr = '&cx=' +this.cx.toString()
                 let startTime='startTime=';
                 startTime+=this.utils.formatMonthStart(this.startTime)
@@ -446,28 +476,53 @@
                 endTime+=this.utils.formatMonthStart(this.endTime)
                 let pz = "pz="+this.pz
                 let jd = "jd="+this.jd
-                this.downloadUrlMx=this.$store.state.fetchPath + "/export/exportXSJSCx?"+startTime+endTime+cxArr+"&"+jd+"&"+pz;
-                const msg = this.$Message.loading({
-                    content: '正在导出数据，请稍后',
-                    duration: 0
-                });
-                setTimeout(msg, 20000);
+                fetch(this.$store.state.fetchPath + "/export/exportXSJSCx?"+startTime+endTime+cxArr+"&"+jd+"&"+pz, {
+                    method: "GET",
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    credentials: 'include'
+                }).then(response => response.blob())
+                    .then(blob => {
+                        setTimeout(msg,1000);
+                        let url = window.URL.createObjectURL(blob);
+                        let a = document.createElement('a');
+                        a.href = url;
+                        a.download = "销售结算情况（产线）明细.xlsx";
+                        a.click();
+                        this.mxstatsMx = false
+                    });
             },
-            downMx(){
-                let cxArr = '&cx=' +this.cx.toString()
-                let startTime='startTime=';
-                startTime+=this.utils.formatMonthStart(this.startTime)
-                let endTime='&endTime=';
-                endTime+=this.utils.formatMonthStart(this.endTime)
-                let pz = "pz="+this.pz
-                let jd = "jd="+this.jd
-                this.downloadUrl=this.$store.state.fetchPath + "/export/exportXSJS?"+startTime+endTime+cxArr+"&"+jd+"&"+pz;
-                const msg = this.$Message.loading({
-                    content: '正在导出数据，请稍后',
-                    duration: 0
-                });
-                setTimeout(msg, 20000);
-            },
+            // MxdownMx(){
+            //     let cxArr = '&cx=' +this.cx.toString()
+            //     let startTime='startTime=';
+            //     startTime+=this.utils.formatMonthStart(this.startTime)
+            //     let endTime='&endTime=';
+            //     endTime+=this.utils.formatMonthStart(this.endTime)
+            //     let pz = "pz="+this.pz
+            //     let jd = "jd="+this.jd
+            //     this.downloadUrlMx=this.$store.state.fetchPath + "/export/exportXSJSCx?"+startTime+endTime+cxArr+"&"+jd+"&"+pz;
+            //     const msg = this.$Message.loading({
+            //         content: '正在导出数据，请稍后',
+            //         duration: 0
+            //     });
+            //     setTimeout(msg, 20000);
+            // },
+            // downMx(){
+            //     let cxArr = '&cx=' +this.cx.toString()
+            //     let startTime='startTime=';
+            //     startTime+=this.utils.formatMonthStart(this.startTime)
+            //     let endTime='&endTime=';
+            //     endTime+=this.utils.formatMonthStart(this.endTime)
+            //     let pz = "pz="+this.pz
+            //     let jd = "jd="+this.jd
+            //     this.downloadUrl=this.$store.state.fetchPath + "/export/exportXSJS?"+startTime+endTime+cxArr+"&"+jd+"&"+pz;
+            //     const msg = this.$Message.loading({
+            //         content: '正在导出数据，请稍后',
+            //         duration: 0
+            //     });
+            //     setTimeout(msg, 20000);
+            // },
             getList() {
                 let cxArr = '&cx=' +this.cx.toString()
                 this.mxstatsMx=true

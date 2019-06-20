@@ -40,7 +40,8 @@
                 <Col style="width: 300px;float: right;">
                     <Button @click="getList()" icon="ios-search" style="margin-right:10px;">查询</Button>
                     <Button @click="downLoad()" :loading="dwstats" icon="ios-cloud-download-outline">导出</Button>
-                    <a :href="downloadUrl"><Button type="primary" :loading="mxstats" style="margin-left:10px" @click="dw()">明细导出</Button></a>
+<!--                    <a :href="downloadUrl"><Button type="primary" :loading="mxstats" style="margin-left:10px" @click="dw()">明细导出</Button></a>-->
+                    <Button type="primary" :loading="mxstats" style="margin-left:10px" @click="dw()">明细导出</Button>
                 </Col>
             </Row>
         </Form>
@@ -118,22 +119,50 @@
         },
         methods: {
             dw(){
-                this.downMx();
-            },
-            downMx(){
+                // this.downMx();
+                const msg = this.$Message.loading({
+                    content: '正在导出数据，请稍后',
+                    duration: 0
+                });
+                this.mxstats = true
                 let startTime='startTime=';
                 startTime+=this.utils.formatMonthStart(this.startTime)
                 let endTime='&endTime=';
                 endTime+=this.utils.formatMonthStart(this.endTime)
                 let companyName= "&companyName="+this.gc
                 let jd = "&jd="+this.model1
-                this.downloadUrl=this.$store.state.fetchPath + "/export/exportXSJSGc?"+startTime+endTime+companyName+jd;
-                const msg = this.$Message.loading({
-                    content: '正在导出数据，请稍后',
-                    duration: 0
-                });
-                setTimeout(msg, 20000);
+                fetch(this.$store.state.fetchPath + "/export/exportXSJSGc?"+startTime+endTime+companyName+jd, {
+                    method: "GET",
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    credentials: 'include'
+                }).then(response => response.blob())
+                    .then(blob => {
+                        setTimeout(msg,1000);
+                        let url = window.URL.createObjectURL(blob);
+                        let a = document.createElement('a');
+                        a.href = url;
+                        a.download = "销售结算情况（钢厂）明细.xlsx";
+                        a.click();
+                        this.mxstats = false
+                    });
             },
+
+            // downMx(){
+            //     let startTime='startTime=';
+            //     startTime+=this.utils.formatMonthStart(this.startTime)
+            //     let endTime='&endTime=';
+            //     endTime+=this.utils.formatMonthStart(this.endTime)
+            //     let companyName= "&companyName="+this.gc
+            //     let jd = "&jd="+this.model1
+            //     this.downloadUrl=this.$store.state.fetchPath + "/export/exportXSJSGc?"+startTime+endTime+companyName+jd;
+            //     const msg = this.$Message.loading({
+            //         content: '正在导出数据，请稍后',
+            //         duration: 0
+            //     });
+            //     setTimeout(msg, 20000);
+            // },
             downLoad(){
                 this.$refs.table.exportCsv({
                     filename: '销售结算情况（钢厂）明细'
