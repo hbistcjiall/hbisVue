@@ -30,7 +30,7 @@
 
                 <FormItem prop="password" class="formitem">
                     <Input type="password" v-model="formInline.password" placeholder="密码" @keyup.enter.native="handleSubmit('formInline')">
-                        <Icon type="ios-lock-outline" slot="prepend" style="font-size: 20px;color: #8ABEF2;font-weight: 800""></Icon>
+                        <Icon type="ios-lock-outline" slot="prepend" style="font-size: 20px;color: #8ABEF2;font-weight: 800"></Icon>
                     </Input>
                 </FormItem>
                 <FormItem class="formitem">
