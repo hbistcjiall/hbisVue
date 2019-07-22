@@ -2,20 +2,19 @@
     <div>
         <Form :label-width="60">
             <Row>
-                <Col span="5">
+                <Col style="width: 320px;float: left">
                     <FormItem label="日期：">
                         <DatePicker type="month" placeholder="开始时间" :editable="false" :clearable="false"
                                     v-model="startTime"
-                                    style="width:110px;margin-left: -50px"></DatePicker>
+                                    style="width:120px;margin-left: -10px"></DatePicker>
                         <DatePicker type="month" placeholder="结束时间" :editable="false" :clearable="false"
                                     v-model="endTime"
-                                    style="width:110px;margin-left: 10px;"></DatePicker>
+                                    style="width:120px;margin-left: 10px;"></DatePicker>
                     </FormItem>
                 </Col>
-                <Col span="4">
-                    <FormItem  style="margin-left: -50px">
-                        <label>产品大类：</label>
-                        <Select style="width:100px; "  v-model="zl" placeholder="请选择" filterable  >
+                <Col style="width: 240px;float: left;">
+                    <FormItem label="产品大类:" :label-width="100">
+                        <Select v-model="zl" placeholder="请选择" filterable  >
                             <Option value="全部">全部</Option>
                             <Option value="热板">热板</Option>
                             <Option value="薄板">薄板</Option>
@@ -30,17 +29,20 @@
                         </Select>
                     </FormItem>
                 </Col>
-                <Col span="4">
-                    <FormItem label="产线:" style="margin-left: 100px" >
-                        <Select style="width:235px"  v-model="cx" placeholder="请选择产线" filterable multiple>
+                <Col style="width: 320px;margin-left: 20px;float: left">
+                    <FormItem label="产线:">
+                        <Select v-model="cx" placeholder="请选择产线" filterable multiple>
                             <Option v-for="item in cxData" :value="item.value" :key="item.value">{{ item.label }}</Option>
                         </Select>
                     </FormItem>
                 </Col>
-                <Col span="6" style="float: right;margin-bottom: 20px">
+                <Col style="float: right;margin-bottom: 20px;width: 320px;">
                     <Button @click="getListed()" icon="ios-search">查询</Button>
-                    <a :href="downloadUrl"><Button type="primary" :loading="mxstats" style="margin-left:10px" icon="ios-cloud-download-outline" @click="download()">导出</Button></a>
-                    <a :href="downloadUrlMx"><Button type="primary" :loading="mxstatsMx" style="margin-left:10px" @click="downloadMx()">明细导出</Button></a>
+<!--                    <a :href="downloadUrl"><Button type="primary" :loading="mxstats" style="margin-left:10px" icon="ios-cloud-download-outline" @click="download()">导出</Button></a>-->
+<!--                    <a :href="downloadUrlMx"><Button type="primary" :loading="mxstatsMx" style="margin-left:10px" @click="downloadMx()">明细导出</Button></a>-->
+                    <Button type="primary" :loading="mxstats" style="margin-left:10px" icon="ios-cloud-download-outline" @click="download()">导出</Button>
+                    <Button type="primary" :loading="mxstatsMx" style="margin-left:10px" @click="downloadMx()">明细导出</Button>
+
                 </Col>
             </Row>
         </Form>
@@ -7686,29 +7688,83 @@
                 });
             },
             download(){
-                this.downMx()
-            },
-            downMx(){
+                // this.downMx()
+                const msg = this.$Message.loading({
+                    content: '正在导出数据，请稍后',
+                    duration: 0
+                });
+                this.mxstats = true;
                 let zlStr = '&zl='+this.zl;
                 let cxArr = '&cx=' +this.cx.toString()
                 let startTime='startTime=';
                 let endTime='&endTime=';
                 startTime = startTime+this.utils.formatMonthStart(this.startTime)
                 endTime = endTime+this.utils.formatMonthStart(this.endTime)
-                this.downloadUrl=this.$store.state.fetchPath + "/export/exportReport?"+startTime+endTime+zlStr+cxArr;
+                fetch(this.$store.state.fetchPath + "/export/exportReport?"+startTime+endTime+zlStr+cxArr, {
+                    method: "GET",
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    credentials: 'include'
+                }).then(response => response.blob())
+                    .then(blob => {
+                        setTimeout(msg,1000);
+                        let url = window.URL.createObjectURL(blob);
+                        let a = document.createElement('a');
+                        a.href = url;
+                        a.download = "产品等级价格分布.xlsx";
+                        a.click();
+                        this.mxstats = false
+                    });
             },
+            // downMx(){
+            //     let zlStr = '&zl='+this.zl;
+            //     let cxArr = '&cx=' +this.cx.toString()
+            //     let startTime='startTime=';
+            //     let endTime='&endTime=';
+            //     startTime = startTime+this.utils.formatMonthStart(this.startTime)
+            //     endTime = endTime+this.utils.formatMonthStart(this.endTime)
+            //     this.downloadUrl=this.$store.state.fetchPath + "/export/exportReport?"+startTime+endTime+zlStr+cxArr;
+            // },
             downloadMx(){
-                this.MxdownMx()
-            },
-            MxdownMx(){
+                // this.MxdownMx()
+                const msg = this.$Message.loading({
+                    content: '正在导出数据，请稍后',
+                    duration: 0
+                });
+                this.mxstatsMx = true;
                 let zlStr = '&zl='+this.zl;
                 let cxArr = '&cx=' +this.cx.toString()
                 let startTime='startTime=';
                 let endTime='&endTime=';
                 startTime = startTime+this.utils.formatMonthStart(this.startTime)
                 endTime = endTime+this.utils.formatMonthStart(this.endTime)
-                this.downloadUrlMx=this.$store.state.fetchPath + "/export/exportJGFB?"+startTime+endTime+zlStr+cxArr;
-            }
+                fetch(this.$store.state.fetchPath + "/export/exportJGFB?"+startTime+endTime+zlStr+cxArr, {
+                    method: "GET",
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    credentials: 'include'
+                }).then(response => response.blob())
+                    .then(blob => {
+                        setTimeout(msg,1000);
+                        let url = window.URL.createObjectURL(blob);
+                        let a = document.createElement('a');
+                        a.href = url;
+                        a.download = "产品等级价格分布明细.xlsx";
+                        a.click();
+                        this.mxstatsMx = false
+                    });
+            },
+            // MxdownMx(){
+            //     let zlStr = '&zl='+this.zl;
+            //     let cxArr = '&cx=' +this.cx.toString()
+            //     let startTime='startTime=';
+            //     let endTime='&endTime=';
+            //     startTime = startTime+this.utils.formatMonthStart(this.startTime)
+            //     endTime = endTime+this.utils.formatMonthStart(this.endTime)
+            //     this.downloadUrlMx=this.$store.state.fetchPath + "/export/exportJGFB?"+startTime+endTime+zlStr+cxArr;
+            // }
         },
     }
 </script>

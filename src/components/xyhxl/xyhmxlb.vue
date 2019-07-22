@@ -36,19 +36,20 @@
                     </Select>
                 </FormItem>
             </Col>
-            <Col span="7" style="float: right">
+            <Col style="width:430px;float: right">
                 <Button type="primary" @click="search" style="margin-left:20px" icon="ios-search">查询</Button>
                 <Button type="primary" @click="clearall" style="margin-left:10px">清空</Button>
                 <Button type="primary" @click="pldelect" style="margin-left:10px">批量删除</Button>
                 <a :href="downloadUrl"><Button type="primary" style="margin-left:10px">导出</Button></a>
+                <a :href="downloadMb"><Button type="primary" style="margin-left:10px">下载模版</Button></a>
             </Col>
 
         </Row>
-            <Row>
-                <Col span="2" style="float: right">
-                    <a :href="downloadMb"><Button type="primary" style="margin-left:10px">下载模版</Button></a>
-                </Col>
-            </Row>
+<!--            <Row>-->
+<!--                <Col span="2" style="float: right">-->
+<!--                    <a :href="downloadMb"><Button type="primary" style="margin-left:10px">下载模版</Button></a>-->
+<!--                </Col>-->
+<!--            </Row>-->
         </Form>
         <Table :loading="loading" border stripe :columns="columns12" :data="fecthdata6"  style="margin-top: 20px" ref="table" @on-select="panduanduoxuan" @on-select-all="panduanduoxuan" >
             <template slot-scope="{ row }" slot="name">
@@ -438,6 +439,10 @@
     }
 </script>
 <style scoped>
+    button{
+        background: #3497db;
+        color:#fff;
+    }
     .paging{
         float:right;
         margin-top:10px;

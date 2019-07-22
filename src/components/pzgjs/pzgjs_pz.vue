@@ -2,18 +2,18 @@
     <div>
         <Form :label-width="60">
             <Row>
-                <Col span="3" v-if="!switchTime" >
+                <Col style="width: 200px;float: left;margin-left: 20px" v-if="!switchTime" >
                     <FormItem label="年份：">
-                        <DatePicker type="year"  placeholder="请选择年份" :editable="false" :clearable="false"  v-model="year" style="width:150px"></DatePicker>
+                        <DatePicker type="year"  placeholder="请选择年份" :editable="false" :clearable="false"  v-model="year"></DatePicker>
                     </FormItem>
                 </Col>
-                <Col span="6"  v-if="switchTime" >
+                <Col style="width: 320px;float: left;" v-if="switchTime" >
                     <FormItem label="月份：">
-                        <DatePicker type="month" placeholder="起始月份" :editable="false" :clearable="false"  v-model="startTime" style="width:150px;margin-right: 5px;margin-left: -50px"></DatePicker>
-                        <DatePicker type="month" placeholder="终止月份" :editable="false" :clearable="false"  v-model="endTime" style="width:150px"></DatePicker>
+                        <DatePicker type="month" placeholder="起始月份" :editable="false" :clearable="false"  v-model="startTime" style="width:120px;margin-left: -20px"></DatePicker>
+                        <DatePicker type="month" placeholder="终止月份" :editable="false" :clearable="false"  v-model="endTime" style="width:120px;margin-left: 20px"></DatePicker>
                     </FormItem>
                 </Col>
-                <Col span="1" >
+                <Col style="width: 100px;float: left;margin-left: -20px">
                     <FormItem>
                         <i-switch v-model="switchTime" @on-change="changeSwitch">
                             <span slot="open">年</span>
@@ -21,33 +21,43 @@
                         </i-switch>
                     </FormItem>
                 </Col>
-                <Col span="3" style="margin-left: 100px">
-                    <FormItem label="品种：" style="width: 120px">
-                        <Select v-model="pz" style="width:120px" placeholder="请选择品种" @on-change="changeTitle()">
+                <Col style="width: 200px;float: left;margin-left: 20px">
+                    <FormItem label="品种：">
+                        <Select v-model="pz" placeholder="请选择品种" @on-change="changeTitle()">
                             <Option value="">全部</Option>
-                            <Option value="冷板">冷板</Option>
                             <Option value="热板">热板</Option>
-                            <Option value="棒线">棒线</Option>
+                            <Option value="冷板">冷板</Option>
                             <Option value="宽厚板">宽厚板</Option>
-                            <Option value="型带">型带</Option>
-                            <Option value="高端产品">高端产品</Option>
+                            <Option value="特钢">特钢</Option>
+                            <Option value="薄板">薄板</Option>
+                            <Option value="圆钢">圆钢</Option>
+                            <Option value="螺纹钢">螺纹钢</Option>
+                            <Option value="型材">型材</Option>
+                            <Option value="镀锌">镀锌</Option>
+                            <Option value="酸洗">酸洗</Option>
+                            <Option value="线材">线材</Option>
+                            <Option value="中厚板">中厚板</Option>
                         </Select>
                     </FormItem>
                 </Col>
-                <Col span="4" style="margin-left: 20px">
+                <Col style="width: 200px;float: left;margin-left: 20px">
                    <label>产品等级：</label>
                         <Select v-model="zt" style="width:120px" placeholder="请选择产品等级" @on-change="changeTitle()">
                             <Option value="0">品种钢</Option>
                             <Option value="1">高端产品</Option>
                         </Select>
                 </Col>
-                <Col span="6" style="float: right;margin-bottom: 20px">
+
+            </Row>
+            <Row>
+                <Col style="float: right;width: 300px;margin-bottom: 20px">
                     <Button @click="getList()" icon="ios-search" style="margin-right:10px;">查询</Button>
-                    <Button @click="downLoad()" icon="ios-cloud-download-outline">导出</Button>
-                    <a :href="downloadUrl"><Button type="primary" :loading="mxstats" style="margin-left:10px" @click="dw()">明细导出</Button></a>
+                    <Button @click="downLoad()" icon="ios-cloud-download-outline" :loading="dwstats">导出</Button>
+<!--                    <a :href="downloadUrl"><Button type="primary" :loading="mxstats" style="margin-left:10px" @click="dw()">明细导出</Button></a>-->
+                    <Button type="primary" :loading="mxstats" style="margin-left:10px" @click="dw()">明细导出</Button>
+
                 </Col>
             </Row>
-
 
         </Form>
         <Table :loading="loading" :columns="columns" :data="data" border height="700" ref="table"></Table>
@@ -59,6 +69,7 @@
         name: "pzgjs_pz",
         data() {
             return {
+                dwstats:true,
                 downloadUrl:'',
                 mxstats:true,
                 loading:true,
@@ -271,6 +282,7 @@
                 this.switchTime?(this.startTime=date,this.endTime=this.utils.formatMonthEnd()):this.year=date;
             },
             getList() {
+                this.dwstats = true;
                 this.mxstats = true;
                 this.loading = true;
                 let params={
@@ -357,6 +369,7 @@
                     this.data.unshift(obj)
                     this.loading = false;
                     this.mxstats = false;
+                    this.dwstats = false
                 });
             },
             changeTitle(){
@@ -374,19 +387,45 @@
                 this.getList()
             },
             dw(){
-                this.downMx();
-            },
-            downMx(){
+                // this.downMx();
+                const msg = this.$Message.loading({
+                    content: '正在导出数据，请稍后',
+                    duration: 0
+                });
+                this.mxstats = true;
                 let startTime='startTime=';
                 startTime+=this.utils.formatMonthStart(this.startTime)
                 let endTime='&endTime=';
                 endTime+=this.utils.formatMonthStart(this.endTime)
                 let pz = "&pz="+this.pz
-                this.downloadUrl=this.$store.state.fetchPath + "/export/exportPzgPz?"+startTime+endTime+pz;
+                fetch(this.$store.state.fetchPath + "/export/exportPzgPz?"+startTime+endTime+pz, {
+                    method: "GET",
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    credentials: 'include'
+                }).then(response => response.blob())
+                    .then(blob => {
+                        setTimeout(msg,1000);
+                        let url = window.URL.createObjectURL(blob);
+                        let a = document.createElement('a');
+                        a.href = url;
+                        a.download = "结算完成（品种）明细.xlsx";
+                        a.click();
+                        this.mxstats = false
+                    });
             },
+            // downMx(){
+            //     let startTime='startTime=';
+            //     startTime+=this.utils.formatMonthStart(this.startTime)
+            //     let endTime='&endTime=';
+            //     endTime+=this.utils.formatMonthStart(this.endTime)
+            //     let pz = "&pz="+this.pz
+            //     this.downloadUrl=this.$store.state.fetchPath + "/export/exportPzgPz?"+startTime+endTime+pz;
+            // },
             downLoad(){
                 this.$refs.table.exportCsv({
-                    filename: '结算完成（品种）明细'
+                    filename: '结算完成（品种）'
                 });
             }
         }

@@ -1,10 +1,10 @@
 <template>
     <div>
-        <Form :label-width="70">
+        <Form :label-width="60">
             <Row>
-                <Col span="3">
+                <Col style="width: 200px;float: left">
                     <FormItem label="单位：">
-                        <Select style="width:100px"  v-model="dw" placeholder="请选择单位" filterable @on-change="getCx()" >
+                        <Select style=""  v-model="dw" placeholder="请选择单位" filterable @on-change="getCx()" >
                             <Option value="全部">全部</Option>
                             <Option value="9580">河钢唐钢</Option>
                             <Option value="9727">河钢邯钢</Option>
@@ -16,24 +16,24 @@
                         </Select>
                     </FormItem>
                 </Col>
-                <Col span="5">
+                <Col style="width: 320px;float: left">
                     <FormItem label="产线：">
-                        <Select style="width:235px"  v-model="cx" placeholder="请选择产线" filterable multiple>
+                        <Select style=""  v-model="cx" placeholder="请选择产线" filterable multiple>
                             <Option v-for="item in cxData" :value="item.value" :key="item.value">{{ item.label }}</Option>
                         </Select>
                     </FormItem>
                 </Col>
-                <Col span="3">
-                    <FormItem label="月份：" style="margin-left:0px">
-                        <DatePicker type="month" placeholder="起始月份" :editable="false" :clearable="false" v-model="startTime" style="width:130px"></DatePicker>
+                <Col style="width: 200px;float: left">
+                    <FormItem label="月份：" style="">
+                        <DatePicker type="month" placeholder="起始月份" :editable="false" :clearable="false" v-model="startTime" style=""></DatePicker>
                     </FormItem>
                 </Col>
                 <Col span="4">
                     <span>&nbsp;</span>
                 </Col>
-                <Col span="4" style="float: right">
+                <Col style="float: right;width: 200px">
                     <Button @click="getList()" icon="ios-search" style="margin-right:10px;">查询</Button>
-                    <Button @click="downLoad()" icon="ios-cloud-download-outline">导出</Button>
+                    <Button @click="downLoad()" :loading="dwstats" icon="ios-cloud-download-outline">导出</Button>
                 </Col>
             </Row>
 
@@ -48,6 +48,7 @@
         data() {
             // let ckjhl = 'CKJHL';
             return {
+                dwstats:true,
                 loading:true,
                 cx:[],
                 startTime:new Date(),
@@ -301,6 +302,7 @@
         },
         methods: {
             getList() {
+                this.dwstats = true;
                 this.loading = true;
                 let cxName = 'cxName='+this.cx.toString();
                 let dwName='companyId='+this.dw;
@@ -397,6 +399,7 @@
                     this.data.push(obj)
                     this.data = this.utils.mergeRow(this.data,'COMPANYID')
                     this.loading = false;
+                    this.dwstats = false;
                 });
             },
             getCxData(){

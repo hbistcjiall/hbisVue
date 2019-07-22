@@ -25,7 +25,7 @@ router.beforeEach((to, from, next) => {
             next({
                 path: '/index'
             });
-            iView.Message.error('请先退出登录')
+            // iView.Message.error('请先退出登录')
         }
     } else {
         if (to.path == "/") {

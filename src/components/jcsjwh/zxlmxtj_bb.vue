@@ -1,47 +1,52 @@
 <template>
     <div>
-        <div class="divStyle">
-            <label style="float:left">产品类别：
-                <Select v-model="model1" style="width:120px">
-                    <Option v-for="item in cplbList" :value="item.value" :key="item.label">{{ item.label }}</Option>
-                </Select>
-            </label>
+        <Row>
+            <div class="divStyle">
+                <label style="float:left">产品类别：
+                    <Select v-model="model1" style="width:120px">
+                        <Option v-for="item in cplbList" :value="item.value" :key="item.label">{{ item.label }}</Option>
+                    </Select>
+                </label>
 
-            <label style="float:left;margin-left: 20px">供货方式：
-                <Select v-model="model2" style="width:120px">
-                    <Option v-for="item in ghfsList" :value="item.value" :key="item.label">{{ item.label }}</Option>
-                </Select>
-            </label>
-            <label class="yfgc" style="margin-left:20px;margin-top: 5px">统计月份：
-            </label>
-            <DatePicker type="month" placeholder="起始月份" :editable="false" :clearable="false" v-model="startTime"
-                        style="width:120px;float: left;margin-left: 10px">
-            </DatePicker>
-            <DatePicker style=";width:120px;float: left" type="month" placeholder="结束月份" :editable="false"
-                        :clearable="false"
-                        v-model="endTime">
-            </DatePicker>
-            <label style="float: left;margin-left: 10px;margin-top: 6px">钢厂:</label>
-            <Checkbox
-                    :indeterminate="indeterminate"
-                    :value="checkAll"
-                    @click.prevent.native="handleCheckAll" style="float: left;margin-left: 20px;margin-top: 6px">全选
-            </Checkbox>
-            <CheckboxGroup v-model="checkText" class="yfgc" @on-change="checkAllGroupChange">
-                <Checkbox label="唐钢" value="唐钢"></Checkbox>
-                <Checkbox label="邯钢" value="邯钢"></Checkbox>
-                <Checkbox label="宣钢" value="宣钢"></Checkbox>
-                <Checkbox label="承钢" value="承钢"></Checkbox>
-                <Checkbox label="舞钢" value="舞钢"></Checkbox>
-            </CheckboxGroup>
+                <label style="float:left;margin-left: 20px">供货方式：
+                    <Select v-model="model2" style="width:120px">
+                        <Option v-for="item in ghfsList" :value="item.value" :key="item.label">{{ item.label }}</Option>
+                    </Select>
+                </label>
+                <label class="yfgc" style="margin-left:20px;margin-top: 5px">统计月份：
+                </label>
+                <DatePicker type="month" placeholder="起始月份" :editable="false" :clearable="false" v-model="startTime"
+                            style="width:120px;float: left;margin-left: 10px">
+                </DatePicker>
+                <DatePicker style=";width:120px;float: left" type="month" placeholder="结束月份" :editable="false"
+                            :clearable="false"
+                            v-model="endTime">
+                </DatePicker>
+                <label style="float: left;margin-left: 10px;margin-top: 6px">钢厂:</label>
+                <Checkbox
+                        :indeterminate="indeterminate"
+                        :value="checkAll"
+                        @click.prevent.native="handleCheckAll" style="float: left;margin-left: 20px;margin-top: 6px">全选
+                </Checkbox>
+                <CheckboxGroup v-model="checkText" class="yfgc" @on-change="checkAllGroupChange">
+                    <Checkbox label="唐钢" value="唐钢"></Checkbox>
+                    <Checkbox label="邯钢" value="邯钢"></Checkbox>
+                    <Checkbox label="宣钢" value="宣钢"></Checkbox>
+                    <Checkbox label="承钢" value="承钢"></Checkbox>
+                    <Checkbox label="舞钢" value="舞钢"></Checkbox>
+                </CheckboxGroup>
 
-        </div>
-        <div style="float: right;margin-bottom: 20px">
-            <Button @click="search()" icon="ios-search" type="primary" style="margin-right:20px;">查询</Button>
-            <a :href="downloadUrl">
-                <Button type="primary" icon="ios-cloud-download-outline" style="margin-left:10px">导出</Button>
-            </a>
-        </div>
+            </div>
+        </Row>
+        <Row>
+            <div style="float: right;margin-bottom: 20px">
+                <Button @click="search()" icon="ios-search" type="primary" style="margin-right:5px;">查询</Button>
+                <a :href="downloadUrl">
+                    <Button type="primary" icon="ios-cloud-download-outline" style="margin-left:5px" @click="downLoad()" :loading="dwstats">导出</Button>
+                </a>
+            </div>
+        </Row>
+
         <Table border stripe :columns="columns12" :data="resDatas" style="clear: both;margin-top: 20px" ref="table"
                :loading="loading">
             <template slot-scope="{ row }" slot="name">
@@ -63,6 +68,7 @@
                     page: '0',
                     limit: '10',
                 },
+                dwstats:true,
                 loading: true,
                 downloadUrl: '',
                 indeterminate: true,
@@ -202,6 +208,7 @@
         },
         methods: {
             handleListApproveHistory() {
+                this.dwstats = true;
                 this.loading = true;
                 let startTime = 'beginTime=';
                 let endTime = '&endTime=';
@@ -227,9 +234,9 @@
                         }
                     }).then((res) => {
                     res = res && res.length > 0 ? JSON.parse(res) : []
-                    this.downLoad();
                     this.resDatas = res.list.data;
                     this.loading = false;
+                    this.dwstats = false;
                 })
             },
             changepage(index) {
@@ -304,7 +311,7 @@
     }
 
     .divStyle {
-        width: 85%;
+        width: 99%;
         height: 60px;
         margin: 0 auto;
         /*margin-bottom: 20px;*/
@@ -313,7 +320,7 @@
 
     .yfgc {
         float: left;
-        margin-left: 20px;
+        margin-left: 0px;
         margin-top: 5px;
     }
 </style>

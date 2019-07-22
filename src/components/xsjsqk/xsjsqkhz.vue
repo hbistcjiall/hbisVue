@@ -2,7 +2,7 @@
     <div>
         <Form :label-width="60">
             <Row>
-                <Col span="6">
+                <Col style="width: 320px;float: left;">
                     <FormItem label="月份：">
                         <DatePicker type="month" placeholder="起始月份" :editable="false" :clearable="false" v-model="startTime" style="width:120px;margin-left:-20px"></DatePicker>
                     <!--</FormItem>-->
@@ -12,14 +12,14 @@
                         <DatePicker type="month" placeholder="终止月份"  :editable="false" :clearable="false" v-model="endTime" style="width:120px;margin-left:20px"></DatePicker>
                     </FormItem>
                 </Col>
-                <Col span="4" style="margin-left: 20px">
+                <Col style="width: 320px;float: left;">
                     <FormItem label="产线：">
                         <Select  v-model="cx" placeholder="请选择产线" filterable multiple>
                             <Option v-for="item in cxData" :value="item.value" :key="item.value">{{ item.label }}</Option>
                         </Select>
                     </FormItem>
                 </Col>
-                <Col span="4" style="margin-left: 20px">
+                <Col style="width: 200px;float: left;margin-left: 20px">
                     <FormItem label="品种：">
                         <Select  v-model="pz" placeholder="请选择品种">
                             <Option value="全部">全部</Option>
@@ -35,7 +35,7 @@
                         </Select>
                     </FormItem>
                 </Col>
-                <Col span="4" style="margin-left: 20px">
+                <Col style="width: 200px;float: left;margin-left: 20px">
                     <FormItem label="借贷：">
                         <Select v-model="jd">
                             <Option value="1">是</Option>
@@ -43,11 +43,13 @@
                         </Select>
                     </FormItem>
                 </Col>
-                <Col span="6" style="float: right;margin-bottom: 20px">
+                <Col style="width: 320px;float: right;margin-bottom: 20px">
                     <Button @click="getList()" icon="ios-search" style="margin-right:10px;">查询</Button>
                     <!--                    <Button @click="downLoad()" icon="ios-cloud-download-outline">导出</Button>-->
-                    <a :href="downloadUrl"><Button type="primary" :loading="mxstats" style="margin-left:10px" icon="ios-cloud-download-outline" @click="download()">导出</Button></a>
-                    <a :href="downloadUrlMx"><Button type="primary" :loading="mxstatsMx" style="margin-left:10px" icon="ios-cloud-download-outline" @click="downloadMx()">明细导出</Button></a>
+<!--                    <a :href="downloadUrl"><Button type="primary" :loading="mxstats" style="margin-left:10px" icon="ios-cloud-download-outline" @click="download()">导出</Button></a>-->
+<!--                    <a :href="downloadUrlMx"><Button type="primary" :loading="mxstatsMx" style="margin-left:10px" icon="ios-cloud-download-outline" @click="downloadMx()">明细导出</Button></a>-->
+                    <Button type="primary" :loading="mxstats" style="margin-left:10px" icon="ios-cloud-download-outline" @click="download()">导出</Button>
+                    <Button type="primary" :loading="mxstatsMx" style="margin-left:10px" icon="ios-cloud-download-outline" @click="downloadMx()">明细导出</Button>
                 </Col>
             </Row>
         </Form>
@@ -63,7 +65,7 @@
                 downloadUrlMx:'',
                 downloadUrl:'',
                 mxstatsMx:true,
-                mxstats:false,
+                mxstats:true,
                 jd:'0',
                 pz:'全部',
                 cx:[],
@@ -409,7 +411,6 @@
         mounted() {
             this.getList();
             this.getCxData();
-            this.mxstats = true
         },
         methods: {
             getCxData(){
@@ -433,12 +434,43 @@
                 });
             },
             download(){
-                this.downMx();
+                // this.downMx();
+                const msg = this.$Message.loading({
+                    content: '正在导出数据，请稍后',
+                    duration: 0
+                });
+                this.mxstats  = true
+                let cxArr = '&cx=' +this.cx.toString()
+                let startTime='startTime=';
+                startTime+=this.utils.formatMonthStart(this.startTime)
+                let endTime='&endTime=';
+                endTime+=this.utils.formatMonthStart(this.endTime)
+                let pz = "pz="+this.pz
+                let jd = "jd="+this.jd
+                fetch(this.$store.state.fetchPath + "/export/exportXSJS?"+startTime+endTime+cxArr+"&"+jd+"&"+pz, {
+                    method: "GET",
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    credentials: 'include'
+                }).then(response => response.blob())
+                    .then(blob => {
+                        setTimeout(msg,1000);
+                        let url = window.URL.createObjectURL(blob);
+                        let a = document.createElement('a');
+                        a.href = url;
+                        a.download = "销售结算情况（产线）.xlsx";
+                        a.click();
+                        this.mxstats = false
+                    });
             },
             downloadMx(){
-                this.MxdownMx();
-            },
-            MxdownMx(){
+                // this.MxdownMx();
+                const msg = this.$Message.loading({
+                    content: '正在导出数据，请稍后',
+                    duration: 0
+                });
+                this.mxstatsMx = true
                 let cxArr = '&cx=' +this.cx.toString()
                 let startTime='startTime=';
                 startTime+=this.utils.formatMonthStart(this.startTime)
@@ -446,28 +478,53 @@
                 endTime+=this.utils.formatMonthStart(this.endTime)
                 let pz = "pz="+this.pz
                 let jd = "jd="+this.jd
-                this.downloadUrlMx=this.$store.state.fetchPath + "/export/exportXSJSCx?"+startTime+endTime+cxArr+"&"+jd+"&"+pz;
-                const msg = this.$Message.loading({
-                    content: '正在导出数据，请稍后',
-                    duration: 0
-                });
-                setTimeout(msg, 20000);
+                fetch(this.$store.state.fetchPath + "/export/exportXSJSCx?"+startTime+endTime+cxArr+"&"+jd+"&"+pz, {
+                    method: "GET",
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    credentials: 'include'
+                }).then(response => response.blob())
+                    .then(blob => {
+                        setTimeout(msg,1000);
+                        let url = window.URL.createObjectURL(blob);
+                        let a = document.createElement('a');
+                        a.href = url;
+                        a.download = "销售结算情况（产线）明细.xlsx";
+                        a.click();
+                        this.mxstatsMx = false
+                    });
             },
-            downMx(){
-                let cxArr = '&cx=' +this.cx.toString()
-                let startTime='startTime=';
-                startTime+=this.utils.formatMonthStart(this.startTime)
-                let endTime='&endTime=';
-                endTime+=this.utils.formatMonthStart(this.endTime)
-                let pz = "pz="+this.pz
-                let jd = "jd="+this.jd
-                this.downloadUrl=this.$store.state.fetchPath + "/export/exportXSJS?"+startTime+endTime+cxArr+"&"+jd+"&"+pz;
-                const msg = this.$Message.loading({
-                    content: '正在导出数据，请稍后',
-                    duration: 0
-                });
-                setTimeout(msg, 20000);
-            },
+            // MxdownMx(){
+            //     let cxArr = '&cx=' +this.cx.toString()
+            //     let startTime='startTime=';
+            //     startTime+=this.utils.formatMonthStart(this.startTime)
+            //     let endTime='&endTime=';
+            //     endTime+=this.utils.formatMonthStart(this.endTime)
+            //     let pz = "pz="+this.pz
+            //     let jd = "jd="+this.jd
+            //     this.downloadUrlMx=this.$store.state.fetchPath + "/export/exportXSJSCx?"+startTime+endTime+cxArr+"&"+jd+"&"+pz;
+            //     const msg = this.$Message.loading({
+            //         content: '正在导出数据，请稍后',
+            //         duration: 0
+            //     });
+            //     setTimeout(msg, 20000);
+            // },
+            // downMx(){
+            //     let cxArr = '&cx=' +this.cx.toString()
+            //     let startTime='startTime=';
+            //     startTime+=this.utils.formatMonthStart(this.startTime)
+            //     let endTime='&endTime=';
+            //     endTime+=this.utils.formatMonthStart(this.endTime)
+            //     let pz = "pz="+this.pz
+            //     let jd = "jd="+this.jd
+            //     this.downloadUrl=this.$store.state.fetchPath + "/export/exportXSJS?"+startTime+endTime+cxArr+"&"+jd+"&"+pz;
+            //     const msg = this.$Message.loading({
+            //         content: '正在导出数据，请稍后',
+            //         duration: 0
+            //     });
+            //     setTimeout(msg, 20000);
+            // },
             getList() {
                 let cxArr = '&cx=' +this.cx.toString()
                 this.mxstatsMx=true

@@ -1,11 +1,11 @@
 <template>
     <div>
-        <Form :label-width="100">
+        <Form :label-width="60">
             <Row>
-                <Col span="4" >
-                    <FormItem label="日期：" style="width:120px;">
+                <Col style="width: 200px;float: left">
+                    <FormItem label="日期：">
                         <DatePicker type="month" placeholder="请选择" :editable="false" :clearable="false"
-                                    v-model="startTime" style="width:120px;"></DatePicker>
+                                    v-model="startTime"></DatePicker>
                     </FormItem>
                 </Col>
                 <!--<Col span="4">-->
@@ -31,7 +31,7 @@
                         <!--</Select>-->
                     <!--</FormItem>-->
                 <!--</Col>-->
-                <Col span="4">
+                <Col style="width: 200px;float: left">
                     <FormItem label="品种：">
                         <Select v-model="zyjhcx.pz" placeholder="请选择品种" @on-change="getCx">
                             <Option value="全部">全部</Option>
@@ -43,15 +43,15 @@
                         </Select>
                     </FormItem>
                 </Col>
-                <Col span="4">
+                <Col style="width: 340px;float: left">
                     <FormItem label="产线：" style="">
-                        <Select  v-model="cx" style="width:235px" placeholder="请选择产线" filterable multiple>
+                        <Select  v-model="cx" placeholder="请选择产线" filterable multiple>
                             <Option v-for="item in cxData" :value="item.value" :key="item.value">{{ item.label }}</Option>
                         </Select>
                     </FormItem>
                 </Col>
-                <Col span="5" style="margin-left: 100px">
-                    <FormItem label="销售主体：" style="">
+                <Col style="width: 250px;float: left">
+                    <FormItem label="销售主体：" :label-width="80" style="">
                         <Select  v-model="zyjhcx.xszt" placeholder="请选择销售主体">
                             <Option value="">全部</Option>
                             <Option value="销售总公司">销售总公司</Option>
@@ -61,16 +61,16 @@
                         </Select>
                     </FormItem>
                 </Col>
-                <Col span="4" style="float: right">
-                    <Button @click="getList()" icon="ios-search" style="margin-right:10px;">查询</Button>
-                    <Button @click="downLoad()" icon="ios-cloud-download-outline">导出</Button>
-                </Col>
+
                 <!--<Col span="2" style="line-height: 30px;margin-top: 10px;float: right">-->
                 <!--</Col>-->
             </Row>
-            <!--<Row style="margin-bottom: 10px">-->
-
-            <!--</Row>-->
+            <Row>
+                <Col style="width: 200px;float: right;margin-bottom: 20px">
+                    <Button @click="getList()" icon="ios-search" style="margin-right:10px;">查询</Button>
+                    <Button @click="downLoad()" :loading="dwstats" icon="ios-cloud-download-outline">导出</Button>
+                </Col>
+            </Row>
         </Form>
         <Table :loading="loading" :columns="columns" :data="data" border height="700" ref="table"></Table>
     </div>
@@ -81,6 +81,7 @@
         name: "pzgjs_cx",
         data() {
             return {
+                dwstats:true,
                 loading:true,
                 zyjhcx:{
                     pz:'全部',
@@ -137,6 +138,7 @@
         },
         methods: {
             getList() {
+                this.dwstats = true;
                 this.loading = true;
                 let cx = 'cx='+this.cx.toString();
                 let startTime = 'startTime=';
@@ -180,6 +182,7 @@
                     };
                     this.data.sort(compare('RQ', compare('CX', compare('XSZT',compare('PZ')))))
                     this.loading = false;
+                    this.dwstats = false;
                 });
             },
             getCxData(){

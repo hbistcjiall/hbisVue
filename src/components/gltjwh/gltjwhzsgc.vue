@@ -2,28 +2,31 @@
     <div>
         <Form :label-width="80">
             <Row>
-                <Col span="5">
+                <Col style="width: 260px;float:left;">
                     <FormItem label="业务类型:">
-                        <Select  v-model="name" style="width:235px" placeholder="请选择产线" filterable>
+                        <Select  v-model="name"placeholder="请选择产线" filterable>
                             <Option v-for="item in nameData" :value="item.value" :key="item.value">{{ item.label }}</Option>
                         </Select>
                     </FormItem>
                 </Col>
-                <Col span="5" style="margin-left: 20px">
+                <Col style="width: 260px;float:left;">
                     <FormItem label="过滤表:">
-                        <Select  v-model="tableName" style="width:235px" placeholder="请选择产线" filterable @on-change="getCCCC()">
+                        <Select  v-model="tableName" placeholder="请选择产线" filterable @on-change="getCCCC()">
                             <Option v-for="item in tableNameData" :value="item.value" :key="item.value">{{ item.label }}</Option>
                         </Select>
                     </FormItem>
                 </Col>
-                <Col span="4" style="margin-left: 20px">
+                <Col style="width: 260px;float:left;">
                     <FormItem label="过滤字段:">
-                        <Select  v-model="column" style="width:235px" placeholder="请选择产线" filterable>
+                        <Select  v-model="column" placeholder="请选择产线" filterable>
                             <Option v-for="item in columnData" :value="item.value" :key="item.value">{{ item.label }}</Option>
                         </Select>
                     </FormItem>
                 </Col>
-                <Col span="8" style="float: right">
+
+            </Row>
+            <Row>
+                <Col style="width: 380px;float: right;">
                     <Button type="primary" @click="search" style="margin-left:20px" icon="ios-search">查询</Button>
                     <Button type="primary" @click="clearall" style="margin-left:10px">清空</Button>
                     <Button type="primary" @click="addNew" style="margin-left:10px;">添加</Button>
@@ -778,6 +781,10 @@
     }
 </script>
 <style scoped>
+    button {
+        background: #3497db;
+        color: #fff;
+    }
     .paging{
         float:right;
         margin-top:10px;

@@ -2,7 +2,7 @@
     <div>
         <Form :label-width="60">
             <Row>
-                <Col span="6">
+                <Col style="width: 320px;float: left;">
                     <FormItem label="月份：">
                         <DatePicker type="month" placeholder="起始月份" :editable="false" :clearable="false" v-model="startTime" style="width:120px;margin-left:-20px"></DatePicker>
                     <!--</FormItem>-->
@@ -13,7 +13,7 @@
 "></DatePicker>
                     </FormItem>
                 </Col>
-                <Col span="4">
+                <Col style="width: 270px;float: left;">
                     <FormItem style="margin-left: -40px">
                         <label>是否借贷：</label>
                         <Select v-model="model1" style="width:100px">
@@ -22,24 +22,26 @@
                         </Select>
                     </FormItem>
                 </Col>
-                <Col span="3">
-                    <FormItem label="钢厂：" style="margin-left: 0px">
+                <Col style="width: 270px;float: left;">
+                    <FormItem label="钢厂：">
                         <Select v-model="gc" placeholder="请选择钢厂">
                             <Option value="全部">全部</Option>
-                            <Option value="唐钢">唐钢</Option>
-                            <Option value="邯钢">邯钢</Option>
-                            <Option value="宣钢">宣钢</Option>
-                            <Option value="承钢">承钢</Option>
-                            <Option value="舞钢">舞钢</Option>
-                            <Option value="石钢">石钢</Option>
-                            <Option value="衡板">衡板</Option>
+                            <Option value="9580">唐钢</Option>
+                            <Option value="9727">邯钢</Option>
+                            <Option value="9193">宣钢</Option>
+                            <Option value="9196">承钢</Option>
+                            <Option value="1932">舞钢</Option>
+                            <Option value="8110">石钢</Option>
+                            <Option value="8493">衡板</Option>
+                            <Option value="7778">邯宝</Option>
                         </Select>
                     </FormItem>
                 </Col>
-                <Col span="6" style="float: right">
+                <Col style="width: 300px;float: right;">
                     <Button @click="getList()" icon="ios-search" style="margin-right:10px;">查询</Button>
-                    <Button @click="downLoad()" icon="ios-cloud-download-outline">导出</Button>
-                    <a :href="downloadUrl"><Button type="primary" :loading="mxstats" style="margin-left:10px" @click="dw()">明细导出</Button></a>
+                    <Button @click="downLoad()" :loading="dwstats" icon="ios-cloud-download-outline">导出</Button>
+<!--                    <a :href="downloadUrl"><Button type="primary" :loading="mxstats" style="margin-left:10px" @click="dw()">明细导出</Button></a>-->
+                    <Button type="primary" :loading="mxstats" style="margin-left:10px" @click="dw()">明细导出</Button>
                 </Col>
             </Row>
         </Form>
@@ -52,7 +54,8 @@
         name: "xsjsqkgc",
         data() {
             return {
-                mxstats:false,
+                dwstats:true,
+                mxstats:true,
                 downloadUrl:'',
                 gc:'全部',
                 loading:true,
@@ -116,31 +119,57 @@
         },
         methods: {
             dw(){
-                this.downMx();
-            },
-            downMx(){
-                let startTime='startTime=';
-                startTime+=this.utils.formatMonthStart(this.startTime)
-                window.console.log(this.startTime);
-                window.console.log(startTime);
-                let endTime='&endTime=';
-                endTime+=this.utils.formatMonthStart(this.endTime)
-                window.console.log(endTime);
-                let companyName= "&companyName="+this.gc
-                let jd = "&jd="+this.model1
-                this.downloadUrl=this.$store.state.fetchPath + "/export/exportXSJSGc?"+startTime+endTime+companyName+jd;
-                const msg = this.$Message.loading({//iview
+                // this.downMx();
+                const msg = this.$Message.loading({
                     content: '正在导出数据，请稍后',
                     duration: 0
                 });
-                setTimeout(msg, 20000);
+                this.mxstats = true
+                let startTime='startTime=';
+                startTime+=this.utils.formatMonthStart(this.startTime)
+                let endTime='&endTime=';
+                endTime+=this.utils.formatMonthStart(this.endTime)
+                let companyName= "&companyName="+this.gc
+                let jd = "&jd="+this.model1
+                fetch(this.$store.state.fetchPath + "/export/exportXSJSGc?"+startTime+endTime+companyName+jd, {
+                    method: "GET",
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    credentials: 'include'
+                }).then(response => response.blob())
+                    .then(blob => {
+                        setTimeout(msg,1000);
+                        let url = window.URL.createObjectURL(blob);
+                        let a = document.createElement('a');
+                        a.href = url;
+                        a.download = "销售结算情况（钢厂）明细.xlsx";
+                        a.click();
+                        this.mxstats = false
+                    });
             },
+
+            // downMx(){
+            //     let startTime='startTime=';
+            //     startTime+=this.utils.formatMonthStart(this.startTime)
+            //     let endTime='&endTime=';
+            //     endTime+=this.utils.formatMonthStart(this.endTime)
+            //     let companyName= "&companyName="+this.gc
+            //     let jd = "&jd="+this.model1
+            //     this.downloadUrl=this.$store.state.fetchPath + "/export/exportXSJSGc?"+startTime+endTime+companyName+jd;
+            //     const msg = this.$Message.loading({
+            //         content: '正在导出数据，请稍后',
+            //         duration: 0
+            //     });
+            //     setTimeout(msg, 20000);
+            // },
             downLoad(){
                 this.$refs.table.exportCsv({
                     filename: '销售结算情况（钢厂）明细'
                 });
             },
             getList() {
+                this.dwstats = true;
                 this.mxstats = true;
                 this.loading = true;
                 let startTime='startTime=';
@@ -169,7 +198,7 @@
                     this.data = res;
                     let result1 = 0;
                     let result2 = 0;
-                    let zl = 0;
+                    // let zl = 0;
                     let sjpj = 0
                     for(var i=0;i<this.data.length;i++){
                         result1 += this.data[i].FKIMG
@@ -190,6 +219,7 @@
                     };
                     this.data.push(obj);
                     this.loading = false;
+                    this.dwstats = false;
                     this.mxstats = false;
                 });
             }

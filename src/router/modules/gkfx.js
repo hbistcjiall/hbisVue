@@ -89,5 +89,4 @@ export default [
             isLogin: true
         }
     },
-
 ]
