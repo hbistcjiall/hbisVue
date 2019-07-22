@@ -1,20 +1,20 @@
 <template>
     <div>
-        <Form :label-width="80">
+        <Form :label-width="100">
             <Row>
-                <Col style="width: 320px;float: left">
+                <Col span="6" >
                     <FormItem label="日期：">
                         <DatePicker type="date" placeholder="记录时间" :editable="false" :clearable="false"
                                     v-model="startTime"
-                                    style="width:110px;margin-left: -20px;"></DatePicker>
+                                    style="width:110px;margin-left: -50px;margin-right: 5px"></DatePicker>
                         <DatePicker type="date" placeholder="记录时间" :editable="false" :clearable="false"
                                     v-model="endTime"
-                                    style="width:110px;margin-left: 20px"></DatePicker>
+                                    style="width:110px"></DatePicker>
                     </FormItem>
                 </Col>
-                <Col style="width: 200px;float: left">
+                <Col span="3">
                     <FormItem label="钢厂：" style="">
-                        <Select v-model="gc" placeholder="请选择">
+                        <Select style="width:100px;" v-model="gc" placeholder="请选择">
                             <Option value="全部">全部</Option>
                             <Option value="9580">唐钢</Option>
                             <Option value="9727">邯钢</Option>
@@ -26,24 +26,24 @@
                         </Select>
                     </FormItem>
                 </Col>
-                <Col style="width: 200px;float: left">
+                <Col span="3">
                     <FormItem label="查询表：" style="">
-                        <Select @on-change="changewww()" v-model="cxb" placeholder="请选择">
+                        <Select @on-change="changewww()" style="width:100px;" v-model="cxb" placeholder="请选择">
                             <Option value="SCM_SALE_ORDER">订单表</Option>
                             <Option value="SCM_DELIVERY_DETAIL">发货表</Option>
                             <Option value="SCM_STEEL_SETTLE">结算表</Option>
                         </Select>
                     </FormItem>
                 </Col>
-                <Col style="width: 200px;float: left;margin-left: 20px">
-                    <FormItem label="过滤类型：">
-                        <Select v-model="glzd" placeholder="请选择">
+                <Col span="3">
+                    <FormItem label="过滤类型：" style="margin-left: 50px">
+                        <Select style="width:100px;" v-model="glzd" placeholder="请选择">
                             <Option v-for="item in cxData" :value="item.value" :key="item.value">{{ item.label }}</Option>
                         </Select>
                     </FormItem>
                 </Col>
-                <Col style="width: 100px;float: right;margin-bottom: 20px">
-                    <Button @click="getList()" icon="ios-search">查询</Button>
+                <Col span="2" style="margin-left: -50px;float: right">
+                    <Button @click="getList()" icon="ios-search" style="margin-right:10px;">查询</Button>
                 </Col>
             </Row>
         </Form>

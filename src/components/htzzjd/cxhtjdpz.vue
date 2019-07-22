@@ -1,10 +1,10 @@
 <template>
     <div>
-        <Form :label-width="60">
+        <Form :label-width="100">
             <Row>
-                <Col style="width: 200px;float: left">
-                    <FormItem label="品种：" >
-                        <Select v-model="pz" placeholder="请选择品种">
+                <Col span="4">
+                    <FormItem label="品种：" style="width:120px">
+                        <Select v-model="pz" style="width:120px" placeholder="请选择品种">
                             <!--<Option v-for="item in pzData" :value="item.value" :key="item.value">{{ item.label }}</Option>-->
                             <Option value="">全部</Option>
                             <Option value="热板">热板</Option>
@@ -15,9 +15,9 @@
                         </Select>
                     </FormItem>
                 </Col>
-                <Col style="width: 200px;float: left">
-                    <FormItem label="月份：">
-                        <DatePicker type="month" placeholder="起始月份" :editable="false" :clearable="false" v-model="startTime" style=""></DatePicker>
+                <Col span="4">
+                    <FormItem label="月份：" style="margin-left:10px">
+                        <DatePicker type="month" placeholder="起始月份" :editable="false" :clearable="false" v-model="startTime" style="width:150px"></DatePicker>
                     </FormItem>
                 </Col>
                 <!--<Col span="4">-->
@@ -26,9 +26,9 @@
                     <!--</FormItem>-->
                 <!--</Col>-->
                 <Col span="2">&nbsp;</Col>
-                <Col  style="width: 200px;float: right">
-                    <Button @click="getList()" icon="ios-search">查询</Button>
-                    <Button @click="downLoad()" :loading="dwstats" icon="ios-cloud-download-outline">导出</Button>
+                <Col span="4" style="float: right">
+                    <Button @click="getList()" icon="ios-search" style="margin-right:10px;">查询</Button>
+                    <Button @click="downLoad()" icon="ios-cloud-download-outline">导出</Button>
                 </Col>
             </Row>
 
@@ -42,7 +42,6 @@
         name: "cxhtjdpz",
         data() {
             return {
-                dwstats:true,
                 loading:true,
                 pz:'',
                 startTime:new Date(),
@@ -297,7 +296,6 @@
         },
         methods: {
             getList() {
-                this.dwstats = true;
                 this.loading = true;
                 let params={};
                 params.pzName = this.pz
@@ -395,7 +393,6 @@
                     }
                     this.data.push(obj)
                     this.loading = false;
-                    this.dwstats = false;
                 });
             },
             downLoad(){

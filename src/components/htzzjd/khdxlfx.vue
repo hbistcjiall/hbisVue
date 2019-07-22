@@ -1,45 +1,47 @@
 <template>
     <div>
-        <Form :label-width="60">
+        <Form :label-width="120">
             <Row>
-                <Col style="width: 200px;float:left;margin-right: 20px">
-                    <FormItem label="子公司：">
-                        <Select style="" v-model="zgs">
+                <Col span="4">
+                    <FormItem label="子公司：" style="width:120px;margin-left:-60px">
+                        <Select style="width:120px" v-model="zgs">
                             <Option v-for="item in zgslist" :value="item.value">{{item.lable}}</Option>
                         </Select>
                     </FormItem>
                 </Col>
-                <Col v-if="switchTime" style="width:360px;float: left">
-                    <FormItem label="交货截至日期：" :label-width="100">
+                <Col span="3" v-if="switchTime" style="margin-left: -20px">
+                    <FormItem label="交货截至日期：" style="width:120px;">
                         <DatePicker type="month" placeholder="起始月份" :editable="false" :clearable="false"
                                     v-model="startTime"
-                                    style="width:120px;margin-left:-20px"></DatePicker>
-                        <DatePicker type="month" placeholder="终止月份" :editable="false" :clearable="false"
-                                    v-model="endTime"  style="width:120px;margin-left:20px"></DatePicker>
+                                    style="width:120px;margin-left: -10px"></DatePicker>
                     </FormItem>
                 </Col>
-                <Col style="width:200px;float: left;margin-left:20px" v-if="switchTime">
-                    <FormItem label="记录日期：" :label-width="80">
+                <Col span="3" v-if="switchTime">
+                    <FormItem style="width:120px;">
+                        <DatePicker type="month" placeholder="终止月份" :editable="false" :clearable="false"
+                                    v-model="endTime" style="width:120px;margin-left: -70px"></DatePicker>
+                    </FormItem>
+                </Col>
+                <Col span="4" v-if="switchTime">
+                    <FormItem label="记录日期：" style="width:120px;margin-left: -10px">
                         <DatePicker type="date" placeholder="记录时间" :editable="false" :clearable="false"
                                     v-model="jiluTime"
-                                    style=""></DatePicker>
+                                    style="width:120px;margin-left: -10px"></DatePicker>
                         <!--<DatePicker type="date"  placeholder="Select date" style="width: 150px" v-model="startTime"></DatePicker>-->
                     </FormItem>
                 </Col>
-                <Col style="width: 200px;float: left;margin-left:20px" >
-                    <FormItem label="发货量汇总方式：" :label-width="120">
+                <Col span="6" style="margin-left: -100px" >
+                    <FormItem>
+                        <label style="width: 120px;float: left">发货量汇总方式：</label>
                         <Select style="width:120px;" v-model="hz">
                             <Option value="1">去0统计</Option>
                             <Option value="0">不去0统计</Option>
                         </Select>
                     </FormItem>
                 </Col>
-
-            </Row>
-            <Row>
-                <Col style="float: right;margin-bottom:20px;width: 200px;">
-                    <Button @click="getList()" icon="ios-search">查询</Button>
-                    <Button @click="downLoad()" :loading="dwstats" icon="ios-cloud-download-outline">导出</Button>
+                <Col span="4" style="float: right;margin-bottom:20px;">
+                    <Button @click="getList()" icon="ios-search" type="primary" style="margin-right:10px;">查询</Button>
+                    <Button @click="downLoad()" icon="ios-cloud-download-outline" type="primary">导出</Button>
                 </Col>
             </Row>
         </Form>
@@ -52,7 +54,6 @@
         name: "khdxlfx",
         data() {
             return {
-                dwstats:true,
                 startTime: new Date(),
                 endTime: new Date(),
                 NewStartTime: this.utils.formatMonthStart(this.startTime).substring(6, 7),
@@ -245,7 +246,6 @@
                     // this.newdata[i].duixian[Number(startMonth)+i-1] = this.newdata[i].duixian[Number(startMonth)+i-1] + "%";
                 }
                 this.loading = true;
-                this.dwstats = true;
                 let params = {};
                 this.zgs ? params.companyId = this.zgs : '';
                 this.hz ? params.summaryType = this.hz : '';
@@ -275,7 +275,6 @@
                     }
                     this.data = this.newdata;
                     this.loading = false;
-                    this.dwstats = false;
                 });
             },
             downLoad() {
@@ -288,8 +287,5 @@
 </script>
 
 <style scoped>
-    button{
-        background: #3497db;
-        color:#fff;
-    }
+
 </style>

@@ -175,11 +175,11 @@ const indexchild=[
         },
     },
     {
-        path: '/xsjsqk/xsjsqkhz',
-        name: 'xsjsqkhz',
-        component: resolve => require(['@/components/xsjsqk/xsjsqkhz'], resolve),
+        path: '/xsjsqk/xsjsqkcx',
+        name: 'xsjsqkcx',
+        component: resolve => require(['@/components/xsjsqk/xsjsqkcx'], resolve),
         meta: {
-            title: '销售结算情况（汇总）',
+            title: '集团销售结算情况（汇总）',
             keepAlive: true,
             isLogin: true
         },
@@ -213,6 +213,15 @@ const indexchild=[
             keepAlive: true,
             isLogin: true
         },
+    },
+    {
+        path: '/jcsjdc/jcsjdcfh',
+        name: 'xsztylhztdy',
+        component: resolve => require(['@/components/jcsjdc/fhsjdc'], resolve),
+        meta: {
+            title: '发货数据导出',
+            isLogin: true
+        }
     },
 ];
 const childrens=indexchild.concat(pzgjs).concat(xyhxl).concat(gkfx).concat(htzzjd);

@@ -1,10 +1,11 @@
 <template>
     <div>
-        <Form :label-width="80">
+        <Form :label-width="100">
             <Row>
-                <Col style="width: 200px;float: left">
-                    <FormItem  :label-width="100" label="子公司名称：">
-                        <Select  v-model="name" placeholder="请选择">
+                <Col span="5" style="margin-left: -100px">
+                    <FormItem  style="">
+                        <label>子公司名称：</label>
+                        <Select style="width:100px;" v-model="name" placeholder="请选择">
                             <Option value="全部">全部</Option>
                             <Option value="9580">唐钢</Option>
                             <Option value="9727">邯钢</Option>
@@ -14,7 +15,7 @@
                         </Select>
                     </FormItem>
                 </Col>
-                <Col style="width: 200px;float: left">
+                <Col span="4">
                     <FormItem label="品种：" style="">
                         <Select style="" v-model="pz" placeholder="请选择" filterable>
                             <Option value="全部">全部</Option>
@@ -27,19 +28,19 @@
                         </Select>
                     </FormItem>
                 </Col>
-                <Col style="width: 250px;float: left;margin-left: 20px">
+                <Col span="6">
                     <FormItem label="合同单位：" style="">
                         <Input v-model="htdw" placeholder="请输入合作单位"/>
                     </FormItem>
                 </Col>
-                <Col style="width: 360px;float: left">
-                    <FormItem label="发货日期：" :label-width="100">
+                <Col span="7" >
+                    <FormItem label="发货日期：">
                         <DatePicker type="date" placeholder="记录时间" :editable="false" :clearable="false"
                                     v-model="startTime"
-                                    style="width:120px;margin-left: -20px"></DatePicker>
+                                    style="width:110px;margin-left: -80px"></DatePicker>
                         <DatePicker type="date" placeholder="记录时间" :editable="false" :clearable="false"
                                     v-model="endTime"
-                                    style="width:120px;margin-left:20px"></DatePicker>
+                                    style="width:110px;margin-left:20px"></DatePicker>
                     </FormItem>
                 </Col>
 
@@ -47,7 +48,7 @@
             <Row>
                 <Col span="6" style="margin-left: -50px;float: right;margin-bottom: 20px">
                     <Button @click="getList()" icon="ios-search" style="margin-right:10px;">查询</Button>
-                    <Button @click="downLoad()" icon="ios-cloud-download-outline" :loading="dwstats">导出</Button>
+                    <Button @click="downLoad()" icon="ios-cloud-download-outline">导出</Button>
                 </Col>
             </Row>
         </Form>
@@ -60,7 +61,6 @@
         name: "jtgczybgqk",
         data(){
             return{
-                dwstats:true,
                 loading:false,
                 name:'全部',
                 pz:'全部',
@@ -140,7 +140,6 @@
         },
         methods:{
             getList(){
-                this.dwstats = true;
                 this.loading = true;
                 let name ='name='+this.name;
                 let startTime='startTime='+this.utils.formatdate(this.startTime).substring(0, 10);
@@ -162,7 +161,6 @@
                     res = res && res.length > 0 ? JSON.parse(res) : [];
                     this.data=res;
                     this.loading = false;
-                    this.dwstats = false
                 });
             },
             // getPzData(){

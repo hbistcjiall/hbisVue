@@ -1,5 +1,5 @@
 <template>
-    <div>    
+    <div>
         <Row style="width:330px;margin:0px auto;">
             <div @click="getTime(0)" type="primary" :class="{ 'class-a': isA, 'class-b': isB}">本月</div>
             <div @click="getTime(1)" type="primary" :class="{ 'class-c': isC, 'class-d': isD}">上月</div>

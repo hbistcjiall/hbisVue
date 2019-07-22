@@ -10,3 +10,4 @@ pzgjs--品种钢结算
 system--系统管理
 xsjsqk--销售结算情况
 xyhxl--协议户销量
+jcsjdc--基础数据导出
