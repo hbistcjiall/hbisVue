@@ -334,7 +334,7 @@
                 let pz = "pz="+this.pz
                 let pzg = "pzg="+this.pzg
                 let jd = "jd="+this.jd
-                this.downloadUrlMx=this.$store.state.fetchPath + "/export/exportXSJSCx?"+startTime+endTime+cxArr+"&"+jd+"&"+pz+"&"+pzg;
+                this.downloadUrlMx=this.$store.state.fetchPath + "/export/exportJTXSJSCx?"+startTime+endTime+cxArr+"&"+jd+"&"+pz+"&"+pzg;
                 const msg = this.$Message.loading({
                     content: '正在导出数据，请稍后',
                     duration: 0
